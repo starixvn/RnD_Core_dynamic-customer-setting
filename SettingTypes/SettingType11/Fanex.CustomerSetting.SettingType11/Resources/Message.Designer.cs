@@ -106,6 +106,24 @@ namespace Fanex.CustomerSetting.SettingType11.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are not allowed to disable downline&apos;s product..
+        /// </summary>
+        internal static string Msg_60035 {
+            get {
+                return ResourceManager.GetString("Msg_60035", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not allowed to perform this action..
+        /// </summary>
+        internal static string Msg_90012 {
+            get {
+                return ResourceManager.GetString("Msg_90012", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product Status is updated successfully..
         /// </summary>
         internal static string UpdateProductStatusSuccessfully {

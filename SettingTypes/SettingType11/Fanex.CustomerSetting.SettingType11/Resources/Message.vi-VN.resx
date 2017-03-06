@@ -135,4 +135,10 @@
   <data name="Msg_60034" xml:space="preserve">
     <value>Không thể đồng bộ hóa trò chơi này bởi vì thiết lập của tài khoản cấp trên hiện chưa được đồng bộ hóa.</value>
   </data>
+  <data name="Msg_60035" xml:space="preserve">
+    <value>Bạn không được phép vô hiệu hoá sản phẩm cược của cấp dưới.</value>
+  </data>
+  <data name="Msg_90012" xml:space="preserve">
+    <value>Bạn không thể thực thi hành động này.</value>
+  </data>
 </root>

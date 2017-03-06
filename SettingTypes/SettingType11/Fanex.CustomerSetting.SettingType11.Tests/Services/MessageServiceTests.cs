@@ -35,6 +35,14 @@
         [TestCase(2, 60034)]
         [TestCase(3, 60034)]
         [TestCase(4, 60034)]
+        [TestCase(1, 60035)]
+        [TestCase(2, 60035)]
+        [TestCase(3, 60035)]
+        [TestCase(4, 60035)]
+        [TestCase(1, 90012)]
+        [TestCase(2, 90012)]
+        [TestCase(3, 90012)]
+        [TestCase(4, 90012)]
         public void TranslateMessage_Always_MainMessageIsMsgIdFromRawMsg(byte settingLevel, int msgId)
         {
             // Arrange

@@ -4,6 +4,9 @@ module CustomerSetting {
     "use strict";
 
     export class SettingType11Item extends DefaultSettingItem {
+        private systemId: number;
+        private customerLevel: Level;
+
         public isDisabled: boolean;
         public upline: SettingType11Item;
         public downline: SettingType11Item;
@@ -20,16 +23,15 @@ module CustomerSetting {
             this.isDisabled = !isChecked;
 
             if (this.downline) {
-                if (isChecked && !(<SettingType11Item>this.oldSetting).isChecked) {
-                    this.downline.readonly = false;
+                if ((<SettingType11Item>this.oldSetting).isChecked && (<SettingType11Item>this.downline.oldSetting).isChecked) {
+                    this.downline.isChecked = this.isChecked;
+                    this.downline.readonly = true;
                 } else {
-                    if ((<SettingType11Item>this.oldSetting).isChecked && (<SettingType11Item>this.downline.oldSetting).isChecked) {
-                        this.downline.isChecked = this.isChecked;
-                    } else {
+                    if (!this.isChecked) {
                         this.downline.isChecked = false;
                     }
 
-                    this.downline.readonly = true;
+                    this.downline.readonly = !isChecked;
                 }
 
                 this.resetFieldState("isDisabled");
@@ -40,23 +42,29 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
-        constructor(settingItem?: any, backup: boolean = false) {
+        constructor(settingItem: any, backup: boolean, customerLevel: Level, systemId: number)
+        constructor(settingItem?: any, backup: boolean = false, customerLevel: Level = null, systemId: number = 0) {
             super(settingItem);
+
+            this.systemId = systemId;
+            this.customerLevel = customerLevel;
 
             if (settingItem) {
                 this.isDisabled = settingItem.isDisabled;
+                this.readonly = false;
 
                 if (settingItem.upline) {
                     this.upline = new SettingType11Item(settingItem.upline);
                     this.readonly = settingItem.upline.isDisabled;
-                } else {
-                    this.readonly = false;
+                }
+
+                if (this.systemId !== System.nap && this.customerLevel !== Level.member) {
+                    this.readonly = this.readonly || this.isChecked;
                 }
 
                 if (settingItem.downline) {
-                    this.downline = new SettingType11Item(settingItem.downline, true);
-                    this.downline.readonly = true;
+                    this.downline = new SettingType11Item(settingItem.downline, true, customerLevel, systemId);
+                    this.downline.readonly = !this.isChecked || this.downline.isChecked;
                 }
             }
 
@@ -125,14 +133,6 @@ module CustomerSetting {
         public validate(): boolean {
             if (this.isDisabled && this.downline && !this.downline.isDisabled) {
                 this.validationState = new ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
-
-                return false;
-            }
-
-            if (this.downline
-                && this.isDisabled === (<SettingType11Item>this.oldSetting).isDisabled
-                && this.downline.isDisabled !== (<SettingType11Item>this.oldSetting).downline.isDisabled) {
-                this.validationState = new ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
 
                 return false;
             }
