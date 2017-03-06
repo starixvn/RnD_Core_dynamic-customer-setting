@@ -61,6 +61,15 @@ namespace Fanex.CustomerSetting.NumberGames2.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are not allowed to disable downlines as a company policy..
+        /// </summary>
+        internal static string ProductStatusNoteForExternalSites {
+            get {
+                return ResourceManager.GetString("ProductStatusNoteForExternalSites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to update the Product Status for the time being. Please try again later..
         /// </summary>
         internal static string UnableToUpdateProductStatus {
