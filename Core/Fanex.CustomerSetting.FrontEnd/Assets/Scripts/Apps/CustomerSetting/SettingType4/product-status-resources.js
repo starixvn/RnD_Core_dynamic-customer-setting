@@ -54,7 +54,7 @@
     
     productStatusResources["message"] = productStatusResources["message"] || {};
     productStatusResources["message"]["en-us"] = {
-        "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled.",
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannot be enabled when Upline is disabled.",
         "DownlineProductStatusCannotBeNull": "Downline Product Status cannot be null.",
         "DownlineStatusCannotBeChanged": "Downline&apos;s Product Status must be unchanged when the Upline has not been changed.",
         "DownlineStatusIsInvalid": "The product is not offered for this customer line.",

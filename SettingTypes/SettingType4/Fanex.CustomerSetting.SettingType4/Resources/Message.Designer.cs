@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.SettingType4.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downline cannnot be enabled when Upline is disabled..
+        ///   Looks up a localized string similar to Downline cannot be enabled when Upline is disabled..
         /// </summary>
         internal static string DownlineCannotBeEnabledWhenUplineIsDisabled {
             get {
