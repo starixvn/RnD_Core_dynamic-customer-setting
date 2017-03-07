@@ -5,6 +5,6 @@
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
         </Setting>
-        <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+        <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
 </Functions>
