@@ -137,6 +137,15 @@ module CustomerSetting {
                 return false;
             }
 
+            if (this.downline
+                && !(<SettingType11Item>this.oldSetting).isDisabled
+                && !(<SettingType11Item>this.oldSetting).downline.isDisabled
+                && this.isDisabled != this.downline.isDisabled) {
+                this.validationState = new ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
+
+                return false;
+            }
+
             if (this.upline && this.upline.isDisabled && !this.isDisabled) {
                 this.validationState = new ValidationResult("DownlineCannotBeEnabledWhenUplineIsDisabled", "isDisabled");
 

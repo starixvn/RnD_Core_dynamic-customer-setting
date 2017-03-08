@@ -116,6 +116,15 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
+            if (this.downline
+                && !(<SettingType13Item>this.oldSetting).isDisabled
+                && !(<SettingType13Item>this.oldSetting).downline.isDisabled
+                && this.isDisabled != this.downline.isDisabled) {
+                this.validationState = new ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
+
+                return false;
+            }
+
             if (this.upline && this.upline.isDisabled && !this.isDisabled) {
                 this.validationState = new ValidationResult("DownlineCannotBeEnabledWhenUplineIsDisabled", "isDisabled");
 
