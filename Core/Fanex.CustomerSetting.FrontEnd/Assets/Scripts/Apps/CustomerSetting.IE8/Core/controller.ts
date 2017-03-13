@@ -111,7 +111,9 @@ module CustomerSetting.IE8 {
                 this.querySetting();
 
                 this.$timeout(() => {
-                    if ((<UpdatingSettingResult>this.requestMsgResult).removeSuccessResults().length === 0) {
+                    var settingResults = (<UpdatingSettingResult>this.requestMsgResult);
+
+                    if (settingResults && settingResults.removeSuccessResults && settingResults.removeSuccessResults().length === 0) {
                         this.requestMsgResult = undefined;
 
                         if (this.successfulUpdatingCallback) {
