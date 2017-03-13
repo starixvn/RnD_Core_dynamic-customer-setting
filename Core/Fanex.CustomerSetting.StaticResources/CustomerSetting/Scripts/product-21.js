@@ -32095,7 +32095,8 @@ var CustomerSetting;
                 _this.requestMsgResult = new CustomerSetting.UpdatingSettingResult(response.data);
                 _this.querySetting();
                 _this.$timeout(function () {
-                    if (_this.requestMsgResult.removeSuccessResults().length === 0) {
+                    var settingResults = _this.requestMsgResult;
+                    if (settingResults && settingResults.removeSuccessResults && settingResults.removeSuccessResults().length === 0) {
                         _this.requestMsgResult = undefined;
                         if (_this.successfulUpdatingCallback) {
                             _this.successfulUpdatingCallback(isPartialUpdate, isMultipleUpdate);
