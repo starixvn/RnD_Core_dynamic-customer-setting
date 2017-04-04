@@ -133,7 +133,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is no change to update!.
+        ///   Looks up a localized string similar to There is no change to update..
         /// </summary>
         public static string NoChangeToUpdate {
             get {
