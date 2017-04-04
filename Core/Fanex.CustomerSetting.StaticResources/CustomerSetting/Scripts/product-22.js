@@ -35309,7 +35309,7 @@ $templateCache.put("settingtype8.htm","<div class=\"block settingtype8\" data-ng
         "DataIsNotValid": "Data is not valid.",
         "DuplicateValuesAlertMsg": "Out of range for highlighted values.",
         "Msg_90001": "Update process is unsuccessful !",
-        "NoChangeToUpdate": "There is no change to update!",
+        "NoChangeToUpdate": "There is no change to update.",
         "ProductNameMissing": "Product Id {0} does not have name in {1}",
         "SettingTypeError": "Unable to load the setting type due to a technical problem. Please try again later or notify system administrator!",
         "SettingTypeHasNoSettingItem": "Setting Type {0} does not have any setting item.",
@@ -35331,7 +35331,7 @@ $templateCache.put("settingtype8.htm","<div class=\"block settingtype8\" data-ng
         "CustomersAreNotSameLine": "会员不同线！",
         "DuplicateValuesAlertMsg": "突显值已超出范围。",
         "Msg_90001": "更新程序失败！",
-        "NoChangeToUpdate": "没有任何的变化更新！",
+        "NoChangeToUpdate": "没有任何的变化更新。",
         "SettingTypeError": "由于技术故障导致加载设置类型失败。请稍后再试或联系系统管理员！",
         "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧",
         "YouAreNotAuthorized": "您没有使用此功能的权限"
@@ -35346,7 +35346,7 @@ $templateCache.put("settingtype8.htm","<div class=\"block settingtype8\" data-ng
         "CustomersAreNotSameLine": "會員不同線！",
         "DuplicateValuesAlertMsg": "突顯值已超出範圍。",
         "Msg_90001": "更新程序失敗！",
-        "NoChangeToUpdate": "沒有任何的變化更新！",
+        "NoChangeToUpdate": "沒有任何的變化更新。",
         "SettingTypeError": "由於技術故障導致加載設置類型失敗。請稍後再試或聯系系統管理員！",
         "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧",
         "YouAreNotAuthorized": "您沒有使用此功能的權限"
