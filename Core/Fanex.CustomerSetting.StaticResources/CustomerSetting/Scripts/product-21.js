@@ -34203,7 +34203,8 @@ var CustomerSetting;
                     }
                     else {
                         if (!this.isChecked) {
-                            this.downline.isChecked = false;
+                            this.downline.isDisabled = true;
+                            this.resetFieldState("downline.isDisabled");
                         }
                         this.downline.readonly = !isChecked;
                     }

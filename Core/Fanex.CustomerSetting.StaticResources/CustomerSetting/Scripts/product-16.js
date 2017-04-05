@@ -34380,7 +34380,8 @@ var CustomerSetting;
                             this.downline.isChecked = this.isChecked;
                         }
                         else {
-                            this.downline.isChecked = false;
+                            this.downline.isDisabled = true;
+                            this.resetFieldState("downline.isDisabled");
                         }
                         this.downline.readonly = true;
                     }
