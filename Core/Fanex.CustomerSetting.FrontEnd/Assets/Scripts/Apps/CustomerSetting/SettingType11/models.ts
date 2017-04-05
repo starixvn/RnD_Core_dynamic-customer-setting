@@ -28,7 +28,8 @@ module CustomerSetting {
                     this.downline.readonly = true;
                 } else {
                     if (!this.isChecked) {
-                        this.downline.isChecked = false;
+                        this.downline.isDisabled = true;
+                        this.resetFieldState("downline.isDisabled");
                     }
 
                     this.downline.readonly = !isChecked;

@@ -160,7 +160,8 @@ module CustomerSetting.IE8 {
                     if ((<SettingType4Item>this.oldSetting).isChecked && (<SettingType4Item>this.downline.oldSetting).isChecked) {
                         this.downline.isChecked = this.isChecked;
                     } else {
-                        this.downline.isChecked = false;
+                        this.downline.isDisabled = true;
+                        this.resetFieldState("downline.isDisabled");
                     }
 
                     this.downline.readonly = true;
