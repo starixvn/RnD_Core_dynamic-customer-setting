@@ -121,6 +121,6 @@
     <value>You are not allowed to disable downlines as a company policy.</value>
   </data>
   <data name="SuccessfulProductStatusUpdateWarning" xml:space="preserve">
-    <value>You've just enabled a product for downlines. Please go to Member Setting page to configure the settings.</value>
+    <value>You've just enabled a product for downlines. Please go to Member Setting page to configure your OWN PT Settings.</value>
   </data>
 </root>

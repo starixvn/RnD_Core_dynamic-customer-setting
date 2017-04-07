@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SuccessfulProductStatusUpdateWarning" xml:space="preserve">
-    <value>คุณต้องการเปิดการใช้งานให้ดาวไลน์แค่โปรดักส์เดียว, โปรดไปที่หน้าสมาชิกตั้งค่าการกำหนดค่าการตั้งค่า</value>
+    <value>คุณเพิ่งเปิดใช้งานผลิตภัณฑ์สำหรับดาวน์ไลน์ โปรดไปที่หน้าการตั้งค่าสมาชิกเพื่อกำหนดการตั้งค่าความเสี่ยงของคุณเอง</value>
   </data>
   <data name="ProductStatusNoteForExternalSites" xml:space="preserve">
     <value>ตามนโยบายของบริษัทคุณไม่สามารถปิดการใช้งานของดาวน์ไลน์</value>

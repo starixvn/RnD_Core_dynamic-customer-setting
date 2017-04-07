@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SuccessfulProductStatusUpdateWarning" xml:space="preserve">
-    <value>Bạn vừa kích hoạt một sản phẩm cược cho cấp dưới. Vui lòng vào trang Tuỳ Chỉnh Member để cấu hình các thiết lập.</value>
+    <value>Bạn vừa kích hoạt một sản phẩm cược cho cấp dưới. Vui lòng vào trang Cấu Hình Member để thiết lập giá trị Position Taking của mình.</value>
   </data>
   <data name="ProductStatusNoteForExternalSites" xml:space="preserve">
     <value>Theo quy định của công ty, bạn không được phép vô hiệu hoá sản phẩm cược của cấp dưới.</value>

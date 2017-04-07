@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SuccessfulProductStatusUpdateWarning" xml:space="preserve">
-    <value>您剛啟用了一個產品給下線。請轉至“會員設置”頁面配置設置。</value>
+    <value>您剛啟用了產品予下線。 請您點擊到會員設定頁面設置您自己的占成數。</value>
   </data>
   <data name="ProductStatusNoteForExternalSites" xml:space="preserve">
     <value>作為公司的政策, 你不允許禁用下線。</value>

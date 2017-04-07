@@ -70,7 +70,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType13 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You&apos;ve just enabled a product for downlines. Please go to Member Setting page to configure the settings..
+        ///   Looks up a localized string similar to You&apos;ve just enabled a product for downlines. Please go to Member Setting page to configure your OWN PT Settings..
         /// </summary>
         internal static string SuccessfulProductStatusUpdateWarning {
             get {
