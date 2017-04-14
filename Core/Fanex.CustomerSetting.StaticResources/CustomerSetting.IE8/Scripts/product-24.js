@@ -36277,7 +36277,8 @@ var CustomerSetting;
                         this.upline = new SettingType13Item(settingItem.upline);
                         this.readonly = settingItem.upline.isDisabled;
                     }
-                    if (this.systemId !== IE8.System.nap && this.customerLevel !== IE8.Level.member) {
+                    if ((this.systemId === IE8.System.alpha || this.systemId === IE8.System.internalAlpha)
+                        && this.customerLevel !== IE8.Level.member) {
                         this.readonly = this.readonly || this.isChecked;
                     }
                     if (settingItem.downline) {
@@ -36345,7 +36346,7 @@ var CustomerSetting;
                 if (this.downline
                     && !this.oldSetting.isDisabled
                     && !this.oldSetting.downline.isDisabled
-                    && this.isDisabled != this.downline.isDisabled) {
+                    && this.isDisabled !== this.downline.isDisabled) {
                     this.validationState = new IE8.ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
                     return false;
                 }
