@@ -16,7 +16,7 @@
             {
                 new SettingType
                 {
-                    Id = AddSettingType13WarningTask.SettingType13Id,
+                    Id = Constants.SettingType13Id,
                     DisplayMode = 1,
                     SettingItems = new List<ProductStatusItem>
                     {

@@ -77,7 +77,7 @@
         public void PostUpdateCustomerSetting_DoesNotUpdateSettingType13_SubResultsOfUpdateResultDoesNotChange()
         {
             // Arrange.
-            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != AddSettingType13WarningTask.SettingType13Id);
+            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != Constants.SettingType13Id);
 
             // Act.
             _task.Invoke(_settingContext, _command, _settingResults);
@@ -90,7 +90,7 @@
         public void PostUpdateCustomerSetting_DoesNotEnableDownline_SubResultsOfUpdateResultDoesNotChange()
         {
             // Arrange.
-            SettingType settingType13 = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == AddSettingType13WarningTask.SettingType13Id);
+            SettingType settingType13 = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == Constants.SettingType13Id);
 
             settingType13.SettingItems = new List<ProductStatusItem>
             {
@@ -131,7 +131,7 @@
         public void PostUpdateCustomerSetting_UpdateSettingType13Failed_SubResultsOfUpdateResultDoesNotChange()
         {
             // Arrange.
-            _subResults.Add(new SettingResult(-1, Arg.Any<string>(), -1, 1, AddSettingType13WarningTask.SettingType13Id, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(-1, Arg.Any<string>(), -1, 1, Constants.SettingType13Id, Arg.Any<string>()));
 
             // Act.
             _task.Invoke(_settingContext, _command, _settingResults);
@@ -144,7 +144,7 @@
         public void PostUpdateCustomerSetting_SystemIsNAP_SubResultsOfUpdateResultDoesNotChange()
         {
             // Arrange.
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13WarningTask.SettingType13Id, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, Constants.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = (byte)SystemType.Nap;
 
             // Act.
@@ -160,7 +160,7 @@
         public void PostUpdateCustomerSetting_EnableDownlineOnExternalSites_AddWarningMessage(byte systemId)
         {
             // Arrange.
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13WarningTask.SettingType13Id, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, Constants.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = systemId;
 
             // Act.
@@ -176,7 +176,7 @@
         public void PostUpdateCustomerSetting_EnableDownlineOnExternalSites_AddWarningToRemindUserUpdateMemberSettings(byte systemId)
         {
             // Arrange.
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13WarningTask.SettingType13Id, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, Constants.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = systemId;
 
             // Act.
@@ -184,6 +184,20 @@
 
             // Assert.
             Assert.IsTrue(_settingResults.SubResults.Any(subResult => subResult.Message == Resources.SuccessfulProductStatusUpdateWarning));
+        }
+
+        [Test]
+        public void PostUpdateCustomerSetting_EnableDownlineOnNap_DoNotAddWarningMessage()
+        {
+            // Arrange.
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, Constants.SettingType13Id, Arg.Any<string>()));
+            _settingContext.System = (byte)SystemType.Nap;
+
+            // Act.
+            _task.Invoke(_settingContext, _command, _settingResults);
+
+            // Assert.
+            Assert.IsFalse(_settingResults.SubResults.Any(subResult => subResult.Code == AddSettingType13UpdateWarningsTask.SuccessfulProductStatusUpdateWarningCode));
         }
 
         [Test]
@@ -229,7 +243,7 @@
         public void PostUpdateMultipleCustomerSetting_DoesNotUpdateSettingType13_SubResultsOfUpdateResultDoesNotChange()
         {
             // Arrange.
-            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != AddSettingType13WarningTask.SettingType13Id);
+            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != Constants.SettingType13Id);
 
             // Act.
             _task.Invoke(_settingContext, _command, _settingResults);
@@ -242,7 +256,7 @@
         public void PostMultipleUpdateCustomerSetting_DoesNotEnableDownline_SubResultsOfUpdateResultDoesNotChange()
         {
             // Arrange.
-            SettingType settingType13 = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == AddSettingType13WarningTask.SettingType13Id);
+            SettingType settingType13 = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == Constants.SettingType13Id);
 
             settingType13.SettingItems = new List<ProductStatusItem>
             {
@@ -283,7 +297,7 @@
         public void PostMultipleUpdateCustomerSetting_UpdateSettingType13Failed_SubResultsOfUpdateResultDoesNotChange()
         {
             // Arrange.
-            _subResults.Add(new SettingResult(-1, Arg.Any<string>(), -1, 1, AddSettingType13WarningTask.SettingType13Id, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(-1, Arg.Any<string>(), -1, 1, Constants.SettingType13Id, Arg.Any<string>()));
 
             // Act.
             _task.Invoke(_settingContext, _command, _settingResults);
@@ -296,7 +310,7 @@
         public void PostMultipleUpdateCustomerSetting_SystemIsNAP_SubResultsOfUpdateResultDoesNotChange()
         {
             // Arrange.
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13WarningTask.SettingType13Id, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, Constants.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = (byte)SystemType.Nap;
 
             // Act.
@@ -312,7 +326,7 @@
         public void PostMultipleUpdateCustomerSetting_EnableDownlineOnExternalSites_AddWarningMessage(byte systemId)
         {
             // Arrange.
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13WarningTask.SettingType13Id, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, Constants.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = systemId;
 
             // Act.
@@ -328,7 +342,7 @@
         public void PostMultipleUpdateCustomerSetting_EnableDownlineOnExternalSites_AddWarningToRemindUserUpdateMemberSettings(byte systemId)
         {
             // Arrange.
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13WarningTask.SettingType13Id, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, Constants.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = systemId;
 
             // Act.
@@ -336,6 +350,20 @@
 
             // Assert.
             Assert.IsTrue(_settingResults.SubResults.Any(subResult => subResult.Message == Resources.SuccessfulProductStatusUpdateWarning));
+        }
+
+        [Test]
+        public void PostMultipleUpdateCustomerSetting_EnableDownlineOnNap_AddWarningMessage()
+        {
+            // Arrange.
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, Constants.SettingType13Id, Arg.Any<string>()));
+            _settingContext.System = (byte)SystemType.Nap;
+
+            // Act.
+            _task.Invoke(_settingContext, _command, _settingResults);
+
+            // Assert.
+            Assert.IsFalse(_settingResults.SubResults.Any(subResult => subResult.Code == AddSettingType13UpdateWarningsTask.SuccessfulProductStatusUpdateWarningCode));
         }
     }
 }

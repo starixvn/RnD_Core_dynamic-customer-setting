@@ -1,12 +1,13 @@
 ﻿namespace Fanex.CustomerSetting.Tasks.SettingType13
 {
+    using System.Linq;
     using Common.Helper;
     using Models;
-    using Models.Constants;
+    using Models.Enumerations;
     using Models.Requests;
     using Models.Results;
 
-    public class AddSettingType13QueryWarningTask : AddSettingType13WarningTask, IPostQueryCustomerSettingTask
+    public class AddSettingType13QueryWarningTask : IPostQueryCustomerSettingTask
     {
         internal const int ProductStatusNoteForExternalSitesCode = -9102;
 
@@ -17,10 +18,20 @@
             Check.Argument.IsNotNull(setting, nameof(setting));
 
             if ((query.CustomerLevel.IsMasterLevel() || query.CustomerLevel.IsAgentLevel())
-                && FilterSettingType13OnExternalSites(settingContext, setting) != null)
+                && FilterSettingType13OnAlpha(settingContext, setting) != null)
             {
                 setting.WarningMessage = new Result(ProductStatusNoteForExternalSitesCode, Resources.ProductStatusNoteForExternalSites);
             }
+        }
+
+        private SettingType FilterSettingType13OnAlpha(ISettingContext settingContext, ISetting setting)
+        {
+            if (settingContext.System == (byte)SystemType.Alpha || settingContext.System == (byte)SystemType.InternalAlpha)
+            {
+                return setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == Constants.SettingType13Id);
+            }
+
+            return null;
         }
     }
 }

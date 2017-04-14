@@ -60,7 +60,8 @@ module CustomerSetting {
                     this.readonly = settingItem.upline.isDisabled;
                 }
 
-                if (this.systemId !== System.nap && this.customerLevel !== Level.member) {
+                if ((this.systemId === System.alpha || this.systemId === System.internalAlpha)
+                    && this.customerLevel !== Level.member) {
                     this.readonly = this.readonly || this.isChecked;
                 }
 
@@ -142,7 +143,7 @@ module CustomerSetting {
             if (this.downline
                 && !(<SettingType13Item>this.oldSetting).isDisabled
                 && !(<SettingType13Item>this.oldSetting).downline.isDisabled
-                && this.isDisabled != this.downline.isDisabled) {
+                && this.isDisabled !== this.downline.isDisabled) {
                 this.validationState = new ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
 
                 return false;

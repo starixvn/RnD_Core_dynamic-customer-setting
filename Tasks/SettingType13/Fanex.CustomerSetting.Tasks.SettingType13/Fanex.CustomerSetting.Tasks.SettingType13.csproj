@@ -41,8 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddSettingType13QueryWarningTask.cs" />
-    <Compile Include="AddSettingType13WarningTask.cs" />
     <Compile Include="AddSettingType13UpdateWarningsTask.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>

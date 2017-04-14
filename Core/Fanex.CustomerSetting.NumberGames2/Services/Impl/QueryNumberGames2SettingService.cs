@@ -47,7 +47,7 @@
             ISetting setting = base.GetCustomerSetting(query);
 
             if (setting != null
-                && ContainsSettingType11OnExternalSites(SettingContext, setting)
+                && ContainsSettingType11OnAlpha(SettingContext, setting)
                 && CheckIfEditingCustomerIsMasterOrAgent(query))
             {
                 setting.WarningMessage = new Result(ProductStatusNoteForExternalSitesCode, Messages.ProductStatusNoteForExternalSites);
@@ -56,14 +56,14 @@
             return setting;
         }
 
-        private bool ContainsSettingType11OnExternalSites(ISettingContext settingContext, ISetting setting)
+        private bool ContainsSettingType11OnAlpha(ISettingContext settingContext, ISetting setting)
         {
-            if (settingContext.System == (byte)SystemType.Nap)
+            if (settingContext.System == (byte)SystemType.Alpha || settingContext.System == (byte)SystemType.InternalAlpha)
             {
-                return false;
+                return setting.SettingTypes.Any(settingType => settingType.Id == NumberGames2ProductStatusSettingType);
             }
 
-            return setting.SettingTypes.Any(settingType => settingType.Id == NumberGames2ProductStatusSettingType);
+            return false;
         }
 
         private bool CheckIfEditingCustomerIsMasterOrAgent(CustomerSettingQuery query)

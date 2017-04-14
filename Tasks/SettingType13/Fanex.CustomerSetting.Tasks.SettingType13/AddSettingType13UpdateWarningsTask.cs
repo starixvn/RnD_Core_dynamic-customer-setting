@@ -5,10 +5,11 @@
     using Common.Helper;
     using CustomerSetting.SettingType13.Models;
     using Models;
+    using Models.Enumerations;
     using Models.Requests;
     using Models.Results;
 
-    public class AddSettingType13UpdateWarningsTask : AddSettingType13WarningTask, IPostUpdateCustomerSettingTask, IPostUpdateMultipleCustomersSettingTask
+    public class AddSettingType13UpdateWarningsTask : IPostUpdateCustomerSettingTask, IPostUpdateMultipleCustomersSettingTask
     {
         internal const int SuccessfulProductStatusUpdateWarningCode = -9101;
 
@@ -33,11 +34,11 @@
         private void AddWarningsForSuccessfulSettingType13Updates(ISettingContext settingContext, UpdateCustomerSettingCommand command, IResult updateResult)
         {
             var updateSettingResult = updateResult as UpdateSettingResult;
-            SettingType settingType13OnExternalSite = FilterSettingType13OnExternalSites(settingContext, command.Setting);
+            SettingType settingType13OnExternalSites = FilterSettingType13OnExternalSites(settingContext, command.Setting);
 
             if (updateSettingResult == null
-                || settingType13OnExternalSite == null
-                || !CheckIfUserEnablesDownlines(settingType13OnExternalSite))
+                || settingType13OnExternalSites == null
+                || !CheckIfUserEnablesDownlines(settingType13OnExternalSites))
             {
                 return;
             }
@@ -86,9 +87,19 @@
             return false;
         }
 
+        private SettingType FilterSettingType13OnExternalSites(ISettingContext settingContext, ISetting setting)
+        {
+            if (settingContext.System != (byte)SystemType.Nap)
+            {
+                return setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == Constants.SettingType13Id);
+            }
+
+            return null;
+        }
+
         private List<SettingResult> FilterSuccessfulProductStatusResults(UpdateSettingResult updateResult)
             => updateResult.SubResults
-                .Where(subResult => subResult.SettingTypeId == SettingType13Id && subResult.IsSuccessful)
+                .Where(subResult => subResult.SettingTypeId == Constants.SettingType13Id && subResult.IsSuccessful)
                 .ToList();
     }
 }

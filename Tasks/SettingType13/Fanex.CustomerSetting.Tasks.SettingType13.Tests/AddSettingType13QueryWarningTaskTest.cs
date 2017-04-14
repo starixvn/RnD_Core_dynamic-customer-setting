@@ -13,7 +13,6 @@
     public class AddSettingType13QueryWarningTaskTest
     {
         private AddSettingType13QueryWarningTask _task;
-        private List<SettingResult> _subResults;
         private ISettingContext _settingContext;
         private ISetting _setting;
         private CustomerSettingQuery _query;
@@ -26,7 +25,6 @@
             Level customerLevel = Level.Agent;
 
             _task = new AddSettingType13QueryWarningTask();
-            _subResults = new List<SettingResult>();
             _settingContext = Substitute.For<ISettingContext>();
             _settingContext.Actor = Substitute.For<User>();
             _settingContext.Actor.Level = Level.Master;
@@ -78,7 +76,7 @@
         public void PostQueryCustomerSetting_DoesNotUpdateSettingType13_NoAddWarningMessage()
         {
             // Arrange.
-            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != AddSettingType13WarningTask.SettingType13Id);
+            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != Constants.SettingType13Id);
 
             // Act.
             _task.Invoke(_settingContext, _query, _setting);
@@ -180,8 +178,7 @@
 
         [TestCase((byte)SystemType.Alpha)]
         [TestCase((byte)SystemType.InternalAlpha)]
-        [TestCase((byte)SystemType.ExternalNap)]
-        public void PostQueryCustomerSetting_EditSettingType13OnExternalSites_AddWarningMessageWithCodeIsNegative9102(byte systemId)
+        public void PostQueryCustomerSetting_EditSettingType13OnAlpha_AddWarningMessageWithCodeIsNegative9102(byte systemId)
         {
             // Arrange.
             _settingContext.System = systemId;
@@ -195,8 +192,7 @@
 
         [TestCase((byte)SystemType.Alpha)]
         [TestCase((byte)SystemType.InternalAlpha)]
-        [TestCase((byte)SystemType.ExternalNap)]
-        public void PostQueryCustomerSetting_EditSettingType13OnExternalSites_AddWarningNoteToUser(byte systemId)
+        public void PostQueryCustomerSetting_EditSettingType13OnAlpha_AddWarningNoteToUser(byte systemId)
         {
             // Arrange.
             _settingContext.System = systemId;
@@ -206,6 +202,20 @@
 
             // Assert.
             Assert.IsTrue(_setting?.WarningMessage?.Message == Resources.ProductStatusNoteForExternalSites);
+        }
+
+        [TestCase((byte)SystemType.Nap)]
+        [TestCase((byte)SystemType.ExternalNap)]
+        public void PostQueryCustomerSetting_EditSettingType13OnNap_DoNotAddWarningMessage(byte systemId)
+        {
+            // Arrange.
+            _settingContext.System = systemId;
+
+            // Act.
+            _task.Invoke(_settingContext, _query, _setting);
+
+            // Assert.
+            Assert.Null(_setting?.WarningMessage);
         }
     }
 }
