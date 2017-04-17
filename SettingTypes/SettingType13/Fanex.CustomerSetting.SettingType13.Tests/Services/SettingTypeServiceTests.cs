@@ -19,7 +19,7 @@
 
     public class SettingTypeServiceTests
     {
-        private const byte SettingTypeId = 11;
+        private const byte SettingTypeId = 13;
 
         private ISettingTypeService _settingTypeService;
         private IResourceService _resourceService;

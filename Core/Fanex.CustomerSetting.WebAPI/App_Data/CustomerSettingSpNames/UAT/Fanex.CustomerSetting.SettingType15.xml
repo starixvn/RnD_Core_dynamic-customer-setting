@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+    <Function Name="GameDisableStatus">
+        <Setting Key="Acc_CustSetting_WinningShareCommissionSelect" SpName="Acc_CustSetting_WinningShareCommissionSelect_xpre" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+            <Mapping DataField="WinningShareCommission" ObjectProperty="WinningShare" />
+        </Setting>
+    </Function>
+</Functions>
