@@ -8,8 +8,6 @@
 
     public class CustomerSettingMatrixService : ICustomerSettingMatrixService
     {
-        private const string SettingMatrixTemplateCachingKey = "CustomerSettingMatrixTemplate";
-        private const byte CachingHours = 4;
         private readonly IRestClient _restClient;
 
         internal CustomerSettingMatrixService()

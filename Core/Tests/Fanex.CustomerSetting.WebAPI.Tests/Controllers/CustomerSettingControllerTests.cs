@@ -345,10 +345,10 @@
             jsonBuilder.Append("\"ActorName\": \"sa\",");
             jsonBuilder.Append("\"ActorLevel\": 5,");
             jsonBuilder.Append("\"SubAccountId\": 5,");
-            jsonBuilder.AppendFormat("\"System\": 1,");
-            jsonBuilder.AppendFormat("\"ProductId\": 1,");
-            jsonBuilder.AppendFormat("\"CustomerId\": 1,");
-            jsonBuilder.AppendFormat("\"CustomerLevel\": 4");
+            jsonBuilder.Append("\"System\": 1,");
+            jsonBuilder.Append("\"ProductId\": 1,");
+            jsonBuilder.Append("\"CustomerId\": 1,");
+            jsonBuilder.Append("\"CustomerLevel\": 4");
             jsonBuilder.Append("}");
 
             return jsonBuilder.ToString();
