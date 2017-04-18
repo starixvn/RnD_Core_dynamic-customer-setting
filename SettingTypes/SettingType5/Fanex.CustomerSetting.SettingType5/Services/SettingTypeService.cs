@@ -44,7 +44,7 @@
             var customerChargeCommission = new SettingType
             {
                 Name = Label.ChargeCommission,
-                SettingItems = chargeCommissionRawData.Select(productStatusItemDto => new ChargeCommissionItem(productStatusItemDto))
+                SettingItems = chargeCommissionRawData.Select(chargeCommissionDto => new ChargeCommissionItem(chargeCommissionDto))
             };
 
             SetSettingTypeReadOnlyWhenIndirectUplineEditMember(customerChargeCommission, query);
