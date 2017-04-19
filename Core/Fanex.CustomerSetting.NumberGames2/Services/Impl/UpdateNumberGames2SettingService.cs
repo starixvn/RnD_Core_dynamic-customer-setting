@@ -24,7 +24,6 @@
     public class UpdateNumberGames2SettingService : UpdateSettingService, IUpdateSettingService
     {
         private const short ProductStatusSettingType = 11;
-        private const short CommissionGroupSettingType = 10;
 
         private readonly ICustomerSyncStatusService _customerSyncStatusService;
         private readonly IThirdPartyServices _apiService;
