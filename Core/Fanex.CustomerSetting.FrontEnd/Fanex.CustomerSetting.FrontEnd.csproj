@@ -426,6 +426,18 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>settingtype13-resources.js</LastGenOutput>
     </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14-resources.js">
+      <DependentUpon>settingtype14-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype14-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType15\settingtype15-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType15\settingtype15.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType15\settingtype15-resources.js">
@@ -705,6 +717,10 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType13\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType13\settingtype13.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType13\settingtype13-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14-input.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType15\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType15\settingtype15.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType15\settingtype15-resources.ts" />
