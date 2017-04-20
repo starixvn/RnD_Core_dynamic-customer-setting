@@ -78,6 +78,8 @@
     <Content Include="CustomerSetting.IE8\Scripts\product-5.min.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-28.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-28.min.js" />
+    <Content Include="CustomerSetting.IE8\Scripts\product-26.js" />
+    <Content Include="CustomerSetting.IE8\Scripts\product-26.min.js" />
     <Content Include="CustomerSetting.IE8\Styles\customer-setting-ie8.css" />
     <Content Include="CustomerSetting.IE8\Styles\customer-setting-ie8.min.css" />
     <Content Include="CustomerSetting.IE8\Styles\Images\auto-pt.gif" />
@@ -110,6 +112,8 @@
     <Content Include="CustomerSetting\Scripts\product-5.min.js" />
     <Content Include="CustomerSetting\Scripts\product-28.js" />
     <Content Include="CustomerSetting\Scripts\product-28.min.js" />
+    <Content Include="CustomerSetting\Scripts\product-26.js" />
+    <Content Include="CustomerSetting\Scripts\product-26.min.js" />
     <Content Include="CustomerSetting\Styles\customer-setting.css" />
     <Content Include="CustomerSetting\Styles\customer-setting.min.css" />
     <Content Include="CustomerSetting\Styles\flexbox-patch.css" />
