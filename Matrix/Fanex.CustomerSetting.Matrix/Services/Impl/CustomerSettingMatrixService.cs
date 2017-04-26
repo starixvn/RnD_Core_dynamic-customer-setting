@@ -78,6 +78,7 @@
 
                 case SettingType.Commission:
                 case SettingType.ChargeCommission:
+                case SettingType.TicketCommission:
                     return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName);
 
                 default:

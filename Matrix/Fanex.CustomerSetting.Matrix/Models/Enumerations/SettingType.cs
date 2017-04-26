@@ -4,6 +4,7 @@
     {
         PositionTaking = 1,
         Commission = 3,
-        ChargeCommission = 5
+        ChargeCommission = 5,
+        TicketCommission = 14
     }
 }

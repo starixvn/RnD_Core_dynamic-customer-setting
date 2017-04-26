@@ -90,6 +90,7 @@
         static PositionTaking = new SettingType(1, "PositionTaking");
         static Commission = new SettingType(3, "Commission");
         static ChargeCommission = new SettingType(5, "Charge Commission");
+        static TicketCommission = new SettingType(14, "Ticket Commission");
         public id: number;
         public name: string;
 
