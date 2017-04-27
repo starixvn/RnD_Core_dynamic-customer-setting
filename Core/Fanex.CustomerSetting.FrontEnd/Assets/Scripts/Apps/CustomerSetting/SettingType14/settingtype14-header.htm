@@ -17,7 +17,7 @@
     <div class="block__lbl w50-percent">{{::('CommForMaster' | settingType14Label)}}</div>
     <div class="block__lbl block__lbl--no-border w50-percent">{{::('CommForAgent' | settingType14Label)}}</div>
 </div>
-<div class="w80-percent block__lbl" data-ng-if="uplineLevel === avaiCustomerLevels.master && customerLevel === avaiCustomerLevels.member">
+<div class="w80-percent block__lbl block__lbl--no-border" data-ng-if="uplineLevel === avaiCustomerLevels.master && customerLevel === avaiCustomerLevels.member">
     {{::('CommForAgent' | settingType14Label)}}
 </div>
 <div class="w80-percent" data-ng-if="uplineLevel === avaiCustomerLevels.agent && customerLevel === avaiCustomerLevels.member">

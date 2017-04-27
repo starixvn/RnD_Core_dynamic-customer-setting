@@ -1,6 +1,6 @@
 ﻿<div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.superAgent">
     <div class="block__cell w50-percent">{{item.uplineCommission | number}}%</div>
-    <div class="block__cell w50-percent setting-field-wrapper align-left" data-ng-if="settingType | editableSettingType">
+    <div class="block__cell block__cell--no-border w50-percent setting-field-wrapper align-left" data-ng-if="settingType | editableSettingType">
         <input type="text"
                maxlength="6"
                data-ng-model="item.commission"
