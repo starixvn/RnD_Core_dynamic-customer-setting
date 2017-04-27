@@ -162,9 +162,8 @@
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType11.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType12.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType13.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType15.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType14.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType15.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType2.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType3.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType4.xml" />
@@ -182,9 +181,8 @@
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType11.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType12.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType13.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType15.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType14.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType15.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType2.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType3.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType4.xml" />
@@ -202,9 +200,8 @@
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType11.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType12.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType13.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType15.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType14.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType15.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType2.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType3.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType4.xml" />
@@ -222,9 +219,8 @@
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType11.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType12.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType13.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType15.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType14.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType15.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType2.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType3.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType4.xml" />
@@ -242,9 +238,8 @@
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType11.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType12.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType13.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType15.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType14.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType15.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType2.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType3.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType4.xml" />
