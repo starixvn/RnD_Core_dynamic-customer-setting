@@ -43,15 +43,28 @@ module CustomerSettingMatrix {
             this.commissionItemMatrixRows = commissionItemMatrix.commissionItemMatrixRows.map((itemMatrixRow: any) => new CommissionItemMatrixRow(itemMatrixRow));
         }
 
-        public getItemMatrixName(settingLevel: number) {
+        public getItemMatrixName(settingLevel: number, settingTypeId: number) {
             switch (settingLevel) {
                 case SettingLevel.product:
-                    return SettingType.Commission.name;
+                    return this.getCommissionName(settingTypeId);
                 case SettingLevel.sportType:
                     return this.sportTypeName;
                 case SettingLevel.betType:
                 case SettingLevel.sportTypeBetType:
                     return this.betTypeName;
+            }
+
+            return "";
+        }
+
+        private getCommissionName(settingTypeId: number) {
+            switch (settingTypeId) {
+                case SettingType.Commission.id:
+                    return SettingType.Commission.name;
+                case SettingType.ChargeCommission.id:
+                    return SettingType.ChargeCommission.name;
+                case SettingType.TicketCommission.id:
+                    return SettingType.TicketCommission.name;
             }
 
             return "";
@@ -62,11 +75,13 @@ module CustomerSettingMatrix {
         public commissionItemMatrices: Array<CommissionItemMatrix>;
         public customerLevels: Array<Level>;
         public commissionItemMatrixGroups: Array<CommissionItemMatrixGroup>;
+        public settingTypeId: number;
 
-        constructor(commissionMatrix: any) {
+        constructor(commissionMatrix: any, settingTypeId: number) {
             super(commissionMatrix);
 
             this.commissionItemMatrices = commissionMatrix.commissionItemMatrices.map((itemMatrix: any) => new CommissionItemMatrix(itemMatrix));
+            this.settingTypeId = settingTypeId;
         }
 
         public groupDataBySettingLevel() {

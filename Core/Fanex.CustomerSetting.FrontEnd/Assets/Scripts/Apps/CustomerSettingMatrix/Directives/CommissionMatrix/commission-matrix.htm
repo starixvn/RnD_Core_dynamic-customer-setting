@@ -13,7 +13,7 @@
                     <th>
                     </th>
                     <th data-ng-repeat="commissionItemMatrix in commissionItemMatrixGroup.commissionItemMatrices">
-                        {{::commissionItemMatrix.getItemMatrixName(commissionItemMatrixGroup.settingLevel)}}
+                        {{::commissionItemMatrix.getItemMatrixName(commissionItemMatrixGroup.settingLevel, commissionMatrix.settingTypeId)}}
                     </th>
                 </tr>
             </thead>

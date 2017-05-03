@@ -152,7 +152,7 @@ module CustomerSettingMatrix {
                             case SettingType.Commission.id:
                             case SettingType.ChargeCommission.id:
                             case SettingType.TicketCommission.id:
-                                this.settingTypeMatrix = new CommissionMatrix(customerSettingMatrix.settingTypeMatrix);
+                                this.settingTypeMatrix = new CommissionMatrix(customerSettingMatrix.settingTypeMatrix, this.querySettingMatrix.settingTypeId);
                                 break;
                         }
                         this.settingTypeMatrix.groupDataBySettingLevel();
