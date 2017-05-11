@@ -9,7 +9,8 @@
 
     public class ProductStatusItem : SettingItemDefault
     {
-        private const string ProductXmlFormat = "<ProductStatus {0} IsDisabled=\"{1}\" IsDisabledDownline=\"{2}\"/>";
+        private const string ProductStatusXmlFormat = "<ProductStatus {0} IsDisabled=\"{1}\" IsDisabledDownline=\"{2}\"/>";
+        private const string ProductStatusWithoutDownlineXmlFormat = "<ProductStatus {0} IsDisabled=\"{1}\"/>";
 
         public ProductStatusItem()
         {
@@ -60,11 +61,12 @@
 
         public override string ToXml()
         {
-            return string.Format(
-                ProductXmlFormat,
-                base.ToXml(),
-                IsDisabled ? 1 : 0,
-                Downline?.IsDisabled == true ? 1 : 0);
+            if (Downline == null)
+            {
+                return string.Format(ProductStatusWithoutDownlineXmlFormat, base.ToXml(), IsDisabled ? 1 : 0);
+            }
+
+            return string.Format(ProductStatusXmlFormat, base.ToXml(), IsDisabled ? 1 : 0, Downline.IsDisabled ? 1 : 0);
         }
 
         public override bool Equals(object obj)

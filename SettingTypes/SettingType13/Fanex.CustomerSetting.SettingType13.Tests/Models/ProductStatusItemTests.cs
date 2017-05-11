@@ -79,7 +79,7 @@
                         SportTypeId = 1,
                         BetTypeId = 1,
                         IsDisabled = true
-                    }).Returns("<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"0\"/>");
+                    }).Returns("<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\"/>");
                 yield return new TestCaseData(
                     new ProductStatusItem
                     {
