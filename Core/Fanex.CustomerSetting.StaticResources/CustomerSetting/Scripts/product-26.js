@@ -32533,120 +32533,6 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var DetectMaxHeightDirective = (function () {
-        function DetectMaxHeightDirective($window, $timeout) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var container = angular.element(element.parent());
-                var debounceResize = CustomerSetting.debounce(function () {
-                    if (!element.hasClass("ng-hide")) {
-                        _this.calculateHeight(element, container);
-                    }
-                }, 100);
-                _this.calculateHeight(element, container);
-                container.css({ "height": "auto" });
-                angular.element(_this.$window).on("resize", debounceResize);
-            };
-            this.$window = $window;
-            this.$timeout = $timeout;
-        }
-        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
-            var _this = this;
-            this.$timeout(function () {
-                var outerHeight = _this.$window.innerHeight;
-                var maxHeigth = outerHeight * 0.6;
-                var marginTop = outerHeight * 0.2 - 35;
-                element.css({
-                    "max-height": maxHeigth + "px"
-                });
-                container.css({ "margin-top": marginTop + "px" });
-            });
-        };
-        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
-        return DetectMaxHeightDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DraggableDirective = (function () {
-        function DraggableDirective($document) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
-                var container = angular.element(element.parent())[0];
-                var width;
-                var height;
-                var startX;
-                var startY;
-                var currentX;
-                var currentY;
-                draggableBanner.css({
-                    cursor: "move"
-                });
-                draggableBanner.on("mousedown", function (event) {
-                    startX = event.clientX - element[0].offsetLeft;
-                    startY = event.clientY - element[0].offsetTop;
-                    width = element[0].offsetWidth;
-                    height = element[0].offsetHeight;
-                    _this.$document.on("mousemove", mouseMove);
-                    _this.$document.on("mouseup", mouseUp);
-                });
-                var mouseMove = function (event) {
-                    currentX = event.clientX - startX;
-                    currentY = event.clientY - startY;
-                    updatePosition();
-                };
-                var mouseUp = function (event) {
-                    _this.$document.off("mousemove", mouseMove);
-                    _this.$document.off("mouseup", mouseUp);
-                };
-                function updatePosition() {
-                    if (container) {
-                        var containerClientRect = container.getBoundingClientRect();
-                        if (currentX < containerClientRect.left) {
-                            currentX = containerClientRect.left;
-                        }
-                        else if (currentX > containerClientRect.right - width) {
-                            currentX = containerClientRect.right - width;
-                        }
-                        if (currentY < containerClientRect.top) {
-                            currentY = containerClientRect.top;
-                        }
-                        else if (currentY > containerClientRect.bottom - height) {
-                            currentY = containerClientRect.bottom - height;
-                        }
-                    }
-                    element.css({
-                        "margin-top": currentY + "px",
-                        "margin-left": currentX + "px"
-                    });
-                }
-            };
-            this.$document = $document;
-        }
-        Object.defineProperty(DraggableDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    draggableBanner: "=draggable"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        DraggableDirective.$inject = ["$document"];
-        return DraggableDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
     var FieldHighlightingDirective = (function () {
         function FieldHighlightingDirective($window, $compile, $timeout, $templateCache, $rootScope) {
             var _this = this;
@@ -32811,6 +32697,120 @@ var CustomerSetting;
     }
     TooltipMessage.$inject = ["$injector", "$filter"];
     CustomerSetting.ModuleRegister.filter("tooltipMessage", TooltipMessage);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DetectMaxHeightDirective = (function () {
+        function DetectMaxHeightDirective($window, $timeout) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var container = angular.element(element.parent());
+                var debounceResize = CustomerSetting.debounce(function () {
+                    if (!element.hasClass("ng-hide")) {
+                        _this.calculateHeight(element, container);
+                    }
+                }, 100);
+                _this.calculateHeight(element, container);
+                container.css({ "height": "auto" });
+                angular.element(_this.$window).on("resize", debounceResize);
+            };
+            this.$window = $window;
+            this.$timeout = $timeout;
+        }
+        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
+            var _this = this;
+            this.$timeout(function () {
+                var outerHeight = _this.$window.innerHeight;
+                var maxHeigth = outerHeight * 0.6;
+                var marginTop = outerHeight * 0.2 - 35;
+                element.css({
+                    "max-height": maxHeigth + "px"
+                });
+                container.css({ "margin-top": marginTop + "px" });
+            });
+        };
+        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
+        return DetectMaxHeightDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DraggableDirective = (function () {
+        function DraggableDirective($document) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
+                var container = angular.element(element.parent())[0];
+                var width;
+                var height;
+                var startX;
+                var startY;
+                var currentX;
+                var currentY;
+                draggableBanner.css({
+                    cursor: "move"
+                });
+                draggableBanner.on("mousedown", function (event) {
+                    startX = event.clientX - element[0].offsetLeft;
+                    startY = event.clientY - element[0].offsetTop;
+                    width = element[0].offsetWidth;
+                    height = element[0].offsetHeight;
+                    _this.$document.on("mousemove", mouseMove);
+                    _this.$document.on("mouseup", mouseUp);
+                });
+                var mouseMove = function (event) {
+                    currentX = event.clientX - startX;
+                    currentY = event.clientY - startY;
+                    updatePosition();
+                };
+                var mouseUp = function (event) {
+                    _this.$document.off("mousemove", mouseMove);
+                    _this.$document.off("mouseup", mouseUp);
+                };
+                function updatePosition() {
+                    if (container) {
+                        var containerClientRect = container.getBoundingClientRect();
+                        if (currentX < containerClientRect.left) {
+                            currentX = containerClientRect.left;
+                        }
+                        else if (currentX > containerClientRect.right - width) {
+                            currentX = containerClientRect.right - width;
+                        }
+                        if (currentY < containerClientRect.top) {
+                            currentY = containerClientRect.top;
+                        }
+                        else if (currentY > containerClientRect.bottom - height) {
+                            currentY = containerClientRect.bottom - height;
+                        }
+                    }
+                    element.css({
+                        "margin-top": currentY + "px",
+                        "margin-left": currentX + "px"
+                    });
+                }
+            };
+            this.$document = $document;
+        }
+        Object.defineProperty(DraggableDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    draggableBanner: "=draggable"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        DraggableDirective.$inject = ["$document"];
+        return DraggableDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -33910,9 +33910,77 @@ $templateCache.put("settingtype15.htm","<div><default-setting-type-grouping></de
         "TicketCommission": "Ticket Commission"
     };
     
+    settingType14Resources["label"] = settingType14Resources["label"] || {};
+    settingType14Resources["label"]["zh-cn"] = {
+        "AgentCommission": "代理佣金",
+        "AgentGivenCommission": "代理可设置佣金",
+        "CommForAgent": "代理佣金",
+        "CommForMaster": "总代理佣金",
+        "MasterCommission": "总代理佣金",
+        "MasterGivenCommission": "总代理可设置佣金",
+        "MasterRemainCommission": "总代理保留佣金",
+        "MaxGivenCommission": "最高可设置佣金",
+        "MemberCommission": "会员的佣金",
+        "SuperCommission": "超级总代理佣金",
+        "SuperGivenCommission": "超级总代可设置佣金",
+        "SuperRemainCommission": "超级总代保留佣金",
+        "TicketCommission": "注单佣金"
+    };
+    
+    settingType14Resources["label"] = settingType14Resources["label"] || {};
+    settingType14Resources["label"]["zh-tw"] = {
+        "AgentCommission": "代理佣金",
+        "AgentGivenCommission": "代理可設置佣金",
+        "CommForAgent": "代理佣金",
+        "CommForMaster": "總代理佣金",
+        "MasterCommission": "總代理佣金",
+        "MasterGivenCommission": "總代理可設置佣金",
+        "MasterRemainCommission": "總代理保留佣金",
+        "MaxGivenCommission": "最高可設置佣金",
+        "MemberCommission": "會員的佣金",
+        "SuperCommission": "超級總代理佣金",
+        "SuperGivenCommission": "超級總代可設置佣金",
+        "SuperRemainCommission": "超級總代保留佣金",
+        "TicketCommission": "注單佣金"
+    };
+    
+    settingType14Resources["label"] = settingType14Resources["label"] || {};
+    settingType14Resources["label"]["th-th"] = {
+        "AgentCommission": "คอมมิชั่นของเอเย่น",
+        "AgentGivenCommission": "เอเจ่นต์สามารถตั้งค่าคอมมิชชั่น",
+        "CommForAgent": "ค่าคอมมิชชั่นจากตัวแทน",
+        "CommForMaster": "ค่าคอมมิชชั่นจากตัวแทนหลัก",
+        "MasterCommission": "มาสเตอร์คอมมิชั่น",
+        "MasterGivenCommission": "มาสเตอร์สามารถตั้งค่าคอมมิชชั่น",
+        "MasterRemainCommission": "มาสเตอร์คงไว้ค่าคอมมิชชั่น",
+        "MaxGivenCommission": "ค่าคอมมิชชั่นสูงสุดที่กำหนด",
+        "MemberCommission": "ค่าคอมมิชชั่นสำหรับสมาชิก",
+        "SuperCommission": "คอมมิชั่นของซุปเปอร์",
+        "SuperGivenCommission": "ซุปเปอร์สามารถตั้งค่าคอมมิชชั่น",
+        "SuperRemainCommission": "ซุปเปอร์คงไว้ค่าคอมมิชชั่น",
+        "TicketCommission": "ค่าคอมมิชชั่นของตั๋ว"
+    };
+    
+    settingType14Resources["label"] = settingType14Resources["label"] || {};
+    settingType14Resources["label"]["vi-vn"] = {
+        "AgentCommission": "Hoa hồng cho Agent",
+        "AgentGivenCommission": "Hoa hồng Agent được cấp",
+        "CommForAgent": "Hoa hồng cho Agent",
+        "CommForMaster": "Hoa hồng cho Master",
+        "MasterCommission": "Hoa hồng cho Master",
+        "MasterGivenCommission": "Hoa hồng Master được cấp",
+        "MasterRemainCommission": "Hoa hồng Master còn",
+        "MaxGivenCommission": "Hoa hồng tối đa được cấp",
+        "MemberCommission": "Hoa hồng cho Member",
+        "SuperCommission": "Hoa hồng cho Super",
+        "SuperGivenCommission": "Hoa hồng Super được cấp",
+        "SuperRemainCommission": "Hoa hồng Super còn",
+        "TicketCommission": "Hoa hồng trên vé cược"
+    };
+    
     settingType14Resources["message"] = settingType14Resources["message"] || {};
     settingType14Resources["message"]["en-us"] = {
-        "CommissionCannotBeExceed100Percent": "The Commission cannot be exceed 100%.",
+        "CommissionCannotBeExceed100Percent": "The Commission cannot exceed 100%.",
         "CommissionMustBeLessThanOrEqualToGivenCommission": "The Commission must be less than or equal to the Given Commission.",
         "CommissionMustBePositive": "The Commission must be a positive number.",
         "Msg_1": "Invalid Commission Rate.",
@@ -33921,17 +33989,38 @@ $templateCache.put("settingtype15.htm","<div><default-setting-type-grouping></de
     
     settingType14Resources["message"] = settingType14Resources["message"] || {};
     settingType14Resources["message"]["zh-cn"] = {
-        "Msg_1": "佣金率无效"
+        "CommissionCannotBeExceed100Percent": "佣金不能超出 100%",
+        "CommissionMustBeLessThanOrEqualToGivenCommission": "佣金必须少于或等于给予的佣金",
+        "CommissionMustBePositive": "佣金必须是正数",
+        "Msg_1": "佣金率无效",
+        "UpdatedTicketCommissionSuccessfully": "成功更新注单的佣金"
     };
     
     settingType14Resources["message"] = settingType14Resources["message"] || {};
     settingType14Resources["message"]["zh-tw"] = {
-        "Msg_1": "傭金率無效"
+        "CommissionCannotBeExceed100Percent": "佣金不能超出 100%",
+        "CommissionMustBeLessThanOrEqualToGivenCommission": "佣金必須少於或等於給予的佣金",
+        "CommissionMustBePositive": "佣金必須是正數",
+        "Msg_1": "佣金率無效",
+        "UpdatedTicketCommissionSuccessfully": "成功更新注單的佣金"
     };
     
     settingType14Resources["message"] = settingType14Resources["message"] || {};
     settingType14Resources["message"]["th-th"] = {
-        "Msg_1": "อัตราค่าคอมมิชชั่นไม่ถูกต้อง"
+        "CommissionCannotBeExceed100Percent": "ค่าคอมมิชชั่นจะต้องไม่เกิน 100%",
+        "CommissionMustBeLessThanOrEqualToGivenCommission": "ค่าคอมมิชชั่นต้องน้อยกว่าหรือเท่ากับที่กำหนด",
+        "CommissionMustBePositive": "ค่าคอมมิชชั่นต้องเป็นจำนวนบวก",
+        "Msg_1": "ค่าคอมมิชชั่นโมฆะ",
+        "UpdatedTicketCommissionSuccessfully": "อัปเดตค่าคอมมิชชั่นของตั๋วเรียบร้อยแล้ว"
+    };
+    
+    settingType14Resources["message"] = settingType14Resources["message"] || {};
+    settingType14Resources["message"]["vi-vn"] = {
+        "CommissionCannotBeExceed100Percent": "Hoa hồng không được vượt 100%.",
+        "CommissionMustBeLessThanOrEqualToGivenCommission": "Hoa hồng cho cấp dưới không lớn hơn mức đã nhận.",
+        "CommissionMustBePositive": "Hoa hồng phải là số nguyên dương",
+        "Msg_1": "Hoa hồng không phù hợp",
+        "UpdatedTicketCommissionSuccessfully": "Cập nhật Hoa hồng trên vé cược thành công."
     };
 
     angular.module("customerSetting").value("settingType14Resources", settingType14Resources);
@@ -33947,6 +34036,26 @@ $templateCache.put("settingtype15.htm","<div><default-setting-type-grouping></de
     settingType15Resources["label"] = settingType15Resources["label"] || {};
     settingType15Resources["label"]["en-us"] = {
         "WinningShareCommission": "Winning Share Commission"
+    };
+    
+    settingType15Resources["label"] = settingType15Resources["label"] || {};
+    settingType15Resources["label"]["zh-cn"] = {
+        "WinningShareCommission": "获奖赢额佣金"
+    };
+    
+    settingType15Resources["label"] = settingType15Resources["label"] || {};
+    settingType15Resources["label"]["zh-tw"] = {
+        "WinningShareCommission": "獲獎贏額佣"
+    };
+    
+    settingType15Resources["label"] = settingType15Resources["label"] || {};
+    settingType15Resources["label"]["th-th"] = {
+        "WinningShareCommission": "ค่าคอมมิชชั่นที่ชนะ"
+    };
+    
+    settingType15Resources["label"] = settingType15Resources["label"] || {};
+    settingType15Resources["label"]["vi-vn"] = {
+        "WinningShareCommission": "Phần chia thắng cược"
     };
 
     angular.module("customerSetting").value("settingType15Resources", settingType15Resources);

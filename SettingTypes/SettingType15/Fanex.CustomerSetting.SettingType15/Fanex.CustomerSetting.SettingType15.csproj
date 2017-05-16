@@ -105,6 +105,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Label.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Label.th-TH.resx" />
+    <EmbeddedResource Include="Resources\Label.vi-VN.resx" />
+    <EmbeddedResource Include="Resources\Label.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Label.zh-TW.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

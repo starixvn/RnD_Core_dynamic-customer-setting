@@ -35493,26 +35493,6 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var CustomerInfoDirective = (function () {
-            function CustomerInfoDirective() {
-                this.replace = true;
-                this.scope = {
-                    info: "=",
-                    names: "="
-                };
-                this.templateUrl = "CustomerInfo/customer-info.htm";
-            }
-            return CustomerInfoDirective;
-        }());
-        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
         var SettingTypeDirective = (function () {
             function SettingTypeDirective(settingItemType) {
                 var _this = this;
@@ -35669,6 +35649,26 @@ var CustomerSetting;
             };
         }
         IE8.ModuleRegister.filter("showingName", ShowingName);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var CustomerInfoDirective = (function () {
+            function CustomerInfoDirective() {
+                this.replace = true;
+                this.scope = {
+                    info: "=",
+                    names: "="
+                };
+                this.templateUrl = "CustomerInfo/customer-info.htm";
+            }
+            return CustomerInfoDirective;
+        }());
+        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -36891,9 +36891,9 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
+angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></div><div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
-$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></div><div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
+$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/HighlightField/tooltip.htm","<div class=\"tooltip tooltip--{{highlightType}}\" data-ng-if=\"tooltipMessage\"><div class=\"tooltip__content\">{{tooltipMessage}}</div></div>");
@@ -37288,9 +37288,77 @@ $templateCache.put("settingtype15.htm","<div><div data-default-setting-type-grou
         "TicketCommission": "Ticket Commission"
     };
     
+    settingType14Resources["label"] = settingType14Resources["label"] || {};
+    settingType14Resources["label"]["zh-cn"] = {
+        "AgentCommission": "代理佣金",
+        "AgentGivenCommission": "代理可设置佣金",
+        "CommForAgent": "代理佣金",
+        "CommForMaster": "总代理佣金",
+        "MasterCommission": "总代理佣金",
+        "MasterGivenCommission": "总代理可设置佣金",
+        "MasterRemainCommission": "总代理保留佣金",
+        "MaxGivenCommission": "最高可设置佣金",
+        "MemberCommission": "会员的佣金",
+        "SuperCommission": "超级总代理佣金",
+        "SuperGivenCommission": "超级总代可设置佣金",
+        "SuperRemainCommission": "超级总代保留佣金",
+        "TicketCommission": "注单佣金"
+    };
+    
+    settingType14Resources["label"] = settingType14Resources["label"] || {};
+    settingType14Resources["label"]["zh-tw"] = {
+        "AgentCommission": "代理佣金",
+        "AgentGivenCommission": "代理可設置佣金",
+        "CommForAgent": "代理佣金",
+        "CommForMaster": "總代理佣金",
+        "MasterCommission": "總代理佣金",
+        "MasterGivenCommission": "總代理可設置佣金",
+        "MasterRemainCommission": "總代理保留佣金",
+        "MaxGivenCommission": "最高可設置佣金",
+        "MemberCommission": "會員的佣金",
+        "SuperCommission": "超級總代理佣金",
+        "SuperGivenCommission": "超級總代可設置佣金",
+        "SuperRemainCommission": "超級總代保留佣金",
+        "TicketCommission": "注單佣金"
+    };
+    
+    settingType14Resources["label"] = settingType14Resources["label"] || {};
+    settingType14Resources["label"]["th-th"] = {
+        "AgentCommission": "คอมมิชั่นของเอเย่น",
+        "AgentGivenCommission": "เอเจ่นต์สามารถตั้งค่าคอมมิชชั่น",
+        "CommForAgent": "ค่าคอมมิชชั่นจากตัวแทน",
+        "CommForMaster": "ค่าคอมมิชชั่นจากตัวแทนหลัก",
+        "MasterCommission": "มาสเตอร์คอมมิชั่น",
+        "MasterGivenCommission": "มาสเตอร์สามารถตั้งค่าคอมมิชชั่น",
+        "MasterRemainCommission": "มาสเตอร์คงไว้ค่าคอมมิชชั่น",
+        "MaxGivenCommission": "ค่าคอมมิชชั่นสูงสุดที่กำหนด",
+        "MemberCommission": "ค่าคอมมิชชั่นสำหรับสมาชิก",
+        "SuperCommission": "คอมมิชั่นของซุปเปอร์",
+        "SuperGivenCommission": "ซุปเปอร์สามารถตั้งค่าคอมมิชชั่น",
+        "SuperRemainCommission": "ซุปเปอร์คงไว้ค่าคอมมิชชั่น",
+        "TicketCommission": "ค่าคอมมิชชั่นของตั๋ว"
+    };
+    
+    settingType14Resources["label"] = settingType14Resources["label"] || {};
+    settingType14Resources["label"]["vi-vn"] = {
+        "AgentCommission": "Hoa hồng cho Agent",
+        "AgentGivenCommission": "Hoa hồng Agent được cấp",
+        "CommForAgent": "Hoa hồng cho Agent",
+        "CommForMaster": "Hoa hồng cho Master",
+        "MasterCommission": "Hoa hồng cho Master",
+        "MasterGivenCommission": "Hoa hồng Master được cấp",
+        "MasterRemainCommission": "Hoa hồng Master còn",
+        "MaxGivenCommission": "Hoa hồng tối đa được cấp",
+        "MemberCommission": "Hoa hồng cho Member",
+        "SuperCommission": "Hoa hồng cho Super",
+        "SuperGivenCommission": "Hoa hồng Super được cấp",
+        "SuperRemainCommission": "Hoa hồng Super còn",
+        "TicketCommission": "Hoa hồng trên vé cược"
+    };
+    
     settingType14Resources["message"] = settingType14Resources["message"] || {};
     settingType14Resources["message"]["en-us"] = {
-        "CommissionCannotBeExceed100Percent": "The Commission cannot be exceed 100%.",
+        "CommissionCannotBeExceed100Percent": "The Commission cannot exceed 100%.",
         "CommissionMustBeLessThanOrEqualToGivenCommission": "The Commission must be less than or equal to the Given Commission.",
         "CommissionMustBePositive": "The Commission must be a positive number.",
         "Msg_1": "Invalid Commission Rate.",
@@ -37299,17 +37367,38 @@ $templateCache.put("settingtype15.htm","<div><div data-default-setting-type-grou
     
     settingType14Resources["message"] = settingType14Resources["message"] || {};
     settingType14Resources["message"]["zh-cn"] = {
-        "Msg_1": "佣金率无效"
+        "CommissionCannotBeExceed100Percent": "佣金不能超出 100%",
+        "CommissionMustBeLessThanOrEqualToGivenCommission": "佣金必须少于或等于给予的佣金",
+        "CommissionMustBePositive": "佣金必须是正数",
+        "Msg_1": "佣金率无效",
+        "UpdatedTicketCommissionSuccessfully": "成功更新注单的佣金"
     };
     
     settingType14Resources["message"] = settingType14Resources["message"] || {};
     settingType14Resources["message"]["zh-tw"] = {
-        "Msg_1": "傭金率無效"
+        "CommissionCannotBeExceed100Percent": "佣金不能超出 100%",
+        "CommissionMustBeLessThanOrEqualToGivenCommission": "佣金必須少於或等於給予的佣金",
+        "CommissionMustBePositive": "佣金必須是正數",
+        "Msg_1": "佣金率無效",
+        "UpdatedTicketCommissionSuccessfully": "成功更新注單的佣金"
     };
     
     settingType14Resources["message"] = settingType14Resources["message"] || {};
     settingType14Resources["message"]["th-th"] = {
-        "Msg_1": "อัตราค่าคอมมิชชั่นไม่ถูกต้อง"
+        "CommissionCannotBeExceed100Percent": "ค่าคอมมิชชั่นจะต้องไม่เกิน 100%",
+        "CommissionMustBeLessThanOrEqualToGivenCommission": "ค่าคอมมิชชั่นต้องน้อยกว่าหรือเท่ากับที่กำหนด",
+        "CommissionMustBePositive": "ค่าคอมมิชชั่นต้องเป็นจำนวนบวก",
+        "Msg_1": "ค่าคอมมิชชั่นโมฆะ",
+        "UpdatedTicketCommissionSuccessfully": "อัปเดตค่าคอมมิชชั่นของตั๋วเรียบร้อยแล้ว"
+    };
+    
+    settingType14Resources["message"] = settingType14Resources["message"] || {};
+    settingType14Resources["message"]["vi-vn"] = {
+        "CommissionCannotBeExceed100Percent": "Hoa hồng không được vượt 100%.",
+        "CommissionMustBeLessThanOrEqualToGivenCommission": "Hoa hồng cho cấp dưới không lớn hơn mức đã nhận.",
+        "CommissionMustBePositive": "Hoa hồng phải là số nguyên dương",
+        "Msg_1": "Hoa hồng không phù hợp",
+        "UpdatedTicketCommissionSuccessfully": "Cập nhật Hoa hồng trên vé cược thành công."
     };
 
     angular.module("customerSetting").value("settingType14Resources", settingType14Resources);
@@ -37325,6 +37414,26 @@ $templateCache.put("settingtype15.htm","<div><div data-default-setting-type-grou
     settingType15Resources["label"] = settingType15Resources["label"] || {};
     settingType15Resources["label"]["en-us"] = {
         "WinningShareCommission": "Winning Share Commission"
+    };
+    
+    settingType15Resources["label"] = settingType15Resources["label"] || {};
+    settingType15Resources["label"]["zh-cn"] = {
+        "WinningShareCommission": "获奖赢额佣金"
+    };
+    
+    settingType15Resources["label"] = settingType15Resources["label"] || {};
+    settingType15Resources["label"]["zh-tw"] = {
+        "WinningShareCommission": "獲獎贏額佣"
+    };
+    
+    settingType15Resources["label"] = settingType15Resources["label"] || {};
+    settingType15Resources["label"]["th-th"] = {
+        "WinningShareCommission": "ค่าคอมมิชชั่นที่ชนะ"
+    };
+    
+    settingType15Resources["label"] = settingType15Resources["label"] || {};
+    settingType15Resources["label"]["vi-vn"] = {
+        "WinningShareCommission": "Phần chia thắng cược"
     };
 
     angular.module("customerSetting").value("settingType15Resources", settingType15Resources);
