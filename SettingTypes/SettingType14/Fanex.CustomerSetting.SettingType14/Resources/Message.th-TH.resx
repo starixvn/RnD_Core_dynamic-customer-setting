@@ -118,6 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Msg_1" xml:space="preserve">
-    <value>อัตราค่าคอมมิชชั่นไม่ถูกต้อง</value>
+    <value>ค่าคอมมิชชั่นโมฆะ</value>
+  </data>
+  <data name="CommissionCannotBeExceed100Percent" xml:space="preserve">
+    <value>ค่าคอมมิชชั่นจะต้องไม่เกิน 100%</value>
+  </data>
+  <data name="CommissionMustBeLessThanOrEqualToGivenCommission" xml:space="preserve">
+    <value>ค่าคอมมิชชั่นต้องน้อยกว่าหรือเท่ากับที่กำหนด</value>
+  </data>
+  <data name="CommissionMustBePositive" xml:space="preserve">
+    <value>ค่าคอมมิชชั่นต้องเป็นจำนวนบวก</value>
+  </data>
+  <data name="UpdatedTicketCommissionSuccessfully" xml:space="preserve">
+    <value>อัปเดตค่าคอมมิชชั่นของตั๋วเรียบร้อยแล้ว</value>
   </data>
 </root>

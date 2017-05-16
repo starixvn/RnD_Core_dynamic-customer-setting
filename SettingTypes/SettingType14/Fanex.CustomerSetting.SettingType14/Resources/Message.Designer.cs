@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.SettingType14.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Commission cannot be exceed 100%..
+        ///   Looks up a localized string similar to The Commission cannot exceed 100%..
         /// </summary>
         internal static string CommissionCannotBeExceed100Percent {
             get {
