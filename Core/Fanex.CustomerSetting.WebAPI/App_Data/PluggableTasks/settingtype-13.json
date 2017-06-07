@@ -39,5 +39,16 @@
         ]
       }
     ]
+  },
+  {
+    "productId": 28,
+    "tasks": [
+      {
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.SettingType13.AddSettingType13QueryWarningTask, Fanex.CustomerSetting.Tasks.SettingType13"
+        ]
+      }
+    ]
   }
+
 ]
