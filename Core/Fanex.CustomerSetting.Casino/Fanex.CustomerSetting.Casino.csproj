@@ -91,7 +91,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Criteria\GetCustomerCasinoStatusCriteria.cs" />
     <Compile Include="DataAccesses\ICustomerProductStatusDataAccess.cs" />
     <Compile Include="DataAccesses\Impl\CustomerProductStatusDataAccess.cs" />
     <Compile Include="GlobalSuppressions.cs" />

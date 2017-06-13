@@ -8,7 +8,7 @@
         public CustomerProductStatus GetCustomserProductStatus(int customerId, byte productId)
         {
             var customerProductStatus = new CustomerProductStatus { IsSynced = false, IsDownlineSynced = false, IsHidden = true };
-            using (var objectDb = new ObjectDb("Acc_CustSetting_SyncStatusSelect"))
+            using (var objectDb = new ObjectDb("Acc_CustSetting_DisableNewProductSyncStatusSelect"))
             {
                 customerProductStatus = objectDb.QueryEntity<CustomerProductStatus>(new { CustId = customerId, ProductId = productId });
             }
@@ -18,7 +18,7 @@
 
         public void UpdateCustomerProductSyncedStatus(int customerId, byte productId, int userId, int subAccountId, string ip)
         {
-            using (var objectDb = new ObjectDb("Acc_CustSetting_SyncStatusUpd"))
+            using (var objectDb = new ObjectDb("Acc_CustSetting_DisableNewProductSyncStatusUpd"))
             {
                 objectDb.ExecuteNonQuery(new
                 {
