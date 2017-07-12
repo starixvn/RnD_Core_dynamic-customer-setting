@@ -251,7 +251,6 @@
     <Content Include="Web.sit.config" />
     <Content Include="Web.uat.config" />
     <Content Include="Web.spu2.config" />
-    <Content Include="Web.dev.config" />
     <Content Include="Web.masterLocal.config" />
   </ItemGroup>
   <ItemGroup>
