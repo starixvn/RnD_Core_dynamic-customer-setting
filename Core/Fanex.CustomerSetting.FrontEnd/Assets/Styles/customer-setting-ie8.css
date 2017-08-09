@@ -615,7 +615,6 @@ th {
 .right-btn-area {
   cursor: pointer;
   float: right;
-  height: 100%;
   padding: 0 5px; }
   .right-btn-area .icon {
     vertical-align: middle; }
