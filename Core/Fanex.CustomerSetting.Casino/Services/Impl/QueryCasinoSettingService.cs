@@ -5,45 +5,37 @@
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
+    using Data.Repository;
+    using Logging;
     using Models;
 
     /// <summary>
     /// <see url="https://redmine.nexcel.vn/projects/allbet/wiki/Allbet_Credit_Changes_On_NAP#2.1"/>
     /// </summary>
-    public class QueryCasinoSettingService : IQuerySettingService
+    public class QueryCasinoSettingService : QuerySettingService
     {
-        private readonly ISettingContext _settingContext;
-        private readonly IQuerySettingService _querySettingService;
-        private readonly ICustomerProductStatusService _customerProductStatusService;
+        private readonly ICustomerProductSyncedStatusService _customerProductSyncedStatusService;
 
         public QueryCasinoSettingService(
             ISettingContext settingContext,
-            IQuerySettingService querySettingService = null,
-            ICustomerProductStatusService customerProductStatusService = null)
+            ITaskService pluggableTaskService,
+            ICustomerProductSyncedStatusService customerProductStatusService)
+            : base(settingContext, pluggableTaskService: pluggableTaskService)
         {
-            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
-            Check.Argument.IsNotNull(settingContext.Actor, nameof(settingContext.Actor));
-
-            _settingContext = settingContext;
-            _querySettingService = querySettingService ?? new QuerySettingService(_settingContext);
-            _customerProductStatusService = customerProductStatusService ?? new CustomerProductStatusService();
+            _customerProductSyncedStatusService = customerProductStatusService ?? new CustomerProductSyncedStatusService();
         }
 
         public QueryCasinoSettingService(ISettingContext settingContext) : this(settingContext, null, null)
         {
         }
 
-        protected QueryCasinoSettingService()
-        {
-        }
-
-        public ISetting GetCustomerSetting(CustomerSettingQuery query)
+        public override ISetting GetCustomerSetting(CustomerSettingQuery query)
         {
             Check.Argument.IsNotNull(query, nameof(query));
 
-            var setting = _querySettingService.GetCustomerSetting(query);
-            var customerCasinoStatus = _customerProductStatusService.GetCustomerStatus(query.CustomerId, query.ProductId);
-            var casinoSetting = new CasinoSetting(setting, customerCasinoStatus);
+            ISetting setting = base.GetCustomerSetting(query);
+            bool syncedStatus = _customerProductSyncedStatusService.CheckCustomerProductSyncedStatus(query.CustomerId, query.ProductId);
+            var casinoSetting = new CasinoSetting(setting, syncedStatus);
 
             return casinoSetting;
         }

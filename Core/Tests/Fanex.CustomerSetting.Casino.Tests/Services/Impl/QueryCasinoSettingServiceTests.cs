@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using Casino.Models;
     using Casino.Services;
-    using Casino.Services.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
@@ -16,10 +15,7 @@
     public class QueryCasinoSettingServiceTests
     {
         private IQuerySettingService _queryCasinoSettingService;
-        private IQuerySettingService _querySettingService;
-        private ISettingContext _settingContext;
-        private ICustomerProductStatusService _customerProductStatusService;
-        private ISetting _setting;
+        private ICustomerProductSyncedStatusService _customerProductSyncedStatusService;
 
         private CustomerSettingQuery CreateCustomerSettingQuery(byte levelValue)
         {
@@ -33,40 +29,30 @@
         [SetUp]
         public void Setup()
         {
-            _settingContext = new SettingContextStub();
-            _setting = Substitute.For<ISetting>();
+            var settingContext = new SettingContextStub();
 
-            _setting.CustomerId = 1;
-            _setting.CustomerLevel = Level.Member;
-            _setting.ProductId = 1;
-            _setting.SettingTypes = new List<SettingType>();
-            _customerProductStatusService = Substitute.For<ICustomerProductStatusService>();
-            _querySettingService = Substitute.For<IQuerySettingService>();
-
-            _querySettingService.GetCustomerSetting(Arg.Any<CustomerSettingQuery>()).ReturnsForAnyArgs(_setting);
-
-            _queryCasinoSettingService = new QueryCasinoSettingService(
-                _settingContext,
-                _querySettingService,
-                _customerProductStatusService);
+            _customerProductSyncedStatusService = Substitute.For<ICustomerProductSyncedStatusService>();
+            _queryCasinoSettingService = new QueryCasinoSettingServiceStub(settingContext, _customerProductSyncedStatusService);
         }
 
         [TestCase(4)]
         [TestCase(3)]
         [TestCase(2)]
         [TestCase(1)]
-        public void GetCustomerSetting_CustomerSyncedStatusIsFalse_SettingNormalModeIsFalse(byte levelValue)
+        public void GetCustomerSetting_CustomerIsUnsynced_SettingNormalModeIsFalse(byte levelValue)
         {
-            //// Arrange
+            // Arrange.
             var query = CreateCustomerSettingQuery(levelValue);
-            var customerCasinoStatus = new CustomerProductStatus { IsHidden = false, IsSynced = false };
-            _customerProductStatusService.GetCustomerStatus(query.CustomerId, query.ProductId)
-                          .ReturnsForAnyArgs(customerCasinoStatus);
+            bool syncedStatus = false;
 
-            //// Act
+            _customerProductSyncedStatusService
+                .CheckCustomerProductSyncedStatus(query.CustomerId, query.ProductId)
+                .ReturnsForAnyArgs(syncedStatus);
+
+            // Act.
             var setting = _queryCasinoSettingService.GetCustomerSetting(query) as CasinoSetting;
 
-            //// Assert
+            // Assert.
             Assert.AreEqual(false, setting.IsNormalMode);
         }
 
@@ -74,49 +60,20 @@
         [TestCase(3)]
         [TestCase(2)]
         [TestCase(1)]
-        public void GetCustomerSetting_HasAtLeastOneDownlineIsUnsynced_SettingNormalModeIsFalse(byte levelValue)
+        public void GetCustomerSetting_CustomerIsSynced_SettingNormalModeIsTrue(byte levelValue)
         {
-            //// Arrange
+            // Arrange.
             var query = CreateCustomerSettingQuery(levelValue);
-            var customerCasinoStatus = new CustomerProductStatus
-            {
-                IsHidden = false,
-                IsSynced = true,
-                IsDownlineSynced = false
-            };
+            bool syncedStatus = true;
 
-            _customerProductStatusService.GetCustomerStatus(query.CustomerId, query.ProductId)
-                           .ReturnsForAnyArgs(customerCasinoStatus);
+            _customerProductSyncedStatusService
+                .CheckCustomerProductSyncedStatus(query.CustomerId, query.ProductId)
+                .ReturnsForAnyArgs(syncedStatus);
 
-            //// Act
+            // Act.
             var setting = _queryCasinoSettingService.GetCustomerSetting(query) as CasinoSetting;
 
-            //// Assert
-            Assert.AreEqual(false, setting.IsNormalMode);
-        }
-
-        [TestCase(4)]
-        [TestCase(3)]
-        [TestCase(2)]
-        [TestCase(1)]
-        public void GetCustomerSetting_CustomerAndAllDownlinesAreSynced_SettingNormalModeIsTrue(byte levelValue)
-        {
-            //// Arrange
-            var query = CreateCustomerSettingQuery(levelValue);
-            var customerCasinoStatus = new CustomerProductStatus
-            {
-                IsHidden = false,
-                IsSynced = true,
-                IsDownlineSynced = true
-            };
-
-            _customerProductStatusService.GetCustomerStatus(query.CustomerId, query.ProductId)
-                           .ReturnsForAnyArgs(customerCasinoStatus);
-
-            //// Act
-            var setting = _queryCasinoSettingService.GetCustomerSetting(query) as CasinoSetting;
-
-            //// Assert
+            // Assert.
             Assert.AreEqual(true, setting.IsNormalMode);
         }
     }

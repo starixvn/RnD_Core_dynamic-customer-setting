@@ -5,12 +5,9 @@
 
     public class CasinoSetting : Setting
     {
-        private CustomerProductStatus customerProductStatus;
-
-        public CasinoSetting(ISetting setting, CustomerProductStatus customerProductStatus)
+        public CasinoSetting(ISetting setting, bool customerProductSyncedStatus)
         {
             Check.Argument.IsNotNull(setting, "setting");
-            Check.Argument.IsNotNull(customerProductStatus, "customerProductStatus");
 
             CustomerId = setting.CustomerId;
             CustomerInfo = setting.CustomerInfo;
@@ -19,16 +16,9 @@
             ProductName = setting.ProductName;
             SettingTypes = setting.SettingTypes;
             WarningMessage = setting.WarningMessage;
-
-            this.customerProductStatus = customerProductStatus;
+            IsNormalMode = customerProductSyncedStatus;
         }
 
-        public bool IsNormalMode
-        {
-            get
-            {
-                return customerProductStatus.IsSynced && customerProductStatus.IsDownlineSynced;
-            }
-        }
+        public bool IsNormalMode { get; }
     }
 }

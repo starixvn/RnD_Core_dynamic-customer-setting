@@ -3,26 +3,25 @@
     using Common.Helper;
     using DataAccesses;
     using DataAccesses.Impl;
-    using Models;
 
-    public class CustomerProductStatusService : ICustomerProductStatusService
+    public class CustomerProductSyncedStatusService : ICustomerProductSyncedStatusService
     {
-        private readonly ICustomerProductStatusDataAccess dataAccess;
+        private readonly ICustomerProducSyncedtStatusDataAccess dataAccess;
 
-        public CustomerProductStatusService(ICustomerProductStatusDataAccess dataAccess = null)
+        public CustomerProductSyncedStatusService(ICustomerProducSyncedtStatusDataAccess dataAccess = null)
         {
-            this.dataAccess = dataAccess ?? new CustomerProductStatusDataAccess();
+            this.dataAccess = dataAccess ?? new CustomerProductSyncedStatusDataAccess();
         }
 
-        public CustomerProductStatus GetCustomerStatus(int customerId, byte productId)
+        public bool CheckCustomerProductSyncedStatus(int customerId, byte productId)
         {
             Check.Argument.IsNotNegativeOrZero(customerId, nameof(customerId));
             Check.Argument.IsNotNegativeOrZero(productId, nameof(productId));
 
-            return dataAccess.GetCustomserProductStatus(customerId, productId);
+            return dataAccess.CheckCustomerProductSyncedStatus(customerId, productId);
         }
 
-        public void UpdateCustomerStatus(int customerId, byte productId, int userId, int subAccountId, string ip)
+        public void UpdateCustomerProductSyncedStatus(int customerId, byte productId, int userId, int subAccountId, string ip)
         {
             Check.Argument.IsNotNegativeOrZero(customerId, nameof(customerId));
             Check.Argument.IsNotNegativeOrZero(productId, nameof(productId));

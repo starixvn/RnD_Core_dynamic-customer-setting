@@ -26,35 +26,34 @@
         [Test]
         public void CasinoSettingCtor_SettingIsNull_ThrowArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new CasinoSetting(null, Arg.Any<CustomerProductStatus>()));
+            Assert.Throws<ArgumentNullException>(() => new CasinoSetting(null, Arg.Any<bool>()));
         }
 
         [Test]
-        public void CasinoSetting_CustomerProductStatusIsSyncedAndDonlineIsSynced_IsNormalModeMustBeTrue()
+        public void CasinoSetting_CustomerIsSynced_IsNormalModeMustBeTrue()
         {
-            //// Arrange
-            var customerProductStatus = new CustomerProductStatus { IsHidden = false, IsSynced = true, IsDownlineSynced = true };
-            var casinotSetting = new CasinoSetting(setting, customerProductStatus);
+            // Arrange.
+            bool syncedStatus = true;
+            var casinoSetting = new CasinoSetting(setting, syncedStatus);
 
             //// Act
-            var actual = casinotSetting.IsNormalMode;
+            var actual = casinoSetting.IsNormalMode;
 
-            //// Assert
+            // Assert.
             Assert.IsTrue(actual);
         }
 
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        public void CasinoSetting_CustomerProductStatusOrDonlineIsUnsynced_IsNormalModeMustBeFalsed(bool isSynced, bool isDownlineSynced)
+        [Test]
+        public void CasinoSetting_CustomerProductStatuIsUnsynced_IsNormalModeMustBeFalse()
         {
-            //// Arrange
-            var customerProductStatus = new CustomerProductStatus { IsHidden = false, IsSynced = isSynced, IsDownlineSynced = isDownlineSynced };
-            var casinotSetting = new CasinoSetting(this.setting, customerProductStatus);
+            // Arrange.
+            bool syncedStatus = false;
+            var casinotSetting = new CasinoSetting(this.setting, syncedStatus);
 
-            //// Act
+            // Act.
             var actual = casinotSetting.IsNormalMode;
 
-            //// Assert
+            // Assert.
             Assert.IsFalse(actual);
         }
     }

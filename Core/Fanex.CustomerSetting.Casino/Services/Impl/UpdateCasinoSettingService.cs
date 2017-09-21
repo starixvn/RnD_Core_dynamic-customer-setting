@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Services.Impl
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common.Helper;
@@ -13,102 +12,75 @@
     using Exceptions;
     using Logging;
 
-    public class UpdateCasinoSettingService : IUpdateCasinoSettingService
+    public class UpdateCasinoSettingService : UpdateSettingService, IUpdateCasinoSettingService
     {
         private const byte StatusSettingTypeValue = 13;
-        private readonly ISettingContext _settingContext;
-        private readonly IUpdateSettingService _updateSettingService;
-        private readonly IValidationService _validationService;
-        private readonly ICustomerProductStatusService _customerProductStatusService;
-        private readonly ITaskService _taskService;
-        private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
-        private readonly ILogger _logger;
+        private readonly ICustomerProductSyncedStatusService _customerProductSyncedStatusService;
 
-        public UpdateCasinoSettingService()
+        public UpdateCasinoSettingService(ISettingContext settingContext, ICustomerProductSyncedStatusService customerProductStatusService)
+            : base(settingContext)
         {
+            _customerProductSyncedStatusService = customerProductStatusService;
         }
 
         public UpdateCasinoSettingService(ISettingContext settingContext)
+            : this(settingContext, new CustomerProductSyncedStatusService())
         {
-            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
-            Check.Argument.IsNotNull(settingContext.Actor, nameof(settingContext.Actor));
-
-            _settingContext = settingContext;
-            _updateSettingService = new UpdateSettingService(settingContext);
-            _validationService = new ValidationService(settingContext);
-            _customerProductStatusService = new CustomerProductStatusService();
-            _taskService = new TaskService(_settingContext);
-            _settingTypeServiceFactory = new SettingTypeServiceFactory();
-            _logger = Logger.Log;
         }
 
-        public UpdateCasinoSettingService(
+        internal UpdateCasinoSettingService(
             ISettingContext settingContext,
-            IUpdateSettingService updateSettingService,
             IValidationService validationService,
-            ICustomerProductStatusService customerProductStatusService,
-            ITaskService taskService,
+            ITaskService pluggableTaskService,
+            ILogger logger,
             ISettingTypeServiceFactory settingTypeServiceFactory,
-            ILogger logger)
+            ICustomerProductSyncedStatusService customerProductStatusService)
+            : base(settingContext, validationService, pluggableTaskService, logger, settingTypeServiceFactory)
         {
-            _settingContext = settingContext;
-            _updateSettingService = updateSettingService;
-            _validationService = validationService;
-            _customerProductStatusService = customerProductStatusService;
-            _taskService = taskService;
-            _settingTypeServiceFactory = settingTypeServiceFactory;
-            _logger = logger;
+            _customerProductSyncedStatusService = customerProductStatusService;
         }
 
-        public IResult Update(UpdateCustomerSettingCommand command)
+        public override IResult Update(UpdateCustomerSettingCommand command)
+        {
+            Check.Argument.IsNotNull(command, nameof(command));
+            Check.Argument.IsNotNull(command.Setting, nameof(command.Setting));
+
+            bool syncedStatus = _customerProductSyncedStatusService.CheckCustomerProductSyncedStatus(
+                command.Setting.CustomerId,
+                command.Setting.ProductId);
+
+            if (syncedStatus)
+            {
+                return base.Update(command);
+            }
+
+            return UpdateUnsyncedCustomerSetting(command);
+        }
+
+        public override IResult Update(MultipleUpdateCustomerSettingCommand command)
         {
             Check.Argument.IsNotNull(command, nameof(command));
             Check.Argument.IsNotNull(command.Setting, nameof(command.Setting));
             Check.Argument.IsNotNull(command.Setting.SettingTypes, nameof(command.Setting.SettingTypes));
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
 
-            var validationResult = Validate(command);
+            var subResults = new List<IResult>();
 
-            if (validationResult.IsNotOk)
-            {
-                return validationResult;
-            }
-
-            _taskService.Run(command.Setting.ProductId, command);
-
-            var customerCasinoStatus = _customerProductStatusService.GetCustomerStatus(command.Setting.CustomerId, command.Setting.ProductId);
-
-            if (customerCasinoStatus.IsSynced && customerCasinoStatus.IsDownlineSynced)
-            {
-                return _updateSettingService.Update(command);
-            }
-
-            IResult result = UpdateUnsyncedCustomerSetting(command);
-
-            // Run plugged tasks after updating settings of customer.
-            _taskService.Run(command.Setting.ProductId, command, result);
-
-            return result;
-        }
-
-        public IResult Update(MultipleUpdateCustomerSettingCommand command)
-        {
-            Check.Argument.IsNotNull(command, nameof(command));
-            Check.Argument.IsNotNull(command.Setting, nameof(command.Setting));
-            Check.Argument.IsNotNull(command.Setting.SettingTypes, nameof(command.Setting.SettingTypes));
-            Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
-
-            var results = new List<IResult>();
+            TaskService.Run(command.Setting.ProductId, command);
 
             foreach (var customerId in command.CustomerIds)
             {
                 var updateCustomerSettingCommand = command.GetUpdateCustomerSettingCommand(customerId);
-                var result = Update(updateCustomerSettingCommand);
+                var updateResult = Update(updateCustomerSettingCommand);
 
-                results.Add(result);
+                subResults.Add(updateResult);
             }
 
-            return new UpdateSettingResult(results);
+            var result = new UpdateSettingResult(subResults);
+
+            TaskService.Run(command.Setting.ProductId, command, result);
+
+            return result;
         }
 
         public IResult UpdateUnsyncedCustomerSetting(UpdateCustomerSettingCommand command)
@@ -119,23 +91,25 @@
 
             var settingTypeResults = new List<SettingResult>();
 
+            TaskService.Run(command.Setting.ProductId, command);
+
             command.Setting.SettingTypes
                 .Where(settingType => settingType.Id != StatusSettingTypeValue)
                 .ToList()
                 .ForEach(settingType =>
                 {
                     var updateSettingTypeResult = UpdateCustomerSettingType(
-                               command.Setting.CustomerId,
-                               command.Setting.CustomerInfo,
-                               command.Setting.CustomerLevel,
-                               settingType,
-                               command.Setting.ProductId,
-                               command.UplineLevel);
+                        command.Setting.CustomerId,
+                        command.Setting.CustomerInfo,
+                        command.Setting.CustomerLevel,
+                        settingType,
+                        command.Setting.ProductId,
+                        command.UplineLevel);
 
                     settingTypeResults.Add(updateSettingTypeResult);
                 });
 
-            if (!settingTypeResults.Exists(result => result.IsNotOk) && _settingContext.System != (byte)SystemType.ExternalNapBetSetting)
+            if (settingTypeResults.All(settingTypeResult => settingTypeResult.IsOk) && SettingContext.System != (byte)SystemType.ExternalNapBetSetting)
             {
                 var productStatusResult = UpdateProductStatus(command);
 
@@ -145,7 +119,11 @@
                 }
             }
 
-            return new UpdateSettingResult(settingTypeResults);
+            var result = new UpdateSettingResult(settingTypeResults);
+
+            TaskService.Run(command.Setting.ProductId, command, result);
+
+            return result;
         }
 
         private SettingResult UpdateProductStatus(UpdateCustomerSettingCommand command)
@@ -165,12 +143,12 @@
 
                 if (productStatusResult.IsOk)
                 {
-                    _customerProductStatusService.UpdateCustomerStatus(
+                    _customerProductSyncedStatusService.UpdateCustomerProductSyncedStatus(
                         command.Setting.CustomerId,
                         command.Setting.ProductId,
-                        _settingContext.Actor.Id,
-                        _settingContext.Actor.SubAccountId,
-                        _settingContext.IP);
+                        SettingContext.Actor.Id,
+                        SettingContext.Actor.SubAccountId,
+                        SettingContext.IP);
                 }
             }
             else if (command.Setting.CustomerLevel.IsNotMemberLevel() || command.UplineLevel?.IsAgentLevel() == true)
@@ -179,75 +157,6 @@
             }
 
             return productStatusResult;
-        }
-
-        private SettingResult UpdateCustomerSettingType(
-           int customerId,
-           CustomerInfo customerInfo,
-           Level customerLevel,
-           SettingType settingType,
-           byte productId,
-           Level uplineLevel)
-        {
-            try
-            {
-                CheckSettingTypeIsValid(settingType);
-                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
-
-                var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
-                var settingResult = settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
-
-                settingResult.CustomerName = customerInfo != null ? customerInfo.UserName : string.Empty;
-                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
-
-                return settingResult;
-            }
-            catch (CustomerSettingException customerSettingException)
-            {
-                WriteLog(customerId, customerLevel, uplineLevel, productId, settingType, customerSettingException);
-
-                return new SettingResult(Result.AccessDenied.Code, customerSettingException.OriginalMessage, 0, customerId, settingType.Id, settingType.Name);
-            }
-            catch (Exception ex)
-            {
-                WriteLog(customerId, customerLevel, uplineLevel, productId, settingType, new CustomerSettingException(ex.Message, ex));
-
-                return new SettingResult(
-                    Result.SystemError,
-                    customerId,
-                    settingType.Id,
-                    settingType.Name);
-            }
-        }
-
-        private IResult Validate(UpdateCustomerSettingCommand command)
-        {
-            return _validationService.ValidateUpdateSettingAction(command);
-        }
-
-        private void CheckSettingTypeIsValid(SettingType settingType)
-        {
-            var result = settingType.Validate();
-
-            if (result.IsNotOk)
-            {
-                throw new CustomerSettingException(result.Message);
-            }
-        }
-
-        private void WriteLog(
-           int customerId,
-           Level customerLevel,
-           Level uplineLevel,
-           byte productId,
-           SettingType customerSettingType,
-           CustomerSettingException ex)
-        {
-            ex.SetSettingContextInfo("Update Setting Casino", _settingContext);
-            ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
-            ex.SetProductInfo(productId, customerSettingType);
-
-            _logger.Error(ex.Message, ex);
         }
     }
 }

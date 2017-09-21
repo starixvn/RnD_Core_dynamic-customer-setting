@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CasinoSettingTest.cs" />
+    <Compile Include="Models\QueryCasinoSettingServiceStub.cs" />
     <Compile Include="StubHelper.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
     <Compile Include="Models\SettingItemStub.cs" />

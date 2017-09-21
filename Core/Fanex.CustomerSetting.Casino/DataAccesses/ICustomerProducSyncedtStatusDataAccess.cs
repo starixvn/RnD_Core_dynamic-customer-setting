@@ -2,9 +2,9 @@
 {
     using Models;
 
-    public interface ICustomerProductStatusDataAccess
+    public interface ICustomerProducSyncedtStatusDataAccess
     {
-        CustomerProductStatus GetCustomserProductStatus(int customerId, byte productId);
+        bool CheckCustomerProductSyncedStatus(int customerId, byte productId);
 
         void UpdateCustomerProductSyncedStatus(int customerId, byte productId, int userId, int subAccountId, string ip);
     }
