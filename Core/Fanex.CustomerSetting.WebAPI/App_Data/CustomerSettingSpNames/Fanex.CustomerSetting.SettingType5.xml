@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions>
-    <Function Name="ChargeCommission">
+<Functions SiteId="68" SiteName="DCS">
+    <Function Name="ChargeCommission" ProductName="Sportsbook 2">
         <Setting Key="CustSetting_SuperChargeCommissionSelect" SpName="Acc_CustSetting_DiscountSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />

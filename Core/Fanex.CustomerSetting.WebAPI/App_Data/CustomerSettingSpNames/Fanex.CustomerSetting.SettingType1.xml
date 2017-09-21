@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions>
+<Functions SiteId="68" SiteName="DCS">
   <Function Name="Position_Taking">
     <Setting Key="CustSetting_SuperPTSelect" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />

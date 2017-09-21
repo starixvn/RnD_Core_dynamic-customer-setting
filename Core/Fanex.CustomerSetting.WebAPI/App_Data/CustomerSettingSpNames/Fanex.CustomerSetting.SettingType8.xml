@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions>
+<Functions SiteId="68" SiteName="DCS">
     <Function Name="StakeLevelGroup">
         <Setting Key="CustSetting_StakeLevelGroupSelect" SpName="Acc_CustSetting_StakeLevelGroupSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />

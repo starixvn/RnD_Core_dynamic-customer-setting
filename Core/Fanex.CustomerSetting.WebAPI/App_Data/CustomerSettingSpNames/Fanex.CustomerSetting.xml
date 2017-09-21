@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions>
+<Functions SiteId="68" SiteName="DCS">
   <Function Name="Customer_Setting_Core">
     <Setting Key="CustSetting_SameLineCheck" SpName="Acc_CustSetting_SameLineCheck" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="CustSetting_MultiCustPermissionValidate" SpName="Acc_CustSetting_MultiCustPermissionValidate" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />

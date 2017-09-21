@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions>
-    <Function Name="GameDisableStatus">
+<Functions SiteId="68" SiteName="DCS">
+    <Function Name="TicketCommission">
         <Setting Key="Acc_CustSetting_TicketCommissionSelect" SpName="Acc_CustSetting_TicketCommissionSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
