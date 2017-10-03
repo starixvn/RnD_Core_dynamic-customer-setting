@@ -74,6 +74,8 @@
     <Content Include="CustomerSetting.IE8\Scripts\product-23.min.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-24.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-24.min.js" />
+    <Content Include="CustomerSetting.IE8\Scripts\product-30.js" />
+    <Content Include="CustomerSetting.IE8\Scripts\product-30.min.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-5.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-5.min.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-28.js" />
@@ -108,6 +110,8 @@
     <Content Include="CustomerSetting\Scripts\product-23.min.js" />
     <Content Include="CustomerSetting\Scripts\product-24.js" />
     <Content Include="CustomerSetting\Scripts\product-24.min.js" />
+    <Content Include="CustomerSetting\Scripts\product-30.js" />
+    <Content Include="CustomerSetting\Scripts\product-30.min.js" />
     <Content Include="CustomerSetting\Scripts\product-5.js" />
     <Content Include="CustomerSetting\Scripts\product-5.min.js" />
     <Content Include="CustomerSetting\Scripts\product-28.js" />

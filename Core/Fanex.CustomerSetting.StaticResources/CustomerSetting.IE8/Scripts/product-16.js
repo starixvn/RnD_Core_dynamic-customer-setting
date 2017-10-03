@@ -35686,9 +35686,9 @@ var CustomerSetting;
                 this.templateUrl = "SettingResult/setting-result.htm";
                 this.controller = ["$rootScope", "$scope", "$window", function ($rootScope, $scope, $window) {
                         $scope.$watch("result", function (result) {
+                            $rootScope.$emit("page-height-changed");
                             if (result) {
                                 $window.scrollTo(0, 0);
-                                $rootScope.$emit("page-height-changed");
                             }
                         });
                     }];
@@ -35754,6 +35754,177 @@ var CustomerSetting;
             return SettingTypeDirectiveLoader;
         }());
         IE8.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var FieldHighlightingDirective = (function () {
+            function FieldHighlightingDirective($window, $compile, $timeout, $templateCache, $rootScope) {
+                var _this = this;
+                this.restrict = "A";
+                this.priority = 100;
+                this.scope = {
+                    tooltipMessage: "@",
+                    tooltipType: "@",
+                    tooltipPositionModel: "@",
+                    tooltipDisplayingSeconds: "@",
+                    displayingTimeoutCallback: "&",
+                    fieldName: "@",
+                    highlightState: "="
+                };
+                this.link = function (scope, element) {
+                    var template = _this.$templateCache.get("DefaultSettingBlock/HighlightField/tooltip.htm");
+                    var tooltip = angular.element(template);
+                    var debounceResize = _.debounce(function () {
+                        if (scope.tooltipMessage) {
+                            _this.calculateTooltipPosition(element, scope.tooltipPositionModel);
+                        }
+                    }, 100);
+                    _this.$compile(tooltip)(scope);
+                    element.parent().prepend(tooltip);
+                    scope.$watch("tooltipMessage", function () {
+                        var fieldName = scope.fieldName;
+                        var highlightState = scope.highlightState;
+                        scope.highlightType = null;
+                        if (scope.tooltipMessage) {
+                            _this.calculateTooltipPosition(element, scope.tooltipPositionModel);
+                            scope.highlightType = scope.tooltipType || "error";
+                            if (scope.tooltipDisplayingSeconds) {
+                                _this.$timeout(function () {
+                                    scope.displayingTimeoutCallback();
+                                }, +scope.tooltipDisplayingSeconds * 1000);
+                            }
+                        }
+                        if (highlightState && fieldName) {
+                            highlightState[fieldName] = IE8.NotificationType[scope.highlightType || "none"];
+                        }
+                    });
+                    if (scope.highlightState) {
+                        scope.$watch("highlightState", function (highlightState) {
+                            var fieldHighlightState = (highlightState || {})[scope.fieldName];
+                            var style = fieldHighlightState && fieldHighlightState !== IE8.NotificationType.none
+                                ? IE8.NotificationType[fieldHighlightState]
+                                : null;
+                            _this.resetElementBorder(element);
+                            if (style) {
+                                element.addClass("setting-field--" + style);
+                            }
+                        }, true);
+                    }
+                    element.on("change", function () {
+                        if (!scope.tooltipMessage && scope.highlightState) {
+                            var fieldHighlightState = scope.highlightState[scope.fieldName];
+                            if (fieldHighlightState && fieldHighlightState !== IE8.NotificationType.none) {
+                                scope.highlightState[scope.fieldName] = IE8.NotificationType.none;
+                            }
+                        }
+                        scope.$apply();
+                    });
+                    angular.element(_this.$window).on("resize", debounceResize);
+                    _this.$rootScope.$on("page-height-changed", function () {
+                        if (scope.tooltipMessage) {
+                            _this.calculateTooltipPosition(element, scope.tooltipPositionModel);
+                        }
+                    });
+                };
+                this.$window = $window;
+                this.$compile = $compile;
+                this.$timeout = $timeout;
+                this.$templateCache = $templateCache;
+                this.$rootScope = $rootScope;
+            }
+            FieldHighlightingDirective.prototype.calculateTooltipPosition = function (target, positionModel) {
+                var _this = this;
+                this.$timeout(function () {
+                    var tooltip = angular.element(angular.element(target[0]).prev());
+                    if (!tooltip || tooltip.length === 0) {
+                        return;
+                    }
+                    tooltip.removeClass("tooltip--right tooltip--left");
+                    tooltip.css({ "left": "0px", "visibility": "hidden" });
+                    var elementRect = target[0].getBoundingClientRect();
+                    var tooltipRect = tooltip[0].getBoundingClientRect();
+                    var elementWidth = elementRect.right - elementRect.left;
+                    var elementHeight = elementRect.bottom - elementRect.top;
+                    var tooltipWidth = tooltipRect.right - tooltipRect.left;
+                    var tooltipHeight = tooltipRect.bottom - tooltipRect.top;
+                    var windowWidth = _this.$window.document.body.clientWidth;
+                    var topOffset = 0;
+                    var leftOffset = 0;
+                    var arrowWidth = 5;
+                    if ((+positionModel || IE8.PositionModel.relative) === IE8.PositionModel.relative) {
+                        var bodyRect = _this.$window.document.body.getBoundingClientRect();
+                        topOffset = bodyRect.top;
+                        leftOffset = bodyRect.left;
+                    }
+                    var top = Math.max(0, elementRect.top - topOffset - tooltipHeight + arrowWidth);
+                    var left = elementRect.left + (elementWidth - tooltipWidth) / 2 - leftOffset;
+                    if (windowWidth < left + tooltipWidth) {
+                        top = elementRect.top - topOffset - (tooltipHeight - elementHeight) / 2 + arrowWidth;
+                        left = elementRect.left - tooltipWidth - arrowWidth;
+                        tooltip.addClass("tooltip--right");
+                    }
+                    if (left < 0) {
+                        top = elementRect.top - topOffset - (tooltipHeight - elementHeight) / 2 + arrowWidth;
+                        left = elementRect.left + elementWidth;
+                        tooltip.addClass("tooltip--left");
+                    }
+                    tooltip.css({
+                        "top": top + "px",
+                        "left": left + "px",
+                        "visibility": "visible"
+                    });
+                });
+            };
+            FieldHighlightingDirective.prototype.resetElementBorder = function (element) {
+                if (element.hasClass("setting-field--error")) {
+                    element.removeClass("setting-field--error");
+                }
+                if (element.hasClass("setting-field--warning")) {
+                    element.removeClass("setting-field--success");
+                }
+                if (element.hasClass("setting-field--success")) {
+                    element.removeClass("setting-field--success");
+                }
+            };
+            FieldHighlightingDirective.$inject = ["$window", "$compile", "$timeout", "$templateCache", "$rootScope"];
+            return FieldHighlightingDirective;
+        }());
+        IE8.ModuleRegister.directive("fieldHighlighting", FieldHighlightingDirective);
+        function TooltipMessage($injector, $filter) {
+            return function (result, resourceServiceName, fieldName, customFilterName) {
+                if (customFilterName === void 0) { customFilterName = null; }
+                var message = "";
+                if (result
+                    && result.message
+                    && (!fieldName || (fieldName && fieldName === result.fieldName))) {
+                    var resourceService = $injector.get(resourceServiceName);
+                    var params = _.map((result.msgParams || []), function (param) {
+                        if (typeof param === "number") {
+                            var value = $filter("number")(param);
+                            if (customFilterName) {
+                                value = $filter(customFilterName)(value);
+                            }
+                            return value;
+                        }
+                        else {
+                            return param;
+                        }
+                    });
+                    if (resourceService) {
+                        params.unshift(result.message);
+                        message = resourceService.getFormattedMessage.apply(resourceService, params);
+                    }
+                }
+                return message;
+            };
+        }
+        TooltipMessage.$inject = ["$injector", "$filter"];
+        IE8.ModuleRegister.filter("tooltipMessage", TooltipMessage);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -35881,169 +36052,86 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var FieldHighlightingDirective = (function () {
-            function FieldHighlightingDirective($window, $compile, $timeout, $templateCache, $rootScope) {
+        var ToggleSettingBlockDirective = (function () {
+            function ToggleSettingBlockDirective($rootScope, $timeout) {
                 var _this = this;
-                this.restrict = "A";
-                this.priority = 100;
                 this.scope = {
-                    tooltipMessage: "@",
-                    tooltipType: "@",
-                    tooltipPositionModel: "@",
-                    tooltipDisplayingSeconds: "@",
-                    displayingTimeoutCallback: "&",
-                    fieldName: "@",
-                    highlightState: "="
+                    blockIndex: "=",
+                    sharedStates: "=",
+                    settingData: "=",
+                    settingTypeId: "="
                 };
+                this.initializing = true;
                 this.link = function (scope, element) {
-                    var template = _this.$templateCache.get("DefaultSettingBlock/HighlightField/tooltip.htm");
-                    var tooltip = angular.element(template);
-                    var debounceResize = _.debounce(function () {
-                        if (scope.tooltipMessage) {
-                            _this.calculateTooltipPosition(element, scope.tooltipPositionModel);
-                        }
-                    }, 100);
-                    _this.$compile(tooltip)(scope);
-                    element.parent().prepend(tooltip);
-                    scope.$watch("tooltipMessage", function () {
-                        var fieldName = scope.fieldName;
-                        var highlightState = scope.highlightState;
-                        scope.highlightType = null;
-                        if (scope.tooltipMessage) {
-                            _this.calculateTooltipPosition(element, scope.tooltipPositionModel);
-                            scope.highlightType = scope.tooltipType || "error";
-                            if (scope.tooltipDisplayingSeconds) {
-                                _this.$timeout(function () {
-                                    scope.displayingTimeoutCallback();
-                                }, +scope.tooltipDisplayingSeconds * 1000);
-                            }
-                        }
-                        if (highlightState && fieldName) {
-                            highlightState[fieldName] = IE8.NotificationType[scope.highlightType || "none"];
+                    var container = angular.element(element.parent());
+                    container.addClass("togglable-bar");
+                    container.on("click", function (event) {
+                        var target = angular.element(event.target);
+                        if (target.hasClass("togglable-bar")) {
+                            _this.toggle(scope);
+                            return false;
                         }
                     });
-                    if (scope.highlightState) {
-                        scope.$watch("highlightState", function (highlightState) {
-                            var fieldHighlightState = (highlightState || {})[scope.fieldName];
-                            var style = fieldHighlightState && fieldHighlightState !== IE8.NotificationType.none
-                                ? IE8.NotificationType[fieldHighlightState]
-                                : null;
-                            _this.resetElementBorder(element);
-                            if (style) {
-                                element.addClass("setting-field--" + style);
+                    element.addClass("ng-hide");
+                    if (!_this.isToggleAllDirective(scope)) {
+                        scope.$watch("settingData", function () {
+                            if (_this.initializing) {
+                                _this.$timeout(function () { return _this.initializing = false; });
+                            }
+                            else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
+                                scope.sharedStates.expandBlock(scope.blockIndex);
+                                _this.triggerPageHeightChangedEvent();
                             }
                         }, true);
-                    }
-                    element.on("change", function () {
-                        if (!scope.tooltipMessage && scope.highlightState) {
-                            var fieldHighlightState = scope.highlightState[scope.fieldName];
-                            if (fieldHighlightState && fieldHighlightState !== IE8.NotificationType.none) {
-                                scope.highlightState[scope.fieldName] = IE8.NotificationType.none;
+                        _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
+                            if ((!settingTypeId || settingTypeId === scope.settingTypeId)
+                                && scope.settingData
+                                && _.some(scope.settingData, function (item) { return !item.validationState.isSuccessful(); })
+                                && !scope.sharedStates.isExpanded(scope.blockIndex)) {
+                                scope.sharedStates.expandBlock(scope.blockIndex);
+                                _this.triggerPageHeightChangedEvent();
                             }
-                        }
-                        scope.$apply();
-                    });
-                    angular.element(_this.$window).on("resize", debounceResize);
-                    _this.$rootScope.$on("page-height-changed", function () {
-                        if (scope.tooltipMessage) {
-                            _this.calculateTooltipPosition(element, scope.tooltipPositionModel);
-                        }
-                    });
+                        });
+                        _this.$rootScope.$on("queriedSetting", function () {
+                            _this.initializing = true;
+                        });
+                    }
                 };
-                this.$window = $window;
-                this.$compile = $compile;
-                this.$timeout = $timeout;
-                this.$templateCache = $templateCache;
                 this.$rootScope = $rootScope;
+                this.$timeout = $timeout;
             }
-            FieldHighlightingDirective.prototype.calculateTooltipPosition = function (target, positionModel) {
-                var _this = this;
-                this.$timeout(function () {
-                    var tooltip = angular.element(target[0].previousElementSibling);
-                    if (!tooltip || tooltip.length === 0) {
-                        return;
+            ToggleSettingBlockDirective.prototype.toggle = function (scope) {
+                if (this.isToggleAllDirective(scope)) {
+                    if (scope.sharedStates.isExpandedAll()) {
+                        scope.sharedStates.collapseAllBlocks();
                     }
-                    tooltip.removeClass("tooltip--right tooltip--left");
-                    tooltip.css({ "left": "0px", "visibility": "hidden" });
-                    var elementRect = target[0].getBoundingClientRect();
-                    var tooltipRect = tooltip[0].getBoundingClientRect();
-                    var elementWidth = elementRect.right - elementRect.left;
-                    var elementHeight = elementRect.bottom - elementRect.top;
-                    var tooltipWidth = tooltipRect.right - tooltipRect.left;
-                    var tooltipHeight = tooltipRect.bottom - tooltipRect.top;
-                    var windowWidth = _this.$window.document.body.clientWidth;
-                    var topOffset = 0;
-                    var leftOffset = 0;
-                    var arrowWidth = 5;
-                    if ((+positionModel || IE8.PositionModel.relative) === IE8.PositionModel.relative) {
-                        var bodyRect = _this.$window.document.body.getBoundingClientRect();
-                        topOffset = bodyRect.top;
-                        leftOffset = bodyRect.left;
+                    else {
+                        scope.sharedStates.expandAllBlocks();
                     }
-                    var top = Math.max(0, elementRect.top - topOffset - tooltipHeight + arrowWidth);
-                    var left = elementRect.left + (elementWidth - tooltipWidth) / 2 - leftOffset;
-                    if (windowWidth < left + tooltipWidth) {
-                        top = elementRect.top - topOffset - (tooltipHeight - elementHeight) / 2 + arrowWidth;
-                        left = elementRect.left - tooltipWidth - arrowWidth;
-                        tooltip.addClass("tooltip--right");
+                }
+                else {
+                    if (scope.sharedStates.isExpanded(scope.blockIndex)) {
+                        scope.sharedStates.collapseBlock(scope.blockIndex);
                     }
-                    if (left < 0) {
-                        top = elementRect.top - topOffset - (tooltipHeight - elementHeight) / 2 + arrowWidth;
-                        left = elementRect.left + elementWidth;
-                        tooltip.addClass("tooltip--left");
+                    else {
+                        scope.sharedStates.expandBlock(scope.blockIndex);
                     }
-                    tooltip.css({
-                        "top": top + "px",
-                        "left": left + "px",
-                        "visibility": "visible"
-                    });
-                });
+                }
+                scope.$apply();
+                this.triggerPageHeightChangedEvent();
             };
-            FieldHighlightingDirective.prototype.resetElementBorder = function (element) {
-                if (element.hasClass("setting-field--error")) {
-                    element.removeClass("setting-field--error");
-                }
-                if (element.hasClass("setting-field--warning")) {
-                    element.removeClass("setting-field--success");
-                }
-                if (element.hasClass("setting-field--success")) {
-                    element.removeClass("setting-field--success");
-                }
+            ;
+            ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
+                return scope.blockIndex === null || scope.blockIndex === undefined;
             };
-            FieldHighlightingDirective.$inject = ["$window", "$compile", "$timeout", "$templateCache", "$rootScope"];
-            return FieldHighlightingDirective;
+            ToggleSettingBlockDirective.prototype.triggerPageHeightChangedEvent = function () {
+                this.$rootScope.$emit("page-height-changed");
+            };
+            ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
+            return ToggleSettingBlockDirective;
         }());
-        IE8.ModuleRegister.directive("fieldHighlighting", FieldHighlightingDirective);
-        function TooltipMessage($injector, $filter) {
-            return function (result, resourceServiceName, fieldName, customFilterName) {
-                if (customFilterName === void 0) { customFilterName = null; }
-                var message = "";
-                if (result
-                    && result.message
-                    && (!fieldName || (fieldName && fieldName === result.fieldName))) {
-                    var resourceService = $injector.get(resourceServiceName);
-                    var params = _.map((result.msgParams || []), function (param) {
-                        if (typeof param === "number") {
-                            var value = $filter("number")(param);
-                            if (customFilterName) {
-                                value = $filter(customFilterName)(value);
-                            }
-                            return value;
-                        }
-                        else {
-                            return param;
-                        }
-                    });
-                    if (resourceService) {
-                        params.unshift(result.message);
-                        message = resourceService.getFormattedMessage.apply(resourceService, params);
-                    }
-                }
-                return message;
-            };
-        }
-        TooltipMessage.$inject = ["$injector", "$filter"];
-        IE8.ModuleRegister.filter("tooltipMessage", TooltipMessage);
+        IE8.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
+        IE8.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -36159,94 +36247,6 @@ var CustomerSetting;
             return DraggableDirective;
         }());
         IE8.ModuleRegister.directive("draggable", DraggableDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var ToggleSettingBlockDirective = (function () {
-            function ToggleSettingBlockDirective($rootScope, $timeout) {
-                var _this = this;
-                this.scope = {
-                    blockIndex: "=",
-                    sharedStates: "=",
-                    settingData: "=",
-                    settingTypeId: "="
-                };
-                this.initializing = true;
-                this.link = function (scope, element) {
-                    var container = angular.element(element.parent());
-                    container.addClass("togglable-bar");
-                    container.on("click", function (event) {
-                        var target = angular.element(event.target);
-                        if (target.hasClass("togglable-bar")) {
-                            _this.toggle(scope);
-                            return false;
-                        }
-                    });
-                    element.addClass("ng-hide");
-                    if (!_this.isToggleAllDirective(scope)) {
-                        scope.$watch("settingData", function () {
-                            if (_this.initializing) {
-                                _this.$timeout(function () { return _this.initializing = false; });
-                            }
-                            else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
-                                scope.sharedStates.expandBlock(scope.blockIndex);
-                                _this.triggerPageHeightChangedEvent();
-                            }
-                        }, true);
-                        _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
-                            if ((!settingTypeId || settingTypeId === scope.settingTypeId)
-                                && scope.settingData
-                                && _.some(scope.settingData, function (item) { return !item.validationState.isSuccessful(); })
-                                && !scope.sharedStates.isExpanded(scope.blockIndex)) {
-                                scope.sharedStates.expandBlock(scope.blockIndex);
-                                _this.triggerPageHeightChangedEvent();
-                            }
-                        });
-                        _this.$rootScope.$on("queriedSetting", function () {
-                            _this.initializing = true;
-                        });
-                    }
-                };
-                this.$rootScope = $rootScope;
-                this.$timeout = $timeout;
-            }
-            ToggleSettingBlockDirective.prototype.toggle = function (scope) {
-                if (this.isToggleAllDirective(scope)) {
-                    if (scope.sharedStates.isExpandedAll()) {
-                        scope.sharedStates.collapseAllBlocks();
-                    }
-                    else {
-                        scope.sharedStates.expandAllBlocks();
-                    }
-                }
-                else {
-                    if (scope.sharedStates.isExpanded(scope.blockIndex)) {
-                        scope.sharedStates.collapseBlock(scope.blockIndex);
-                    }
-                    else {
-                        scope.sharedStates.expandBlock(scope.blockIndex);
-                    }
-                }
-                scope.$apply();
-                this.triggerPageHeightChangedEvent();
-            };
-            ;
-            ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
-                return scope.blockIndex === null || scope.blockIndex === undefined;
-            };
-            ToggleSettingBlockDirective.prototype.triggerPageHeightChangedEvent = function () {
-                this.$rootScope.$emit("page-height-changed");
-            };
-            ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
-            return ToggleSettingBlockDirective;
-        }());
-        IE8.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
-        IE8.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -37932,12 +37932,12 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
-$templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></div><div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
-$templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/HighlightField/tooltip.htm","<div class=\"tooltip tooltip--{{highlightType}}\" data-ng-if=\"tooltipMessage\"><div class=\"tooltip__content\">{{tooltipMessage}}</div></div>");
+$templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><div data-copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></div></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\" data-ng-model=\"item.superPTOnMembers\" data-field-highlighting data-field-name=\"superPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-field-highlighting data-field-name=\"masterPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
 $templateCache.put("position-taking-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'positionTakingResourceService\':fieldName}}\"></select></div>");
 $templateCache.put("settingtype1-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.superAgent\"><div class=\"block__lbl w25-percent\">{{\'SuperMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl w25-percent\">{{\'MasterMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl w25-percent\">{{\'AgentMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w25-percent\">{{\'SuperMinPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__lbl w28-percent\">{{\'SuperPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl w28-percent\">{{\'MasterMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{\'MasterMinPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{\'MasterPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{\'AgentMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{\'AgentMinPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__lbl w28-percent\">{{\'SuperPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl w28-percent\">{{\'MasterPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{\'AgentPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent no-right-border\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__lbl w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{\'MasterPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{\'AgentPT\' | positionTakingLabel}}</div></div><div class=\"block__lbl block__lbl--no-border w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\"><div>{{\'AgentPT\' | positionTakingLabel}}</div></div>");

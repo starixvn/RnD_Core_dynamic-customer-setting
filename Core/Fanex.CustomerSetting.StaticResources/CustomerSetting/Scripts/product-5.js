@@ -32325,9 +32325,9 @@ var CustomerSetting;
             this.templateUrl = "SettingResult/setting-result.htm";
             this.controller = ["$rootScope", "$scope", "$window", function ($rootScope, $scope, $window) {
                     $scope.$watch("result", function (result) {
+                        $rootScope.$emit("page-height-changed");
                         if (result) {
                             $window.scrollTo(0, 0);
-                            $rootScope.$emit("page-height-changed");
                         }
                     });
                 }];

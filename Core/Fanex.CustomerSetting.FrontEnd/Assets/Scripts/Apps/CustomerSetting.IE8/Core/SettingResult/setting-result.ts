@@ -21,9 +21,10 @@ module CustomerSetting.IE8 {
 
         public controller: any = ["$rootScope", "$scope", "$window", ($rootScope: ng.IRootScopeService, $scope: ISettingResultScope, $window: ng.IWindowService) => {
             $scope.$watch("result", (result: UpdatingSettingResult) => {
+                $rootScope.$emit("page-height-changed");
+
                 if (result) {
                     $window.scrollTo(0, 0);
-                    $rootScope.$emit("page-height-changed");
                 }
             });
         }];

@@ -124,7 +124,7 @@ module CustomerSetting.IE8 {
 
         private calculateTooltipPosition(target: ng.IAugmentedJQuery, positionModel: PositionModel): void {
             this.$timeout(() => {
-                var tooltip: ng.IAugmentedJQuery = angular.element(target[0].previousElementSibling);
+                var tooltip: ng.IAugmentedJQuery = angular.element(angular.element(target[0]).prev());
 
                 if (!tooltip || tooltip.length === 0) {
                     return;
