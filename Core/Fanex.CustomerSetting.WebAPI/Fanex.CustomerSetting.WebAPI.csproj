@@ -164,6 +164,7 @@
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType13.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType14.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType15.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType16.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.xml" />
@@ -305,6 +306,10 @@
     <ProjectReference Include="..\..\SettingTypes\SettingType15\Fanex.CustomerSetting.SettingType15\Fanex.CustomerSetting.SettingType15.csproj">
       <Project>{769a7e78-8638-4f16-ab56-b80b9e434a3a}</Project>
       <Name>Fanex.CustomerSetting.SettingType15</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SettingTypes\SettingType16\Fanex.CustomerSetting.SettingType16\Fanex.CustomerSetting.SettingType16.csproj">
+      <Project>{4002ea81-5eb7-4037-bf1b-d6cf95c329bb}</Project>
+      <Name>Fanex.CustomerSetting.SettingType16</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SettingTypes\SettingType5\Fanex.CustomerSetting.SettingType5\Fanex.CustomerSetting.SettingType5.csproj">
       <Project>{f800a03e-8229-4ad2-93a5-cd10a6b9916d}</Project>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+    <Function Name="BetLimit" SiteId="68" SiteName="DCS">
+        <Setting Key="Acc_CustSetting_BetLimitSelect" SpName="Acc_CustSetting_BetLimitSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+        </Setting>
+        <Setting Key="Acc_CustSetting_BetLimitUpd" SpName="Acc_CustSetting_BetLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    </Function>
+</Functions>
