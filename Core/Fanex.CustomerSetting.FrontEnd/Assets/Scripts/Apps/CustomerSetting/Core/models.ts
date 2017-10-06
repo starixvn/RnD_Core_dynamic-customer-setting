@@ -114,7 +114,7 @@ module CustomerSetting {
 
         public toJson(): {} {
             var settingItem: any = {};
-            var reservedProperties: string[] = ["oldSetting", "validationState"];
+            var reservedProperties: string[] = ["oldSetting", "validationState", "highlightState", "$$hashKey"];
 
             Object.keys(this).forEach((prop: string) => {
                 if (this[prop] !== undefined && this[prop] !== null && reservedProperties.indexOf(prop) < 0) {

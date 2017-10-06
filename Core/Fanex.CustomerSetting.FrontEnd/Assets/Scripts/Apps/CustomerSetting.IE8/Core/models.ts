@@ -115,7 +115,7 @@ module CustomerSetting.IE8 {
 
         public toJson(): {} {
             var settingItem: any = {};
-            var reservedProperties: string[] = ["oldSetting", "validationState"];
+            var reservedProperties: string[] = ["oldSetting", "validationState", "highlightState", "$$hashKey"];
 
             _.chain(this).keys().forEach((prop: string) => {
                 if (this[prop] !== undefined && this[prop] !== null && _.indexOf(reservedProperties, prop) < 0) {
