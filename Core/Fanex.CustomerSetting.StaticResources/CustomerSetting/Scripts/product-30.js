@@ -30882,7 +30882,7 @@ var CustomerSetting;
         DefaultSettingItem.prototype.toJson = function () {
             var _this = this;
             var settingItem = {};
-            var reservedProperties = ["oldSetting", "validationState"];
+            var reservedProperties = ["oldSetting", "validationState", "highlightState", "$$hashKey"];
             Object.keys(this).forEach(function (prop) {
                 if (_this[prop] !== undefined && _this[prop] !== null && reservedProperties.indexOf(prop) < 0) {
                     if (_this[prop].toJson) {
@@ -34388,9 +34388,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var SettingType2Item = (function (_super) {
-        __extends(SettingType2Item, _super);
-        function SettingType2Item(settingItem, backup) {
+    var SettingType16Item = (function (_super) {
+        __extends(SettingType16Item, _super);
+        function SettingType16Item(settingItem, backup) {
             if (backup === void 0) { backup = false; }
             _super.call(this, settingItem);
             if (settingItem) {
@@ -34398,14 +34398,14 @@ var CustomerSetting;
                 this.maxBet = settingItem.maxBet;
                 this.maxPerMatch = settingItem.maxPerMatch;
                 if (settingItem.upline) {
-                    this.upline = new SettingType2Item(settingItem.upline);
+                    this.upline = new SettingType16Item(settingItem.upline);
                 }
             }
             if (backup) {
-                this.oldSetting = new SettingType2Item(this);
+                this.oldSetting = new SettingType16Item(this);
             }
         }
-        SettingType2Item.prototype.isChanged = function () {
+        SettingType16Item.prototype.isChanged = function () {
             var isChanged = _super.prototype.isChanged.call(this);
             var oldSetting = this.oldSetting;
             return isChanged
@@ -34413,7 +34413,7 @@ var CustomerSetting;
                 || this.maxBet !== oldSetting.maxBet
                 || this.maxPerMatch !== oldSetting.maxPerMatch;
         };
-        SettingType2Item.prototype.copySettingFrom = function (source) {
+        SettingType16Item.prototype.copySettingFrom = function (source) {
             var isSuccessful = true;
             var backupMinBet;
             var backupMaxBet;
@@ -34442,7 +34442,7 @@ var CustomerSetting;
             }
             return isSuccessful;
         };
-        SettingType2Item.prototype.validate = function () {
+        SettingType16Item.prototype.validate = function () {
             if (!this.validateMinBet()) {
                 return false;
             }
@@ -34455,13 +34455,13 @@ var CustomerSetting;
             this.resetValidationState();
             return true;
         };
-        SettingType2Item.prototype.validateSpecialCase = function () {
-            if (this.minBet === this.maxBet && this.maxBet === this.maxPerMatch && this.maxPerMatch === 0) {
+        SettingType16Item.prototype.validateSpecialCase = function () {
+            if (this.minBet === 0 && this.maxBet === 0 && this.maxPerMatch === 0) {
                 this.resetValidationState();
                 return true;
             }
         };
-        SettingType2Item.prototype.validateMinBet = function () {
+        SettingType16Item.prototype.validateMinBet = function () {
             if (this.validateSpecialCase()) {
                 return true;
             }
@@ -34478,7 +34478,7 @@ var CustomerSetting;
             this.resetValidationState();
             return true;
         };
-        SettingType2Item.prototype.validateMaxBet = function () {
+        SettingType16Item.prototype.validateMaxBet = function () {
             if (this.validateSpecialCase()) {
                 return true;
             }
@@ -34499,7 +34499,7 @@ var CustomerSetting;
             this.resetValidationState();
             return true;
         };
-        SettingType2Item.prototype.validateMaxPerMatch = function () {
+        SettingType16Item.prototype.validateMaxPerMatch = function () {
             if (this.validateSpecialCase()) {
                 return true;
             }
@@ -34516,19 +34516,19 @@ var CustomerSetting;
             this.resetValidationState();
             return true;
         };
-        return SettingType2Item;
+        return SettingType16Item;
     }(CustomerSetting.DefaultSettingItem));
-    CustomerSetting.SettingType2Item = SettingType2Item;
+    CustomerSetting.SettingType16Item = SettingType16Item;
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var BetSettingInputDirective = (function () {
-        function BetSettingInputDirective($compile, $filter) {
+    var SettingType16InputDirective = (function () {
+        function SettingType16InputDirective($compile, $filter) {
             var _this = this;
             this.replace = true;
-            this.templateUrl = "bet-setting-input.htm";
+            this.templateUrl = "settingtype16-input.htm";
             this.controller = ["$scope", function ($scope) {
                     $scope.updateValue = function () {
                         if ($scope.fieldName === "minBet") {
@@ -34548,7 +34548,7 @@ var CustomerSetting;
                 element.attr("data-ng-model", "settingItem." + scope.fieldName);
                 element.attr("data-ng-change", "updateValue()");
                 element.attr("data-field-highlighting", "");
-                if (scope.customerLevel !== CustomerSetting.Level.super || (scope.fieldName === "minBet" && scope.settingItem.upline.minBet > 0)) {
+                if (scope.customerLevel !== CustomerSetting.Level.super || scope.settingItem.upline[scope.fieldName] > 0) {
                     element.addClass("setting-field--has-constraint");
                 }
                 if (scope.fieldName === "minBet") {
@@ -34640,7 +34640,7 @@ var CustomerSetting;
             this.$compile = $compile;
             this.$filter = $filter;
         }
-        Object.defineProperty(BetSettingInputDirective.prototype, "scope", {
+        Object.defineProperty(SettingType16InputDirective.prototype, "scope", {
             get: function () {
                 return {
                     settingItem: "=",
@@ -34652,10 +34652,10 @@ var CustomerSetting;
             enumerable: true,
             configurable: true
         });
-        BetSettingInputDirective.$inject = ["$compile", "$filter", "betSettingResourceService"];
-        return BetSettingInputDirective;
+        SettingType16InputDirective.$inject = ["$compile", "$filter", "settingType16ResourceService"];
+        return SettingType16InputDirective;
     }());
-    CustomerSetting.ModuleRegister.directive("betSettingInput", BetSettingInputDirective);
+    CustomerSetting.ModuleRegister.directive("settingtype16Input", SettingType16InputDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -34666,35 +34666,35 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var BetSettingResourceService = (function (_super) {
-        __extends(BetSettingResourceService, _super);
-        function BetSettingResourceService(betSettingResources, parametersService) {
-            _super.call(this, betSettingResources, parametersService);
+    var SettingType16ResourceService = (function (_super) {
+        __extends(SettingType16ResourceService, _super);
+        function SettingType16ResourceService(settingType16Resources, parametersService) {
+            _super.call(this, settingType16Resources, parametersService);
         }
-        BetSettingResourceService.$inject = ["betSettingResources", "parametersService"];
-        return BetSettingResourceService;
+        SettingType16ResourceService.$inject = ["settingType16Resources", "parametersService"];
+        return SettingType16ResourceService;
     }(CustomerSetting.ResourceService));
-    CustomerSetting.BetSettingResourceService = BetSettingResourceService;
-    CustomerSetting.ModuleRegister.service("betSettingResourceService", BetSettingResourceService);
-    function BetSettingLabelFilter(betSettingResourceService) {
+    CustomerSetting.SettingType16ResourceService = SettingType16ResourceService;
+    CustomerSetting.ModuleRegister.service("settingType16ResourceService", SettingType16ResourceService);
+    function SettingType16LabelFilter(settingType16ResourceService) {
         return function (name) {
-            return betSettingResourceService.getLabel(name);
+            return settingType16ResourceService.getLabel(name);
         };
     }
-    BetSettingLabelFilter.$inject = ["betSettingResourceService"];
-    CustomerSetting.ModuleRegister.filter("betSettingLabel", BetSettingLabelFilter);
-    function BetSettingMessageFilter(betSettingResourceService) {
+    SettingType16LabelFilter.$inject = ["settingType16ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType16Label", SettingType16LabelFilter);
+    function SettingType16MessageFilter(settingType16ResourceService) {
         return function (name) {
             var replacements = [];
             for (var _i = 1; _i < arguments.length; _i++) {
                 replacements[_i - 1] = arguments[_i];
             }
             replacements.unshift(name);
-            return betSettingResourceService.getFormattedMessage.apply(betSettingResourceService, replacements);
+            return settingType16ResourceService.getFormattedMessage.apply(SettingType16ResourceService, replacements);
         };
     }
-    BetSettingMessageFilter.$inject = ["betSettingResourceService"];
-    CustomerSetting.ModuleRegister.filter("betSettingMessage", BetSettingMessageFilter);
+    SettingType16MessageFilter.$inject = ["settingType16ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType16Message", SettingType16MessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -34705,23 +34705,23 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var SettingType2Directive = (function (_super) {
-        __extends(SettingType2Directive, _super);
-        function SettingType2Directive(betSettingResourceService) {
+    var SettingType16Directive = (function (_super) {
+        __extends(SettingType16Directive, _super);
+        function SettingType16Directive(settingType16ResourceService) {
             var _this = this;
-            _super.call(this, function (settingItem, backup) { return new CustomerSetting.SettingType2Item(settingItem, backup); });
-            this.templateUrl = "settingtype2.htm";
+            _super.call(this, function (settingItem, backup) { return new CustomerSetting.SettingType16Item(settingItem, backup); });
+            this.templateUrl = "settingtype16.htm";
             this.link = function (scope) {
-                scope.headerTemplateUrl = "settingtype2-header.htm";
-                scope.valueTemplateUrl = "settingtype2-value.htm";
-                scope.settingTypeName = _this.betSettingResourceService.getLabel("BetSetting");
+                scope.headerTemplateUrl = "settingtype16-header.htm";
+                scope.valueTemplateUrl = "settingtype16-value.htm";
+                scope.settingTypeName = _this.settingType16ResourceService.getLabel("BetSetting");
             };
-            this.betSettingResourceService = betSettingResourceService;
+            this.settingType16ResourceService = settingType16ResourceService;
         }
-        SettingType2Directive.$inject = ["betSettingResourceService"];
-        return SettingType2Directive;
+        SettingType16Directive.$inject = ["settingType16ResourceService"];
+        return SettingType16Directive;
     }(CustomerSetting.SettingTypeDirective));
-    CustomerSetting.ModuleRegister.directive("settingtype2", SettingType2Directive);
+    CustomerSetting.ModuleRegister.directive("settingtype16", SettingType16Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -35136,10 +35136,10 @@ $templateCache.put("comm-rate-select.htm","<div class=\"setting-field-wrapper\">
 $templateCache.put("settingtype3-header.htm","<div data-ng-if=\"uplineLevel === avaiCustomerLevels.super\"><div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'CommissionForMaster\' | commissionLabel)}}</div><div class=\"block__lbl w33-percent\">{{::(\'CommissionForAgent\' | commissionLabel)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'CommissionForMember\' | commissionLabel)}}</div></div></div><div data-ng-if=\"uplineLevel === avaiCustomerLevels.master\"><div class=\"block__lbl\"></div><div class=\"block__lbl w40-percent\">{{::(\'CommissionForAgent\' | commissionLabel)}}</div><div class=\"block__lbl block__lbl--no-border w40-percent\">{{::(\'CommissionForMember\' | commissionLabel)}}</div></div>");
 $templateCache.put("settingtype3-value.htm","<comm-rate-select data-ng-if=\"settingType | editableSettingType\" data-setting-item=\"item\"></comm-rate-select><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)\">{{item.commRate}}</div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w33-percent\">{{item.upline.upline.commRate}}</div><div class=\"block__cell w33-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.commRate}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w50-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.commRate}}</div></div>");
 $templateCache.put("settingtype3.htm","<div data-ng-class=\"{ \'full-width\': customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent }\"><default-setting-type-grouping></default-setting-type-grouping></div>");
-$templateCache.put("bet-setting-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'betSettingResourceService\':fieldName}}\"></div>");
-$templateCache.put("settingtype2-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'MinBet\' | betSettingLabel)}}</div><div class=\"block__lbl w33-percent\">{{::(\'MaxBet\' | betSettingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'MaxPerMatch\' | betSettingLabel)}}</div></div>");
-$templateCache.put("settingtype2-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></bet-setting-input><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></bet-setting-input><bet-setting-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></bet-setting-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerMatch | formatNumber}}</div></div>");
-$templateCache.put("settingtype2.htm","<div><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping></div>");
+$templateCache.put("settingtype16-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'MinBet\' | settingType16Label)}}</div><div class=\"block__lbl w33-percent\">{{::(\'MaxBet\' | settingType16Label)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'MaxPerMatch\' | settingType16Label)}}</div></div>");
+$templateCache.put("settingtype16-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'settingType16ResourceService\':fieldName}}\"></div>");
+$templateCache.put("settingtype16-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><settingtype16-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></settingtype16-input><settingtype16-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></settingtype16-input><settingtype16-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></settingtype16-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerMatch | formatNumber}}</div></div>");
+$templateCache.put("settingtype16.htm","<div><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping></div>");
 $templateCache.put("settingtype6-win-limit-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-model=\"settingItem.winLimit\" data-ng-options=\"item.key as item.value for item in range\" data-field-highlighting data-field-name=\"winLimit\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'settingType6ResourceService\':\'winLimit\':\'unlimitedLimit\'}}\"></select><span>{{::(\'OnGivenCredit\' | settingType6Label)}}</span></div>");
 $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype6\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\">{{group[0].betTypeName}}</div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumWin\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><settingtype6-win-limit-select data-setting-item=\"item\"></settingtype6-win-limit-select></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? \'X\' : \'\'}} {{::(\'OnGivenCredit\' | settingType6Label)}}</div></div><div class=\"block__row block__row--border-top\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype6-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-field-highlighting data-field-name=\"lossLimit\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype6-unlimited-checkbox data-ng-model=\"isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType6Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentWinLossAmount\' | settingType6Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentWinLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentWinLoss(item)\">{{::(\'ClickToViewCurrentWinLossLimit\' | settingType6Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentWinLossAmount\"><div><span>{{\'Winning\' | settingType6Label}}:</span> <span data-ng-if=\"item.winLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.winLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.winPercent | formatNumber}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxWinAmount | formatNumber}}</span></span></div><div><span>{{\'Losing\' | settingType6Label}}:</span> <span data-ng-if=\"item.lossLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.lossLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.lossPercent | formatNumber}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxLossAmount | formatNumber}}</span></span></div></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-highlight-state=\"item.highlightState\" data-field-name=\"isAutoReset\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType6Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
@@ -35995,64 +35995,64 @@ $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype
 (function () {
     "use strict";
 
-    var betSettingResources = {};
+    var settingType16Resources = {};
     
-    betSettingResources["label"] = betSettingResources["label"] || {};
-    betSettingResources["label"]["en-us"] = {
+    settingType16Resources["label"] = settingType16Resources["label"] || {};
+    settingType16Resources["label"]["en-us"] = {
         "BetSetting": "Bet Setting",
         "MaxBet": "Max Bet",
         "MaxPerMatch": "Max Per Match",
         "MinBet": "Min Bet"
     };
     
-    betSettingResources["label"] = betSettingResources["label"] || {};
-    betSettingResources["label"]["zh-cn"] = {
+    settingType16Resources["label"] = settingType16Resources["label"] || {};
+    settingType16Resources["label"]["zh-cn"] = {
         "BetSetting": "投注设定",
         "MaxBet": "最高投注",
         "MaxPerMatch": "单场限额",
         "MinBet": "最低投注"
     };
     
-    betSettingResources["label"] = betSettingResources["label"] || {};
-    betSettingResources["label"]["zh-tw"] = {
+    settingType16Resources["label"] = settingType16Resources["label"] || {};
+    settingType16Resources["label"]["zh-tw"] = {
         "BetSetting": "投注設定",
         "MaxBet": "最高投注",
         "MaxPerMatch": "單場限額",
         "MinBet": "最低投注"
     };
     
-    betSettingResources["label"] = betSettingResources["label"] || {};
-    betSettingResources["label"]["ko-kr"] = {
+    settingType16Resources["label"] = settingType16Resources["label"] || {};
+    settingType16Resources["label"]["ko-kr"] = {
         "BetSetting": "배팅 설정",
         "MaxBet": "최대 배팅",
         "MaxPerMatch": "경기당 최대 값",
         "MinBet": "최소 배팅"
     };
     
-    betSettingResources["label"] = betSettingResources["label"] || {};
-    betSettingResources["label"]["ja-jp"] = {
+    settingType16Resources["label"] = settingType16Resources["label"] || {};
+    settingType16Resources["label"]["ja-jp"] = {
         "MaxBet": "最大ベット",
         "MaxPerMatch": "1 試合毎の最大"
     };
     
-    betSettingResources["label"] = betSettingResources["label"] || {};
-    betSettingResources["label"]["th-th"] = {
+    settingType16Resources["label"] = settingType16Resources["label"] || {};
+    settingType16Resources["label"]["th-th"] = {
         "BetSetting": "การกำหนดการวางเดิมพัน",
         "MaxBet": "ค่าเดิมพันสูงสุด",
         "MaxPerMatch": "ค่าเดิมพันสูงสุดต่อคู่การแข่งขัน",
         "MinBet": "ค่าเดิมพันต้ำสุด"
     };
     
-    betSettingResources["label"] = betSettingResources["label"] || {};
-    betSettingResources["label"]["vi-vn"] = {
+    settingType16Resources["label"] = settingType16Resources["label"] || {};
+    settingType16Resources["label"]["vi-vn"] = {
         "BetSetting": "Tiền Cược",
         "MaxBet": "Cược lớn nhất",
         "MaxPerMatch": "Cược tối đa cho 1 trận",
         "MinBet": "Cược nhỏ nhất"
     };
     
-    betSettingResources["message"] = betSettingResources["message"] || {};
-    betSettingResources["message"]["en-us"] = {
+    settingType16Resources["message"] = settingType16Resources["message"] || {};
+    settingType16Resources["message"]["en-us"] = {
         "BetLimitCannotBeGreaterThanMaxValue": "BetLimit cannot be greater than Max Value.",
         "MaxBetCannotBeGreaterThanMaxPerMatch": "Max Bet cannot be greater than Max Per Match.",
         "MaxBetCannotBeNegative": "Max Bet cannot be negative.",
@@ -36080,8 +36080,8 @@ $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype
         "UpdateBetSettingSuccessfully": "Bet Setting is updated successfully."
     };
     
-    betSettingResources["message"] = betSettingResources["message"] || {};
-    betSettingResources["message"]["zh-cn"] = {
+    settingType16Resources["message"] = settingType16Resources["message"] || {};
+    settingType16Resources["message"]["zh-cn"] = {
         "MaxBetCannotBeGreaterThanMaxPerMatch": "最高投注不可高于当场最高投注",
         "MaxBetLessThanOrEqualMaxPerMatch": "最高投注必须少于或相等于单场限额",
         "MaxBetLessThanOrEqualTo": "最高投注不得多于或相等于 {0}",
@@ -36105,8 +36105,8 @@ $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype
         "UpdateBetSettingSuccessfully": "投注设定已更新成功."
     };
     
-    betSettingResources["message"] = betSettingResources["message"] || {};
-    betSettingResources["message"]["zh-tw"] = {
+    settingType16Resources["message"] = settingType16Resources["message"] || {};
+    settingType16Resources["message"]["zh-tw"] = {
         "MaxBetCannotBeGreaterThanMaxPerMatch": "最高投注不可高於單場最高投注",
         "MaxBetLessThanOrEqualMaxPerMatch": "最高投注必須少於或相等於單場限額",
         "MaxBetLessThanOrEqualTo": "最高投注不得多於或相等於 {0}",
@@ -36130,8 +36130,8 @@ $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype
         "UpdateBetSettingSuccessfully": "投注設定已更新成功."
     };
     
-    betSettingResources["message"] = betSettingResources["message"] || {};
-    betSettingResources["message"]["ko-kr"] = {
+    settingType16Resources["message"] = settingType16Resources["message"] || {};
+    settingType16Resources["message"]["ko-kr"] = {
         "MaxBetCannotBeGreaterThanMaxPerMatch": "최대 배팅은 경기당최대 값보다 클수 없습니다",
         "MaxBetLessThanOrEqualMaxPerMatch": "최대베팅은 경기 당 최대치와 같거나 이하이어야합니다",
         "MaxBetLessThanOrEqualTo": "최대 배팅보다 이하이여야 합니다 {0}.",
@@ -36141,8 +36141,8 @@ $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype
         "UpdateBetSettingSuccessfully": "베팅 설정이 성공적으로 업데이트되었습니다."
     };
     
-    betSettingResources["message"] = betSettingResources["message"] || {};
-    betSettingResources["message"]["ja-jp"] = {
+    settingType16Resources["message"] = settingType16Resources["message"] || {};
+    settingType16Resources["message"]["ja-jp"] = {
         "MaxBetCannotBeGreaterThanMaxPerMatch": "Max Bet cannot be greater than Max Per Match",
         "MaxBetLessThanOrEqualMaxPerMatch": "The Max Bet should be less than or equal to Max Per Match",
         "MaxBetLessThanOrEqualTo": "一回当たりのマックスベットポイントは表示されていますので、再確認してください {0}.",
@@ -36152,8 +36152,8 @@ $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype
         "UpdateBetSettingSuccessfully": "Bet Setting is updated successfully."
     };
     
-    betSettingResources["message"] = betSettingResources["message"] || {};
-    betSettingResources["message"]["th-th"] = {
+    settingType16Resources["message"] = settingType16Resources["message"] || {};
+    settingType16Resources["message"]["th-th"] = {
         "MaxBetCannotBeGreaterThanMaxPerMatch": "จำนวนเงินสูงสุดที่สามารถเล่นได้ต้องไม่มากกว่าจำนวนเงินสูงสุดต่อรายการที่เล่น",
         "MaxBetLessThanOrEqualMaxPerMatch": "ค่าเดิมพันสูงสุดควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุดต่อการแข่งขัน",
         "MaxBetLessThanOrEqualTo": "จำนวนการเดิมพันสูงสุดต้องน้อยกว่า หรือเท่ากับ {0}.",
@@ -36176,8 +36176,8 @@ $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype
         "UpdateBetSettingSuccessfully": "การตั้งค่าเดิมพัน ได้อัพเดทเรียบร้อยแล้ว."
     };
     
-    betSettingResources["message"] = betSettingResources["message"] || {};
-    betSettingResources["message"]["vi-vn"] = {
+    settingType16Resources["message"] = settingType16Resources["message"] || {};
+    settingType16Resources["message"]["vi-vn"] = {
         "MaxBetCannotBeGreaterThanMaxPerMatch": "Tiền cược lớn nhất không thể lớn hơn Tiền cược tối đa của mỗi trận đấu",
         "MaxBetLessThanOrEqualMaxPerMatch": "Tiền cược lớn nhất phải nhỏ hơn hoặc bằng Tiền cược tối đa của mỗi trận đấu",
         "MaxBetLessThanOrEqualTo": "Tiền cược lớn nhất phải nhỏ hơn hoặc bằng {0}",
@@ -36187,7 +36187,7 @@ $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype
         "UpdateBetSettingSuccessfully": "Thiết lập về tiền cược được cập nhật thành công"
     };
 
-    angular.module("customerSetting").value("betSettingResources", betSettingResources);
+    angular.module("customerSetting").value("settingType16Resources", settingType16Resources);
 })();
 
 /*jshint -W101,-W106,-W044,-W098*/

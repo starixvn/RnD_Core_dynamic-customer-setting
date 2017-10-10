@@ -30882,7 +30882,7 @@ var CustomerSetting;
         DefaultSettingItem.prototype.toJson = function () {
             var _this = this;
             var settingItem = {};
-            var reservedProperties = ["oldSetting", "validationState"];
+            var reservedProperties = ["oldSetting", "validationState", "highlightState", "$$hashKey"];
             Object.keys(this).forEach(function (prop) {
                 if (_this[prop] !== undefined && _this[prop] !== null && reservedProperties.indexOf(prop) < 0) {
                     if (_this[prop].toJson) {
