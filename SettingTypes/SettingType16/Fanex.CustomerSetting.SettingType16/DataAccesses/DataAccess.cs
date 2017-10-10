@@ -14,7 +14,7 @@
     {
         public IEnumerable<BetLimitDto> GetCustomerBetLimit(CustomerSettingQuery query)
         {
-            using (var objectDb = new ObjectDb("Acc_CustSetting_BetLimitSelect"))
+            using (var objectDb = new ObjectDb("Acc_CustSetting_BetSettingSelect"))
             {
                 return objectDb.Query<BetLimitDto>(new
                 {
@@ -43,7 +43,7 @@
                 ["msgtype"] = 0
             };
 
-            return ExecuteNonQuery("Acc_CustSetting_BetLimitUpd", parameters);
+            return ExecuteNonQuery("Acc_CustSetting_BetSettingUpd", parameters);
         }
     }
 }
