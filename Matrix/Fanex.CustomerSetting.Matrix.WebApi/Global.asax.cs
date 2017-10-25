@@ -7,6 +7,8 @@
     using System.Web.Http;
     using Data.Configuration;
     using Logging;
+    using Logging.Extensions.Database;
+    using Logging.Extensions.Web;
 
     public class WebApiApplication : HttpApplication
     {
@@ -14,6 +16,7 @@
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             DbSettingProviderManager.Current.Start();
+            ExceptionHandler.UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
         }
 
         /// <summary>
@@ -23,38 +26,7 @@
         /// <param name="e">Event arguments.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
-            // Logging
-            if (Server != null)
-            {
-                Exception ex = Server.GetLastError().GetBaseException();
-                var messageBuilder = new StringBuilder();
-
-                // Get base exception data
-                messageBuilder
-                    .AppendLine(ex.Message)
-                    .AppendLine($"Type: {ex.GetType()}")
-                    .AppendLine($"Source: {ex.Source}")
-                    .AppendLine($"Target Site: {ex.TargetSite}")
-                    .AppendLine($"Stack Trace: {ex.StackTrace}");
-
-                // Get additional exception data
-                var sqlException = ex as SqlException;
-
-                if (sqlException == null && ex.InnerException != null)
-                {
-                    sqlException = ex.InnerException as SqlException;
-                }
-
-                if (sqlException != null)
-                {
-                    messageBuilder
-                    .AppendLine($"Procedure: {sqlException.Procedure}")
-                    .AppendLine($"Line Number: {sqlException.LineNumber}")
-                    .AppendLine($"Server: {sqlException.Server}");
-                }
-
-                LogService.Error(messageBuilder.ToString());
-            }
+            ExceptionHandler.Handle(Server.GetLastError());
         }
     }
 }
