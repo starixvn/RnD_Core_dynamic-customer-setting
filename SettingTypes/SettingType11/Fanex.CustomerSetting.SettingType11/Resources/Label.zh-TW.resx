@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Enable" xml:space="preserve">
-    <value>啟用</value>
-  </data>
-  <data name="EnableDownline" xml:space="preserve">
-    <value>啟動下線</value>
-  </data>
   <data name="ProductStatus" xml:space="preserve">
     <value>產品狀態</value>
   </data>

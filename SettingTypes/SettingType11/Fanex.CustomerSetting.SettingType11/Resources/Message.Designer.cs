@@ -19,7 +19,7 @@ namespace Fanex.CustomerSetting.SettingType11.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Message {
@@ -70,38 +70,11 @@ namespace Fanex.CustomerSetting.SettingType11.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downline&apos;s Product Status must be unchanged when the Upline has not been changed..
-        /// </summary>
-        internal static string DownlineStatusCannotBeChanged {
-            get {
-                return ResourceManager.GetString("DownlineStatusCannotBeChanged", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The product is not offered for this customer line..
-        /// </summary>
-        internal static string DownlineStatusIsInvalid {
-            get {
-                return ResourceManager.GetString("DownlineStatusIsInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Unable to edit downline&apos;s Product Status because the account disabled for this product..
         /// </summary>
         internal static string Msg_60033 {
             get {
                 return ResourceManager.GetString("Msg_60033", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unable to synchronize this product because the upline account setting is not synchronized..
-        /// </summary>
-        internal static string Msg_60034 {
-            get {
-                return ResourceManager.GetString("Msg_60034", resourceCulture);
             }
         }
         
