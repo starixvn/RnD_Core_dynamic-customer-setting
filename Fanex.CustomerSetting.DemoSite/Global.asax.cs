@@ -1,11 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite
 {
-    using System.Web.Http;
+    using Client40;
+    using MatrixClient;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Client40;
-    using MatrixClient;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -16,7 +15,6 @@
             CustomerSettingRegistration.Init();
             SettingMatrixRegistration.Init();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 

@@ -90,4 +90,4 @@ bower_components
 **/Typings/**
 **/Compass/**
 Fanex.CustomerSetting.DemoSite/App/
-.vs/config
+.vs/
