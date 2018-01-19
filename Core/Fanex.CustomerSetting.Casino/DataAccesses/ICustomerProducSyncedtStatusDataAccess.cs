@@ -1,7 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Casino.DataAccesses
 {
-    using Models;
-
     public interface ICustomerProducSyncedtStatusDataAccess
     {
         bool CheckCustomerProductSyncedStatus(int customerId, byte productId);

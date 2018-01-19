@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.SettingType14.Tests.Services
 {
+    using System.Linq;
     using Constants;
     using CustomerSetting.Services;
     using NSubstitute;
     using NUnit.Framework;
     using Resources;
     using SettingType14.Services;
-    using System.Linq;
 
     [TestFixture]
     public class MessageServiceTests

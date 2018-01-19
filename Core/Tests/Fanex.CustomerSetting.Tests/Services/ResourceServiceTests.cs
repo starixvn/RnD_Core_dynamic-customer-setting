@@ -2,7 +2,6 @@
 {
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
-    using Data.Repository;
     using NSubstitute;
     using NUnit.Framework;
     using RemotingRefApi;

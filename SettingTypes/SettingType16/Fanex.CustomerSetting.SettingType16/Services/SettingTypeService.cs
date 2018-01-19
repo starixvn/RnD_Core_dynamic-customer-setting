@@ -9,7 +9,6 @@
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using DataAccesses;
-    using Dtos;
     using Logging;
     using Models;
     using Resources;

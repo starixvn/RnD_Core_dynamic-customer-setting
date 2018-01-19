@@ -1,12 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.WebApi
 {
     using System;
-    using System.Data.SqlClient;
-    using System.Text;
     using System.Web;
     using System.Web.Http;
     using Data.Configuration;
-    using Logging;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
 

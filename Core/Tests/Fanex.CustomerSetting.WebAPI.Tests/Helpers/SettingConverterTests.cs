@@ -54,17 +54,17 @@
             }
         }
 
-        public static string[] ReadSampleData()
+        public static string ReadSampleData()
         {
             string sampleSetting = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + SampleDataFilePath);
 
             sampleSetting = sampleSetting.Replace("\"", "\\\"");
 
-            return new string[] { "{\"Setting\":\"" + sampleSetting + "\"}" };
+            return "{\"Setting\":\"" + sampleSetting + "\"}";
         }
 
-        [Test, TestCaseSource(nameof(ReadSampleData))]
-        public void SerializeObject_Always_ReturnExpectedData(string data)
+        [Test]
+        public void SerializeObject_Always_ReturnExpectedData()
         {
             // Act.
             var jsonSerializerSettings = new JsonSerializerSettings
@@ -78,7 +78,7 @@
                     new LevelConverter()
                 }
             };
-            var setting = JsonConvert.DeserializeObject<UpdateSettingRequest>(data, jsonSerializerSettings);
+            var setting = JsonConvert.DeserializeObject<UpdateSettingRequest>(ReadSampleData(), jsonSerializerSettings);
 
             // Assert.
             string reserializedSettingJson = JsonConvert.SerializeObject(setting.Setting);

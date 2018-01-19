@@ -5,8 +5,6 @@
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
-    using Data.Repository;
-    using Logging;
     using Models;
 
     /// <summary>

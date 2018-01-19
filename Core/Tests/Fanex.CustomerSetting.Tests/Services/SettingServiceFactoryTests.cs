@@ -13,13 +13,13 @@
     {
         private const byte AllBet = 21;
         private static readonly Type QueryServiceDefaultType = typeof(QuerySettingService);
-        private static readonly Type UpdateServiceDefaultType = typeof(UpdateSettingService);        
-        private SettingServiceConfigurator configurator;        
+        private static readonly Type UpdateServiceDefaultType = typeof(UpdateSettingService);
+        private SettingServiceConfigurator configurator;
 
         [SetUp]
         public void SetUpServiceTypeConfig()
         {
-            configurator = new SettingServiceConfigurator();            
+            configurator = new SettingServiceConfigurator();
         }
 
         [Test]
@@ -64,7 +64,7 @@
         [TestCase(2, 101)]
         public void GetQueryService_ConfigurationIsEmpty_ReturnDefaultQueryService(byte system, byte productId)
         {
-            //// Arrange            
+            //// Arrange
             var settingContext = Substitute.For<ISettingContext>();
             settingContext.Actor = Substitute.For<User>();
 
@@ -82,7 +82,7 @@
         [TestCase(2, 101)]
         public void GetUpdateService_ConfigurationIsEmpty_ReturnDefaultUpdateService(byte system, byte productId)
         {
-            //// Arrange            
+            //// Arrange
             var settingContext = Substitute.For<ISettingContext>();
             settingContext.Actor = Substitute.For<User>();
 
@@ -100,7 +100,7 @@
         [TestCase(2, 101)]
         public void GetQueryService_ProductIdIsNotRegistered_ReturnDefaultQueryService(byte system, byte productId)
         {
-            //// Arrange            
+            //// Arrange
             var settingContext = Substitute.For<ISettingContext>();
             settingContext.Actor = Substitute.For<User>();
             var defaultServiceType = QueryServiceDefaultType;
@@ -117,7 +117,7 @@
         [TestCase(2, 101)]
         public void GetUpdateService_ProductIdIsNotRegistered_ReturnDefaultUpdateService(byte system, byte productId)
         {
-            //// Arrange            
+            //// Arrange
             var settingContext = Substitute.For<ISettingContext>();
             settingContext.Actor = Substitute.For<User>();
             var defaultServiceType = UpdateServiceDefaultType;
@@ -136,7 +136,7 @@
             //// Arrange
             var productId = AllBet;
             var settingContext = Substitute.For<ISettingContext>();
-            settingContext.Actor = Substitute.For<User>();           
+            settingContext.Actor = Substitute.For<User>();
             var serviceType = typeof(UpdateCasinoSettingService);
 
             configurator

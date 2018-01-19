@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using CustomerSetting.Models;
-    using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using Dtos;

@@ -1,5 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType14.Tests.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
@@ -15,8 +17,6 @@
     using Resources;
     using SettingType14.Models;
     using SettingType14.Services;
-    using System.Collections.Generic;
-    using System.Linq;
 
     [TestFixture]
     public class SettingTypeServiceTests

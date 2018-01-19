@@ -1,9 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Tests.Services.Impl
 {
-    using System.Collections.Generic;
     using Casino.Models;
     using Casino.Services;
-    using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Services;

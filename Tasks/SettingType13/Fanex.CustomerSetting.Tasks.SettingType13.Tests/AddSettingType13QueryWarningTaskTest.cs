@@ -1,12 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Tasks.SettingType13.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Models;
     using Models.Enumerations;
     using Models.Requests;
-    using Models.Results;
     using NSubstitute;
     using NUnit.Framework;
 

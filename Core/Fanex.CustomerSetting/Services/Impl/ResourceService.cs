@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
-    using Data.Repository;
     using RemotingRefApi;
 
     public class ResourceService : IResourceService
@@ -10,7 +9,7 @@
         private const string ProductDefaultFormat = "Product {0}";
         private const string ProductRefId = "Product";
         private const string RefResourceDefaultFormat = "Ref Resource: {0} - Key: {1}";
-        
+
         private readonly IRemotingRefService _remotingRef;
 
         public ResourceService(IRemotingRefService remotingRef = null)

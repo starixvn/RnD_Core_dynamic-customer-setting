@@ -1,10 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.SettingType14.Tests.Models
 {
+    using System;
     using CustomerSetting.Models.Enumerations;
     using Dtos;
     using NUnit.Framework;
     using SettingType14.Models;
-    using System;
 
     public class TicketCommissionItemTests
     {

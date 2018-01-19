@@ -6,7 +6,6 @@
     using Helpers;
     using Models.Requests;
     using RestSharp;
-    using RestSharp.Extensions;
 
     internal class CustomerSettingService : ICustomerSettingService
     {

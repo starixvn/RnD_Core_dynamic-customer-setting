@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType14.Models
 {
+    using System;
     using Common.Helper;
     using Constants;
     using CustomerSetting.Models;
@@ -7,7 +8,6 @@
     using CustomerSetting.Models.Results;
     using Dtos;
     using Resources;
-    using System;
 
     public class TicketCommissionItem : SettingItemDefault, IEquatable<TicketCommissionItem>
     {
