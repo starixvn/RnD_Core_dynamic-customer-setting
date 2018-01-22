@@ -12,8 +12,8 @@
                 data-ng-disabled="item.readonly" />
          <input type="checkbox"
                 class="setting-field--checkfield__check-ctrl"
-                data-ng-if="!(settingType | editableSettingType)"
                 disabled="disabled"
+                data-ng-if="!(settingType | editableSettingType)"
                 data-ng-model="item.isChecked" />
          <span data-ng-if="customerLevel === avaiCustomerLevels.superAgent">{{'Super' | label}}</span>
          <span data-ng-if="customerLevel === avaiCustomerLevels.masterAgent">{{'Master' | label}}</span>

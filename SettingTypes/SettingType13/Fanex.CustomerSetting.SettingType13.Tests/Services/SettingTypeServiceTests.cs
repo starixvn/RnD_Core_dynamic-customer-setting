@@ -64,9 +64,7 @@
                     BetTypeId = 1,
                     SportTypeId = 1,
                     IsDisabledUpline = false,
-                    IsDisabled = false,
-                    HasDownline = true,
-                    IsDisabledDownline = true
+                    IsDisabled = false
                 }
             };
 
@@ -82,8 +80,7 @@
                 BetTypeId = 1,
                 SportTypeId = 1,
                 IsDisabled = false,
-                Upline = new ProductStatusItem(false),
-                Downline = new ProductStatusItem(true)
+                Upline = new ProductStatusItem(false)
             };
 
             Assert.AreEqual(expectedFirstResult, firstProductStatusItem);

@@ -57,7 +57,6 @@ module CustomerSetting.IE8 {
 
             if (source) {
                 var backupIsChecked: boolean = this.isChecked;
-                var backupDownlineIsChecked: boolean;
 
                 if (!this.readonly) {
                     this.isChecked = source.isChecked;
@@ -68,16 +67,10 @@ module CustomerSetting.IE8 {
 
                 if (!isSuccessful) {
                     this.isChecked = backupIsChecked;
-
                     this.toggleCheck();
                     this.highlightUnablyCopiedField();
                 } else {
-                    // Since highlightCopiedFields can't work with complex rule, then we must call those commands manually.
-                    if (this.isChecked !== backupIsChecked) {
-                        this.highlightState["isDisabled"] = NotificationType.success;
-                    } else if (this.highlightState["isDisabled"]) {
-                        this.highlightState["isDisabled"] = NotificationType.none;
-                    }
+                    this.highlightCopiedFields({ isDisabled: !backupIsChecked });
                 }
             }
 
@@ -115,16 +108,6 @@ module CustomerSetting.IE8 {
 
         public toggleCheck(isDownline: boolean = false): void {
             this.isDisabled = !this.isChecked;
-        }
-
-        private resetFieldState(fieldName: string): void {
-            if (this.validationState && !this.validationState.isSuccessful()) {
-                if (this.validationState.fieldName === fieldName) {
-                    this.resetValidationState();
-                }
-            } else {
-                this.resetFieldHighlightState(fieldName);
-            }
         }
     }
 }

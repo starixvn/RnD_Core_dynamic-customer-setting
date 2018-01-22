@@ -1,7 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Tasks.SettingType13.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using CustomerSetting.SettingType13.Models;
     using Models;
     using Models.Enumerations;
     using Models.Requests;
@@ -27,7 +29,7 @@
             _settingContext.Actor = Substitute.For<User>();
             _settingContext.Actor.Level = Level.Master;
             _settingContext.System = (byte)SystemType.Alpha;
-            _setting = SampleData.CreateSampleSettingData();
+            _setting = CreateSampleSettingData();
             _query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
         }
 
@@ -214,6 +216,37 @@
 
             // Assert.
             Assert.Null(_setting?.WarningMessage);
+        }
+
+        private static ISetting CreateSampleSettingData()
+        {
+            ISetting setting = Substitute.For<ISetting>();
+
+            setting.SettingTypes = new List<SettingType>
+            {
+                new SettingType
+                {
+                    Id = Constants.SettingType13Id,
+                    DisplayMode = 1,
+                    SettingItems = new List<ProductStatusItem>
+                    {
+                        new ProductStatusItem
+                        {
+                            SportTypeId = 1,
+                            BetTypeId = 1,
+                            IsDisabled = false,
+                            Upline = new ProductStatusItem
+                            {
+                                IsDisabled = false
+                            }
+                        }
+                    }
+                }
+            };
+            setting.CustomerLevel = Level.Master;
+            setting.WarningMessage = null;
+
+            return setting;
         }
     }
 }

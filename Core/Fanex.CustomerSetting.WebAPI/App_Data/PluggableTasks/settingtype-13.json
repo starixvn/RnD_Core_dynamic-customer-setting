@@ -24,8 +24,7 @@
     "tasks": [
       {
         "taskNames": [
-          "Fanex.CustomerSetting.Tasks.SettingType13.AddSettingType13QueryWarningTask, Fanex.CustomerSetting.Tasks.SettingType13",
-          "Fanex.CustomerSetting.Tasks.SettingType13.AddSettingType13UpdateWarningsTask, Fanex.CustomerSetting.Tasks.SettingType13"
+          "Fanex.CustomerSetting.Tasks.SettingType13.AddSettingType13QueryWarningTask, Fanex.CustomerSetting.Tasks.SettingType13"
         ]
       }
     ]
@@ -52,6 +51,16 @@
   },
   {
     "productId": 26,
+    "tasks": [
+      {
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.SettingType13.AddSettingType13QueryWarningTask, Fanex.CustomerSetting.Tasks.SettingType13"
+        ]
+      }
+    ]
+  },
+  {
+    "productId": 30,
     "tasks": [
       {
         "taskNames": [

@@ -10,7 +10,6 @@ module CustomerSetting {
 
         public isDisabled: boolean;
         public upline: SettingType13Item;
-        public downline: SettingType13Item;
 
         // Additional fields tracing the state of controls.
         // I added those fields due to the state of controls can be cloned via copying function.
@@ -22,24 +21,6 @@ module CustomerSetting {
 
         public set isChecked(isChecked: boolean) {
             this.isDisabled = !isChecked;
-
-            if (this.downline) {
-                if ((<SettingType13Item>this.oldSetting).isChecked && (<SettingType13Item>this.downline.oldSetting).isChecked) {
-                    this.downline.isChecked = this.isChecked;
-                    this.downline.readonly = true;
-                } else {
-                    if (!this.isChecked) {
-                        this.downline.isDisabled = true;
-                        this.resetFieldState("downline.isDisabled");
-                    }
-
-                    this.downline.readonly = !isChecked;
-                }
-
-                this.resetFieldState("isDisabled");
-            } else {
-                this.resetFieldState("downline.isDisabled");
-            }
         }
 
         constructor();
@@ -64,11 +45,6 @@ module CustomerSetting {
                     && this.customerLevel !== Level.member) {
                     this.readonly = this.readonly || this.isChecked;
                 }
-
-                if (settingItem.downline) {
-                    this.downline = new SettingType13Item(settingItem.downline, true, customerLevel, systemId);
-                    this.downline.readonly = !this.isChecked || this.downline.isChecked;
-                }
             }
 
             if (backup) {
@@ -80,9 +56,7 @@ module CustomerSetting {
             var isChanged: boolean = super.isChanged();
             var oldSetting: SettingType13Item = <SettingType13Item>this.oldSetting;
 
-            return isChanged
-                || this.isDisabled !== oldSetting.isDisabled
-                || (this.downline && this.downline.isDisabled !== oldSetting.downline.isDisabled);
+            return isChanged || this.isDisabled !== oldSetting.isDisabled;
         }
 
         public copySettingFrom(source: SettingType13Item): boolean {
@@ -90,43 +64,18 @@ module CustomerSetting {
 
             if (source) {
                 var backupIsChecked: boolean = this.isChecked;
-                var backupDownlineIsChecked: boolean;
 
                 if (!this.readonly) {
                     this.isChecked = source.isChecked;
-                }
-
-                if (this.downline && source.downline) {
-                    backupDownlineIsChecked = this.downline.isChecked;
-
-                    if (!this.downline.readonly) {
-                        this.downline.isChecked = source.downline.isChecked;
-                    }
                 }
 
                 isSuccessful = this.validate();
 
                 if (!isSuccessful) {
                     this.isChecked = backupIsChecked;
-
-                    if (this.downline) {
-                        this.downline.isChecked = backupDownlineIsChecked;
-                    }
-
                     this.highlightUnablyCopiedField();
                 } else {
-                    // Since highlightCopiedFields can't work with complex rule, then we must call those commands manually.
-                    if (this.isChecked !== backupIsChecked) {
-                        this.highlightState["isDisabled"] = NotificationType.success;
-                    } else if (this.highlightState["isDisabled"]) {
-                        this.highlightState["isDisabled"] = NotificationType.none;
-                    }
-
-                    if (this.downline && this.downline.isChecked !== backupDownlineIsChecked) {
-                        this.highlightState["downline.isDisabled"] = NotificationType.success;
-                    } else if (this.highlightState["downline.isDisabled"]) {
-                        this.highlightState["downline.isDisabled"] = NotificationType.none;
-                    }
+                    this.highlightCopiedFields({ isDisabled: !backupIsChecked });
                 }
             }
 
@@ -134,21 +83,6 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (this.isDisabled && this.downline && !this.downline.isDisabled) {
-                this.validationState = new ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
-
-                return false;
-            }
-
-            if (this.downline
-                && !(<SettingType13Item>this.oldSetting).isDisabled
-                && !(<SettingType13Item>this.oldSetting).downline.isDisabled
-                && this.isDisabled !== this.downline.isDisabled) {
-                this.validationState = new ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
-
-                return false;
-            }
-
             if (this.upline && this.upline.isDisabled && !this.isDisabled) {
                 this.validationState = new ValidationResult("DownlineCannotBeEnabledWhenUplineIsDisabled", "isDisabled");
 
@@ -174,21 +108,7 @@ module CustomerSetting {
                 settingItem.upline = this.upline.toJson();
             }
 
-            if (this.downline) {
-                settingItem.downline = this.downline.toJson();
-            }
-
             return settingItem;
-        }
-
-        private resetFieldState(fieldName: string): void {
-            if (this.validationState && !this.validationState.isSuccessful) {
-                if (this.validationState.fieldName === fieldName) {
-                    this.resetValidationState();
-                }
-            } else {
-                this.resetFieldHighlightState(fieldName);
-            }
         }
     }
 }

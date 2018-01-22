@@ -19,7 +19,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType13 {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,20 +61,11 @@ namespace Fanex.CustomerSetting.Tasks.SettingType13 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not allowed to disable downlines as a company policy..
+        ///   Looks up a localized string similar to You are not allowed to disable this product on your downlines as a company policy..
         /// </summary>
         internal static string ProductStatusNoteForExternalSites {
             get {
                 return ResourceManager.GetString("ProductStatusNoteForExternalSites", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You&apos;ve just enabled a product for downlines. Please go to Member Setting page to configure your OWN PT Settings..
-        /// </summary>
-        internal static string SuccessfulProductStatusUpdateWarning {
-            get {
-                return ResourceManager.GetString("SuccessfulProductStatusUpdateWarning", resourceCulture);
             }
         }
     }

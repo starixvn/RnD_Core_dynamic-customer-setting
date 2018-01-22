@@ -445,6 +445,7 @@ module CustomerSetting.IE8 {
         private initializeWarningMessage(warningMessage: any): void {
             this.warningMessage = new UpdatingSettingResult(warningMessage);
             this.warningMessage.msgType = MessageType.warning;
+            this.warningMessage.msgTypeName = "warning";
 
             if (this.warningMessage.subResults) {
                 _.forEach(this.warningMessage.subResults, (subResult: CustomerSettingResult) => {
