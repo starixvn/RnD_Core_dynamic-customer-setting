@@ -34560,6 +34560,401 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.directive("settingtype2", SettingType2Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType6Item = (function (_super) {
+        __extends(SettingType6Item, _super);
+        function SettingType6Item(settingItem, backup) {
+            if (backup === void 0) { backup = false; }
+            _super.call(this, settingItem);
+            if (settingItem) {
+                this.winLimit = settingItem.winLimit;
+                this.maxWinRange = settingItem.maxWinRange;
+                this.lossLimit = settingItem.lossLimit;
+                this.minLossRange = settingItem.minLossRange;
+                this.maxLossRange = settingItem.maxLossRange;
+                this.isAutoReset = settingItem.isAutoReset;
+                this.isAutoResetUpline = settingItem.isAutoResetUpline;
+            }
+            if (backup) {
+                this.oldSetting = new SettingType6Item(this);
+            }
+        }
+        SettingType6Item.prototype.isChanged = function () {
+            var isChanged = _super.prototype.isChanged.call(this);
+            var oldSetting = this.oldSetting;
+            isChanged =
+                isChanged
+                    || this.winLimit !== oldSetting.winLimit
+                    || this.lossLimit !== oldSetting.lossLimit
+                    || this.isAutoReset !== oldSetting.isAutoReset;
+            return isChanged;
+        };
+        SettingType6Item.prototype.validate = function () {
+            if (this.winLimit < 0) {
+                this.validationState = new CustomerSetting.ValidationResult("MaximumWinShouldNotBeLessThanZero", "winLimit");
+                return false;
+            }
+            if (0 < this.maxWinRange && this.maxWinRange < this.winLimit) {
+                this.validationState = new CustomerSetting.ValidationResult("MaximumWinShouldBotExceedThanUplineMaximumWin", "winLimit");
+                return false;
+            }
+            if (this.lossLimit === null) {
+                this.validationState = new CustomerSetting.ValidationResult("MaximumLossValueIsRequired", "lossLimit");
+                return false;
+            }
+            if ((this.maxLossRange === 0 && this.lossLimit !== 0 && this.lossLimit < this.minLossRange)
+                || (this.maxLossRange > 0 && (this.lossLimit < this.minLossRange || this.maxLossRange < this.lossLimit))
+                || (this.lossLimit < 0)) {
+                this.validationState = new CustomerSetting.ValidationResult("MaximumLossValueShouldBeInRange", "lossLimit", [this.minLossRange, this.maxLossRange]);
+                return false;
+            }
+            if (!this.isAutoResetUpline && this.isAutoReset) {
+                this.validationState = new CustomerSetting.ValidationResult("AutoResetIsViolatedWithUpline", "isAutoReset");
+                return false;
+            }
+            this.resetValidationState();
+            return true;
+        };
+        SettingType6Item.prototype.toJson = function () {
+            return {
+                sportTypeId: this.sportTypeId,
+                sportTypeName: this.sportTypeName,
+                betTypeId: this.betTypeId,
+                betTypeName: this.betTypeName,
+                typeName: this.typeName,
+                winLimit: this.winLimit,
+                maxWinRange: this.maxWinRange,
+                lossLimit: this.lossLimit,
+                minLossRange: this.minLossRange,
+                maxLossRange: this.maxLossRange,
+                isAutoReset: this.isAutoReset,
+                isAutoResetUpline: this.isAutoResetUpline
+            };
+        };
+        return SettingType6Item;
+    }(CustomerSetting.DefaultSettingItem));
+    CustomerSetting.SettingType6Item = SettingType6Item;
+    var CurrentWinLossAmountItem = (function () {
+        function CurrentWinLossAmountItem(currentWinningAmount) {
+            if (currentWinningAmount) {
+                this.winPercent = currentWinningAmount.winPercent;
+                this.maxWinAmount = currentWinningAmount.maxWinAmount;
+                this.lossPercent = currentWinningAmount.lossPercent;
+                this.maxLossAmount = currentWinningAmount.maxLossAmount;
+            }
+        }
+        return CurrentWinLossAmountItem;
+    }());
+    CustomerSetting.CurrentWinLossAmountItem = CurrentWinLossAmountItem;
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType6ResourceService = (function (_super) {
+        __extends(SettingType6ResourceService, _super);
+        function SettingType6ResourceService(settingType6Resource, parametersService) {
+            _super.call(this, settingType6Resource, parametersService);
+        }
+        SettingType6ResourceService.$inject = ["settingType6Resource", "parametersService"];
+        return SettingType6ResourceService;
+    }(CustomerSetting.ResourceService));
+    CustomerSetting.SettingType6ResourceService = SettingType6ResourceService;
+    CustomerSetting.ModuleRegister.service("settingType6ResourceService", SettingType6ResourceService);
+    function SettingType6LabelFilter(settingType6ResourceService) {
+        return function (name) {
+            return settingType6ResourceService.getLabel(name);
+        };
+    }
+    SettingType6LabelFilter.$inject = ["settingType6ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType6Label", SettingType6LabelFilter);
+    function SettingType6MessageFilter(settingType6ResourceService) {
+        return function (name) {
+            var replacements = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                replacements[_i - 1] = arguments[_i];
+            }
+            replacements.unshift(name);
+            return settingType6ResourceService.getFormattedMessage.apply(settingType6ResourceService, replacements);
+        };
+    }
+    SettingType6MessageFilter.$inject = ["settingType6ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType6Message", SettingType6MessageFilter);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType6LossLimitInputDirective = (function () {
+        function SettingType6LossLimitInputDirective($compile, $filter, settingType6ResourceService) {
+            var _this = this;
+            this.restrict = "A";
+            this.require = "ngModel";
+            this.controller = ["$scope", function ($scope) {
+                    $scope.updateValue = function () {
+                        $scope.item.validate();
+                    };
+                }];
+            this.link = function (scope, element, attributes, modelCtrl) {
+                element.on("focus", function () {
+                    element.data("focused", true);
+                });
+                element.on("focusout", function () {
+                    element.data("focused", false);
+                });
+                element.on("mouseup", function () {
+                    if (element.data("focused")) {
+                        var input = element[0];
+                        input.select();
+                    }
+                });
+                element.on("keydown", function (event) {
+                    var value = element.val();
+                    var dotPistion = value.indexOf(".");
+                    var numberParts = value.split(".");
+                    var input = element[0];
+                    if (value.length === 0 && event.keyCode === 96) {
+                        event.preventDefault();
+                        return;
+                    }
+                    if ([110, 190].indexOf(event.keyCode) >= 0) {
+                        if (numberParts.length > 1) {
+                            event.preventDefault();
+                            return;
+                        }
+                        else {
+                            return;
+                        }
+                    }
+                    if ([46, 8, 9, 27, 13].indexOf(event.keyCode) >= 0
+                        || (event.keyCode === 65 && event.ctrlKey === true)
+                        || (event.keyCode >= 35 && event.keyCode <= 40)) {
+                        return;
+                    }
+                    if ((event.shiftKey || (event.keyCode < 48 || event.keyCode > 57))
+                        && (event.keyCode < 96 || event.keyCode > 105)) {
+                        event.preventDefault();
+                        return;
+                    }
+                    if (dotPistion >= 0 && dotPistion < input.selectionStart && numberParts[1].length > 1) {
+                        event.preventDefault();
+                        return;
+                    }
+                });
+                modelCtrl.$formatters.unshift(function () {
+                    if (modelCtrl.$modelValue === 0) {
+                        return _this.settingType6ResourceService.getLabel("Unlimited");
+                    }
+                    else {
+                        return _this.$filter("number")(modelCtrl.$modelValue);
+                    }
+                });
+                modelCtrl.$parsers.unshift(function (viewValue) {
+                    var input = element[0];
+                    var value = 0;
+                    var formattedValue = viewValue;
+                    var caretPosition = input.selectionStart;
+                    var numberParts = viewValue ? viewValue.split(".") : [];
+                    if (numberParts.length > 1) {
+                        var plainIntegerPart = numberParts[0].replace(/[\,]/g, "") || "0";
+                        var decimalPart = numberParts[1].replace(/[\,\.]/g, "") || "";
+                        decimalPart = decimalPart.substring(0, 2);
+                        value = parseFloat(plainIntegerPart + "." + decimalPart);
+                        formattedValue = _this.$filter("number")(plainIntegerPart) + "." + decimalPart;
+                    }
+                    else if (numberParts.length > 0) {
+                        var plainNumber = viewValue.replace(/[\,]/g, "");
+                        value = parseInt(plainNumber, 10) || 0;
+                        formattedValue = _this.$filter("number")(value);
+                    }
+                    if (value === 0) {
+                        formattedValue = "";
+                        value = null;
+                    }
+                    element.val(formattedValue);
+                    if (viewValue.length !== caretPosition) {
+                        var offset = viewValue.length - formattedValue.length;
+                        caretPosition -= offset;
+                        if (input.selectionStart === input.selectionEnd) {
+                            input.selectionEnd = caretPosition;
+                        }
+                        input.selectionStart = caretPosition;
+                    }
+                    return value;
+                });
+            };
+            this.$compile = $compile;
+            this.$filter = $filter;
+            this.settingType6ResourceService = settingType6ResourceService;
+        }
+        SettingType6LossLimitInputDirective.$inject = ["$compile", "$filter", "settingType6ResourceService"];
+        return SettingType6LossLimitInputDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("settingtype6LossLimitInput", SettingType6LossLimitInputDirective);
+    var SettingType6UnlimitedCheckboxDirective = (function () {
+        function SettingType6UnlimitedCheckboxDirective() {
+            this.restrict = "A";
+            this.controller = ["$scope", function ($scope) {
+                    $scope.isUnlimited = $scope.item.lossLimit === 0;
+                    $scope.check = function () {
+                        $scope.item.lossLimit = $scope.isUnlimited ? 0 : null;
+                        if ($scope.isUnlimited && $scope.item.validationState.fieldName === "lossLimit") {
+                            $scope.item.resetValidationState();
+                        }
+                    };
+                }];
+        }
+        return SettingType6UnlimitedCheckboxDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("settingtype6UnlimitedCheckbox", SettingType6UnlimitedCheckboxDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType6WinLimitSelectDirective = (function () {
+        function SettingType6WinLimitSelectDirective(settingType6ResourceService) {
+            var _this = this;
+            this.replace = true;
+            this.templateUrl = "settingtype6-win-limit-select.htm";
+            this.controller = ["$scope", function ($scope) {
+                    $scope.$watch("settingItem", function (settingItem) {
+                        var availableWinLimits = [];
+                        if (settingItem.maxWinRange === 0) {
+                            availableWinLimits = SettingType6WinLimitSelectDirective.supportedWinLimits;
+                        }
+                        else {
+                            availableWinLimits = SettingType6WinLimitSelectDirective.supportedWinLimits.filter(function (winLimit) {
+                                return winLimit > 0 && winLimit <= settingItem.maxWinRange;
+                            });
+                            if (availableWinLimits.filter(function (range) { return range === $scope.settingItem.winLimit; }).length === 0) {
+                                availableWinLimits.unshift($scope.settingItem.winLimit);
+                            }
+                        }
+                        $scope.range = availableWinLimits.map(function (winLimit) {
+                            return new CustomerSetting.KeyValuePair(winLimit, winLimit > 0 ? winLimit + "X" : _this.settingType6ResourceService.getLabel("Unlimited"));
+                        });
+                    });
+                }];
+            this.settingType6ResourceService = settingType6ResourceService;
+        }
+        Object.defineProperty(SettingType6WinLimitSelectDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    settingItem: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        SettingType6WinLimitSelectDirective.$inject = ["settingType6ResourceService"];
+        SettingType6WinLimitSelectDirective.supportedWinLimits = [3, 5, 10, 0];
+        return SettingType6WinLimitSelectDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("settingtype6WinLimitSelect", SettingType6WinLimitSelectDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var settingTypeId = 6;
+    var SettingType6Directive = (function (_super) {
+        __extends(SettingType6Directive, _super);
+        function SettingType6Directive() {
+            var _this = this;
+            _super.apply(this, arguments);
+            this.replace = true;
+            this.templateUrl = "settingtype6.htm";
+            this.controller = [
+                "$scope",
+                "$http",
+                "appConfigService",
+                "requestService",
+                "settingTypesSharedValuesService",
+                "settingType6ResourceService",
+                function ($scope, $http, appConfigService, requestService, settingTypesSharedValuesService, settingType6ResourceService) {
+                    $scope.customerId = settingTypesSharedValuesService.customerId;
+                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                    $scope.productId = settingTypesSharedValuesService.productId;
+                    $scope.productName = settingTypesSharedValuesService.productName;
+                    $scope.avaiCustomerLevels = CustomerSetting.Level;
+                    $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
+                    $scope.settingTypeName = settingType6ResourceService.getLabel("WinLossLimit");
+                    $scope.highestPercentageRange = 100;
+                    $scope.$watch("settingType", function (settingType) {
+                        $scope.normalMode = settingTypesSharedValuesService.normalMode;
+                        if (settingType && angular.isArray(settingType.settingItems)) {
+                            if (settingType.isError) {
+                                if (settingType.settingItems.length > 0) {
+                                    settingType.settingItems[0] = new CustomerSetting.ErrorSettingItem(settingType.settingItems[0]);
+                                }
+                            }
+                            else {
+                                settingType.settingItems.forEach(function (item, index) {
+                                    if (item) {
+                                        settingType.settingItems[index] = new CustomerSetting.SettingType6Item(item, true);
+                                    }
+                                });
+                                if (settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
+                                    $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
+                                }
+                                else {
+                                    $scope.sportGroups = [settingType.settingItems];
+                                }
+                            }
+                        }
+                    });
+                    $scope.getCurrentWinLoss = function (settingItem) {
+                        var command = new CustomerSetting.RedirectCommand(settingTypeId, 0, CustomerSetting.ActionType.query, {
+                            customerId: $scope.customerId,
+                            sportTypeId: settingItem.sportTypeId,
+                            betTypeId: settingItem.betTypeId
+                        });
+                        requestService.request(appConfigService.getSettingTypeActionPath(), command.toJson(), function (response) {
+                            settingItem.currentWinLossAmount = new CustomerSetting.CurrentWinLossAmountItem(response.data);
+                        });
+                    };
+                }];
+        }
+        Object.defineProperty(SettingType6Directive.prototype, "scope", {
+            get: function () {
+                return {
+                    settingType: "=",
+                    update: "&"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return SettingType6Directive;
+    }(CustomerSetting.DefaultSettingTypeGroupingDirective));
+    CustomerSetting.ModuleRegister.directive("settingtype6", SettingType6Directive);
+    function UnlimitedLimitFilter(settingType6ResourceService) {
+        return function (value) {
+            return parseFloat(value) > 0 ? value : settingType6ResourceService.getLabel("Unlimited");
+        };
+    }
+    UnlimitedLimitFilter.$inject = ["settingType6ResourceService"];
+    CustomerSetting.ModuleRegister.filter("unlimitedLimit", UnlimitedLimitFilter);
+})(CustomerSetting || (CustomerSetting = {}));
+
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{::(\"GeneralInformation\" | label)}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"UserName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Nickname\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"FirstName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Phone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"LastName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"MobilePhone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{::(\"Fax\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></toggle-setting-block><copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
@@ -34576,7 +34971,9 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
 $templateCache.put("bet-setting-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'betSettingResourceService\':fieldName}}\"></div>");
 $templateCache.put("settingtype2-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'MinBet\' | betSettingLabel)}}</div><div class=\"block__lbl w33-percent\">{{::(\'MaxBet\' | betSettingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'MaxPerMatch\' | betSettingLabel)}}</div></div>");
 $templateCache.put("settingtype2-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></bet-setting-input><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></bet-setting-input><bet-setting-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></bet-setting-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerMatch | formatNumber}}</div></div>");
-$templateCache.put("settingtype2.htm","<div><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping></div>");}]);
+$templateCache.put("settingtype2.htm","<div><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping></div>");
+$templateCache.put("settingtype6-win-limit-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-model=\"settingItem.winLimit\" data-ng-options=\"item.key as item.value for item in range\" data-field-highlighting data-field-name=\"winLimit\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'settingType6ResourceService\':\'winLimit\':\'unlimitedLimit\'}}\"></select><span>{{::(\'OnGivenCredit\' | settingType6Label)}}</span></div>");
+$templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype6\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\">{{group[0].betTypeName}}</div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumWin\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><settingtype6-win-limit-select data-setting-item=\"item\"></settingtype6-win-limit-select></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? \'X\' : \'\'}} {{::(\'OnGivenCredit\' | settingType6Label)}}</div></div><div class=\"block__row block__row--border-top\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype6-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-field-highlighting data-field-name=\"lossLimit\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype6-unlimited-checkbox data-ng-model=\"isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType6Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentWinLossAmount\' | settingType6Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentWinLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentWinLoss(item)\">{{::(\'ClickToViewCurrentWinLossLimit\' | settingType6Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentWinLossAmount\"><div><span>{{\'Winning\' | settingType6Label}}:</span> <span data-ng-if=\"item.winLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.winLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.winPercent | formatNumber}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxWinAmount | formatNumber}}</span></span></div><div><span>{{\'Losing\' | settingType6Label}}:</span> <span data-ng-if=\"item.lossLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.lossLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.lossPercent | formatNumber}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxLossAmount | formatNumber}}</span></span></div></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-highlight-state=\"item.highlightState\" data-field-name=\"isAutoReset\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType6Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
 
 (function () {
@@ -35519,4 +35916,154 @@ $templateCache.put("settingtype2.htm","<div><default-setting-type-grouping class
     };
 
     angular.module("customerSetting").value("betSettingResources", betSettingResources);
+})();
+
+/*jshint -W101,-W106,-W044,-W098*/
+
+(function () {
+    "use strict";
+
+    var settingType6Resource = {};
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["en-us"] = {
+        "ClickToViewCurrentWinLossLimit": "Click to view Current Win/Loss Amount",
+        "CurrentWinLossAmount": "Current Win/Loss Amount",
+        "DailyAutoResetLimit": "Daily auto reset limit (at 12 noon GMT +8)",
+        "Losing": "Losing",
+        "MaximumLoss": "Maximum Loss",
+        "MaximumWin": "Maximum Win",
+        "Of": "of",
+        "OnGivenCredit": "on given credit",
+        "Unlimited": "Unlimited",
+        "WinLossLimit": "Win Loss Limit",
+        "Winning": "Winning"
+    };
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["zh-cn"] = {
+        "ClickToViewCurrentWinLossLimit": "点击查看目前输赢数额",
+        "CurrentWinLossAmount": "目前输赢数额",
+        "DailyAutoResetLimit": "每日限额自动重设 (于 中午12 时正 GMT +8)",
+        "Losing": "输",
+        "MaximumLoss": "最高输额",
+        "MaximumWin": "最高赢额",
+        "Of": "的",
+        "OnGivenCredit": "无信用额",
+        "Unlimited": "无限",
+        "WinLossLimit": "输赢限额",
+        "Winning": "赢"
+    };
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["zh-tw"] = {
+        "ClickToViewCurrentWinLossLimit": "點擊查看目前輸贏數額",
+        "CurrentWinLossAmount": "目前輸贏數額",
+        "DailyAutoResetLimit": "每日限額自動重設 (于 中午12 時正 GMT +8)",
+        "Losing": "輸",
+        "MaximumLoss": "最高輸額",
+        "MaximumWin": "最高赢額",
+        "Of": "的",
+        "OnGivenCredit": "無信用額",
+        "Unlimited": "無限",
+        "WinLossLimit": "輸贏限額",
+        "Winning": "贏"
+    };
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["th-th"] = {
+        "ClickToViewCurrentWinLossLimit": "คลิกเพื่อดูจำนวนแพ้/ชนะปัจจุบัน",
+        "CurrentWinLossAmount": "จำนวนแพ้/ชนะปัจจุบัน",
+        "DailyAutoResetLimit": "ตั้งวงเงินใหม่อัตโนมัติรายวัน (เวลา 12 น. GMT+8)",
+        "Losing": "แพ้",
+        "MaximumLoss": "แพ้สูงสุด",
+        "MaximumWin": "ชนะสูงสุด",
+        "Of": "ของ",
+        "OnGivenCredit": "ยอดคงเหลือที่ได้รับ",
+        "Unlimited": "ไม่จำกัด",
+        "WinLossLimit": "วงเงินแพ้ชนะ",
+        "Winning": "ชนะ"
+    };
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["vi-vn"] = {
+        "ClickToViewCurrentWinLossLimit": "Nhấn để xem giá trị thắng thua hiện tại",
+        "CurrentWinLossAmount": "Giá trị thắng thua hiện tại",
+        "DailyAutoResetLimit": "Tự động reset giới hạn chuyển khoản mỗi ngày (12 trưa GMT+8)",
+        "Losing": "Thua",
+        "MaximumLoss": "Tiền thua cược lớn nhất",
+        "MaximumWin": "Tiền thắng cược lớn nhất",
+        "Of": "của",
+        "OnGivenCredit": "trong hạn mức tín dụng được cấp",
+        "Unlimited": "Không giới hạn",
+        "WinLossLimit": "Giới hạn thắng thua",
+        "Winning": "Thắng"
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["en-us"] = {
+        "AutoResetIsViolatedWithUpline": "Daily Auto Reset is turned off for the Upline.",
+        "MaximumLossValueIsRequired": "Maximum Loss value is required.",
+        "MaximumLossValueShouldBeInRange": "Maximum Loss value should be in the range of ({0} - {1}).",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "Maximum Win should be less than or equal to Maximum Win of the direct upline.",
+        "MaximumWinShouldNotBeLessThanZero": "Maximum Win should not be less than 0.",
+        "Msg_10022": "You are not allowed to change Daily auto reset limit.",
+        "Msg_10024": "Maximum Win should be less than or equal to Maximum Win of the direct upline.",
+        "Msg_10033": "Maximum Loss should be less than or equal to Maximum Loss of the direct upline.",
+        "UpdatedWinLossLimitSuccessfully": "Updated Win Loss Limit successfully."
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["zh-cn"] = {
+        "AutoResetIsViolatedWithUpline": "关闭上线的每日限额自动重设.",
+        "MaximumLossValueIsRequired": "需求最高输额.",
+        "MaximumLossValueShouldBeInRange": "最高输额需介于 ({0} - {1}) 的范围.",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "最高赢额应低于或相等于直系上线的最高赢额.",
+        "MaximumWinShouldNotBeLessThanZero": "最高赢额不应低于 0.",
+        "Msg_10022": "您不允许修改每日限额自动重设.",
+        "Msg_10024": "最高赢额应低于或相等于直系上线的最高赢额.",
+        "Msg_10033": "最高输额应低于或相等于直系上线的最高输额.",
+        "UpdatedWinLossLimitSuccessfully": "输赢限额已成功更新."
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["zh-tw"] = {
+        "AutoResetIsViolatedWithUpline": "關閉上線的每日限額自動重設.",
+        "MaximumLossValueIsRequired": "需求最高輸額.",
+        "MaximumLossValueShouldBeInRange": "最高輸額需介於 ({0} - {1}) 的範圍.",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "最高贏額應低於或相等於直系上線的最高贏額.",
+        "MaximumWinShouldNotBeLessThanZero": "最高贏額不應低於 0.",
+        "Msg_10022": "您不允許修改每日限額自動重設.",
+        "Msg_10024": "最高贏額應低於或相等於直系上線的最高贏額.",
+        "Msg_10033": "最高輸額應低於或相等於直系上線的最高輸額.",
+        "UpdatedWinLossLimitSuccessfully": "輸贏限額已成功更新."
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["th-th"] = {
+        "AutoResetIsViolatedWithUpline": "มีการปิดการตั้งค่าใหม่อัตโนมัติรายวันสำหรับอัปไลน์",
+        "MaximumLossValueIsRequired": "ต้องใช้ค่าแพ้สูงสุด",
+        "MaximumLossValueShouldBeInRange": "ค่าแพ้สูงสุดควรอยู่ในช่วง ({0} - {1})",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "ชนะสูงสุดควรน้อยกว่าหรือเท่ากับชนะสูงสุดของอัปไลน์โดยตรง",
+        "MaximumWinShouldNotBeLessThanZero": "ชนะสูงสุดไม่ควรน้อยกว่า 0",
+        "Msg_10022": "ไม่อนุญาตให้เปลี่ยนแปลงวงเงินการตั้งค่าใหม่อัตโนมัติรายวัน",
+        "Msg_10024": "ชนะสูงสุดควรน้อยกว่าหรือเท่ากับชนะสูงสุดของอัปไลน์โดยตรง",
+        "Msg_10033": "แพ้สูงสุดควรน้อยกว่าหรือเท่ากับแพ้สูงสุดของอัปไลน์โดยตรง",
+        "UpdatedWinLossLimitSuccessfully": "ปรับข้อมูลวงเงินแพ้ชนะเรียบร้อยแล้ว"
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["vi-vn"] = {
+        "AutoResetIsViolatedWithUpline": "Chức năng tự động reset giới hạn chuyển khoản mỗi ngày đã được tắt cho cấp trên.",
+        "MaximumLossValueIsRequired": "Tiền thua cược lớn nhất không thể trống.",
+        "MaximumLossValueShouldBeInRange": "Tiền thua cược lớn nhất phải nằm trong khoảng ({0} - {1}).",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "Tiền thắng cược lớn nhất phải ít hơn hoặc bằng Tiền thắng cược lớn nhất của cấp trên trực tiếp.",
+        "MaximumWinShouldNotBeLessThanZero": "Tiền thắng cược lớn nhất phải lớn hơn 0.",
+        "Msg_10022": "Bạn không được phép thay đổi chức năng Tự động reset giới hạn chuyển khoản mỗi ngày.",
+        "Msg_10024": "Tiền thắng cược lớn nhất phải ít hơn hoặc bằng Tiền thắng cược lớn nhất của cấp trên trực tiếp.",
+        "Msg_10033": "Tiền thua cược lớn nhất phải ít hơn hoặc bằng Tiền thua cược lớn nhất của cấp trên trực tiếp.",
+        "UpdatedWinLossLimitSuccessfully": "Cập nhật Giới hạn thắng thua thành công."
+    };
+
+    angular.module("customerSetting").value("settingType6Resource", settingType6Resource);
 })();
