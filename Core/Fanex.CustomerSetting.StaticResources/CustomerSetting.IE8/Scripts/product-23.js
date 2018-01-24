@@ -34599,6 +34599,7 @@ var CustomerSetting;
             Setting.prototype.initializeWarningMessage = function (warningMessage) {
                 this.warningMessage = new UpdatingSettingResult(warningMessage);
                 this.warningMessage.msgType = IE8.MessageType.warning;
+                this.warningMessage.msgTypeName = "warning";
                 if (this.warningMessage.subResults) {
                     _.forEach(this.warningMessage.subResults, function (subResult) {
                         _.forEach(subResult.settingResults, function (settingResult) {
@@ -36289,10 +36290,6 @@ var CustomerSetting;
                         && this.customerLevel !== IE8.Level.member) {
                         this.readonly = this.readonly || this.isChecked;
                     }
-                    if (settingItem.downline) {
-                        this.downline = new SettingType11Item(settingItem.downline, true, customerLevel, systemId);
-                        this.downline.readonly = !this.isChecked || this.downline.isChecked;
-                    }
                 }
                 if (backup) {
                     this.oldSetting = new SettingType11Item(this);
@@ -36301,63 +36298,29 @@ var CustomerSetting;
             SettingType11Item.prototype.isChanged = function () {
                 var isChanged = _super.prototype.isChanged.call(this);
                 var oldSetting = this.oldSetting;
-                return isChanged
-                    || this.isDisabled !== oldSetting.isDisabled
-                    || (this.downline && this.downline.isDisabled !== oldSetting.downline.isDisabled);
+                return isChanged || this.isDisabled !== oldSetting.isDisabled;
             };
             SettingType11Item.prototype.copySettingFrom = function (source) {
                 var isSuccessful = true;
                 if (source) {
                     var backupIsChecked = this.isChecked;
-                    var backupDownlineIsChecked;
                     if (!this.readonly) {
                         this.isChecked = source.isChecked;
-                    }
-                    if (this.downline && source.downline) {
-                        backupDownlineIsChecked = this.downline.isChecked;
-                        if (!this.downline.readonly) {
-                            this.downline.isChecked = source.downline.isChecked;
-                        }
                     }
                     this.toggleCheck();
                     isSuccessful = this.validate();
                     if (!isSuccessful) {
                         this.isChecked = backupIsChecked;
-                        if (this.downline && source.downline) {
-                            this.downline.isChecked = backupDownlineIsChecked;
-                        }
                         this.toggleCheck();
                         this.highlightUnablyCopiedField();
                     }
                     else {
-                        if (this.isChecked !== backupIsChecked) {
-                            this.highlightState["isDisabled"] = IE8.NotificationType.success;
-                        }
-                        else if (this.highlightState["isDisabled"]) {
-                            this.highlightState["isDisabled"] = IE8.NotificationType.none;
-                        }
-                        if (this.downline.isChecked !== backupDownlineIsChecked) {
-                            this.highlightState["downline.isDisabled"] = IE8.NotificationType.success;
-                        }
-                        else if (this.highlightState["downline.isDisabled"]) {
-                            this.highlightState["downline.isDisabled"] = IE8.NotificationType.none;
-                        }
+                        this.highlightCopiedFields({ isDisabled: !backupIsChecked });
                     }
                 }
                 return isSuccessful;
             };
             SettingType11Item.prototype.validate = function () {
-                if (this.isDisabled && this.downline && !this.downline.isDisabled) {
-                    this.validationState = new IE8.ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
-                    return false;
-                }
-                if (this.downline
-                    && !this.oldSetting.isDisabled
-                    && !this.oldSetting.downline.isDisabled
-                    && this.isDisabled !== this.downline.isDisabled) {
-                    this.validationState = new IE8.ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
-                    return false;
-                }
                 if (this.upline && this.upline.isDisabled && !this.isDisabled) {
                     this.validationState = new IE8.ValidationResult("DownlineCannotBeEnabledWhenUplineIsDisabled", "isDisabled");
                     return false;
@@ -36377,47 +36340,11 @@ var CustomerSetting;
                 if (this.upline) {
                     settingItem.upline = this.upline.toJson();
                 }
-                if (this.downline) {
-                    settingItem.downline = this.downline.toJson();
-                }
                 return settingItem;
             };
             SettingType11Item.prototype.toggleCheck = function (isDownline) {
                 if (isDownline === void 0) { isDownline = false; }
-                if (isDownline) {
-                    this.downline.isDisabled = !this.downline.isChecked;
-                }
-                else {
-                    this.isDisabled = !this.isChecked;
-                }
-                if (this.downline) {
-                    if (this.oldSetting.isChecked && this.downline.oldSetting.isChecked) {
-                        this.downline.isChecked = this.isChecked;
-                        this.downline.readonly = true;
-                    }
-                    else {
-                        if (!this.isChecked) {
-                            this.downline.isDisabled = true;
-                            this.resetFieldState("downline.isDisabled");
-                        }
-                        this.downline.readonly = !this.isChecked;
-                    }
-                    this.downline.isDisabled = !this.downline.isChecked;
-                    this.resetFieldState("isDisabled");
-                }
-                else {
-                    this.resetFieldState("downline.isDisabled");
-                }
-            };
-            SettingType11Item.prototype.resetFieldState = function (fieldName) {
-                if (this.validationState && !this.validationState.isSuccessful()) {
-                    if (this.validationState.fieldName === fieldName) {
-                        this.resetValidationState();
-                    }
-                }
-                else {
-                    this.resetFieldHighlightState(fieldName);
-                }
+                this.isDisabled = !this.isChecked;
             };
             return SettingType11Item;
         }(IE8.DefaultSettingItem));
@@ -38112,7 +38039,7 @@ $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/HighlightField/tooltip.htm","<div class=\"tooltip tooltip--{{highlightType}}\" data-ng-if=\"tooltipMessage\"><div class=\"tooltip__content\">{{tooltipMessage}}</div></div>");
-$templateCache.put("settingtype11-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'isDisabled\'}}\" data-ng-change=\"item.toggleCheck();\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"downline.isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'downline.isDisabled\'}}\" data-ng-change=\"item.toggleCheck(true);\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\"> {{\'EnableDownline\' | settingType11Label}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | settingType11Label}}</label></div>");
+$templateCache.put("settingtype11-value.htm","<div class=\"setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-if=\"settingType | editableSettingType\" data-field-highlighting data-field-name=\"isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'isDisabled\'}}\" data-ng-change=\"item.toggleCheck();\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\"> <input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-if=\"!(settingType | editableSettingType)\" data-ng-model=\"item.isChecked\"> <span data-ng-if=\"customerLevel === avaiCustomerLevels.superAgent\">{{\'Super\' | label}}</span> <span data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\">{{\'Master\' | label}}</span> <span data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'Agent\' | label}}</span> <span data-ng-if=\"customerLevel === avaiCustomerLevels.member\">{{\'Member\' | label}}</span></label></div>");
 $templateCache.put("settingtype11.htm","<div><div data-default-setting-type-grouping></div></div>");
 $templateCache.put("comm-rate-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-field-highlighting data-field-name=\"commRate\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'commissionResourceService\'}}\" data-ng-change=\"resetValidationState()\" data-ng-model=\"settingItem.commRate\" data-ng-options=\"item.value as item.key for item in range\"></select></div>");
 $templateCache.put("settingtype3-header.htm","<div data-ng-if=\"uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{\'CommissionForMaster\' | commissionLabel}}</div><div class=\"block__lbl w33-percent\">{{\'CommissionForAgent\' | commissionLabel}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{\'CommissionForMember\' | commissionLabel}}</div></div></div><div data-ng-if=\"uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__lbl\"></div><div class=\"block__lbl w40-percent\">{{\'CommissionForAgent\' | commissionLabel}}</div><div class=\"block__lbl block__lbl--no-border w40-percent\">{{\'CommissionForMember\' | commissionLabel}}</div></div>");
@@ -38136,6 +38063,7 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><div data-d
     
     resources["label"] = resources["label"] || {};
     resources["label"]["en-us"] = {
+        "Agent": "Agent",
         "Agents": "Agents",
         "CopyTooltip": "Click to duplicate the values",
         "CustomerSetting": "Customer Setting",
@@ -38144,12 +38072,15 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><div data-d
         "GeneralInformation": "General Information",
         "LastName": "Last Name",
         "Live": "Live",
+        "Master": "Master",
         "Masters": "Masters",
+        "Member": "Member",
         "Members": "Members",
         "MobilePhone": "Mobile Phone",
         "Nickname": "Nickname",
         "No": "No",
         "Phone": "Phone",
+        "Super": "Super",
         "Update": "Update",
         "UserName": "Username",
         "UserNames": "Usernames",
@@ -38383,58 +38314,33 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><div data-d
     
     settingType11Resources["label"] = settingType11Resources["label"] || {};
     settingType11Resources["label"]["en-us"] = {
-        "Enable": "Enable",
-        "EnableDownline": "Enable Downline",
         "ProductStatus": "Product Status"
     };
     
     settingType11Resources["label"] = settingType11Resources["label"] || {};
     settingType11Resources["label"]["zh-cn"] = {
-        "Enable": "启用",
-        "EnableDownline": "启动下线",
         "ProductStatus": "产品状态"
     };
     
     settingType11Resources["label"] = settingType11Resources["label"] || {};
     settingType11Resources["label"]["zh-tw"] = {
-        "Enable": "啟用",
-        "EnableDownline": "啟動下線",
         "ProductStatus": "產品狀態"
     };
     
     settingType11Resources["label"] = settingType11Resources["label"] || {};
-    settingType11Resources["label"]["ko-kr"] = {
-        "Enable": "활성화",
-        "EnableDownline": "다운라인 활성화하기",
-        "ProductStatus": "Product Status"
-    };
-    
-    settingType11Resources["label"] = settingType11Resources["label"] || {};
-    settingType11Resources["label"]["ja-jp"] = {
-        "Enable": "Enable"
-    };
-    
-    settingType11Resources["label"] = settingType11Resources["label"] || {};
     settingType11Resources["label"]["th-th"] = {
-        "Enable": "เปิดใช้งาน",
-        "EnableDownline": "เปิดการใช้งาน ดาวน์ไลน์",
         "ProductStatus": "สถานะผลิตภันฑ์"
     };
     
     settingType11Resources["label"] = settingType11Resources["label"] || {};
     settingType11Resources["label"]["vi-vn"] = {
-        "Enable": "Cho phép",
-        "EnableDownline": "Cho phép thành viên cấp dưới",
         "ProductStatus": "Trạng thái trò chơi"
     };
     
     settingType11Resources["message"] = settingType11Resources["message"] || {};
     settingType11Resources["message"]["en-us"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannot be enabled when Upline is disabled.",
-        "DownlineStatusCannotBeChanged": "Downline's Product Status must be unchanged when the Upline has not been changed.",
-        "DownlineStatusIsInvalid": "The product is not offered for this customer line.",
         "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
-        "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
         "Msg_60035": "You are not allowed to disable downline&apos;s product.",
         "Msg_90012": "You are not allowed to perform this action.",
         "UpdateProductStatusSuccessfully": "Product Status is updated successfully."
@@ -38443,10 +38349,7 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><div data-d
     settingType11Resources["message"] = settingType11Resources["message"] || {};
     settingType11Resources["message"]["zh-cn"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "当上线被禁用下线同时也禁用。",
-        "DownlineStatusCannotBeChanged": "当上线状态没有更改，下线状态也不会被更改。",
-        "DownlineStatusIsInvalid": "此产品没有提供给此用户",
         "Msg_60033": "由于账号的此产品已关闭导致无法更改下线产品状态。",
-        "Msg_60034": "无法连接此产品由于上线的账号设置不同步。",
         "Msg_60035": "您不能禁用下线的产品。",
         "Msg_90012": "您不能执行此操作。",
         "UpdateProductStatusSuccessfully": "产品状态更新成功"
@@ -38455,30 +38358,16 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><div data-d
     settingType11Resources["message"] = settingType11Resources["message"] || {};
     settingType11Resources["message"]["zh-tw"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "當上線被禁用下線同時也禁用。",
-        "DownlineStatusCannotBeChanged": "當上線狀態沒有更改，下線狀態也不會被更改。",
-        "DownlineStatusIsInvalid": "此產品沒有提供給此用戶",
         "Msg_60033": "由於賬號的此產品已關閉導致無法更改下線產品狀態。",
-        "Msg_60034": "無法連接此產品由於上線的賬號設置不同步。",
         "Msg_60035": "您不能禁用下線的產品。",
         "Msg_90012": "您不能執行此操作。",
         "UpdateProductStatusSuccessfully": "產品狀態更新成功"
     };
     
     settingType11Resources["message"] = settingType11Resources["message"] || {};
-    settingType11Resources["message"]["ko-kr"] = {
-    };
-    
-    settingType11Resources["message"] = settingType11Resources["message"] || {};
-    settingType11Resources["message"]["ja-jp"] = {
-    };
-    
-    settingType11Resources["message"] = settingType11Resources["message"] || {};
     settingType11Resources["message"]["th-th"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "เมื่อต้นสายมีการปิดการใช้งาน ดาวน์ไลนก็จะถูกปิดการใช้งานด้วย",
-        "DownlineStatusCannotBeChanged": "เมื่อต้นสายไม่มีการเปลี่ยนแปลงสถานะของผลิตภันฑ์ใดๆ ทางดาวน์ไลน์ก็จะไม่มีการเปลี่ยนแปลงด้วย",
-        "DownlineStatusIsInvalid": "ผลิตภันฑ์นี้ ไม่เปิดใช้ ให้กับลูกค้าในสายนี้",
         "Msg_60033": "ไม่สามารถแก้ไขสถานะผลิตภัณฑ์ของดาวน์ไลน์ได้ เนื่องจากไม่ได้เปิดการใช้งานผลิตภัณฑ์นี้",
-        "Msg_60034": "ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า",
         "Msg_60035": "คุณไม่สามารถปิดการใช้งานสินค้าให้กับดาวไลน์",
         "Msg_90012": "คุณไม่สามารถดำเนินการนี้",
         "UpdateProductStatusSuccessfully": "สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว"
@@ -38487,10 +38376,7 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><div data-d
     settingType11Resources["message"] = settingType11Resources["message"] || {};
     settingType11Resources["message"]["vi-vn"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "Thành viên cấp dưới sẽ không được phép chơi trong trường hợp thành viên cấp trên bị cấm chơi.",
-        "DownlineStatusCannotBeChanged": "Trạng thái trò chơi của thành viên cấp dưới không được phép thay đổi nếu thành viên cấp trên không có sự thay đổi.",
-        "DownlineStatusIsInvalid": "Trò chơi không được cung cấp cho những khách hàng thuộc nhóm này.",
         "Msg_60033": "Không thể tùy chỉnh trạng thái trò chơi của thành viên cấp dưới bởi vì tài khoản hiện tại không được phép chơi trò này.",
-        "Msg_60034": "Không thể đồng bộ hóa trò chơi này bởi vì thiết lập của tài khoản cấp trên hiện chưa được đồng bộ hóa.",
         "Msg_60035": "Bạn không được phép vô hiệu hoá sản phẩm cược của cấp dưới.",
         "Msg_90012": "Bạn không thể thực thi hành động này.",
         "UpdateProductStatusSuccessfully": "Trạng thái trò chơi được cập nhật thành công."

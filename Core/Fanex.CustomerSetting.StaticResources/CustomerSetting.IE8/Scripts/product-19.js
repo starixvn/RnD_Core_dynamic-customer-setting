@@ -34599,6 +34599,7 @@ var CustomerSetting;
             Setting.prototype.initializeWarningMessage = function (warningMessage) {
                 this.warningMessage = new UpdatingSettingResult(warningMessage);
                 this.warningMessage.msgType = IE8.MessageType.warning;
+                this.warningMessage.msgTypeName = "warning";
                 if (this.warningMessage.subResults) {
                     _.forEach(this.warningMessage.subResults, function (subResult) {
                         _.forEach(subResult.settingResults, function (settingResult) {
@@ -38140,6 +38141,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     resources["label"] = resources["label"] || {};
     resources["label"]["en-us"] = {
+        "Agent": "Agent",
         "Agents": "Agents",
         "CopyTooltip": "Click to duplicate the values",
         "CustomerSetting": "Customer Setting",
@@ -38148,12 +38150,15 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "GeneralInformation": "General Information",
         "LastName": "Last Name",
         "Live": "Live",
+        "Master": "Master",
         "Masters": "Masters",
+        "Member": "Member",
         "Members": "Members",
         "MobilePhone": "Mobile Phone",
         "Nickname": "Nickname",
         "No": "No",
         "Phone": "Phone",
+        "Super": "Super",
         "Update": "Update",
         "UserName": "Username",
         "UserNames": "Usernames",
