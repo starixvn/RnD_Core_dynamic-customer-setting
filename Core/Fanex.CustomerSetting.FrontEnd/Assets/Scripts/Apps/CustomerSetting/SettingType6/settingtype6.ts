@@ -78,11 +78,14 @@ module CustomerSetting {
 
                 $scope.getCurrentWinLoss = (settingItem: SettingType6Item) => {
                     var command: RedirectCommand = new RedirectCommand(
+                        $scope.customerId,
+                        $scope.customerLevel,
+                        $scope.productId,
+                        $scope.uplineLevel,
                         settingTypeId,
                         0,
                         ActionType.query,
                         {
-                            customerId: $scope.customerId,
                             sportTypeId: settingItem.sportTypeId,
                             betTypeId: settingItem.betTypeId
                         });

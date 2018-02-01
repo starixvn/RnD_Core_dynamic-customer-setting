@@ -183,12 +183,28 @@ module CustomerSetting.IE8 {
     }
 
     export class RedirectCommand {
+        public customerId: number;
+        public customerLevel: Level;
+        public productId: number;
+        public uplineLevel: Level;
         public settingTypeId: number;
         public actionId: number;
         public actionType: ActionType;
         public jsonParameters: any;
 
-        constructor(settingTypeId: number, actionId: number, actionType: ActionType, jsonParameters: any) {
+        constructor(
+            customerId: number,
+            customerLevel: Level,
+            productId: number,
+            uplineLevel: Level,
+            settingTypeId: number,
+            actionId: number,
+            actionType: ActionType,
+            jsonParameters: any) {
+            this.customerId = customerId;
+            this.customerLevel = customerLevel;
+            this.productId = productId;
+            this.uplineLevel = uplineLevel;
             this.settingTypeId = settingTypeId;
             this.actionId = actionId;
             this.actionType = actionType;
@@ -197,6 +213,10 @@ module CustomerSetting.IE8 {
 
         public toJson(): {} {
             return {
+                customerId: this.customerId,
+                customerLevel: this.customerLevel,
+                productId: this.productId,
+                uplineLevel: this.uplineLevel,
                 settingTypeId: this.settingTypeId,
                 actionId: this.actionId,
                 actionType: this.actionType,

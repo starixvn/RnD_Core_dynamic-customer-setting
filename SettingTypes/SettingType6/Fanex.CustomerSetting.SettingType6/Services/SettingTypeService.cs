@@ -78,15 +78,16 @@
                 settingContext.Language);
         }
 
-        public object Handle(ISettingContext settingContext, byte actionId, ActionType actionType, string jsonParameters)
+        public object Handle(ISettingContext settingContext, RedirectCommand command)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
-            Check.Argument.IsNotNull(jsonParameters, nameof(jsonParameters));
+            Check.Argument.IsNotNull(command, nameof(command));
 
-            CurrentWinLossAmountQuery query = JsonConvert.DeserializeObject<CurrentWinLossAmountQuery>(jsonParameters);
-            CurrentWinLossAmountItem currentWinLossAmount = _winLossLimitDataAccess.GetCustomerCurrentWinLossAmount(query);
+            CurrentWinLossAmountQuery query = JsonConvert.DeserializeObject<CurrentWinLossAmountQuery>(command.JsonParameters);
 
-            return currentWinLossAmount;
+            query.CustomerId = command.CustomerId;
+
+            return _winLossLimitDataAccess.GetCustomerCurrentWinLossAmount(query);
         }
     }
 }

@@ -77,11 +77,14 @@ module CustomerSetting.IE8 {
 
                 $scope.getCurrentLoss = (settingItem: SettingType12Item) => {
                     var command: RedirectCommand = new RedirectCommand(
+                        $scope.customerId,
+                        $scope.customerLevel,
+                        $scope.productId,
+                        $scope.uplineLevel,
                         settingTypeId,
                         0,
                         ActionType.query,
                         {
-                            customerId: $scope.customerId,
                             sportTypeId: settingItem.sportTypeId,
                             betTypeId: settingItem.betTypeId
                         });

@@ -166,5 +166,25 @@
                 task.Invoke(_settingContext, customerIds, customerLevel, uplineLevel, productId, settingTypeData, updateResults);
             }
         }
+
+        public void Run(byte productId, short settingTypeId, RedirectCommand command)
+        {
+            var tasks = TaskConfiguration.PickTasks<IPreRedirectTask>(_settingContext.System, productId, settingTypeId);
+
+            foreach (IPreRedirectTask task in tasks)
+            {
+                task.Invoke(_settingContext, command);
+            }
+        }
+
+        public void Run(byte productId, short settingTypeId, RedirectCommand command, object result)
+        {
+            var tasks = TaskConfiguration.PickTasks<IPostRedirectTask>(_settingContext.System, productId, settingTypeId);
+
+            foreach (IPostRedirectTask task in tasks)
+            {
+                task.Invoke(_settingContext, command, result);
+            }
+        }
     }
 }

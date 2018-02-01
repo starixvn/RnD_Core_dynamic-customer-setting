@@ -115,12 +115,14 @@
     <Compile Include="Services\Impl\RouteService.cs" />
     <Compile Include="Services\IRouteService.cs" />
     <Compile Include="Services\ISettingService.cs" />
+    <Compile Include="Tasks\IPostRedirectTask.cs" />
     <Compile Include="Tasks\IPostUpdateMultipleCustomersSettingTask.cs" />
     <Compile Include="Tasks\IPostUpdateMultipleCustomersSettingTypeTask.cs" />
     <Compile Include="Tasks\IPostQueryCustomerSettingTask.cs" />
     <Compile Include="Tasks\IPostQueryCustomerSettingTypeTask.cs" />
     <Compile Include="Tasks\IPostUpdateCustomerSettingTask.cs" />
     <Compile Include="Tasks\IPostUpdateCustomerSettingTypeTask.cs" />
+    <Compile Include="Tasks\IPreRedirectTask.cs" />
     <Compile Include="Tasks\IPreUpdateMultipleCustomersSettingTask.cs" />
     <Compile Include="Tasks\IPreUpdateMultipleCustomersSettingTypeTask.cs" />
     <Compile Include="Tasks\IPreQueryCustomerSettingTask.cs" />

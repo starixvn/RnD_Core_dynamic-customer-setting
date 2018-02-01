@@ -3,10 +3,44 @@
     using System;
     using Enumerations;
 
-    public class RedirectCommand
+    public class RedirectCommand : CustomerSettingQuery
     {
         private short _settingTypeId;
         private byte _actionId;
+
+        public RedirectCommand(
+            int customerId,
+            Level customerLevel,
+            byte productId,
+            Level uplineLevel,
+            short settingTypeId,
+            byte actionId,
+            ActionType actionType,
+            string jsonParameters)
+            : base(customerId, customerLevel, productId, uplineLevel)
+        {
+            SettingTypeId = settingTypeId;
+            ActionId = actionId;
+            ActionType = actionType;
+            JsonParameters = jsonParameters;
+        }
+
+        public RedirectCommand(
+            int customerId,
+            byte customerLevel,
+            byte productId,
+            byte? uplineLevel,
+            short settingTypeId,
+            byte actionId,
+            ActionType actionType,
+            string jsonParameters)
+            : base(customerId, customerLevel, productId, uplineLevel)
+        {
+            SettingTypeId = settingTypeId;
+            ActionId = actionId;
+            ActionType = actionType;
+            JsonParameters = jsonParameters;
+        }
 
         public short SettingTypeId
         {

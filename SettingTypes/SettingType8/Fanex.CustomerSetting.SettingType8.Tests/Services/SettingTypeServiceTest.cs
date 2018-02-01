@@ -4,6 +4,7 @@
     using System.Linq;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using CustomerSetting.Services;
     using CustomerSetting.Tests;
@@ -19,6 +20,8 @@
 
     public class SettingTypeServiceTest
     {
+        private const byte SettingTypeId = 8;
+
         private ISettingTypeService _settingTypeService;
         private IResourceService _resourceService;
         private ILogger _logger;
@@ -209,21 +212,19 @@
         public void Handle_Always_CallGetCustomerStakeLevelGroups()
         {
             // Arrange
-            int customerId = 123;
-            byte productId = 1;
-            short sportTypeId = 1;
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
-            var jsonParameters = string.Format(
-                "{{\"{0}\":{1},\"{2}\":{3},\"{4}\":{5}}}",
-                nameof(customerId),
-                customerId,
-                nameof(productId),
-                productId,
-                nameof(sportTypeId),
-                sportTypeId);
+            var redirectCommand = new RedirectCommand(
+                customerId: 123,
+                customerLevel: Level.Member,
+                productId: 1,
+                uplineLevel: Level.Agent,
+                settingTypeId: SettingTypeId,
+                actionId: 0,
+                actionType: ActionType.Query,
+                jsonParameters: "{\"sportTypeId\":1}");
 
             // Act
-            routeService.Handle(_settingContext, 0, ActionType.Query, jsonParameters);
+            routeService.Handle(_settingContext, redirectCommand);
 
             // Assert
             _dataAccess.Received().GetCustomerStakeLevelGroups(Arg.Is(123), Arg.Is<byte>(1));
@@ -237,20 +238,21 @@
             byte productId = 1;
             short sportTypeId = 1;
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
-            var jsonParameters = string.Format(
-                "{{\"{0}\":{1},\"{2}\":{3},\"{4}\":{5}}}",
-                nameof(customerId),
-                customerId,
-                nameof(productId),
-                productId,
-                nameof(sportTypeId),
-                sportTypeId);
+            var redirectCommand = new RedirectCommand(
+                customerId: customerId,
+                customerLevel: Level.Member,
+                productId: productId,
+                uplineLevel: Level.Agent,
+                settingTypeId: SettingTypeId,
+                actionId: 0,
+                actionType: ActionType.Query,
+                jsonParameters: $"{{\"sportTypeId\":{sportTypeId}}}");
             var levelGroupsRawData = CreateSampleDataOfLevelGroups();
 
             _dataAccess.GetCustomerStakeLevelGroups(customerId, productId).Returns(levelGroupsRawData);
 
             // Act
-            routeService.Handle(_settingContext, 0, ActionType.Query, jsonParameters);
+            routeService.Handle(_settingContext, redirectCommand);
 
             // Assert
             int numberOfDetailedItems = 0;
@@ -267,14 +269,15 @@
             byte productId = 1;
             short sportTypeId = 1;
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
-            var jsonParameters = string.Format(
-                "{{\"{0}\":{1},\"{2}\":{3},\"{4}\":{5}}}",
-                nameof(customerId),
-                customerId,
-                nameof(productId),
-                productId,
-                nameof(sportTypeId),
-                sportTypeId);
+            var redirectCommand = new RedirectCommand(
+                customerId: customerId,
+                customerLevel: Level.Member,
+                productId: productId,
+                uplineLevel: Level.Agent,
+                settingTypeId: SettingTypeId,
+                actionId: 0,
+                actionType: ActionType.Query,
+                jsonParameters: $"{{\"sportTypeId\":{sportTypeId}}}");
             var levelGroupsRawData = CreateSampleDataOfLevelGroups();
             var detailsRawData = CreateSampleDataOfDetails();
             int numberOfDetailedItems = 0;
@@ -292,7 +295,7 @@
 
             // Act.
             var actualCustomerStakeLevelGroupSetting
-                = routeService.Handle(_settingContext, 0, ActionType.Query, jsonParameters) as SettingType;
+                = routeService.Handle(_settingContext, redirectCommand) as SettingType;
             var actualCustomerStakeLevelGroupItem = actualCustomerStakeLevelGroupSetting.SettingItems.First() as StakeLevelGroupItem;
 
             // Assert.

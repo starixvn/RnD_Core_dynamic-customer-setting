@@ -15,6 +15,10 @@
         {
             _request = new RedirectRequest
             {
+                ProductId = 1,
+                CustomerId = 123,
+                CustomerLevel = Level.Member.Value,
+                UplineLevel = Level.Agent.Value,
                 SettingTypeId = 1,
                 ActionId = 1,
                 ActionType = (byte)ActionType.Update,

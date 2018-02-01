@@ -92,16 +92,17 @@
                 settingContext.Language);
         }
 
-        public object Handle(ISettingContext settingContext, byte actionId, ActionType actionType, string jsonParameters)
+        public object Handle(ISettingContext settingContext, RedirectCommand command)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
-            Check.Argument.IsNotNull(jsonParameters, nameof(jsonParameters));
+            Check.Argument.IsNotNull(command, nameof(command));
 
-            StakeLevelGroupDetailsQuery query = JsonConvert.DeserializeObject<StakeLevelGroupDetailsQuery>(jsonParameters);
+            StakeLevelGroupDetailsQuery query = JsonConvert.DeserializeObject<StakeLevelGroupDetailsQuery>(command.JsonParameters);
             IEnumerable<StakeLevelGroupItem> stakeLevelGroupDetails
-                = QueryAndMapStakeLevelGroups(settingContext.Language, query.CustomerId, query.ProductId, query.SportTypeId, true);
+                = QueryAndMapStakeLevelGroups(settingContext.Language, command.CustomerId, command.ProductId, query.SportTypeId, true);
             var stakeLevelGroup = new SettingType
             {
+                Id = command.SettingTypeId,
                 Name = Label.BetLimit,
                 SettingItems = stakeLevelGroupDetails,
                 SettingLevel = query.SettingLevel
@@ -193,7 +194,8 @@
                         stakeLevelItem.StakeRanges = group.Select(item => new StakeRange(item.StakeLevelGroupId, item.StakeLevel));
 
                         return stakeLevelItem;
-                    });
+                    })
+                    .ToList();
             }
 
             return stakeLevelGroupDetails;

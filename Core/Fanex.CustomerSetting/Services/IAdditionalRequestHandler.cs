@@ -1,10 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
     using Models;
-    using Models.Enumerations;
+    using Models.Requests;
 
     public interface IAdditionalRequestHandler
     {
-        object Handle(ISettingContext settingContext, byte actionId, ActionType actionType, string jsonParameters);
+        object Handle(ISettingContext settingContext, RedirectCommand command);
     }
 }

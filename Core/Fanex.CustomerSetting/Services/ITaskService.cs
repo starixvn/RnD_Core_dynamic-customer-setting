@@ -57,5 +57,9 @@
             Level uplineLevel,
             SettingType settingTypeData,
             IEnumerable<IResult> updateResults);
+
+        void Run(byte productId, short settingTypeId, RedirectCommand command);
+
+        void Run(byte productId, short settingTypeId, RedirectCommand command, object result);
     }
 }

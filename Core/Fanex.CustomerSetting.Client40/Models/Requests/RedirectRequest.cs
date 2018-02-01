@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class RedirectRequest : SettingRequest
+    public class RedirectRequest : QuerySettingRequest
     {
         [Range(1, short.MaxValue)]
         public short SettingTypeId { get; set; }

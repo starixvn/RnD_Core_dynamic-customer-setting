@@ -4,7 +4,7 @@
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
 
-    public class RedirectRequest : SettingRequest
+    public class RedirectRequest : QuerySettingRequest
     {
         [Range(1, short.MaxValue)]
         public byte SettingTypeId { get; set; }
@@ -19,13 +19,15 @@
 
         internal RedirectCommand ToRedirectCommand()
         {
-            return new RedirectCommand
-            {
-                SettingTypeId = SettingTypeId,
-                ActionId = ActionId,
-                ActionType = (ActionType)ActionType,
-                JsonParameters = JsonParameters
-            };
+            return new RedirectCommand(
+                CustomerId,
+                CustomerLevel,
+                ProductId,
+                UplineLevel,
+                SettingTypeId,
+                ActionId,
+                (ActionType)ActionType,
+                JsonParameters);
         }
     }
 }

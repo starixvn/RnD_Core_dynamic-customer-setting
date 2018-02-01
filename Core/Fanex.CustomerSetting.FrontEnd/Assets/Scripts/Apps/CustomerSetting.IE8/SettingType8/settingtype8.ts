@@ -61,12 +61,14 @@ module CustomerSetting.IE8 {
 
                 $scope.getLevelGroupDetails = (settingItem: SettingType8Item) => {
                     var command: RedirectCommand = new RedirectCommand(
+                        $scope.customerId,
+                        $scope.customerLevel,
+                        $scope.productId,
+                        $scope.uplineLevel,
                         settingTypeId,
                         0,
                         ActionType.query,
                         {
-                            customerId: $scope.customerId,
-                            productId: $scope.productId,
                             sportTypeId: settingItem.sportTypeId,
                             settingLevel: $scope.settingType.settingLevel
                         });

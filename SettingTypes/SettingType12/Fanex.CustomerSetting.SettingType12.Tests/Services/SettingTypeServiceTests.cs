@@ -188,10 +188,18 @@
         {
             // Arrange
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
-            var jsonParameters = "{\"customerId\":123,\"sportTypeId\":1,\"betTypeId\":1}";
+            var redirectCommand = new RedirectCommand(
+                customerId: 123,
+                customerLevel: Level.Member,
+                productId: 1,
+                uplineLevel: Level.Agent,
+                settingTypeId: SettingTypeId,
+                actionId: 0,
+                actionType: ActionType.Query,
+                jsonParameters: "{\"sportTypeId\":1,\"betTypeId\":1}");
 
             // Act
-            routeService.Handle(_settingContext, 0, ActionType.Query, jsonParameters);
+            routeService.Handle(_settingContext, redirectCommand);
 
             // Assert
             _dataAccess.Received().GetCustomerCurrentLossAmount(Arg.Is(new CurrentLossAmountQuery
@@ -207,7 +215,15 @@
         {
             // Arrange
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
-            var jsonParameters = "{\"customerId\":123,\"sportTypeId\":1,\"betTypeId\":1}";
+            var redirectCommand = new RedirectCommand(
+                customerId: 123,
+                customerLevel: Level.Member,
+                productId: 1,
+                uplineLevel: Level.Agent,
+                settingTypeId: SettingTypeId,
+                actionId: 0,
+                actionType: ActionType.Query,
+                jsonParameters: "{\"sportTypeId\":1,\"betTypeId\":1}");
             var currentLossAmount = new CurrentLossAmountItem
             {
                 LossPercent = 0,
@@ -217,7 +233,7 @@
             _dataAccess.GetCustomerCurrentLossAmount(Arg.Any<CurrentLossAmountQuery>()).Returns(currentLossAmount);
 
             // Act
-            var actualCurrentLossAmount = routeService.Handle(_settingContext, 0, ActionType.Query, jsonParameters);
+            var actualCurrentLossAmount = routeService.Handle(_settingContext, redirectCommand);
 
             // Assert
             var expectedLossAmount = new CurrentLossAmountItem
