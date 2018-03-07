@@ -31554,7 +31554,11 @@ var CustomerSetting;
     }());
     CustomerSetting.SettingPartialCommand = SettingPartialCommand;
     var RedirectCommand = (function () {
-        function RedirectCommand(settingTypeId, actionId, actionType, jsonParameters) {
+        function RedirectCommand(customerId, customerLevel, productId, uplineLevel, settingTypeId, actionId, actionType, jsonParameters) {
+            this.customerId = customerId;
+            this.customerLevel = customerLevel;
+            this.productId = productId;
+            this.uplineLevel = uplineLevel;
             this.settingTypeId = settingTypeId;
             this.actionId = actionId;
             this.actionType = actionType;
@@ -31562,6 +31566,10 @@ var CustomerSetting;
         }
         RedirectCommand.prototype.toJson = function () {
             return {
+                customerId: this.customerId,
+                customerLevel: this.customerLevel,
+                productId: this.productId,
+                uplineLevel: this.uplineLevel,
                 settingTypeId: this.settingTypeId,
                 actionId: this.actionId,
                 actionType: this.actionType,
