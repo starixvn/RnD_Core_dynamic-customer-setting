@@ -34930,8 +34930,7 @@ var CustomerSetting;
                         }
                     });
                     $scope.getCurrentWinLoss = function (settingItem) {
-                        var command = new CustomerSetting.RedirectCommand(settingTypeId, 0, CustomerSetting.ActionType.query, {
-                            customerId: $scope.customerId,
+                        var command = new CustomerSetting.RedirectCommand($scope.customerId, $scope.customerLevel, $scope.productId, $scope.uplineLevel, settingTypeId, 0, CustomerSetting.ActionType.query, {
                             sportTypeId: settingItem.sportTypeId,
                             betTypeId: settingItem.betTypeId
                         });
