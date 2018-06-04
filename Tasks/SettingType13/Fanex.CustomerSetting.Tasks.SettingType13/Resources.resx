@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ProductStatusNoteForExternalSites" xml:space="preserve">
-    <value>You are not allowed to disable this product on your downlines as a company policy.</value>
+    <value>You are not allowed to disable this product on your downlines per company policy.</value>
   </data>
 </root>
