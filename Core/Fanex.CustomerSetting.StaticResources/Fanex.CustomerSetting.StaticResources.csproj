@@ -21,6 +21,7 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -76,6 +77,8 @@
     <Content Include="CustomerSetting.IE8\Scripts\product-24.min.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-30.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-30.min.js" />
+    <Content Include="CustomerSetting.IE8\Scripts\product-33.js" />
+    <Content Include="CustomerSetting.IE8\Scripts\product-33.min.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-5.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-5.min.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-28.js" />
@@ -112,6 +115,8 @@
     <Content Include="CustomerSetting\Scripts\product-24.min.js" />
     <Content Include="CustomerSetting\Scripts\product-30.js" />
     <Content Include="CustomerSetting\Scripts\product-30.min.js" />
+    <Content Include="CustomerSetting\Scripts\product-33.js" />
+    <Content Include="CustomerSetting\Scripts\product-33.min.js" />
     <Content Include="CustomerSetting\Scripts\product-5.js" />
     <Content Include="CustomerSetting\Scripts\product-5.min.js" />
     <Content Include="CustomerSetting\Scripts\product-28.js" />

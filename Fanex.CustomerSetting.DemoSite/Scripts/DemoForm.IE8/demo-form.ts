@@ -200,7 +200,7 @@ module DemoForm {
     app.service("postingToIframeService", PostingToIframeService);
 
     class SampleDataFactory {
-        private static defaultProductId: number = 30;
+        private static defaultProductId: number = 33;
         private static defaultLanguage: string = "en-US";
 
         public static getSystemTypes(): KeyValuePair<number, string>[] {
@@ -218,7 +218,7 @@ module DemoForm {
                 new KeyValuePair<string, string>("zh-CN", "简体中文 (zh-CN)"),
                 new KeyValuePair<string, string>("ja-JP", "日本語 (ja-JP)"),
                 new KeyValuePair<string, string>("th-TH", "ภาษาไทย (th-TH)"),
-                new KeyValuePair<string, string>("zh-TW", "한국어 (ko-KR)"),
+                new KeyValuePair<string, string>("ko-KR", "한국어 (ko-KR)"),
                 new KeyValuePair<string, string>("vi-VN", "Tiếng Việt (vi-VN)"));
         }
 
