@@ -171,4 +171,16 @@
   <data name="UserNames" xml:space="preserve">
     <value>ยูเซอร์เนม</value>
   </data>
+  <data name="Super" xml:space="preserve">
+    <value>ซุปเปอร์</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>มาสเตอร์ </value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>เอเย่นต์</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>สมาชิก</value>
+  </data>
 </root>

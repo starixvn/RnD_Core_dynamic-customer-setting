@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.NumberGames2.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not allowed to disable this product on your downlines per company policy..
+        ///   Looks up a localized string similar to You are not allowed to disable downline&apos;s product as per company policy..
         /// </summary>
         internal static string ProductStatusNoteForExternalSites {
             get {

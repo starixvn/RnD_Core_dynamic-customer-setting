@@ -165,4 +165,7 @@
   <data name="Yes" xml:space="preserve">
     <value>Có</value>
   </data>
+  <data name="Member" xml:space="preserve">
+    <value>Người chơi</value>
+  </data>
 </root>
