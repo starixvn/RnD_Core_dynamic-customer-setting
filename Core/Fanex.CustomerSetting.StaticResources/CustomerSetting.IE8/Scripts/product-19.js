@@ -38167,6 +38167,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-cn"] = {
+        "Agent": "代理",
         "Agents": "代理",
         "CopyTooltip": "点击以复制数值",
         "CustomerSetting": "会员设定",
@@ -38175,12 +38176,15 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "GeneralInformation": "基本信息",
         "LastName": "姓",
         "Live": "现场",
+        "Master": "总代理",
         "Masters": "总代理",
+        "Member": "会员",
         "Members": "会员",
         "MobilePhone": "手机",
         "Nickname": "昵称",
         "No": "无",
         "Phone": "电话",
+        "Super": "超级总代理",
         "Update": "更改",
         "UserName": "用户名",
         "UserNames": "用户名",
@@ -38189,6 +38193,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-tw"] = {
+        "Agent": "代理",
         "Agents": "代理",
         "CopyTooltip": "點擊以復制數值",
         "CustomerSetting": "會員設定",
@@ -38197,12 +38202,15 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "GeneralInformation": "基本信息",
         "LastName": "姓",
         "Live": "現場",
+        "Master": "總代理",
         "Masters": "總代理",
+        "Member": "會員",
         "Members": "會員",
         "MobilePhone": "手機",
         "Nickname": "暱稱",
         "No": "無",
         "Phone": "電話",
+        "Super": "超級總代理",
         "Update": "更改",
         "UserName": "用戶名",
         "UserNames": "用戶名",
@@ -38247,6 +38255,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     resources["label"] = resources["label"] || {};
     resources["label"]["th-th"] = {
+        "Agent": "เอเย่นต์",
         "Agents": "เอเจนท์",
         "CopyTooltip": "คลิ๊กค่าที่จะซ้ำกัน",
         "CustomerSetting": "ตั้งค่าสมาชิก",
@@ -38255,12 +38264,15 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "GeneralInformation": "ข้อมูลทั่วไป",
         "LastName": "นามสกุล",
         "Live": "สด",
+        "Master": "มาสเตอร์",
         "Masters": "มาสเตอร์ต่าง ๆ",
+        "Member": "สมาชิก",
         "Members": "เมมเบอร์ต่าง ๆ",
         "MobilePhone": "โทรศัพท์มือถือ",
         "Nickname": "ชื่อเล่น",
         "No": "ไม่",
         "Phone": "โทรศัพท์",
+        "Super": "ซุปเปอร์",
         "Update": "ล่าสุด",
         "UserName": "ชื่อผู้ใช้ระบบ",
         "UserNames": "ยูเซอร์เนม",
@@ -38277,6 +38289,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "LastName": "Họ",
         "Live": "Trực Tuyến",
         "Masters": "Masters",
+        "Member": "Người chơi",
         "Members": "Members",
         "MobilePhone": "Điện thoại di động",
         "Nickname": "Biệt danh",
