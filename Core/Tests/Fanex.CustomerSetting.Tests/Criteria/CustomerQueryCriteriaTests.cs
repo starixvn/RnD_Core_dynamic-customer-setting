@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Criteria
 {
     using CustomerSetting.Criteria;
+    using CustomerSetting.Models.Enumerations;
     using NUnit.Framework;
 
     [TestFixture]
@@ -37,16 +38,31 @@
         }
 
         [Test]
-        public void GetSettingKey_ReturnSettingKey()
+        public void GetSettingKey_SystemIsNotExtNap_ReturnSettingKeyOfAccSystem()
         {
             //// Arrange
             var criteria = CreateCustomerQueryCriteriaInstance();
+            criteria.System = (byte)SystemType.Alpha;
 
             //// Act
             var actualSettingKey = criteria.GetSettingKey();
 
             //// Arrange
             Assert.AreEqual("CustSetting_CustomerInfoSelect", actualSettingKey);
+        }
+
+        [Test]
+        public void GetSettingKey_SystemIsExtNap_ReturnSettingKeyOfExtNapSystem()
+        {
+            //// Arrange
+            var criteria = CreateCustomerQueryCriteriaInstance();
+            criteria.System = (byte)SystemType.ExternalNap;
+
+            //// Act
+            var actualSettingKey = criteria.GetSettingKey();
+
+            //// Arrange
+            Assert.AreEqual("EAS_CustSetting_CustomerInfoSelect", actualSettingKey);
         }
 
         private CustomerInfoQueryCriteria CreateCustomerQueryCriteriaInstance()

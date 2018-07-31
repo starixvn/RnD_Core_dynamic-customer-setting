@@ -134,7 +134,8 @@
         {
             var customerInfo = DynamicRepository.Get<CustomerInfo>(new CustomerInfoQueryCriteria
             {
-                CustId = customerId
+                CustId = customerId,
+                System = SettingContext.System
             });
 
             return customerInfo;
