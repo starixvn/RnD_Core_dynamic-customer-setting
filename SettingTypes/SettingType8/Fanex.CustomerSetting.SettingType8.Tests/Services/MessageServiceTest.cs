@@ -20,7 +20,7 @@
         {
             _resourceService = Substitute.For<IResourceService>();
             _messageService = new MessageService(_resourceService);
-            _msgType = MessageType.StakeLevelViolation;
+            _msgType = MessageTypes.StakeLevelViolation;
             _rawMessage = "<Root MsgID=\"10034\" Msg=\"\">"
                             + "<Row SportType=\"1\" BetType=\"1\" />"
                         + "</Root>";

@@ -78,8 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Constants.cs" />
-    <Compile Include="Constants\ErrorCode.cs" />
-    <Compile Include="Constants\MessageType.cs" />
+    <Compile Include="Constants\ErrorCodes.cs" />
+    <Compile Include="Constants\MessageTypes.cs" />
     <Compile Include="DataAccesses\DataAccess.cs" />
     <Compile Include="DataAccesses\IDataAccess.cs" />
     <Compile Include="Models\CurrentLossAmountItem.cs" />

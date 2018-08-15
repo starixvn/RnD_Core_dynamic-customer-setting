@@ -17,7 +17,7 @@
         {
             switch (msgType)
             {
-                case MessageType.StakeLevelViolation:
+                case MessageTypes.StakeLevelViolation:
                     return TranslateDefaultSettingTypeViolationMessage(Message.ResourceManager, rawMessage, settingLevel, language);
 
                 default:

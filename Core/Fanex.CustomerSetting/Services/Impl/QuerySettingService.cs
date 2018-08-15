@@ -119,7 +119,7 @@
         protected virtual Product GetProductInfo(byte productId, byte systemId)
         {
             var productSettingTypes = ProductService.GetProductSettingTypes(productId, systemId)
-                .Where(product => product.DisplayMode != DisplayMode.Hidden);
+                .Where(product => product.DisplayMode != DisplayModes.Hidden);
             var productName = ResourceService.GetProductName(productId, SettingContext.Language);
 
             return new Product
@@ -182,7 +182,7 @@
                 customerSettingType.SettingLevel = productSettingType.SettingLevel;
                 customerSettingType.DisplayOrder = productSettingType.DisplayOrder;
 
-                if (customerSettingType.DisplayMode != DisplayMode.ReadOnly)
+                if (customerSettingType.DisplayMode != DisplayModes.ReadOnly)
                 {
                     customerSettingType.DisplayMode = productSettingType.DisplayMode;
                 }

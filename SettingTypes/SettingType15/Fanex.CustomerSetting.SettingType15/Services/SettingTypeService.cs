@@ -45,7 +45,7 @@
             var customerWinningShare = new SettingType
             {
                 Name = Label.WinningShareCommission,
-                DisplayMode = DisplayMode.ReadOnly
+                DisplayMode = DisplayModes.ReadOnly
             };
 
             if (query.CustomerLevel.IsNotMemberLevel())

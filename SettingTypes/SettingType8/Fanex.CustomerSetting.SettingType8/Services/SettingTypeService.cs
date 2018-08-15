@@ -211,7 +211,7 @@
             if (hasViolatedItem)
             {
                 return new Result(
-                    ErrorCode.MemberStakeLevelGroupMustBeSelected,
+                    ErrorCodes.MemberStakeLevelGroupMustBeSelected,
                     Message.MemberStakeLevelGroupMustBeSelected);
             }
 

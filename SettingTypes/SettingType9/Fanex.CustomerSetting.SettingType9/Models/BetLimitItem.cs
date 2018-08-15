@@ -46,32 +46,32 @@
                 || MaxBet > Constants.MaxBetLimitValue
                 || MaxPerNumber > Constants.MaxBetLimitValue)
             {
-                return new Result(ErrorCode.BetLimitExceedMaxValue, Message.BetLimitCannotBeGreaterThanMaxValue);
+                return new Result(ErrorCodes.BetLimitExceedMaxValue, Message.BetLimitCannotBeGreaterThanMaxValue);
             }
 
             if (MinBet < 0)
             {
-                return new Result(ErrorCode.MinBetIsNegative, Message.MinBetCannotBeNegative);
+                return new Result(ErrorCodes.MinBetIsNegative, Message.MinBetCannotBeNegative);
             }
 
             if (MaxBet < 0)
             {
-                return new Result(ErrorCode.MaxBetIsNegative, Message.MaxBetCannotBeNegative);
+                return new Result(ErrorCodes.MaxBetIsNegative, Message.MaxBetCannotBeNegative);
             }
 
             if (MaxPerNumber < 0)
             {
-                return new Result(ErrorCode.MaxPerNumberIsNegative, Message.MaxPerNumberCannotBeNegative);
+                return new Result(ErrorCodes.MaxPerNumberIsNegative, Message.MaxPerNumberCannotBeNegative);
             }
 
             if (MinBet > MaxBet)
             {
-                return new Result(ErrorCode.MinBetIsGreaterThanMaxBet, Message.MinBetCannotBeGreaterThanMaxBet);
+                return new Result(ErrorCodes.MinBetIsGreaterThanMaxBet, Message.MinBetCannotBeGreaterThanMaxBet);
             }
 
             if (MaxBet > MaxPerNumber)
             {
-                return new Result(ErrorCode.MaxBetIsGreaterThanMaxPerNumber, Message.MaxBetCannotBeGreaterThanMaxPerNumber);
+                return new Result(ErrorCodes.MaxBetIsGreaterThanMaxPerNumber, Message.MaxBetCannotBeGreaterThanMaxPerNumber);
             }
 
             return base.Validate();

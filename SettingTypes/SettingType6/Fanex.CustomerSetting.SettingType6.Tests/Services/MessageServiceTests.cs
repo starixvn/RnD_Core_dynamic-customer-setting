@@ -21,7 +21,7 @@
         {
             _resourceService = Substitute.For<IResourceService>();
             _messageService = new MessageService(_resourceService);
-            _msgType = MessageType.WinLimitViolatedWithUpline;
+            _msgType = MessageTypes.WinLimitViolatedWithUpline;
             _rawMessage = "<Root MsgID=\"10024\" Msg=\"\">"
                             + "<Row SportType=\"1\" BetType=\"1\" />"
                         + "</Root>";

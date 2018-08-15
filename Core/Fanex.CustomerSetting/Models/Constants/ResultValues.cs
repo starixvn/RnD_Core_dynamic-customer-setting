@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models.Constants
 {
-    internal static class ResultValue
+    internal static class ResultValues
     {
         public const int Success = 0;
         public const int Error = -1;

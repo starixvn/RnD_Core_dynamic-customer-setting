@@ -1,6 +1,6 @@
-﻿namespace Fanex.CustomerSetting.SettingType2.Constants
+﻿namespace Fanex.CustomerSetting.SettingType16.Constants
 {
-    internal static class ErrorCode
+    internal static class ErrorCodes
     {
         public const int MinBetIsGreaterThanMaxBet = 7001;
         public const int MaxBetIsGreaterThanMaxPerMatch = 7002;

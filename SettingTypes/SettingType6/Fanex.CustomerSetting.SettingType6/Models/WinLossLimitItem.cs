@@ -28,12 +28,12 @@
         {
             if (WinLimit < 0)
             {
-                return new Result(ErrorCode.MaximumWinShouldNotBeLessThanZero, Message.MaximumWinShouldNotBeLessThanZero);
+                return new Result(ErrorCodes.MaximumWinShouldNotBeLessThanZero, Message.MaximumWinShouldNotBeLessThanZero);
             }
 
             if (MaxWinRange > 0 && MaxWinRange < WinLimit)
             {
-                return new Result(ErrorCode.MaximumWinShouldNotExceedThanUplineMaximumWin, Message.MaximumWinShouldBotExceedThanUplineMaximumWin);
+                return new Result(ErrorCodes.MaximumWinShouldNotExceedThanUplineMaximumWin, Message.MaximumWinShouldBotExceedThanUplineMaximumWin);
             }
 
             if ((MaxLossRange > 0 && (LossLimit < MinLossRange || MaxLossRange < LossLimit))
@@ -44,12 +44,12 @@
                         NumberFormatter.FormatDecimal(MinLossRange),
                         NumberFormatter.FormatDecimal(MaxLossRange));
 
-                return new Result(ErrorCode.MaximumLossValueShouldBeInRange, errorMessage);
+                return new Result(ErrorCodes.MaximumLossValueShouldBeInRange, errorMessage);
             }
 
             if (!IsAutoResetUpline && IsAutoReset)
             {
-                return new Result(ErrorCode.AutoResetIsViolatedWithUpline, Message.AutoResetIsViolatedWithUpline);
+                return new Result(ErrorCodes.AutoResetIsViolatedWithUpline, Message.AutoResetIsViolatedWithUpline);
             }
 
             return base.Validate();

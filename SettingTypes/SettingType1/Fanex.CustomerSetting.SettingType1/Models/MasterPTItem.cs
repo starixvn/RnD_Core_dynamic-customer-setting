@@ -58,7 +58,7 @@
             if (N3 > M3)
             {
                 return new Result(
-                    ErrorCode.MasterMinPTIsGreaterThanMasterMaxPT,
+                    ErrorCodes.MasterMinPTIsGreaterThanMasterMaxPT,
                     Message.MasterMinPTCannotBeGreaterThanMasterMaxPT);
             }
 

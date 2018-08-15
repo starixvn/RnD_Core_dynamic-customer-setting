@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType3.Constants
 {
-    internal static class MessageType
+    internal static class MessageTypes
     {
         public const int CommissionViolation = 51;
     }

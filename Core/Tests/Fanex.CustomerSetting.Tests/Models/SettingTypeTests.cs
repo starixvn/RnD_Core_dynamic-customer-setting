@@ -63,7 +63,7 @@
             var actualResult = settingType.Validate();
 
             //// Assert
-            Assert.AreEqual(ResultValue.NoChange, actualResult.Code);
+            Assert.AreEqual(ResultValues.NoChange, actualResult.Code);
         }
 
         [Test]

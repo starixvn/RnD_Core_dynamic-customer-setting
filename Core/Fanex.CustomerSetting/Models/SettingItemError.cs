@@ -24,7 +24,7 @@
 
         public IResult Validate()
         {
-            return new Result(Constants.ResultValue.Error, Message.SettingTypeError);
+            return new Result(Constants.ResultValues.Error, Message.SettingTypeError);
         }
 
         public string ToXml()

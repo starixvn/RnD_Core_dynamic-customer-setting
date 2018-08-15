@@ -5,11 +5,11 @@
 
     public class Result : IResult
     {
-        public static readonly Result Success = new Result(ResultValue.Success);
-        public static readonly Result AccessDenied = new Result(ResultValue.AccessDenied, Resource.Message.AccessDeniedMsg, MessageType.Exception);
-        public static readonly Result NoChange = new Result(ResultValue.NoChange, Resource.Message.NoChangeToUpdate, MessageType.Exception);
-        public static readonly Result SystemError = new Result(ResultValue.Error, Resource.Message.SystemError, MessageType.Exception);
-        public static readonly Result DataError = new Result(ResultValue.DataIsNotValid, Resource.Message.DataIsNotValid, MessageType.Exception);
+        public static readonly Result Success = new Result(ResultValues.Success);
+        public static readonly Result AccessDenied = new Result(ResultValues.AccessDenied, Resource.Message.AccessDeniedMsg, MessageTypes.Exception);
+        public static readonly Result NoChange = new Result(ResultValues.NoChange, Resource.Message.NoChangeToUpdate, MessageTypes.Exception);
+        public static readonly Result SystemError = new Result(ResultValues.Error, Resource.Message.SystemError, MessageTypes.Exception);
+        public static readonly Result DataError = new Result(ResultValues.DataIsNotValid, Resource.Message.DataIsNotValid, MessageTypes.Exception);
 
         public Result(int code)
             : this(code, string.Empty)
@@ -36,7 +36,7 @@
 
         public virtual bool IsSuccessful
         {
-            get { return Code == ResultValue.Success; }
+            get { return Code == ResultValues.Success; }
         }
 
         public virtual bool IsFailed

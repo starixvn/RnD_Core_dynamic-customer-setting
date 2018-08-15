@@ -115,11 +115,11 @@
     <Compile Include="Criteria\ActorStatusQueryCriteria.cs" />
     <Compile Include="Criteria\CheckBelongingCriteria.cs" />
     <Compile Include="Criteria\CustomerLevelQueryCriteria.cs" />
-    <Compile Include="Models\Constants\DisplayMode.cs" />
+    <Compile Include="Models\Constants\DisplayModes.cs" />
     <Compile Include="Models\Enumerations\ActionType.cs" />
     <Compile Include="Models\Enumerations\Enumeration.cs" />
-    <Compile Include="Models\Constants\MessageType.cs" />
-    <Compile Include="Models\Constants\ResultValue.cs" />
+    <Compile Include="Models\Constants\MessageTypes.cs" />
+    <Compile Include="Models\Constants\ResultValues.cs" />
     <Compile Include="Criteria\ProductNamesQueryCriteria.cs" />
     <Compile Include="Models\Messages\DefaultSubMessage.cs" />
     <Compile Include="Models\Messages\ISubMessage.cs" />
@@ -207,6 +207,7 @@
   <ItemGroup>
     <Content Include="Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>

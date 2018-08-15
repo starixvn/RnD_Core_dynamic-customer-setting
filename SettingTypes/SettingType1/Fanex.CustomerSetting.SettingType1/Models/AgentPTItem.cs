@@ -58,7 +58,7 @@
             if (N2 > A2)
             {
                 return new Result(
-                    ErrorCode.AgentMinPTIsGreaterThanAgentMaxPT,
+                    ErrorCodes.AgentMinPTIsGreaterThanAgentMaxPT,
                     Message.AgentMinPTCannotBeGreaterThanAgentMaxPT);
             }
 

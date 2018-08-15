@@ -30,7 +30,7 @@
         {
             //// Arrange
             var errorItem = new SettingItemError();
-            IResult expected = new Result(ResultValue.Error, Message.SettingTypeError);
+            IResult expected = new Result(ResultValues.Error, Message.SettingTypeError);
 
             //// Act
             IResult settingResult = errorItem.Validate();

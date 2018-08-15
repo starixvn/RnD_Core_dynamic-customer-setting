@@ -118,7 +118,7 @@
             if (hasViolatedItem)
             {
                 return new Result(
-                    ErrorCode.MemberStakeLevelMustBeSelectedForSportBetType,
+                    ErrorCodes.MemberStakeLevelMustBeSelectedForSportBetType,
                     Message.MemberStakeLevelMustBeSelectedForBetType);
             }
 

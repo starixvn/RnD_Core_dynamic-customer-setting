@@ -24,7 +24,7 @@
         {
             switch (msgType)
             {
-                case MessageType.Exception:
+                case MessageTypes.Exception:
                     return TranslateSimpleMessage(rawMessage);
 
                 default:

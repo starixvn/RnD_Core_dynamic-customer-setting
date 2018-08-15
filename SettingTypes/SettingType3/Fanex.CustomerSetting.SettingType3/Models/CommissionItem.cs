@@ -45,14 +45,14 @@
             if (CommRate > Constants.MaxCommissionRateValue)
             {
                 return new Result(
-                    ErrorCode.CommissionRateExceedMaxValue,
+                    ErrorCodes.CommissionRateExceedMaxValue,
                     Message.CommRateCannotBeExceedMaxValue);
             }
 
             if (CommRate < 0)
             {
                 return new Result(
-                    ErrorCode.CommRateIsNegative,
+                    ErrorCodes.CommRateIsNegative,
                     Message.CommRateCannotBeNegative);
             }
 

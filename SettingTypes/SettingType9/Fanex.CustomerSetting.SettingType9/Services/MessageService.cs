@@ -17,7 +17,7 @@
         {
             switch (msgType)
             {
-                case MessageType.BetLimitViolation:
+                case MessageTypes.BetLimitViolation:
                     return TranslateDefaultSettingTypeViolationMessage(Message.ResourceManager, rawMessage, settingLevel, language);
 
                 default:

@@ -57,7 +57,7 @@
             var validationResult = lossLimitItem.Validate();
 
             // Assert
-            Assert.AreEqual(ErrorCode.MaximumLossValueShouldBeInRange, validationResult.Code);
+            Assert.AreEqual(ErrorCodes.MaximumLossValueShouldBeInRange, validationResult.Code);
         }
 
         [TestCase(100, 99, 90)]

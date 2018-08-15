@@ -48,21 +48,21 @@
             if (ChargeCommission > Constants.MaxChargeCommissionRateValue)
             {
                 return new Result(
-                    ErrorCode.ShareCannotExceedMaxValue,
+                    ErrorCodes.ShareCannotExceedMaxValue,
                     Message.ShareCannotBeExceed100Percent);
             }
 
             if (ChargeCommission < 0)
             {
                 return new Result(
-                    ErrorCode.ShareMustBePositive,
+                    ErrorCodes.ShareMustBePositive,
                     Message.ShareMustBePositive);
             }
 
             if (Upline == null || ChargeCommission > Upline.ChargeCommission)
             {
                 return new Result(
-                    ErrorCode.ShareCannotBeGreaterThanGivenCommissionError,
+                    ErrorCodes.ShareCannotBeGreaterThanGivenCommissionError,
                     Message.ShareMustBeLessThanOrEqualToGivenCommissionError);
             }
 

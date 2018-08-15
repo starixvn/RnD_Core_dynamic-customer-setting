@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Constants
 {
-    internal static class MessageType
+    internal static class MessageTypes
     {
         /// <summary>
         /// <Root MsgID="10018" Msg="Wrong position taking.">

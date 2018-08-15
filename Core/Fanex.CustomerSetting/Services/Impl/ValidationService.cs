@@ -75,7 +75,7 @@
             {
                 WriteQuerySettingLog(customerId, customerLevel, uplineLevel, customerSettingException);
 
-                return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
+                return new Result(ResultValues.AccessDenied, customerSettingException.OriginalMessage);
             }
 
             return Result.Success;
@@ -188,7 +188,7 @@
             {
                 WriteUpdateSettingLog(command, customerSettingException);
 
-                return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
+                return new Result(ResultValues.AccessDenied, customerSettingException.OriginalMessage);
             }
 
             return Result.Success;
@@ -208,7 +208,7 @@
         private void CheckCustomerSettingTypesIsValidWithProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
         {
             var productSettingTypes = _productService.GetProductSettingTypes(productId, _settingContext.System)
-                .Where(product => product.DisplayMode == DisplayMode.Editable);
+                .Where(product => product.DisplayMode == DisplayModes.Editable);
 
             foreach (var customerSettingType in customerSettingTypes)
             {
@@ -245,7 +245,7 @@
             {
                 WriteUpdateMultipleSettingLog(command, customerSettingException);
 
-                return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
+                return new Result(ResultValues.AccessDenied, customerSettingException.OriginalMessage);
             }
 
             return Result.Success;

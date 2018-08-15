@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType6.Constants
 {
-    internal static class ErrorCode
+    internal static class ErrorCodes
     {
         public const int MaximumWinShouldNotBeLessThanZero = 111001;
         public const int MaximumWinShouldNotExceedThanUplineMaximumWin = 111002;

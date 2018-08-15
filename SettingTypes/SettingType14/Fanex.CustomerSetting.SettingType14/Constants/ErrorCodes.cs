@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType14.Constants
 {
-    internal static class ErrorCode
+    internal static class ErrorCodes
     {
         public const int CommissionCannotExceedMaxValue = 5101;
         public const int CommisisonMustBePositive = 5102;

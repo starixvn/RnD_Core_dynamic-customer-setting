@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType5.Constants
 {
-    internal static class ErrorCode
+    internal static class ErrorCodes
     {
         public const int ShareCannotExceedMaxValue = 5101;
         public const int ShareMustBePositive = 5102;

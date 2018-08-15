@@ -55,7 +55,7 @@
 
             if (result.IsSuccessful)
             {
-                return new SettingResult(ResultValue.Success, updateSuccessfulMessage, result);
+                return new SettingResult(ResultValues.Success, updateSuccessfulMessage, result);
             }
             else
             {
@@ -115,7 +115,7 @@
             if (query.CustomerLevel.IsMemberLevel()
                 && query.UplineLevel.IsNotAgentLevel())
             {
-                settingType.DisplayMode = DisplayMode.ReadOnly;
+                settingType.DisplayMode = DisplayModes.ReadOnly;
             }
         }
 

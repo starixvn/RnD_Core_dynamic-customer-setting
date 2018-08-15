@@ -35,21 +35,21 @@
             if (M4 > S4)
             {
                 return new Result(
-                    ErrorCode.MasterMaxPTIsGreaterThanSuperMaxPT,
+                    ErrorCodes.MasterMaxPTIsGreaterThanSuperMaxPT,
                     Message.MasterMaxPTCannotBeGreaterThanSuperMaxPT);
             }
 
             if (A4 > M4)
             {
                 return new Result(
-                    ErrorCode.AgentMaxPTIsGreaterThanMasterMaxPT,
+                    ErrorCodes.AgentMaxPTIsGreaterThanMasterMaxPT,
                     Message.AgentMaxPTCannotBeGreaterThanMasterMaxPT);
             }
 
             if (N4 > S4)
             {
                 return new Result(
-                    ErrorCode.SuperMinPTIsGreaterThanSuperMaxPTErrorCode,
+                    ErrorCodes.SuperMinPTIsGreaterThanSuperMaxPTErrorCode,
                     Message.SuperMinPTCannotBeGreaterThanSuperMaxPT);
             }
 

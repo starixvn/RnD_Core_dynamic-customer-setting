@@ -50,7 +50,7 @@
             if (Downline != null && IsDisabled && !Downline.IsDisabled)
             {
                 return new Result(
-                    ErrorCode.DownlineIsEnabledWhenUplineIsDisabled,
+                    ErrorCodes.DownlineIsEnabledWhenUplineIsDisabled,
                     Message.DownlineCannotBeEnabledWhenUplineIsDisabled);
             }
 

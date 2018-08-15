@@ -42,21 +42,21 @@
                 if (Commission > MaxCommission)
                 {
                     return new Result(
-                        ErrorCode.CommissionCannotExceedMaxValue,
+                        ErrorCodes.CommissionCannotExceedMaxValue,
                         Message.CommissionCannotBeExceed100Percent);
                 }
 
                 if (Commission < 0)
                 {
                     return new Result(
-                        ErrorCode.CommisisonMustBePositive,
+                        ErrorCodes.CommisisonMustBePositive,
                         Message.CommissionMustBePositive);
                 }
 
                 if (Commission > UplineCommission)
                 {
                     return new Result(
-                        ErrorCode.CommissionCannotBeGreaterThanGivenCommissionError,
+                        ErrorCodes.CommissionCannotBeGreaterThanGivenCommissionError,
                         Message.CommissionMustBeLessThanOrEqualToGivenCommission);
                 }
             }

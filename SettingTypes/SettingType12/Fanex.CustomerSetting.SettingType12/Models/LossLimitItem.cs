@@ -30,12 +30,12 @@
                         NumberFormatter.FormatDecimal(MinLossRange),
                         NumberFormatter.FormatDecimal(MaxLossRange));
 
-                return new Result(ErrorCode.MaximumLossValueShouldBeInRange, errorMessage);
+                return new Result(ErrorCodes.MaximumLossValueShouldBeInRange, errorMessage);
             }
 
             if (!IsAutoResetUpline && IsAutoReset)
             {
-                return new Result(ErrorCode.AutoResetIsViolatedWithUpline, Message.AutoResetIsViolatedWithUpline);
+                return new Result(ErrorCodes.AutoResetIsViolatedWithUpline, Message.AutoResetIsViolatedWithUpline);
             }
 
             return base.Validate();
