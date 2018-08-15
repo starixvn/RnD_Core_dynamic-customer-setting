@@ -78,6 +78,7 @@
     <Compile Include="DataAccesses\IDataAccess.cs" />
     <Compile Include="Dtos\TicketCommissionDto.cs" />
     <Compile Include="Models\TicketCommissionItem.cs" />
+    <Compile Include="Models\TicketCommissionSettingType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Label.Designer.cs">
       <AutoGen>True</AutoGen>

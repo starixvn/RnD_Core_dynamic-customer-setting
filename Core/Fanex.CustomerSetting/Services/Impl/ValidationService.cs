@@ -172,6 +172,7 @@
         {
             Check.Argument.IsNotNull(command, "command");
 
+            var actorLevel = _settingContext.Actor.Level;
             var customerId = command.Setting.CustomerId;
             var customerLevel = command.Setting.CustomerLevel;
             var productId = command.Setting.ProductId;
@@ -183,6 +184,8 @@
                 CheckQueryPermission(customerId, customerLevel, productId, uplineLevel);
 
                 CheckCustomerSettingTypesIsValidWithProductProfile(productId, settingTypes);
+
+                CheckUpdatableCustomerSettingTypes(actorLevel, customerLevel, settingTypes);
             }
             catch (CustomerSettingException customerSettingException)
             {
@@ -213,6 +216,18 @@
             foreach (var customerSettingType in customerSettingTypes)
             {
                 if (!productSettingTypes.Any(stt => stt.Id == customerSettingType.Id))
+                {
+                    throw new CustomerSettingException(Result.AccessDenied.Message);
+                }
+            }
+        }
+
+        private void CheckUpdatableCustomerSettingTypes(Level actorLevel, Level customerLevel, IEnumerable<SettingType> customerSettingTypes)
+        {
+            foreach (var customerSettingType in customerSettingTypes)
+            {
+                if (customerSettingType.DisplayMode != DisplayModes.Editable
+                    || !customerSettingType.SatisfyCustomerLevelConstraint(actorLevel, customerLevel))
                 {
                     throw new CustomerSettingException(Result.AccessDenied.Message);
                 }

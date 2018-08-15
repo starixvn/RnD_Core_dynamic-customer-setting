@@ -18,51 +18,27 @@
 
         public User Actor
         {
-            get
-            {
-                return _actor;
-            }
+            get => _actor;
 
-            set
-            {
-                _actor = value;
-            }
+            set => _actor = value;
         }
 
         public string Language
         {
-            get
-            {
-                return _language;
-            }
+            get => _language;
 
-            set
-            {
-                _language = value;
-            }
+            set => _language = value;
         }
 
-        public string IP
-        {
-            get { return "192.168.1.1"; }
-        }
+        public string IP => "192.168.1.1";
 
         public byte System
         {
-            get
-            {
-                return _systemId;
-            }
+            get => _systemId;
 
-            set
-            {
-                _systemId = value;
-            }
+            set => _systemId = value;
         }
 
-        public string Domain
-        {
-            get { return "Domain Name"; }
-        }
+        public string Domain => "Domain Name";
     }
 }

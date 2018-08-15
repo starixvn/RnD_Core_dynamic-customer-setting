@@ -31,6 +31,7 @@
             var updateSettingRequest = JsonConvert.DeserializeObject<T>(
                 jsonContent,
                 new SettingConverter(),
+                new SettingTypeConverter(),
                 new SettingItemConverter(),
                 new LevelConverter());
 

@@ -41,7 +41,7 @@
             Check.Argument.IsNotNull(query, nameof(query));
 
             IEnumerable<ChargeCommissionDto> chargeCommissionRawData = _chargeCommissionDataAccess.GetCustomerChargeCommissionRawData(query);
-            var customerChargeCommission = new SettingType
+            var customerChargeCommission = new ChargedCommissionSettingType
             {
                 Name = Label.ChargeCommission,
                 SettingItems = chargeCommissionRawData.Select(chargeCommissionDto => new ChargeCommissionItem(chargeCommissionDto))

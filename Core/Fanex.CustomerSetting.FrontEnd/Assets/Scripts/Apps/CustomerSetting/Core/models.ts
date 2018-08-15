@@ -250,6 +250,8 @@ module CustomerSetting {
                 updatedSettingType.settingItems = changedSettingItems;
                 updatedSettingType.typeName = this.typeName;
                 updatedSettingType.displayOrder = this.displayOrder;
+                updatedSettingType.displayMode = this.displayMode;
+                updatedSettingType.isError = this.isError;
                 updatedSettingType.extraData = this.extraData;
             }
 

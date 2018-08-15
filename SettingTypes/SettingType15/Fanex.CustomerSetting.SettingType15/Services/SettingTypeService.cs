@@ -42,7 +42,7 @@
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
             Check.Argument.IsNotNull(query, nameof(query));
 
-            var customerWinningShare = new SettingType
+            var customerWinningShare = new WinningShareSettingType
             {
                 Name = Label.WinningShareCommission,
                 DisplayMode = DisplayModes.ReadOnly

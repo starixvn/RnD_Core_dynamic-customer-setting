@@ -41,7 +41,7 @@
             Check.Argument.IsNotNull(query, nameof(query));
 
             IEnumerable<TicketCommissionDto> ticketCommissionRawData = _commissionDataAccess.GetCustomerTicketCommissionRawData(query);
-            var customerTicketCommission = new SettingType
+            var customerTicketCommission = new TicketCommissionSettingType
             {
                 Name = Label.TicketCommission,
                 SettingItems = ticketCommissionRawData.Select(dto => new TicketCommissionItem(dto, query.CustomerLevel, query.UplineLevel))

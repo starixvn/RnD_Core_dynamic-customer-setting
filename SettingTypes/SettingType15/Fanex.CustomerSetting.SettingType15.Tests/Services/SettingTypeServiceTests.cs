@@ -6,11 +6,11 @@
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Services;
+    using CustomerSetting.SettingType15.Models;
     using CustomerSetting.Tests;
     using DataAccesses;
     using Dtos;
     using Logging;
-    using Models;
     using NSubstitute;
     using NUnit.Framework;
     using SettingType15.Services;

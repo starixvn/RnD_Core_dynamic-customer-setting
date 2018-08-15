@@ -81,6 +81,7 @@
     <Compile Include="Models\BasePTItemTests.cs" />
     <Compile Include="Models\MasterPTOnMemberItemTests.cs" />
     <Compile Include="Models\MasterPTItemTests.cs" />
+    <Compile Include="Models\PTSettingTypeTests.cs" />
     <Compile Include="Models\SuperPTOnMemberItemTests.cs" />
     <Compile Include="Models\SuperPTItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -76,6 +76,7 @@
     <Compile Include="DataAccesses\IDataAccess.cs" />
     <Compile Include="Dtos\WinningShareDto.cs" />
     <Compile Include="Models\WinningShareItem.cs" />
+    <Compile Include="Models\WinningShareSettingType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Label.Designer.cs">
       <AutoGen>True</AutoGen>

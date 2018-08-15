@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Enumerations;
     using Results;
 
     [Serializable]
@@ -35,21 +36,17 @@
                 return _settingItems;
             }
 
-            set
-            {
-                _settingItems = value;
-            }
+            set => _settingItems = value;
         }
 
         /// <summary>
         /// For Controller create exactly concrete class when get json from client.
         /// </summary>
-        public string TypeName
+        public string TypeName => GetType().AssemblyQualifiedName;
+
+        public virtual bool SatisfyCustomerLevelConstraint(Level actorLevel, Level customerLevel)
         {
-            get
-            {
-                return GetType().AssemblyQualifiedName;
-            }
+            return actorLevel.IsCompanyLevel() || actorLevel.IsDirectUplineOf(customerLevel);
         }
 
         public override string ToString()

@@ -1,7 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using CustomerSetting.Models;
+    using CustomerSetting.Models.Constants;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
@@ -133,62 +135,36 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        ////[Test]
-        ////public void ValidateUpdateSetting_CompanyPerformsUpdateActionInAgencySystem_ReturnAccessDeniedResult()
-        ////{
-        ////    //// Arrange
-        ////    var updateParam = InstanceFactory.CreateUpdateSettingParam();
-        ////    _settingContext.Actor.Level = Level.Company;
-        ////    _settingContext.System = (byte)SystemType.Agency;
+        [Test]
+        public void ValidateUpdateSetting_AnySettingTypeIsNotEditable_ReturnFailedResult()
+        {
+            // Arrange.
+            var updateParam = InstanceFactory.CreateUpdateSettingParam();
 
-        ////    AssumeValidateQuerySettingIsSuccessful();
-        ////    AssumeCustomerSettingTypesAreValid(updateParam.Setting.SettingTypes);
+            updateParam.Setting.SettingTypes.First().DisplayMode = DisplayModes.ReadOnly;
+            AssumeValidateQuerySettingIsSuccessful();
 
-        ////    //// Act
-        ////    var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
+            // Act.
+            var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
 
-        ////    //// Assert
-        ////    Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
-        ////}
+            // Assert.
+            Assert.IsFalse(actualResult.IsSuccessful);
+        }
 
-        ////[TestCase((byte)SystemType.Accounting)]
-        ////[TestCase((byte)SystemType.ExternalAccounting)]
-        ////public void ValidateUpdateSetting_CompanyPerformsUpdateActionInSystemIsNotAgency_ReturnSuccessResult(byte system)
-        ////{
-        ////    //// Arrange
-        ////    var updateParam = InstanceFactory.CreateUpdateSettingParam();
-        ////    _settingContext.Actor.Level = Level.Company;
-        ////    _settingContext.System = system;
+        [Test]
+        public void ValidateUpdateSetting_AnySettingTypeDoesNotMeetCustomerLevelConstraint_ReturnFailedResult()
+        {
+            // Arrange.
+            var updateParam = InstanceFactory.CreateUpdateSettingParam(customerLevel: Level.Agent);
 
-        ////    AssumeValidateQuerySettingIsSuccessful();
-        ////    AssumeCustomerSettingTypesAreValid(updateParam.Setting.SettingTypes);
+            _settingContext.Actor.Level = Level.Super;
+            AssumeValidateQuerySettingIsSuccessful();
 
-        ////    //// Act
-        ////    var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
+            // Act.
+            var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
 
-        ////    //// Assert
-        ////    Assert.IsTrue(actualResult.IsSuccessful);
-        ////}
-
-        ////[Test]
-        ////public void ValidateUpdateSetting_RaisedException_AlwaysLogError()
-        ////{
-        ////    //// Arrange
-        ////    var updateParam = InstanceFactory.CreateUpdateSettingParam();
-        ////    _settingContext.Actor.Level = Level.Company;
-
-        ////    AssumeValidateQuerySettingIsSuccessful();
-
-        ////    var expectedException = new Exception("Expected Exception");
-        ////    _productService.GetProductSettingTypes(Arg.Any<byte>(), Arg.Any<byte>()).Returns(x => { throw expectedException; });
-
-        ////    //// Act
-        ////    _validationService.ValidateUpdateSettingAction(updateParam);
-
-        ////    //// Assert
-        ////    _logger.Received().Error(
-        ////        Arg.Is<string>(message => message.Contains(expectedException.Message)),
-        ////        Arg.Any<CustomerSettingException>());
-        ////}
+            // Assert.
+            Assert.IsFalse(actualResult.IsSuccessful);
+        }
     }
 }

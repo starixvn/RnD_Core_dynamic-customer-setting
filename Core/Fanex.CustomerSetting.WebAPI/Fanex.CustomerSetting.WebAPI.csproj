@@ -228,6 +228,7 @@
     <Compile Include="Helpers\LevelConverter.cs" />
     <Compile Include="Helpers\SettingConverter.cs" />
     <Compile Include="Helpers\SettingItemConverter.cs" />
+    <Compile Include="Helpers\SettingTypeConverter.cs" />
     <Compile Include="Helpers\UpdateSettingRequestModelBinder.cs" />
     <Compile Include="Models\Request\QuerySettingRequest.cs" />
     <Compile Include="Models\Request\RedirectRequest.cs" />

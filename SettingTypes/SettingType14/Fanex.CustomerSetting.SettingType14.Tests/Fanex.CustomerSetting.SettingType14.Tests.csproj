@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\TicketCommissionItemTests.cs" />
+    <Compile Include="Models\TicketCommissionSettingTypeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MessageServiceTests.cs" />
     <Compile Include="Services\SettingTypeServiceTests.cs" />

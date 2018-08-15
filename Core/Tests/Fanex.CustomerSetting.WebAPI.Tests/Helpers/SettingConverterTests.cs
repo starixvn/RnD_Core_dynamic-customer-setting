@@ -74,6 +74,7 @@
                 Converters = new List<JsonConverter>
                 {
                     new SettingConverter(),
+                    new SettingTypeConverter(),
                     new SettingItemConverter(),
                     new LevelConverter()
                 }

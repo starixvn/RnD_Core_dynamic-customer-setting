@@ -9,10 +9,7 @@
 
         public byte SettingLevel { get; set; }
 
-        public string TypeName
-        {
-            get { return "SettingItemStub"; }
-        }
+        public string TypeName => "SettingItemStub";
 
         public IResult Validate()
         {
