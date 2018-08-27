@@ -10,15 +10,22 @@
         [ConfigurationProperty("SecretKey", IsRequired = true, DefaultValue = "U6BUFHtVcq5SPQcTl7tHLBG/LF6d5YVRKHrCHD9M+Vw=")]
         public string SecretKey
         {
-            get { return (string)this["SecretKey"]; }
+            get { return this["SecretKey"] as string; }
             set { this["SecretKey"] = value; }
         }
 
-        [ConfigurationProperty("EnableRequestLogging", IsRequired = false, DefaultValue = true)]
-        public bool EnableRequestLogging
+        [ConfigurationProperty("FanexRemotingRefService", IsRequired = false)]
+        public string FanexRemotingRefService
         {
-            get { return (bool)this["EnableRequestLogging"]; }
-            set { this["EnableRequestLogging"] = value; }
+            get { return this["FanexRemotingRefService"] as string; }
+            set { this["FanexRemotingRefService"] = value; }
+        }
+
+        [ConfigurationProperty("InstanceName", IsRequired = false, DefaultValue = "DCS")]
+        public string InstanceName
+        {
+            get { return this["InstanceName"] as string; }
+            set { this["InstanceName"] = value; }
         }
     }
 }

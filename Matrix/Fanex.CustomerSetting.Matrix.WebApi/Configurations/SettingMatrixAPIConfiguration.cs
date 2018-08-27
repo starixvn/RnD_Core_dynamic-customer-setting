@@ -5,7 +5,7 @@
     public class SettingMatrixApiConfiguration : ConfigurationSection
     {
         public static SettingMatrixApiConfiguration Settings { get; }
-            = ConfigurationManager.GetSection("SettingMatrixAPIConfiguration") as SettingMatrixApiConfiguration;
+            = ConfigurationManager.GetSection("SettingMatrixApiConfiguration") as SettingMatrixApiConfiguration;
 
         [ConfigurationProperty("SecretKey", IsRequired = true, DefaultValue = "oOcEDP63hAXyWYjJ2DRbOYWLdx/eIaKZ5AWoiunpeMk=")]
         public string SecretKey
@@ -14,11 +14,18 @@
             set { this["SecretKey"] = value; }
         }
 
-        [ConfigurationProperty("EnableRequestLogging", IsRequired = false, DefaultValue = true)]
-        public bool EnableRequestLogging
+        [ConfigurationProperty("FanexRemotingRefService", IsRequired = false)]
+        public string FanexRemotingRefService
         {
-            get { return (bool)this["EnableRequestLogging"]; }
-            set { this["EnableRequestLogging"] = value; }
+            get { return this["FanexRemotingRefService"] as string; }
+            set { this["FanexRemotingRefService"] = value; }
+        }
+
+        [ConfigurationProperty("InstanceName", IsRequired = false, DefaultValue = "DCS")]
+        public string InstanceName
+        {
+            get { return this["InstanceName"] as string; }
+            set { this["InstanceName"] = value; }
         }
     }
 }

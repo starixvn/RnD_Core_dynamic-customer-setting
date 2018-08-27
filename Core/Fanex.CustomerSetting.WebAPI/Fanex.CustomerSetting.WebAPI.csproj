@@ -236,13 +236,11 @@
     <Compile Include="Controllers\RouteController.cs" />
     <Compile Include="Filters\GlobalExceptionFilter.cs" />
     <Compile Include="Filters\HmacAuthorizationFilter.cs" />
-    <Compile Include="Filters\LogInfoFilter.cs" />
     <Compile Include="Filters\SetLanguageFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Helpers\HttpRequestMessageExtensions.cs" />
     <Compile Include="Helpers\JsonCreationConverter.cs" />
     <Compile Include="Helpers\LevelConverter.cs" />
     <Compile Include="Helpers\SettingConverter.cs" />

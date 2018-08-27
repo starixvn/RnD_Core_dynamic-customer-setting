@@ -191,10 +191,8 @@
     <Compile Include="Configurations\SettingMatrixApiConfiguration.cs" />
     <Compile Include="Controllers\CustomerSettingMatrixController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Extensions\HttpRequestMessageExtensions.cs" />
     <Compile Include="Filters\GlobalExceptionFilter.cs" />
     <Compile Include="Filters\HmacAuthorizationFilter.cs" />
-    <Compile Include="Filters\LogInfoFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

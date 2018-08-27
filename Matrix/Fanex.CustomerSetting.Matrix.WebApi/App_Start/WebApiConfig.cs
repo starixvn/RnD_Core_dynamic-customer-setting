@@ -3,7 +3,6 @@
     using System;
     using System.Net.Http.Formatting;
     using System.Web.Http;
-    using Configurations;
     using Filters;
     using Newtonsoft.Json.Serialization;
 
@@ -36,11 +35,6 @@
 
             config.Filters.Add(new HmacAuthorizationFilter());
             config.Filters.Add(new GlobalExceptionFilter());
-
-            if (SettingMatrixApiConfiguration.Settings.EnableRequestLogging)
-            {
-                config.Filters.Add(new LogInfoFilter());
-            }
         }
     }
 }

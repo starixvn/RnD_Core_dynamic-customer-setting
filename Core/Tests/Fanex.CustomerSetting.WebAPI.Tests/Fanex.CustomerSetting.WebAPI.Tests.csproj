@@ -111,7 +111,6 @@
     <Compile Include="Filters\HmacAuthorizationFilterTests.cs" />
     <Compile Include="Filters\SetLanguageFilterTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Helpers\HttpRequestMessageExtensionsTests.cs" />
     <Compile Include="Helpers\MultipleUpdateSettingRequestModelBinderTests.cs" />
     <Compile Include="Helpers\SettingConverterTests.cs" />
     <Compile Include="Helpers\SettingRequestModelBinderTests.cs" />
