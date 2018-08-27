@@ -4,9 +4,11 @@
     using System.Web;
     using System.Web.Http;
     using AppStart;
+    using Configurations;
     using Data.Configuration;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
+    using RemotingRef;
 
     public class WebApiApplication : HttpApplication
     {
@@ -16,6 +18,10 @@
             SettingServiceConfig.Run();
             DbSettingProviderManager.Current.Start();
             ExceptionHandler.UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
+
+            RefDataTypeContainer
+                .ConnectTo(new Uri(CustomerSettingApiConfiguration.Settings.FanexRemotingRefService))
+                .FromApplication(CustomerSettingApiConfiguration.Settings.InstanceName);
         }
 
         protected void Application_Error(object sender, EventArgs e)
