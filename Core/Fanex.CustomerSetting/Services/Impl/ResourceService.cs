@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
-    using RemotingRefApi;
+    using RemotingRef;
 
     public class ResourceService : IResourceService
     {
@@ -24,10 +24,11 @@
                 return string.Empty;
             }
 
-            var resourceData = _remotingRef.GetResourceData(
+            var resourceData = _remotingRef.GetResourceDataByRefIdAndResourceId(
                 ProductRefId,
                 productId.ToString(),
-                LanguageNameConverter.GetRefLanguageName(language).ToUpper());
+                language,
+                string.Empty);
 
             return string.IsNullOrEmpty(resourceData)
                 ? string.Format(ProductDefaultFormat, productId)
@@ -41,7 +42,7 @@
                 return string.Empty;
             }
 
-            var sportTypeName = _remotingRef.GetSportTypeName(sportTypeId.ToString(), LanguageNameConverter.GetRefLanguageName(language).ToUpper());
+            var sportTypeName = _remotingRef.GetSportName(sportTypeId.ToString(), language);
 
             return string.IsNullOrEmpty(sportTypeName)
                 ? string.Format(SportTypeDefaultFormat, sportTypeId)
@@ -55,7 +56,7 @@
                 return string.Empty;
             }
 
-            var betTypeName = _remotingRef.GetBetTypeName(betTypeId.ToString(), LanguageNameConverter.GetRefLanguageName(language).ToUpper());
+            var betTypeName = _remotingRef.GetBetTypeName(betTypeId.ToString(), language);
 
             return string.IsNullOrEmpty(betTypeName)
                 ? string.Format(BetTypeDefaultFormat, betTypeId)
@@ -69,7 +70,11 @@
                 return string.Empty;
             }
 
-            var resourceData = _remotingRef.GetResourceData(refId, resourceId, LanguageNameConverter.GetRefLanguageName(language).ToUpper());
+            var resourceData = _remotingRef.GetResourceDataByRefIdAndResourceId(
+                refId,
+                resourceId,
+                language,
+                string.Empty);
 
             return string.IsNullOrEmpty(resourceData)
                 ? string.Format(RefResourceDefaultFormat, refId, resourceId)

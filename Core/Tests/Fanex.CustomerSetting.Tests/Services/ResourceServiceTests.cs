@@ -4,7 +4,7 @@
     using CustomerSetting.Services.Impl;
     using NSubstitute;
     using NUnit.Framework;
-    using RemotingRefApi;
+    using RemotingRef;
 
     [TestFixture]
     public class ResourceServiceTests
@@ -46,10 +46,11 @@
             //// Assert
             _remotingRefApi
                 .Received()
-                .GetResourceData(
-                Arg.Is<string>(refId => refId == "Product"),
-                Arg.Is<string>(resourceId => resourceId == productId.ToString()),
-                Arg.Any<string>());
+                .GetResourceDataByRefIdAndResourceId(
+                    Arg.Is<string>(refId => refId == "Product"),
+                    Arg.Is<string>(resourceId => resourceId == productId.ToString()),
+                    Arg.Any<string>(),
+                    Arg.Any<string>());
         }
 
         [Test]
@@ -59,10 +60,13 @@
             byte productId = 1;
             string expectedProductName = "Product Name";
 
-            _remotingRefApi.GetResourceData(
-                Arg.Is<string>(refId => refId == "Product"),
-                Arg.Any<string>(),
-                Arg.Any<string>()).Returns(expectedProductName);
+            _remotingRefApi
+                .GetResourceDataByRefIdAndResourceId(
+                    Arg.Is<string>(refId => refId == "Product"),
+                    Arg.Any<string>(),
+                    Arg.Any<string>(),
+                    Arg.Any<string>())
+                .Returns(expectedProductName);
 
             //// Act
             var actualProductName = _resourceService.GetProductName(productId, _language);
@@ -78,10 +82,13 @@
             //// Arrange
             byte productId = 1;
 
-            _remotingRefApi.GetResourceData(
-                Arg.Is<string>(refId => refId == "Product"),
-                Arg.Any<string>(),
-                Arg.Any<string>()).Returns(productNameFromApi);
+            _remotingRefApi
+                .GetResourceDataByRefIdAndResourceId(
+                    Arg.Is<string>(refId => refId == "Product"),
+                    Arg.Any<string>(),
+                    Arg.Any<string>(),
+                    Arg.Any<string>())
+                .Returns(productNameFromApi);
 
             //// Act
             var actualProductName = _resourceService.GetProductName(productId, _language);
@@ -117,9 +124,9 @@
             //// Assert
             _remotingRefApi
                 .Received()
-                .GetSportTypeName(
-                Arg.Is<string>(sportTypeIdString => sportTypeIdString == sportTypeId.ToString()),
-                Arg.Any<string>());
+                .GetSportName(
+                    Arg.Is<string>(sportTypeIdString => sportTypeIdString == sportTypeId.ToString()),
+                    Arg.Any<string>());
         }
 
         [Test]
@@ -128,7 +135,7 @@
             //// Arrange
             int sportTypeId = 1;
             string expectedSportName = "SportName";
-            _remotingRefApi.GetSportTypeName(Arg.Any<string>(), Arg.Any<string>()).Returns(expectedSportName);
+            _remotingRefApi.GetSportName(Arg.Any<string>(), Arg.Any<string>()).Returns(expectedSportName);
 
             //// Act
             var actualSportName = _resourceService.GetSportTypeName(sportTypeId, _language);
@@ -143,7 +150,7 @@
         {
             //// Arrange
             int sportTypeId = 1;
-            _remotingRefApi.GetSportTypeName(sportTypeId.ToString(), Arg.Any<string>()).Returns(sportNameFromApi);
+            _remotingRefApi.GetSportName(sportTypeId.ToString(), Arg.Any<string>()).Returns(sportNameFromApi);
 
             //// Act
             var actualSportTypeName = _resourceService.GetSportTypeName(sportTypeId, _language);
@@ -258,9 +265,10 @@
             // Assert.
             _remotingRefApi
                 .Received()
-                .GetResourceData(
+                .GetResourceDataByRefIdAndResourceId(
                     Arg.Is<string>(passedRefId => passedRefId == refId),
                     Arg.Is<string>(passedResourceId => passedResourceId == resourceId),
+                    Arg.Any<string>(),
                     Arg.Any<string>());
         }
 
@@ -271,7 +279,13 @@
             string resourceId = nameof(resourceId);
             string resourceData = nameof(resourceData);
 
-            _remotingRefApi.GetResourceData(refId, resourceId, Arg.Any<string>()).Returns(resourceData);
+            _remotingRefApi
+                .GetResourceDataByRefIdAndResourceId(
+                    refId,
+                    resourceId,
+                    Arg.Any<string>(),
+                    Arg.Any<string>())
+                .Returns(resourceData);
 
             // Act.
             string actualData = _resourceService.GetResourceData(refId, resourceId, _language);
@@ -286,7 +300,9 @@
             string refId = nameof(refId);
             string resourceId = nameof(resourceId);
 
-            _remotingRefApi.GetResourceData(refId, resourceId, Arg.Any<string>()).Returns(string.Empty);
+            _remotingRefApi
+                .GetResourceDataByRefIdAndResourceId(refId, resourceId, Arg.Any<string>(), Arg.Any<string>())
+                .Returns(string.Empty);
 
             // Act.
             string actualData = _resourceService.GetResourceData(refId, resourceId, _language);
