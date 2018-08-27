@@ -188,7 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Configurations\SettingMatrixAPIConfiguration.cs" />
+    <Compile Include="Configurations\SettingMatrixApiConfiguration.cs" />
     <Compile Include="Controllers\CustomerSettingMatrixController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Extensions\HttpRequestMessageExtensions.cs" />

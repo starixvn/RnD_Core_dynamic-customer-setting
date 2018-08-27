@@ -33,7 +33,7 @@
             _actionContext.ControllerContext.Request = _request;
             _request.RequestUri = new Uri("http://localhost:7878/customersetting/getcustomersetting");
             _filter = new HmacAuthorizationFilter();
-            _secretKey = SettingMatrixAPIConfiguration.Settings.SecretKey;
+            _secretKey = SettingMatrixApiConfiguration.Settings.SecretKey;
         }
 
         [Test]

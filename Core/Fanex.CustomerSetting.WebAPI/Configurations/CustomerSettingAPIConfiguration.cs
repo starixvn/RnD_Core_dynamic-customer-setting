@@ -2,18 +2,10 @@
 {
     using System.Configuration;
 
-    public class CustomerSettingAPIConfiguration : ConfigurationSection
+    public class CustomerSettingApiConfiguration : ConfigurationSection
     {
-        private static CustomerSettingAPIConfiguration settings
-            = ConfigurationManager.GetSection("CustomerSettingAPIConfiguration") as CustomerSettingAPIConfiguration;
-
-        public static CustomerSettingAPIConfiguration Settings
-        {
-            get
-            {
-                return settings;
-            }
-        }
+        public static CustomerSettingApiConfiguration Settings { get; }
+            = ConfigurationManager.GetSection("CustomerSettingApiConfiguration") as CustomerSettingApiConfiguration;
 
         [ConfigurationProperty("SecretKey", IsRequired = true, DefaultValue = "U6BUFHtVcq5SPQcTl7tHLBG/LF6d5YVRKHrCHD9M+Vw=")]
         public string SecretKey

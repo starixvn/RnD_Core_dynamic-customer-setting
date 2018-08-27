@@ -230,7 +230,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SettingServiceConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Configurations\CustomerSettingAPIConfiguration.cs" />
+    <Compile Include="Configurations\CustomerSettingApiConfiguration.cs" />
     <Compile Include="Controllers\CustomerSettingController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RouteController.cs" />

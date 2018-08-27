@@ -2,18 +2,10 @@
 {
     using System.Configuration;
 
-    public class SettingMatrixAPIConfiguration : ConfigurationSection
+    public class SettingMatrixApiConfiguration : ConfigurationSection
     {
-        private static SettingMatrixAPIConfiguration settings
-            = ConfigurationManager.GetSection("SettingMatrixAPIConfiguration") as SettingMatrixAPIConfiguration;
-
-        public static SettingMatrixAPIConfiguration Settings
-        {
-            get
-            {
-                return settings;
-            }
-        }
+        public static SettingMatrixApiConfiguration Settings { get; }
+            = ConfigurationManager.GetSection("SettingMatrixAPIConfiguration") as SettingMatrixApiConfiguration;
 
         [ConfigurationProperty("SecretKey", IsRequired = true, DefaultValue = "oOcEDP63hAXyWYjJ2DRbOYWLdx/eIaKZ5AWoiunpeMk=")]
         public string SecretKey

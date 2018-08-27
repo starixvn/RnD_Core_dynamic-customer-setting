@@ -37,7 +37,7 @@
             config.Filters.Add(new HmacAuthorizationFilter());
             config.Filters.Add(new GlobalExceptionFilter());
 
-            if (SettingMatrixAPIConfiguration.Settings.EnableRequestLogging)
+            if (SettingMatrixApiConfiguration.Settings.EnableRequestLogging)
             {
                 config.Filters.Add(new LogInfoFilter());
             }

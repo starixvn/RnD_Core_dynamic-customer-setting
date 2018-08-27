@@ -39,7 +39,7 @@
             config.Filters.Add(new HmacAuthorizationFilter());
             config.Filters.Add(new GlobalExceptionFilter());
 
-            if (CustomerSettingAPIConfiguration.Settings.EnableRequestLogging)
+            if (CustomerSettingApiConfiguration.Settings.EnableRequestLogging)
             {
                 config.Filters.Add(new LogInfoFilter());
             }
