@@ -6,7 +6,7 @@
     {
         private const string TasksConfigurationPathKey = "TasksConfigurationPath";
 
-        private static CustomerSettingConfiguration configurations
+        private static readonly CustomerSettingConfiguration configurations
             = ConfigurationManager.GetSection("CustomerSettingConfiguration") as CustomerSettingConfiguration;
 
         public static CustomerSettingConfiguration Configurations => configurations;

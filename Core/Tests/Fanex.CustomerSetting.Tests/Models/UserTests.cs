@@ -8,7 +8,7 @@
     [TestFixture]
     public class UserTests
     {
-        private static object[] isMethodAlwaysReturnRightValueCases =
+        private static readonly object[] isMethodAlwaysReturnRightValueCases =
         {
             new object[] { Level.Company, Level.Company, true },
             new object[] { Level.Company, Level.Super, false },

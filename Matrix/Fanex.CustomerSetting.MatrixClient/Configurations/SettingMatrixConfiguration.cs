@@ -5,7 +5,7 @@
 
     public class SettingMatrixConfiguration : ConfigurationSection
     {
-        private static SettingMatrixConfiguration settings
+        private static readonly SettingMatrixConfiguration settings
             = ConfigurationManager.GetSection("SettingMatrixConfiguration") as SettingMatrixConfiguration;
 
         public static SettingMatrixConfiguration Settings

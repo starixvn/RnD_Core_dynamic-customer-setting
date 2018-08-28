@@ -8,7 +8,7 @@
     [TestFixture]
     public class QuerySettingParamTests
     {
-        private static object[] dataSourceSMALevels = { Level.Super, Level.Master, Level.Agent };
+        private static readonly object[] dataSourceSMALevels = { Level.Super, Level.Master, Level.Agent };
 
         [TestCase(0)]
         [TestCase(-1)]

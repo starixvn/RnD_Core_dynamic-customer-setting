@@ -49,7 +49,7 @@
 
         private IRestResponse UpdateTimeOutResponse(IRestResponse restReponse)
         {
-            if ((int)restReponse.StatusCode == 0)
+            if (restReponse.StatusCode == 0)
             {
                 restReponse.StatusCode = HttpStatusCode.RequestTimeout;
                 restReponse.Content = "{ \"message\": \"Process is timeout.\" }";

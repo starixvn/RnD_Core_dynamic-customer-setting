@@ -24,7 +24,7 @@
     [TestFixture]
     public class SettingTypeServiceTests
     {
-        private static object[] GetCustomerSettingType_ViewDirectDownlineCustomer_Cases =
+        private static readonly object[] GetCustomerSettingType_ViewDirectDownlineCustomer_Cases =
         {
             new object[] { Level.Super, null },
             new object[] { Level.Master, null },

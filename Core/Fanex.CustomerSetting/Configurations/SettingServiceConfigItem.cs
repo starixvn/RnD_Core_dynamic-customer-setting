@@ -6,10 +6,10 @@
 
     internal class SettingServiceConfigItem
     {
-        private Type queryServiceType;
-        private Type updateServiceType;
-        private List<byte> systems;
-        private List<byte> productIds;
+        private readonly Type queryServiceType;
+        private readonly Type updateServiceType;
+        private readonly List<byte> systems;
+        private readonly List<byte> productIds;
 
         internal SettingServiceConfigItem(
             Type queryServiceType,

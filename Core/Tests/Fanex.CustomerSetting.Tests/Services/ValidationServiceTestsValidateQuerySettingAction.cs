@@ -95,7 +95,7 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        private static object[] ValidateQuerySetting_ActorHasPermission_Cases =
+        private static readonly object[] ValidateQuerySetting_ActorHasPermission_Cases =
         {
             new object[] { Level.Company, Level.Super, null },
             new object[] { Level.Company, Level.Master, null },
@@ -132,7 +132,7 @@
             Assert.IsFalse(actualResult.IsSuccessful);
         }
 
-        private static object[] ValidateQuerySetting_ActorDoesNotHavePermission_Cases =
+        private static readonly object[] ValidateQuerySetting_ActorDoesNotHavePermission_Cases =
         {
             new object[] { Level.Super, Level.Super },
             new object[] { Level.Super, Level.Agent },
@@ -203,7 +203,7 @@
             _dynamicRepository.Received().Get<byte>(Arg.Is<CustomerLevelQueryCriteria>(criteria => criteria.CustId == query.CustomerId));
         }
 
-        private static object[] ValidateQuerySetting_ActorIsNotCompany_AlwaysCallCheckBelonging_Cases =
+        private static readonly object[] ValidateQuerySetting_ActorIsNotCompany_AlwaysCallCheckBelonging_Cases =
         {
             new object[] { Level.Super, Level.Super },
             new object[] { Level.Master, Level.Master },
@@ -307,7 +307,7 @@
             Assert.AreEqual("Upline Level is not valid.", actualResult.Message);
         }
 
-        private static object[] ValidateQuerySetting_EditingMemberAndActorLevelIsDifferentWithUplineLevel_Cases =
+        private static readonly object[] ValidateQuerySetting_EditingMemberAndActorLevelIsDifferentWithUplineLevel_Cases =
         {
             new object[] { Level.Super, Level.Master },
             new object[] { Level.Master, Level.Agent },
@@ -338,7 +338,7 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        private static object[] ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_Cases =
+        private static readonly object[] ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_Cases =
         {
             new object[] { Level.Company, Level.Super },
             new object[] { Level.Company, Level.Master },
@@ -369,7 +369,7 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        private static Level[] ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases =
+        private static readonly Level[] ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases =
         {
             Level.Super,
             Level.Master,

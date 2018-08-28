@@ -4,7 +4,7 @@
 
     public class DemoSiteConfiguration : ConfigurationSection
     {
-        private static DemoSiteConfiguration settings
+        private static readonly DemoSiteConfiguration settings
             = ConfigurationManager.GetSection("DemoSiteConfiguration") as DemoSiteConfiguration;
 
         public static DemoSiteConfiguration Settings

@@ -25,7 +25,7 @@
 
             var customerLineDto = GetCustomerLineDto(customerName);
             var customerLine = new List<Customer>();
-            var customerLevel = Enumeration.FromValue<Level>((byte)customerLineDto.LevelValue);
+            var customerLevel = Enumeration.FromValue<Level>(customerLineDto.LevelValue);
 
             if (customerLevel.IsMasterLevel())
             {
@@ -96,7 +96,7 @@
                 Id = customerLineDto.CustId.GetValueOrDefault(0),
                 Name = customerLineDto.UserName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                Level = Enumeration.FromValue<Level>((byte)customerLineDto.LevelValue)
+                Level = Enumeration.FromValue<Level>(customerLineDto.LevelValue)
             };
 
             return customer;
