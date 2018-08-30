@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tasks.SettingType13
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Common.Helper;
     using Models;
@@ -20,7 +21,22 @@
             if ((query.CustomerLevel.IsMasterLevel() || query.CustomerLevel.IsAgentLevel())
                 && FilterSettingType13OnAlpha(settingContext, setting) != null)
             {
-                setting.WarningMessage = new Result(ProductStatusNoteForExternalSitesCode, Resources.ProductStatusNoteForExternalSites);
+                var note = new Result(ProductStatusNoteForExternalSitesCode, Resources.ProductStatusNoteForExternalSites);
+
+                if (setting.WarningMessage != null)
+                {
+                    var warningMessages = new List<IResult>
+                    {
+                        note,
+                        setting.WarningMessage
+                    };
+
+                    setting.WarningMessage = new UpdateSettingResult(warningMessages);
+                }
+                else
+                {
+                    setting.WarningMessage = note;
+                }
             }
         }
 

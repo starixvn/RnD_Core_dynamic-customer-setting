@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tasks.Product33
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Common.Helper;
     using Models;
@@ -19,7 +20,22 @@
 
             if (setting.SettingTypes.Any(settingType => settingType.Id == AffectedSettingType))
             {
-                setting.WarningMessage = new Result(PTSettingNoteCode, Resources.PTAppliedForInsuranceAndGemsBought);
+                var note = new Result(PTSettingNoteCode, Resources.PTAppliedForInsuranceAndGemsBought);
+
+                if (setting.WarningMessage != null)
+                {
+                    var warningMessages = new List<IResult>
+                    {
+                        setting.WarningMessage,
+                        note
+                    };
+
+                    setting.WarningMessage = new UpdateSettingResult(warningMessages);
+                }
+                else
+                {
+                    setting.WarningMessage = note;
+                }
             }
         }
     }
