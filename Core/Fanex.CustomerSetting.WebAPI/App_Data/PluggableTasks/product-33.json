@@ -1,0 +1,12 @@
+﻿[
+  {
+    "productId": 33,
+    "tasks": [
+      {
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.Product33.PTSettingNoteTask, Fanex.CustomerSetting.Tasks.Product33"
+        ]
+      }
+    ]
+  }
+]

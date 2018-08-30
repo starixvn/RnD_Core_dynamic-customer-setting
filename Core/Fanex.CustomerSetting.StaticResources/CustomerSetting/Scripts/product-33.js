@@ -33241,6 +33241,1093 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var SettingType1Config = (function () {
+        function SettingType1Config() {
+        }
+        Object.defineProperty(SettingType1Config, "step", {
+            get: function () {
+                return 1;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(SettingType1Config, "roundingFactor", {
+            get: function () {
+                return 100;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return SettingType1Config;
+    }());
+    CustomerSetting.SettingType1Config = SettingType1Config;
+    var SettingType1Item = (function () {
+        function SettingType1Item() {
+        }
+        SettingType1Item.factory = function (settingItem, backup, customerLevel, uplineLevel, extraData) {
+            if (customerLevel === CustomerSetting.Level.super) {
+                return new SuperPositionTaking(settingItem, backup);
+            }
+            else if (customerLevel === CustomerSetting.Level.master) {
+                return new MasterPositionTaking(settingItem, backup);
+            }
+            else if (customerLevel === CustomerSetting.Level.agent) {
+                return new AgentPositionTaking(settingItem, backup);
+            }
+            else if (customerLevel === CustomerSetting.Level.member && uplineLevel === CustomerSetting.Level.super) {
+                return new SuperPositionTakingOnMember(settingItem, backup);
+            }
+            else if (customerLevel === CustomerSetting.Level.member && uplineLevel === CustomerSetting.Level.master) {
+                return new MasterPositionTakingOnMember(settingItem, backup, extraData);
+            }
+            else if (customerLevel === CustomerSetting.Level.member && uplineLevel === CustomerSetting.Level.agent) {
+                return new AgentPositionTakingOnMember(settingItem, backup);
+            }
+        };
+        SettingType1Item.fetch = function (rawData, settingItem) {
+            var addedProperties = ["sportTypeId", "sportTypeName", "betTypeId", "betTypeName", "typeName", "isLive"];
+            if (rawData && settingItem) {
+                Object.keys(rawData).filter(function (propName) {
+                    return addedProperties.indexOf(propName) < 0;
+                }).forEach(function (propName) {
+                    settingItem[propName] = rawData[propName];
+                });
+            }
+        };
+        SettingType1Item.detechChanges = function (settingItem) {
+            var reservedProperties = ["oldSetting", "validationState", "highlightState"];
+            if (settingItem) {
+                return Object.keys(settingItem).some(function (prop) {
+                    return reservedProperties.indexOf(prop) < 0
+                        && settingItem.oldSetting[prop] !== undefined
+                        && settingItem[prop] !== settingItem.oldSetting[prop];
+                });
+            }
+            return false;
+        };
+        return SettingType1Item;
+    }());
+    CustomerSetting.SettingType1Item = SettingType1Item;
+    var SuperPositionTaking = (function (_super) {
+        __extends(SuperPositionTaking, _super);
+        function SuperPositionTaking(settingItem, backup) {
+            if (backup === void 0) { backup = false; }
+            _super.call(this, settingItem);
+            SettingType1Item.fetch(settingItem, this);
+            if (backup) {
+                this.oldSetting = new SuperPositionTaking(this);
+            }
+        }
+        SuperPositionTaking.prototype.isChanged = function () {
+            return SettingType1Item.detechChanges(this);
+        };
+        SuperPositionTaking.prototype.copySettingFrom = function (source) {
+            var isSuccessful = true;
+            var backupS4;
+            var backupM4;
+            var backupA4;
+            var backupN4;
+            if (source) {
+                backupS4 = this.s4;
+                backupM4 = this.m4;
+                backupA4 = this.a4;
+                backupN4 = this.n4;
+                this.s4 = source.s4;
+                this.m4 = source.m4;
+                this.a4 = source.a4;
+                this.n4 = source.n4;
+                isSuccessful = this.validate();
+                if (!isSuccessful) {
+                    this.s4 = backupS4;
+                    this.m4 = backupM4;
+                    this.a4 = backupA4;
+                    this.n4 = backupN4;
+                    this.highlightUnablyCopiedField();
+                }
+                else {
+                    this.highlightCopiedFields({
+                        s4: backupS4,
+                        m4: backupM4,
+                        a4: backupA4,
+                        n4: backupN4
+                    });
+                }
+            }
+            return isSuccessful;
+        };
+        SuperPositionTaking.prototype.validate = function () {
+            if (this.s4 > this.defaultMaxPT) {
+                this.validationState = new CustomerSetting.ValidationResult("SuperMaxPTCannotBeGreaterThan", "s4", [this.defaultMaxPT / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            if (this.m4 > this.s4) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThanSuperMaxPT", "m4");
+                return false;
+            }
+            if (this.a4 > this.m4) {
+                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThanMasterMaxPT", "a4");
+                return false;
+            }
+            if (this.n4 > this.s4) {
+                this.validationState = new CustomerSetting.ValidationResult("SuperMinPTCannotBeGreaterThanSuperMaxPT", "n4");
+                return false;
+            }
+            this.resetValidationState();
+            return true;
+        };
+        return SuperPositionTaking;
+    }(CustomerSetting.DefaultSettingItem));
+    CustomerSetting.SuperPositionTaking = SuperPositionTaking;
+    var MasterPositionTaking = (function (_super) {
+        __extends(MasterPositionTaking, _super);
+        function MasterPositionTaking(settingItem, backup) {
+            if (backup === void 0) { backup = false; }
+            _super.call(this, settingItem);
+            SettingType1Item.fetch(settingItem, this);
+            if (backup) {
+                this.oldSetting = new MasterPositionTaking(this);
+            }
+        }
+        MasterPositionTaking.prototype.isChanged = function () {
+            var isChanged = SettingType1Item.detechChanges(this);
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+            return isChanged;
+        };
+        MasterPositionTaking.prototype.copySettingFrom = function (source) {
+            var isSuccessful = true;
+            var backupIs3;
+            var backupN3;
+            var backupM3;
+            var backupUs3;
+            var backupS3;
+            if (source) {
+                backupIs3 = this.iS3;
+                backupN3 = this.n3;
+                backupM3 = this.m3;
+                backupUs3 = this.uS3;
+                backupS3 = this.s3;
+                this.iS3 = source.iS3;
+                this.n3 = source.n3;
+                this.m3 = source.m3;
+                this.uS3 = source.uS3;
+                this.s3 = source.s3;
+                isSuccessful = this.validate();
+                if (!isSuccessful) {
+                    if (this.iS3 && !backupIs3 && this.validationState.fieldName === "uS3") {
+                        this.validationState.fieldName = "s3";
+                    }
+                    else if (!this.iS3 && backupIs3 && this.validationState.fieldName === "s3") {
+                        this.validationState.fieldName = "uS3";
+                    }
+                    this.iS3 = backupIs3;
+                    this.n3 = backupN3;
+                    this.m3 = backupM3;
+                    this.uS3 = backupUs3;
+                    this.s3 = backupS3;
+                    this.highlightUnablyCopiedField();
+                }
+                else {
+                    this.highlightCopiedFields({
+                        iS3: backupIs3,
+                        n3: backupN3,
+                        m3: backupM3,
+                        uS3: backupUs3,
+                        s3: backupS3
+                    });
+                }
+            }
+            return isSuccessful;
+        };
+        MasterPositionTaking.prototype.copyPtOnMembersFrom = function (source) {
+            var isSuccessful = true;
+            var backupSuperPTOnMembers;
+            if (source) {
+                backupSuperPTOnMembers = this.superPTOnMembers;
+                this.superPTOnMembers = source.superPTOnMembers;
+                isSuccessful = this.validatePtOnMembers();
+                if (!isSuccessful) {
+                    this.superPTOnMembers = backupSuperPTOnMembers;
+                    this.highlightUnablyCopiedField();
+                }
+                else {
+                    this.highlightCopiedFields({
+                        superPTOnMembers: backupSuperPTOnMembers
+                    });
+                }
+            }
+            return isSuccessful;
+        };
+        MasterPositionTaking.prototype.validate = function () {
+            if (this.iS3) {
+                if (!this.validateAutoPt()) {
+                    return false;
+                }
+            }
+            else {
+                if (!this.validateManualPt()) {
+                    return false;
+                }
+            }
+            if (this.n3 > this.m3) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterMinPTCannotBeGreaterThanMasterMaxPT", "n3");
+                return false;
+            }
+            this.resetValidationState();
+            return true;
+        };
+        MasterPositionTaking.prototype.validateAutoPt = function () {
+            var minOfMasterMaxPt = this.n4 - this.uS3;
+            var maxOfMasterMaxPt = Math.min(this.s4, this.m4);
+            if (this.uS3 > this.s4) {
+                this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTCannotBeGreaterThanSuperMaxPT", "uS3");
+                return false;
+            }
+            if (this.m3 < minOfMasterMaxPt) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            if (this.m3 > maxOfMasterMaxPt) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            return true;
+        };
+        MasterPositionTaking.prototype.validateManualPt = function () {
+            var minOfSuperPt = Math.max(0, this.n4 - this.m4);
+            var minOfMasterMaxPt = Math.max(0, this.n4 - this.s3);
+            var maxOfMasterMaxPt = Math.min(this.s4 - this.s3, this.m4);
+            if (this.s3 < minOfSuperPt) {
+                this.validationState = new CustomerSetting.ValidationResult("SuperPTCannotBeLessThan", "s3", [minOfSuperPt / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            if (this.s3 > this.s4) {
+                this.validationState = new CustomerSetting.ValidationResult("SuperPTCannotBeGreaterThanSuperMaxPT", "s3");
+                return false;
+            }
+            if (this.m3 < minOfMasterMaxPt) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            if (this.m3 > maxOfMasterMaxPt) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            return true;
+        };
+        MasterPositionTaking.prototype.validatePtOnMembers = function () {
+            var maxOfSuperPtOnMembers = Math.max(0, this.s4 - this.m3);
+            if (this.superPTOnMembers < 0) {
+                this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeLessThan", "superPTOnMembers", [0]);
+                return false;
+            }
+            if (this.superPTOnMembers > maxOfSuperPtOnMembers) {
+                this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "superPTOnMembers", [maxOfSuperPtOnMembers / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            return true;
+        };
+        MasterPositionTaking.prototype.correctAutoPtValues = function () {
+            if (this.iS3 && this.s3 > 0) {
+                this.s3 = 0;
+            }
+            if (!this.iS3 && this.uS3 > 0) {
+                this.uS3 = 0;
+            }
+        };
+        return MasterPositionTaking;
+    }(CustomerSetting.DefaultSettingItem));
+    CustomerSetting.MasterPositionTaking = MasterPositionTaking;
+    var AgentPositionTaking = (function (_super) {
+        __extends(AgentPositionTaking, _super);
+        function AgentPositionTaking(settingItem, backup) {
+            if (backup === void 0) { backup = false; }
+            _super.call(this, settingItem);
+            SettingType1Item.fetch(settingItem, this);
+            if (backup) {
+                this.oldSetting = new AgentPositionTaking(this);
+            }
+        }
+        AgentPositionTaking.prototype.isChanged = function () {
+            var isChanged = SettingType1Item.detechChanges(this);
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+            return isChanged;
+        };
+        AgentPositionTaking.prototype.copySettingFrom = function (source) {
+            var isSuccessful = true;
+            var backupIm2;
+            var backupN2;
+            var backupA2;
+            var backupUm2;
+            var backupM2;
+            if (source) {
+                backupIm2 = this.iM2;
+                backupN2 = this.n2;
+                backupA2 = this.a2;
+                backupUm2 = this.uM2;
+                backupM2 = this.m2;
+                this.iM2 = source.iM2;
+                this.n2 = source.n2;
+                this.a2 = source.a2;
+                this.uM2 = source.uM2;
+                this.m2 = source.m2;
+                isSuccessful = this.validate();
+                if (!isSuccessful) {
+                    if (this.iM2 && !backupIm2 && this.validationState.fieldName === "uM2") {
+                        this.validationState.fieldName = "m2";
+                    }
+                    else if (!this.iM2 && backupIm2 && this.validationState.fieldName === "m2") {
+                        this.validationState.fieldName = "uM2";
+                    }
+                    this.iM2 = backupIm2;
+                    this.n2 = backupN2;
+                    this.a2 = backupA2;
+                    this.uM2 = backupUm2;
+                    this.m2 = backupM2;
+                    this.highlightUnablyCopiedField();
+                }
+                else {
+                    this.highlightCopiedFields({
+                        iM2: backupIm2,
+                        n2: backupN2,
+                        a2: backupA2,
+                        uM2: backupUm2,
+                        m2: backupM2
+                    });
+                }
+            }
+            return isSuccessful;
+        };
+        AgentPositionTaking.prototype.copyPtOnMembersFrom = function (source) {
+            var isSuccessful = true;
+            var backupMasterPTOnMembers;
+            if (source) {
+                backupMasterPTOnMembers = this.masterPTOnMembers;
+                this.masterPTOnMembers = source.masterPTOnMembers;
+                isSuccessful = this.validatePtOnMembers();
+                if (!isSuccessful) {
+                    this.masterPTOnMembers = backupMasterPTOnMembers;
+                    this.highlightUnablyCopiedField();
+                }
+                else {
+                    this.highlightCopiedFields({
+                        masterPTOnMembers: backupMasterPTOnMembers
+                    });
+                }
+            }
+            return isSuccessful;
+        };
+        AgentPositionTaking.prototype.validate = function () {
+            if (this.iM2) {
+                if (!this.validateAutoPt()) {
+                    return false;
+                }
+            }
+            else {
+                if (!this.validateManualPt()) {
+                    return false;
+                }
+            }
+            if (this.n2 > this.a2) {
+                this.validationState = new CustomerSetting.ValidationResult("AgentMinPTCannotBeGreaterThanAgentMaxPT", "n2");
+                return false;
+            }
+            this.resetValidationState();
+            return true;
+        };
+        AgentPositionTaking.prototype.validateAutoPt = function () {
+            var minOfAgentMaxPt = this.n3 - this.uM2;
+            var maxOfAgentMaxPt = Math.min(this.m3, this.a4);
+            if (this.uM2 > this.m3) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTCannotBeGreaterThanMasterMaxPT", "uM2");
+                return false;
+            }
+            if (this.a2 < minOfAgentMaxPt) {
+                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            if (this.a2 > maxOfAgentMaxPt) {
+                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            return true;
+        };
+        AgentPositionTaking.prototype.validateManualPt = function () {
+            var minOfMasterPt = Math.max(0, this.n3 - this.a4);
+            var minOfAgentMaxPt = Math.max(0, this.n3 - this.m2);
+            var maxOfAgentMaxPt = Math.min(this.m3 - this.m2, this.a4);
+            if (this.m2 < minOfMasterPt) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterPTCannotBeLessThan", "m2", [minOfMasterPt / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            if (this.m2 > this.m3) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterPTCannotBeGreaterThanMasterMaxPT", "m2");
+                return false;
+            }
+            if (this.a2 < minOfAgentMaxPt) {
+                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            if (this.a2 > maxOfAgentMaxPt) {
+                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            return true;
+        };
+        AgentPositionTaking.prototype.validatePtOnMembers = function () {
+            var maxOfMasterPtOnMembers = Math.max(0, this.m3 - this.a2);
+            if (this.masterPTOnMembers < 0) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeLessThan", "masterPTOnMembers", [0]);
+                return false;
+            }
+            if (this.masterPTOnMembers > maxOfMasterPtOnMembers) {
+                this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "masterPTOnMembers", [maxOfMasterPtOnMembers / SettingType1Config.roundingFactor]);
+                return false;
+            }
+            return true;
+        };
+        AgentPositionTaking.prototype.correctAutoPtValues = function () {
+            if (this.iM2 && this.m2 > 0) {
+                this.m2 = 0;
+            }
+            if (!this.iM2 && this.uM2 > 0) {
+                this.uM2 = 0;
+            }
+        };
+        return AgentPositionTaking;
+    }(CustomerSetting.DefaultSettingItem));
+    CustomerSetting.AgentPositionTaking = AgentPositionTaking;
+    var SuperPositionTakingOnMember = (function (_super) {
+        __extends(SuperPositionTakingOnMember, _super);
+        function SuperPositionTakingOnMember(settingItem, backup) {
+            if (backup === void 0) { backup = false; }
+            _super.call(this, settingItem);
+            SettingType1Item.fetch(settingItem, this);
+            if (backup) {
+                this.oldSetting = new SuperPositionTakingOnMember(this);
+            }
+        }
+        SuperPositionTakingOnMember.prototype.isChanged = function () {
+            var isChanged = SettingType1Item.detechChanges(this);
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+            return isChanged;
+        };
+        SuperPositionTakingOnMember.prototype.copySettingFrom = function (source) {
+            var isSuccessful = true;
+            var backupIs1;
+            var backupUs1;
+            var backups1;
+            var isS1Disabled;
+            if (source) {
+                backupIs1 = this.iS1;
+                backupUs1 = this.uS1;
+                backups1 = this.s1;
+                this.iS1 = source.iS1;
+                if (this.iS1) {
+                    this.uS1 = source.uS1;
+                }
+                else if (!this.iS3) {
+                    this.s1 = source.s1;
+                }
+                isSuccessful = this.validate();
+                if (!isSuccessful) {
+                    if (this.iS1 && !backupIs1 && this.validationState.fieldName === "uS1") {
+                        this.validationState.fieldName = "s1";
+                    }
+                    else if (!this.iS1 && backupIs1 && this.validationState.fieldName === "s1") {
+                        this.validationState.fieldName = "uS1";
+                    }
+                    this.iS1 = backupIs1;
+                    this.uS1 = backupUs1;
+                    this.s1 = backups1;
+                    this.highlightUnablyCopiedField();
+                }
+                else {
+                    this.highlightCopiedFields({
+                        iS1: backupIs1,
+                        uS1: backupUs1,
+                        s1: backups1
+                    });
+                }
+            }
+            return isSuccessful;
+        };
+        SuperPositionTakingOnMember.prototype.validate = function () {
+            if (this.iS1) {
+                var minOfSuperAutoPtOnMember = Math.max(0, this.n4 - this.m1 - this.a1);
+                if (this.uS1 < minOfSuperAutoPtOnMember) {
+                    this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTOnMemberCannotBeLessThan", "uS1", [minOfSuperAutoPtOnMember / SettingType1Config.roundingFactor]);
+                    return false;
+                }
+                if (this.uS1 > this.s4) {
+                    this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT", "uS1");
+                    return false;
+                }
+            }
+            else if (!this.iS3) {
+                var minOfSuperPtOnMember = Math.max(0, this.n4 - this.m1 - this.a1);
+                var maxOfSuperPtOnMember = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
+                if (this.s1 < minOfSuperPtOnMember) {
+                    this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeLessThan", "s1", [minOfSuperPtOnMember / SettingType1Config.roundingFactor]);
+                    return false;
+                }
+                if (this.s1 > maxOfSuperPtOnMember) {
+                    this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "s1", [maxOfSuperPtOnMember / SettingType1Config.roundingFactor]);
+                    return false;
+                }
+            }
+            this.resetValidationState();
+            return true;
+        };
+        SuperPositionTakingOnMember.prototype.correctAutoPtValues = function () {
+            if (this.iS1 && this.s1 > 0) {
+                this.s1 = 0;
+            }
+            if (!this.iS1 && this.uS1 > 0) {
+                this.uS1 = 0;
+            }
+        };
+        return SuperPositionTakingOnMember;
+    }(CustomerSetting.DefaultSettingItem));
+    CustomerSetting.SuperPositionTakingOnMember = SuperPositionTakingOnMember;
+    var MasterPositionTakingOnMember = (function (_super) {
+        __extends(MasterPositionTakingOnMember, _super);
+        function MasterPositionTakingOnMember(settingItem, backup, extraData) {
+            if (backup === void 0) { backup = false; }
+            _super.call(this, settingItem);
+            SettingType1Item.fetch(settingItem, this);
+            if (backup) {
+                this.oldSetting = new MasterPositionTakingOnMember(this);
+            }
+            if (extraData) {
+                var isDisableMasterAutoPTValues = extraData.filter(function (item) {
+                    return item.key === "isDisableMasterAutoPT";
+                });
+                if (isDisableMasterAutoPTValues.length > 0) {
+                    this.isDisableMasterAutoPT = !!isDisableMasterAutoPTValues[0].value;
+                }
+            }
+        }
+        MasterPositionTakingOnMember.prototype.isChanged = function () {
+            var isChanged = SettingType1Item.detechChanges(this);
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+            return isChanged;
+        };
+        MasterPositionTakingOnMember.prototype.copySettingFrom = function (source) {
+            var isSuccessful = true;
+            var backupIm1;
+            var backupUm1;
+            var backupM1;
+            if (source) {
+                backupIm1 = this.iM1;
+                backupUm1 = this.uM1;
+                backupM1 = this.m1;
+                this.iM1 = source.iM1;
+                if (this.iM1) {
+                    this.uM1 = source.uM1;
+                }
+                else if (!this.iM2) {
+                    this.m1 = source.m1;
+                }
+                isSuccessful = this.validate();
+                if (!isSuccessful) {
+                    if (this.iM1 && !backupIm1 && this.validationState.fieldName === "uM1") {
+                        this.validationState.fieldName = "m1";
+                    }
+                    else if (!this.iM1 && backupIm1 && this.validationState.fieldName === "m1") {
+                        this.validationState.fieldName = "uM1";
+                    }
+                    this.iM1 = backupIm1;
+                    this.uM1 = backupUm1;
+                    this.m1 = backupM1;
+                    this.highlightUnablyCopiedField();
+                }
+                else {
+                    this.highlightCopiedFields({
+                        iM1: backupIm1,
+                        uM1: backupUm1,
+                        m1: backupM1
+                    });
+                }
+            }
+            return isSuccessful;
+        };
+        MasterPositionTakingOnMember.prototype.validate = function () {
+            if (this.iM1) {
+                var minOfMasterAutoPtOnMember = Math.max(0, this.n3 - this.a1);
+                if (this.uM1 < minOfMasterAutoPtOnMember) {
+                    this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTOnMemberCannotBeLessThan", "uM1", [minOfMasterAutoPtOnMember / SettingType1Config.roundingFactor]);
+                    return false;
+                }
+                if (this.uM1 > this.m3) {
+                    this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT", "uM1");
+                    return false;
+                }
+            }
+            else if (!this.iM2 || this.isDisableMasterAutoPT) {
+                var minOfMasterPtOnMember = Math.max(0, this.n3 - this.a1);
+                var maxOfMasterPtOnMember = this.m3 - this.a1;
+                if (this.m1 < minOfMasterPtOnMember) {
+                    this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeLessThan", "m1", [minOfMasterPtOnMember / SettingType1Config.roundingFactor]);
+                    return false;
+                }
+                if (this.m1 > maxOfMasterPtOnMember) {
+                    this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "m1", [maxOfMasterPtOnMember / SettingType1Config.roundingFactor]);
+                    return false;
+                }
+            }
+            this.resetValidationState();
+            return true;
+        };
+        MasterPositionTakingOnMember.prototype.correctAutoPtValues = function () {
+            if (this.iM1 && this.m1 > 0) {
+                this.m1 = 0;
+            }
+            if (!this.iM1 && this.uM1 > 0) {
+                this.uM1 = 0;
+            }
+        };
+        return MasterPositionTakingOnMember;
+    }(CustomerSetting.DefaultSettingItem));
+    CustomerSetting.MasterPositionTakingOnMember = MasterPositionTakingOnMember;
+    var AgentPositionTakingOnMember = (function (_super) {
+        __extends(AgentPositionTakingOnMember, _super);
+        function AgentPositionTakingOnMember(settingItem, backup) {
+            if (backup === void 0) { backup = false; }
+            _super.call(this, settingItem);
+            SettingType1Item.fetch(settingItem, this);
+            if (backup) {
+                this.oldSetting = new AgentPositionTakingOnMember(this);
+            }
+        }
+        AgentPositionTakingOnMember.prototype.isChanged = function () {
+            return SettingType1Item.detechChanges(this);
+        };
+        AgentPositionTakingOnMember.prototype.copySettingFrom = function (source) {
+            var isSuccessful = true;
+            var backupA1;
+            if (source) {
+                backupA1 = this.a1;
+                this.a1 = source.a1;
+                isSuccessful = this.validate();
+                if (!isSuccessful) {
+                    this.a1 = backupA1;
+                    this.highlightUnablyCopiedField();
+                }
+                else {
+                    this.highlightCopiedFields({
+                        a1: backupA1
+                    });
+                }
+            }
+            return isSuccessful;
+        };
+        AgentPositionTakingOnMember.prototype.validate = function () {
+            if (this.a1 < this.n2) {
+                this.validationState = new CustomerSetting.ValidationResult("AgentPTCannotBeLessThanAgentMinPT", "a1");
+                return false;
+            }
+            if (this.a1 > this.a2) {
+                this.validationState = new CustomerSetting.ValidationResult("AgentPTCannotBeGreaterThanAgentMaxPT", "a1");
+                return false;
+            }
+            this.resetValidationState();
+            return true;
+        };
+        return AgentPositionTakingOnMember;
+    }(CustomerSetting.DefaultSettingItem));
+    CustomerSetting.AgentPositionTakingOnMember = AgentPositionTakingOnMember;
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var PositionTakingOnMemberDirective = (function () {
+        function PositionTakingOnMemberDirective($q, updatingSettingTypePromiseChain, adjustMemberPtModalService) {
+            var _this = this;
+            this.controller = ["$scope", function ($scope) {
+                    _this.updatingSettingTypePromiseChain.register($scope.settingType.id, function (settingPartialCommand) {
+                        return _this.updatePositionTakingOnMembers(settingPartialCommand);
+                    });
+                }];
+            this.$q = $q;
+            this.updatingSettingTypePromiseChain = updatingSettingTypePromiseChain;
+            this.adjustMemberPtModalService = adjustMemberPtModalService;
+        }
+        PositionTakingOnMemberDirective.prototype.updatePositionTakingOnMembers = function (settingPartialCommand) {
+            var deferred = this.$q.defer();
+            this.adjustMemberPtModalService.show(settingPartialCommand.settingType.settingLevel, settingPartialCommand.customerLevel, settingPartialCommand.settingType.id, settingPartialCommand.settingType.settingItems, function () {
+                deferred.resolve();
+            });
+            return deferred.promise;
+        };
+        PositionTakingOnMemberDirective.$inject = ["$q", "updatingSettingTypePromiseChain", "adjustMemberPtModalService"];
+        return PositionTakingOnMemberDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("positionTakingOnMember", PositionTakingOnMemberDirective);
+    var AdjustMemberPtModalDirective = (function () {
+        function AdjustMemberPtModalDirective(adjustMemberPtModalService) {
+            var _this = this;
+            this.replace = true;
+            this.templateUrl = "adjust-member-pt-modal.htm";
+            this.link = function (scope) {
+                _this.adjustMemberPtModalService.setup(scope);
+                scope.avaiSettingLevels = CustomerSetting.SettingLevel;
+                scope.avaiCustomerLevels = CustomerSetting.Level;
+                scope.$watch("settingItems", function (settingItems) {
+                    if (angular.isArray(settingItems)) {
+                        if (scope.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
+                            scope.sportGroups = _this.groupSettingItemsBySportType(settingItems);
+                        }
+                        else {
+                            scope.sportGroups = [settingItems];
+                        }
+                    }
+                });
+            };
+            this.adjustMemberPtModalService = adjustMemberPtModalService;
+        }
+        Object.defineProperty(AdjustMemberPtModalDirective.prototype, "scope", {
+            get: function () {
+                return {};
+            },
+            enumerable: true,
+            configurable: true
+        });
+        AdjustMemberPtModalDirective.prototype.groupSettingItemsBySportType = function (settingItems) {
+            var currentSportTypeId = -1;
+            var result = new Array();
+            var group;
+            settingItems.forEach(function (settingItem) {
+                var item = settingItem;
+                if (currentSportTypeId !== item.sportTypeId) {
+                    if (group) {
+                        result.push(group);
+                    }
+                    currentSportTypeId = item.sportTypeId;
+                    group = new Array();
+                }
+                group.push(item);
+            });
+            if (group) {
+                result.push(group);
+            }
+            return result;
+        };
+        AdjustMemberPtModalDirective.$inject = ["adjustMemberPtModalService"];
+        return AdjustMemberPtModalDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
+    var AdjustMemberPtModalService = (function () {
+        function AdjustMemberPtModalService($rootScope, valueRangeService) {
+            this.$rootScope = $rootScope;
+            this.valueRangeService = valueRangeService;
+        }
+        AdjustMemberPtModalService.prototype.setup = function (scope) {
+            var _this = this;
+            if (angular.isUndefined(scope)) {
+                throw "Scope of the modal must not be undefied";
+            }
+            this.modalScope = scope;
+            this.modalScope.divisor = CustomerSetting.SettingType1Config.roundingFactor;
+            this.modalScope.cancel = function () {
+                _this.modalScope.isShown = false;
+                _this.resolvePromise();
+            };
+            this.modalScope.ok = function () {
+                _this.modalScope.isShown = false;
+                if (_this.modalScope.customerLevel === CustomerSetting.Level.master) {
+                    _this.modalScope.settingItems.forEach(function (item) {
+                        item.isUpdateSuperPTOnMembers = true;
+                    });
+                }
+                else if (_this.modalScope.customerLevel === CustomerSetting.Level.agent) {
+                    _this.modalScope.settingItems.forEach(function (item) {
+                        item.isUpdateMasterPTOnMembers = true;
+                    });
+                }
+                _this.resolvePromise();
+            };
+        };
+        AdjustMemberPtModalService.prototype.show = function (settingLevel, customerLevel, settingTypeId, settingItems, submitChanges) {
+            if (this.modalScope.isShown) {
+                this.modalScope.isShown = false;
+            }
+            this.modalScope.submitChanges = submitChanges;
+            if (this.convertData(customerLevel, settingItems)) {
+                this.modalScope.settingLevel = settingLevel;
+                this.modalScope.customerLevel = customerLevel;
+                this.modalScope.settingTypeId = settingTypeId;
+                this.modalScope.isShown = true;
+            }
+            else if (this.modalScope.submitChanges) {
+                this.modalScope.submitChanges();
+            }
+        };
+        AdjustMemberPtModalService.prototype.convertData = function (customerLevel, settingItems) {
+            var _this = this;
+            var hasChanged = false;
+            var changedItems = new Array();
+            this.modalScope.ranges = new Array();
+            if (customerLevel === CustomerSetting.Level.master) {
+                settingItems.forEach(function (settingItem) {
+                    var item = settingItem;
+                    if (!item.iS3 && item.iS3 !== item.oldSetting.iS3) {
+                        changedItems.push(item);
+                        _this.modalScope.ranges.push(_this.valueRangeService.generateRanges(item.superPTOnMembers, 0, item.s4 - item.m3, CustomerSetting.SettingType1Config.step, CustomerSetting.SettingType1Config.roundingFactor));
+                    }
+                });
+            }
+            else if (customerLevel === CustomerSetting.Level.agent) {
+                settingItems.forEach(function (settingItem) {
+                    var item = settingItem;
+                    if (!item.iM2 && item.iM2 !== item.oldSetting.iM2) {
+                        changedItems.push(item);
+                        _this.modalScope.ranges.push(_this.valueRangeService.generateRanges(item.masterPTOnMembers, 0, item.m3 - item.a2, CustomerSetting.SettingType1Config.step, CustomerSetting.SettingType1Config.roundingFactor));
+                    }
+                });
+            }
+            if (changedItems.length > 0) {
+                this.modalScope.settingItems = changedItems;
+                hasChanged = true;
+            }
+            return hasChanged;
+        };
+        AdjustMemberPtModalService.prototype.resolvePromise = function () {
+            this.$rootScope.$emit("updateSetting");
+            if (this.modalScope.submitChanges) {
+                this.modalScope.submitChanges();
+            }
+        };
+        AdjustMemberPtModalService.$inject = ["$rootScope", "valueRangeService"];
+        return AdjustMemberPtModalService;
+    }());
+    CustomerSetting.ModuleRegister.service("adjustMemberPtModalService", AdjustMemberPtModalService);
+    var CopyPositionTakingOnMemberDirective = (function (_super) {
+        __extends(CopyPositionTakingOnMemberDirective, _super);
+        function CopyPositionTakingOnMemberDirective() {
+            var _this = this;
+            _super.apply(this, arguments);
+            this.controller = ["$scope", function ($scope) {
+                    _this.copyingSettingService.register($scope);
+                    $scope.copyingState = new CustomerSetting.CopyingState(CustomerSetting.PositionModel.fixed);
+                    $scope.copyingState.none();
+                    $scope.copy = function () {
+                        _this.copyingSettingService.hideTooltips($scope);
+                        if ($scope.settingItems && $scope.settingItems.length > 1) {
+                            var items = CustomerSetting.ArrayHelpers.join2DimensionalArray($scope.settingItems);
+                            var source = items[0];
+                            var targets = items.slice(1);
+                            var numberOfCopiedItems = 0;
+                            var successful = true;
+                            if ($scope.customerLevel === CustomerSetting.Level.master) {
+                                numberOfCopiedItems = targets.filter(function (item) {
+                                    var validItem = item.copyPtOnMembersFrom(source);
+                                    successful = successful ? validItem : successful;
+                                    return validItem ? item.hasHighlightField(CustomerSetting.NotificationType.success) : validItem;
+                                }).length;
+                            }
+                            else if ($scope.customerLevel === CustomerSetting.Level.agent) {
+                                numberOfCopiedItems = targets.filter(function (item) {
+                                    var validItem = item.copyPtOnMembersFrom(source);
+                                    successful = successful ? validItem : successful;
+                                    return validItem ? item.hasHighlightField(CustomerSetting.NotificationType.success) : validItem;
+                                }).length;
+                            }
+                            if (!successful) {
+                                $scope.copyingState.fail();
+                            }
+                            else if (numberOfCopiedItems > 0) {
+                                $scope.copyingState.succeed();
+                            }
+                            else {
+                                $scope.copyingState.none();
+                            }
+                        }
+                    };
+                    $scope.hideTooltip = function () {
+                        $scope.copyingState.none();
+                    };
+                }];
+        }
+        Object.defineProperty(CopyPositionTakingOnMemberDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    customerLevel: "=",
+                    settingTypeId: "=",
+                    settingItems: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return CopyPositionTakingOnMemberDirective;
+    }(CustomerSetting.CopySettingDirective));
+    CustomerSetting.ModuleRegister.directive("copyPositionTakingOnMember", CopyPositionTakingOnMemberDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var PositionTakingResourceService = (function (_super) {
+        __extends(PositionTakingResourceService, _super);
+        function PositionTakingResourceService(positionTakingResources, parametersService) {
+            _super.call(this, positionTakingResources, parametersService);
+        }
+        PositionTakingResourceService.$inject = ["positionTakingResources", "parametersService"];
+        return PositionTakingResourceService;
+    }(CustomerSetting.ResourceService));
+    CustomerSetting.PositionTakingResourceService = PositionTakingResourceService;
+    CustomerSetting.ModuleRegister.service("positionTakingResourceService", PositionTakingResourceService);
+    function PositionTakingLabelFilter(positionTakingResourceService) {
+        return function (name) {
+            return positionTakingResourceService.getLabel(name);
+        };
+    }
+    PositionTakingLabelFilter.$inject = ["positionTakingResourceService"];
+    CustomerSetting.ModuleRegister.filter("positionTakingLabel", PositionTakingLabelFilter);
+    function PositionTakingMessageFilter(positionTakingResourceService) {
+        return function (name) {
+            var replacements = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                replacements[_i - 1] = arguments[_i];
+            }
+            replacements.unshift(name);
+            return positionTakingResourceService.getFormattedMessage.apply(positionTakingResourceService, replacements);
+        };
+    }
+    PositionTakingMessageFilter.$inject = ["positionTakingResourceService"];
+    CustomerSetting.ModuleRegister.filter("positionTakingMessage", PositionTakingMessageFilter);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var PositionTakingSelectDirective = (function () {
+        function PositionTakingSelectDirective($compile) {
+            var _this = this;
+            this.replace = true;
+            this.templateUrl = "position-taking-select.htm";
+            this.controller = ["$scope", "valueRangeService", function ($scope, valueRangeService) {
+                    $scope.divisor = CustomerSetting.SettingType1Config.roundingFactor;
+                    $scope.$watchGroup(["min", "max"], function (newData, oldData) {
+                        if ($scope.settingItem) {
+                            if (!angular.equals(oldData, newData)) {
+                                $scope.settingItem[$scope.fieldName] = Math.max($scope.min, Math.min($scope.max, $scope.settingItem[$scope.fieldName]));
+                            }
+                            $scope.range = valueRangeService.generateRanges($scope.settingItem[$scope.fieldName], $scope.min, $scope.max, CustomerSetting.SettingType1Config.step, CustomerSetting.SettingType1Config.roundingFactor);
+                        }
+                    });
+                    $scope.resetState = function (fieldName) {
+                        var item = $scope.settingItem;
+                        if (item.validationState && !item.validationState.isSuccessful) {
+                            if (item.validationState.fieldName === fieldName) {
+                                item.resetValidationState();
+                            }
+                        }
+                        else {
+                            item.resetHighlightState();
+                        }
+                    };
+                }];
+            this.link = function (scope, element) {
+                var select = element.find("select");
+                select.attr("data-ng-change", "resetState(fieldName)");
+                select.attr("data-ng-model", "settingItem." + scope.fieldName);
+                select.attr("data-ng-options", "item.key as (item.value | ptFormat) for item in range");
+                select.attr("data-field-highlighting", "");
+                if (scope.disabled === "true") {
+                    select.attr("disabled", "disabled");
+                }
+                _this.$compile(element)(scope);
+            };
+            this.$compile = $compile;
+        }
+        Object.defineProperty(PositionTakingSelectDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    settingItem: "=",
+                    fieldName: "@",
+                    min: "@",
+                    max: "@",
+                    disabled: "@"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        PositionTakingSelectDirective.$inject = ["$compile"];
+        return PositionTakingSelectDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
+    function PositionTakingFormatFilter() {
+        return function (ptValue) {
+            return ptValue / CustomerSetting.SettingType1Config.roundingFactor;
+        };
+    }
+    CustomerSetting.ModuleRegister.filter("ptFormat", PositionTakingFormatFilter);
+    function HideIsAutoColumnFilter() {
+        return function (settingType) {
+            return settingType.extraData.some(function (item) {
+                return item.key === "isDisableMasterAutoPT" && item.value;
+            });
+        };
+    }
+    CustomerSetting.ModuleRegister.filter("hideIsAutoColumn", HideIsAutoColumnFilter);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType1Directive = (function (_super) {
+        __extends(SettingType1Directive, _super);
+        function SettingType1Directive(positionTakingResourceService) {
+            var _this = this;
+            _super.call(this, CustomerSetting.SettingType1Item.factory);
+            this.templateUrl = "settingtype1.htm";
+            this.link = function (scope) {
+                scope.headerTemplateUrl = "settingtype1-header.htm";
+                scope.valueTemplateUrl = "settingtype1-value.htm";
+                scope.settingTypeName = _this.positionTakingResourceService.getLabel("PositionTaking");
+            };
+            this.positionTakingResourceService = positionTakingResourceService;
+        }
+        SettingType1Directive.$inject = ["positionTakingResourceService"];
+        return SettingType1Directive;
+    }(CustomerSetting.SettingTypeDirective));
+    CustomerSetting.ModuleRegister.directive("settingtype1", SettingType1Directive);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var SettingType6Item = (function (_super) {
         __extends(SettingType6Item, _super);
         function SettingType6Item(settingItem, backup) {
@@ -33639,6 +34726,11 @@ $templateCache.put("comm-rate-select.htm","<div class=\"setting-field-wrapper\">
 $templateCache.put("settingtype3-header.htm","<div data-ng-if=\"uplineLevel === avaiCustomerLevels.super\"><div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'CommissionForMaster\' | commissionLabel)}}</div><div class=\"block__lbl w33-percent\">{{::(\'CommissionForAgent\' | commissionLabel)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'CommissionForMember\' | commissionLabel)}}</div></div></div><div data-ng-if=\"uplineLevel === avaiCustomerLevels.master\"><div class=\"block__lbl\"></div><div class=\"block__lbl w40-percent\">{{::(\'CommissionForAgent\' | commissionLabel)}}</div><div class=\"block__lbl block__lbl--no-border w40-percent\">{{::(\'CommissionForMember\' | commissionLabel)}}</div></div>");
 $templateCache.put("settingtype3-value.htm","<comm-rate-select data-ng-if=\"settingType | editableSettingType\" data-setting-item=\"item\"></comm-rate-select><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)\">{{item.commRate}}</div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w33-percent\">{{item.upline.upline.commRate}}</div><div class=\"block__cell w33-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.commRate}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w50-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.commRate}}</div></div>");
 $templateCache.put("settingtype3.htm","<div data-ng-class=\"{ \'full-width\': customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent }\"><default-setting-type-grouping></default-setting-type-grouping></div>");
+$templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></copy-position-taking-on-member></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></copy-position-taking-on-member></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-ng-model=\"item.superPTOnMembers\" data-field-highlighting data-field-name=\"superPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-field-highlighting data-field-name=\"masterPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
+$templateCache.put("position-taking-select.htm","<div><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'positionTakingResourceService\':fieldName}}\"></select></div></div>");
+$templateCache.put("settingtype1-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w25-percent\">{{::(\'SuperMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w25-percent\">{{::(\'SuperMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'MasterMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"block__lbl block__lbl--no-border w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div>");
+$templateCache.put("settingtype1-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w25-percent\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s4\" data-min=\"{{0}}\" data-max=\"{{item.defaultMaxPT}}\"></position-taking-select></div><div class=\"block__cell w25-percent\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w25-percent\"><position-taking-select data-setting-item=\"item\" data-field-name=\"a4\" data-min=\"{{0}}\" data-max=\"{{item.m4}}\"></position-taking-select></div><div class=\"block__cell block__cell--no-border w25-percent\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></position-taking-select></div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-position-taking-on-member><div class=\"block__cell w28-percent\" data-ng-show=\"item.iS3\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uS3\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w28-percent\" data-ng-show=\"!item.iS3\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s3\" data-min=\"{{[0, item.n4 - item.m4] | maxValue}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w16-percent\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iS3\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iS3\');\" data-ng-model=\"item.iS3\"></label></div><div class=\"block__cell w28-percent\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m3\" data-min=\"{{item.iS3 ? item.n4 - item.uS3 : ([0, item.n4 - item.s3] | maxValue)}}\" data-max=\"{{item.iS3 ? ([item.s4, item.m4] | minValue) : ([item.s4 - item.s3, item.m4] | minValue)}}\"></position-taking-select></div><div class=\"block__cell block__cell--no-border w28-percent\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n3\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\"></position-taking-select></div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-position-taking-on-member><div class=\"block__cell w28-percent\" data-ng-show=\"item.iM2 && !(settingType | hideIsAutoColumn)\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uM2\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\"></position-taking-select></div><div class=\"block__cell w28-percent\" data-ng-show=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m2\" data-min=\"{{[0, item.n3 - item.a4] | maxValue}}\" data-max=\"{{item.m3}}\"></position-taking-select></div><div class=\"block__cell w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iM2\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iM2\');\" data-ng-model=\"item.iM2\"></label></div><div class=\"block__cell w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"a2\" data-min=\"{{item.iM2 ? item.n3 - item.uM2 : ([0, item.n3 - item.m2] | maxValue)}}\" data-max=\"{{item.iM2 ? ([item.m3, item.a4] | minValue) : ([item.m3 - item.m2, item.a4] | minValue)}}\"></position-taking-select></div><div class=\"block__cell block__cell--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n2\" data-min=\"{{0}}\" data-max=\"{{item.a2}}\"></position-taking-select></div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w28-percent\" data-ng-show=\"item.iS1\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uS1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w28-percent\" data-ng-show=\"!item.iS1\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{[item.n4 - item.m1 - item.a1, item.s4 - item.m3] | maxValue}}\" data-disabled=\"{{item.iS3}}\"></position-taking-select></div><div class=\"block__cell w16-percent\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iS1\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iS1\');\" data-ng-model=\"item.iS1\"></label></div><div class=\"block__cell w28-percent\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent\">{{item.a1 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w42-percent\" data-ng-show=\"item.iM1 && !(settingType | hideIsAutoColumn)\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uM1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3}}\"></position-taking-select></div><div class=\"block__cell w42-percent\" data-ng-show=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3 - item.a1}}\" data-disabled=\"{{item.iM2 && !(settingType | hideIsAutoColumn)}}\"></position-taking-select></div><div class=\"block__cell w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iM1\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iM1\');\" data-ng-model=\"item.iM1\"></label></div><div class=\"block__cell block__cell--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.a1 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\"><div><position-taking-select data-setting-item=\"item\" data-field-name=\"a1\" data-min=\"{{item.n2}}\" data-max=\"{{item.a2}}\"></position-taking-select></div></div></div><div data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w25-percent\">{{item.s4 | ptFormat}}</div><div class=\"block__cell w25-percent\">{{item.m4 | ptFormat}}</div><div class=\"block__cell w25-percent\">{{item.a4 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w25-percent\">{{item.n4 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__cell w28-percent\" data-ng-if=\"item.iS3\">{{item.uS3 | ptFormat}}</div><div class=\"block__cell w28-percent\" data-ng-if=\"!item.iS3\">{{item.s3 | ptFormat}}</div><div class=\"block__cell w16-percent\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS3\"></label></div><div class=\"block__cell w28-percent\">{{item.m3 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent\">{{item.n3 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__cell w28-percent\" data-ng-if=\"item.iM2 && !(settingType | hideIsAutoColumn)\">{{item.uM2 | ptFormat}}</div><div class=\"block__cell w28-percent\" data-ng-if=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.m2 | ptFormat}}</div><div class=\"block__cell w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM2\"></label></div><div class=\"block__cell w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.a2 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{item.n2 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w28-percent\" data-ng-if=\"item.iS1\">{{item.uS1 | ptFormat}}</div><div class=\"block__cell w28-percent\" data-ng-if=\"!item.iS1\">{{item.s1 | ptFormat}}</div><div class=\"block__cell w16-percent\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS1\"></label></div><div class=\"block__cell w28-percent\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent\">{{item.a1 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w42-percent\" data-ng-if=\"item.iM1 && !(settingType | hideIsAutoColumn)\">{{item.uM1 | ptFormat}}</div><div class=\"block__cell w42-percent\" data-ng-if=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.m1 | ptFormat}}</div><div class=\"block__cell w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM1\"></label></div><div class=\"block__cell block__cell--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.a1 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{item.a1 | ptFormat}}</div></div>");
+$templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping><adjust-member-pt-modal data-ng-if=\"settingType | editableSettingType\"></adjust-member-pt-modal></div>");
 $templateCache.put("settingtype6-win-limit-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-model=\"settingItem.winLimit\" data-ng-options=\"item.key as item.value for item in range\" data-field-highlighting data-field-name=\"winLimit\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'settingType6ResourceService\':\'winLimit\':\'unlimitedLimit\'}}\"></select><span>{{::(\'OnGivenCredit\' | settingType6Label)}}</span></div>");
 $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype6\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\">{{group[0].betTypeName}}</div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumWin\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><settingtype6-win-limit-select data-setting-item=\"item\"></settingtype6-win-limit-select></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? \'X\' : \'\'}} {{::(\'OnGivenCredit\' | settingType6Label)}}</div></div><div class=\"block__row block__row--border-top\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype6-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-field-highlighting data-field-name=\"lossLimit\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype6-unlimited-checkbox data-ng-model=\"isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType6Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentWinLossAmount\' | settingType6Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentWinLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentWinLoss(item)\">{{::(\'ClickToViewCurrentWinLossLimit\' | settingType6Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentWinLossAmount\"><div><span>{{\'Winning\' | settingType6Label}}:</span> <span data-ng-if=\"item.winLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.winLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.winPercent | formatNumber}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxWinAmount | formatNumber}}</span></span></div><div><span>{{\'Losing\' | settingType6Label}}:</span> <span data-ng-if=\"item.lossLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.lossLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.lossPercent | formatNumber}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxLossAmount | formatNumber}}</span></span></div></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-highlight-state=\"item.highlightState\" data-field-name=\"isAutoReset\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType6Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
@@ -34087,6 +35179,390 @@ $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype
     };
 
     angular.module("customerSetting").value("commissionResources", commissionResources);
+})();
+
+/*jshint -W101,-W106,-W044,-W098*/
+
+(function () {
+    "use strict";
+
+    var positionTakingResources = {};
+    
+    positionTakingResources["label"] = positionTakingResources["label"] || {};
+    positionTakingResources["label"]["en-us"] = {
+        "AgentMaxPT": "Agent Max PT",
+        "AgentMinPT": "Agent Min PT",
+        "AgentPT": "Agent PT",
+        "DisableAgentAutoPt": "You have changed this agent not to take auto position taking.",
+        "DisableMasterAutoPt": "You have changed this master not to take auto position taking.",
+        "IsAuto": "Is Auto",
+        "Live": "Live",
+        "MasterMaxPT": "Master Max PT",
+        "MasterMinPT": "Master Min PT",
+        "MasterPT": "Master PT",
+        "Max": "Max",
+        "MaxLive": "Max Live",
+        "Min": "Min",
+        "MinLive": "Min Live",
+        "PositionTaking": "Position Taking",
+        "SuperMaxPT": "Super Max PT",
+        "SuperMinPT": "Super Min PT",
+        "SuperPT": "Super PT",
+        "UpdateMemberPtInfo": "You have changed your position taking.",
+        "UpdateMemberPtQuestion": "Do you want to update all member&apos;s position taking to:",
+        "UpdateMemberPtTitle": "Confirm Update Members&apos;s PT"
+    };
+    
+    positionTakingResources["label"] = positionTakingResources["label"] || {};
+    positionTakingResources["label"]["zh-cn"] = {
+        "AgentMaxPT": "代理最高占成",
+        "AgentMinPT": "代理最低占成",
+        "AgentPT": "代理占成数",
+        "DisableAgentAutoPt": "您已更改于此代理不使用自动占成",
+        "DisableMasterAutoPt": "您已更改此总代理不再自动占成.",
+        "IsAuto": "是自动",
+        "LastName": "姓",
+        "Live": "现场",
+        "MasterMaxPT": "总代理最高占成",
+        "MasterMinPT": "总代理最低占成数",
+        "MasterPT": "总代理占成数",
+        "Max": "最高",
+        "MaxLive": "Max Live",
+        "Min": "最低",
+        "MinLive": "Min Live",
+        "PositionTaking": "占成数",
+        "SuperMaxPT": "超级总代理最高占成",
+        "SuperMinPT": "超级总代理最低占成",
+        "SuperPT": "超级总代理占成数",
+        "UpdateMemberPtInfo": "您已更改您的占成数",
+        "UpdateMemberPtQuestion": "您是否要把所有会员的占成数更改为:",
+        "UpdateMemberPtTitle": "确认更新会员的占成数"
+    };
+    
+    positionTakingResources["label"] = positionTakingResources["label"] || {};
+    positionTakingResources["label"]["zh-tw"] = {
+        "AgentMaxPT": "代理最高佔成",
+        "AgentMinPT": "代理最低佔成",
+        "AgentPT": "代理占成数",
+        "DisableAgentAutoPt": "You have changed this agent not to take auto position taking",
+        "DisableMasterAutoPt": "You have changed this master not to take auto position taking.",
+        "IsAuto": "是自動",
+        "Live": "現場",
+        "MasterMaxPT": "總代理最高佔成",
+        "MasterMinPT": "总代理最低占成数",
+        "MasterPT": "总代理占成数",
+        "Max": "最高",
+        "Members": "會員",
+        "Min": "最低",
+        "MinLive": "Min Live",
+        "PositionTaking": "佔成數",
+        "SuperMaxPT": "超級總代理最高佔成",
+        "SuperMinPT": "超級總代理最低佔成",
+        "SuperPT": "超级总代理占成数",
+        "UpdateMemberPtInfo": "您已更改您的占成数",
+        "UpdateMemberPtQuestion": "您是否要把所有會員佔成數更改為:",
+        "UpdateMemberPtTitle": "確認更新會員的佔成數"
+    };
+    
+    positionTakingResources["label"] = positionTakingResources["label"] || {};
+    positionTakingResources["label"]["ko-kr"] = {
+        "AgentMaxPT": "에이전트 최대 PT",
+        "AgentMinPT": "에이전트 최소 PT",
+        "AgentPT": "에이전트 PT",
+        "DisableAgentAutoPt": "해당 에이전트는 자동 거래조건을 설정 하지 못하게 변경 하였습니다",
+        "DisableMasterAutoPt": "해당 마스터의 자동 거래조건을 설정 하지 못하게 변경 하였습니다.",
+        "IsAuto": "자동",
+        "Live": "라이브",
+        "MasterMaxPT": "마스터 최대 PT",
+        "MasterMinPT": "마스터 최소PT",
+        "MasterPT": "마스터 PT",
+        "Max": "최대",
+        "Min": "최소",
+        "PositionTaking": "거래 조건",
+        "SuperMaxPT": "슈퍼 최대 PT",
+        "SuperMinPT": "슈퍼 최소PT",
+        "SuperPT": "슈퍼 PT",
+        "UpdateMemberPtInfo": "포지션테이킹(PT)이 변경되었습니다",
+        "UpdateMemberPtQuestion": "모든회원의 거래조건을 바꾸기를 원하십니까:",
+        "UpdateMemberPtTitle": "Confirm Update Members&apos;s PT"
+    };
+    
+    positionTakingResources["label"] = positionTakingResources["label"] || {};
+    positionTakingResources["label"]["ja-jp"] = {
+        "AgentMaxPT": "Agent Max PT",
+        "AgentMinPT": "Agent Min PT",
+        "AgentPT": "Agent PT",
+        "DisableAgentAutoPt": "You have changed this agent not to take auto position taking",
+        "DisableMasterAutoPt": "You have changed this master not to take auto position taking.",
+        "IsAuto": "Is Auto",
+        "Live": "ライブ",
+        "MasterMaxPT": "Master Max PT",
+        "MasterMinPT": "Master Min PT",
+        "MasterPT": "Master PT",
+        "Max": "Max",
+        "Min": "Min",
+        "PositionTaking": "Position Taking",
+        "SuperMaxPT": "Super Max PT",
+        "SuperMinPT": "Super Min PT",
+        "SuperPT": "Super PT",
+        "UpdateMemberPtInfo": "You have changed your position taking.",
+        "UpdateMemberPtQuestion": "Do you want to update all member&apos;s position taking to:",
+        "UpdateMemberPtTitle": "Confirm Update Members&apos;s PT"
+    };
+    
+    positionTakingResources["label"] = positionTakingResources["label"] || {};
+    positionTakingResources["label"]["th-th"] = {
+        "AgentMaxPT": "แบ่งสู้สูงสุดของเอเย่น",
+        "AgentMinPT": "แบ่งสู้ต่ำสุดของเอเย่น",
+        "AgentPT": "ค่าแบ่งสู้ของเอเย่น",
+        "DisableAgentAutoPt": "คุณได้เปลี่ยนเอเย่นท่านนี้ไม่ถือแบ่งสู้อัตโนมัติ",
+        "DisableMasterAutoPt": "คุณได้ทำการเปลี่ยนตัวแทนหลักและ ไม่ได้เลือกตำแหน่งอัตโนมัติ.",
+        "IsAuto": "คืออัตโนมัติ",
+        "Live": "สด",
+        "MasterMaxPT": "แบ่งสู้สูงสุดของ",
+        "MasterMinPT": "แบ่งสู้ขั้นต่ำของมาสเตอร์",
+        "MasterPT": "ค่าแบ่งสู้ของมาสเตอร์",
+        "Max": "สูงสุด",
+        "Min": "ต่ำสุด",
+        "PositionTaking": "ค่าความเสี่ยง",
+        "SuperMaxPT": "แบ่งสู้สูงสุดของซุปเปรอ์",
+        "SuperMinPT": "แบ่งสู้ต่ำสุดของซุปเปรอ์",
+        "SuperPT": "ค่าแบ่งสู้ของซุปเปอร์",
+        "UpdateMemberPtInfo": "คุณมีการเปลี่ยนค่าแบ่งสู้ของคุณ",
+        "UpdateMemberPtQuestion": "คุณต้องการจะอัพเดทแบ่งสู้บนสมาชิกทั้งหมกหรือไม่:",
+        "UpdateMemberPtTitle": "ยืนยันการอัพเดทการตั้งค่าความเสี่ยง"
+    };
+    
+    positionTakingResources["label"] = positionTakingResources["label"] || {};
+    positionTakingResources["label"]["vi-vn"] = {
+        "AgentMaxPT": "PT lớn nhất của Agent",
+        "AgentMinPT": "PT nhỏ nhất của Agent",
+        "AgentPT": "PT của Agent",
+        "DisableAgentAutoPt": "Bạn vừa mới ngăn Agent này lấy Auto PT",
+        "DisableMasterAutoPt": "Bạn vừa mới ngăn Master này lấy Auto PT.",
+        "IsAuto": "Auto PT",
+        "Live": "Trực Tuyến",
+        "MasterMaxPT": "PT lớn nhất của Master",
+        "MasterMinPT": "PT nhỏ nhất của Master",
+        "MasterPT": "PT của Master",
+        "Max": "Max",
+        "MaxLive": "Max Live",
+        "Min": "Nhỏ nhất",
+        "MinLive": "Min Live",
+        "PositionTaking": "PT",
+        "SuperMaxPT": "PT lớn nhất của Super",
+        "SuperMinPT": "PT nhỏ nhất của Super",
+        "SuperPT": "PT của Super",
+        "UpdateMemberPtInfo": "Bạn đã  thay đổi giá trị PT của mình",
+        "UpdateMemberPtQuestion": "Bạn có muốn cập nhật giá trị PTcủa tất cả các thành viên:",
+        "UpdateMemberPtTitle": "Confirm Update Members&apos;s PT"
+    };
+    
+    positionTakingResources["message"] = positionTakingResources["message"] || {};
+    positionTakingResources["message"]["en-us"] = {
+        "AgentMaxPTCannotBeGreaterThan": "Agent Max PT must be less than or equal to {0}.",
+        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "Agent Max PT must be less than or equal to Master Max PT.",
+        "AgentMaxPTCannotBeLessThan": "Agent Max PT must be greater than or equal to {0}.",
+        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "Agent Min PT must be less than or equal to Agent Max PT.",
+        "AgentPTCannotBeGreaterThanAgentMaxPT": "Agent PT must be less than or equal to Agent Max PT.",
+        "AgentPTCannotBeLessThanAgentMinPT": "Agent PT must be greater than or equal to Agent Min PT.",
+        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "Master Auto PT must be less than or equal to Master Max PT.",
+        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "Master Auto PT on Member must be less than or equal to Master Max PT.",
+        "MasterAutoPTOnMemberCannotBeLessThan": "Master Auto PT on Member must be greater than or equal to {0}.",
+        "MasterMaxPTCannotBeGreaterThan": "Master Max PT must be less than or equal to {0}.",
+        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "Master Max PT must be less than or equal to Super Max PT.",
+        "MasterMaxPTCannotBeLessThan": "Master Max PT must be greater than or equal to {0}.",
+        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "Master Min PT must be less than or equal to Master Max PT.",
+        "MasterPTCannotBeGreaterThanMasterMaxPT": "Master PT must be less than or equal to Master Max PT.",
+        "MasterPTCannotBeLessThan": "Master PT must be greater than or equal to {0}.",
+        "MasterPTOnMemberCannotBeGreaterThan": "Master PT on Member must be less than or equal to {0}.",
+        "MasterPTOnMemberCannotBeLessThan": "Master PT on Member must be greater than or equal to {0}.",
+        "Msg_20001": "Invalid position taking.",
+        "Msg_20019": "Existing masters exceed new Super Max PT.",
+        "Msg_20020": "Existing members exceed new Super Max PT.",
+        "Msg_20021": "Existing masters exceed new Master Max PT.",
+        "Msg_20022": "Existing members exceed new Master Max PT.",
+        "Msg_20023": "Existing agents exceed new Agent Max PT.",
+        "Msg_20024": "Existing members exceed new Agent Max PT.",
+        "Msg_20025": "The position taking violates Upline Min/Max PT.",
+        "Msg_20026": "Existing agents exceed new Master Max PT.",
+        "Msg_20027": "The position taking violates Master Max PT set by company.",
+        "Msg_20028": "The position taking violates Super Max PT.",
+        "Msg_20029": "The position taking violates Super Min PT.",
+        "Msg_20030": "The Agent Min PT violates Master Max PT.",
+        "Msg_20031": "The position taking violates Master Max PT.",
+        "Msg_20032": "The position taking violates Master Min PT.",
+        "Msg_20033": "The position taking violates Agent Min/Max PT.",
+        "Msg_20034": "The position taking violates Agent Max PT.",
+        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "Super Auto PT must be less than or equal to Super Max PT.",
+        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "Super Auto PT on Member must be less than or equal to Super Max PT.",
+        "SuperAutoPTOnMemberCannotBeLessThan": "Super Auto PT on Member must be greater than or equal to {0}.",
+        "SuperMaxPTCannotBeGreaterThan": "Super Max PT must be less than or equal to {0}.",
+        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "Super Min PT must be less than or equal to Super Max PT.",
+        "SuperPTCannotBeGreaterThanSuperMaxPT": "Super PT must be less than or equal to Super Max PT.",
+        "SuperPTCannotBeLessThan": "Super PT must be greater than or equal to {0}.",
+        "SuperPTOnMemberCannotBeGreaterThan": "Super PT on Member must be less than or equal to {0}.",
+        "SuperPTOnMemberCannotBeLessThan": "Super PT on Member must be greater than or equal to {0}.",
+        "UpdatePositionTakingSuccessfully": "Position taking is updated successfully."
+    };
+    
+    positionTakingResources["message"] = positionTakingResources["message"] || {};
+    positionTakingResources["message"]["zh-cn"] = {
+        "AgentMaxPTCannotBeGreaterThan": "代理最高占成必须少于或相等于{0}",
+        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "代理最高占成必须少于或相等于总代理最高占成",
+        "AgentMaxPTCannotBeLessThan": "代理最高占成必须大于或相等于{0}",
+        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "代理最低占成必须少于或相等于代理最高占成",
+        "AgentPTCannotBeGreaterThanAgentMaxPT": "代理占成必须少于或相等于代理最高占成",
+        "AgentPTCannotBeLessThanAgentMinPT": "代理占成必须大于或相等于代理最低占成",
+        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "总代理自动占成必须少于或相等于总代理最高占成",
+        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "总代理自动占成在会员必须少于或相等于总代理最高占成",
+        "MasterAutoPTOnMemberCannotBeLessThan": "总代理自动占成在会员必须大于或相等于{0}",
+        "MasterMaxPTCannotBeGreaterThan": "总代理最高占成必须少于或相等于{0}",
+        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "总代理最高占成必须少于或相等于超级总代理最高占成",
+        "MasterMaxPTCannotBeLessThan": "总代理最高占成必须大于或相等于{0}",
+        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "总代理最低占成必须少于或相等于总代理最高占成",
+        "MasterPTCannotBeGreaterThanMasterMaxPT": "总代理占成必须低于或相等于总代理最高占成。",
+        "MasterPTCannotBeLessThan": "总代理占成必须大于或相等于 {0}。",
+        "MasterPTOnMemberCannotBeGreaterThan": "总代理于会员的占成必须小于或相等于 {0}。",
+        "MasterPTOnMemberCannotBeLessThan": "总代理于会员的占成必须大于或相等于 {0}。",
+        "Msg_20001": "占成无效",
+        "Msg_20019": "現有总代理超過新增超级总代理的最高占成。",
+        "Msg_20020": "現有会员超過新增超级总代理的最高占成。",
+        "Msg_20021": "現有总代理超過新增总代理的最高占成。",
+        "Msg_20022": "現有会员超過新增总代理的最高占成。",
+        "Msg_20023": "現有代理超過新增代理的最高占成。",
+        "Msg_20024": "現有会员超過新增代理的最高占成。",
+        "Msg_20025": "此占成违反上线的最低/最高占成.",
+        "Msg_20026": "現有代理超過新增总代理的最高占成。",
+        "Msg_20027": "此占成违反公司设置于总代理的最高占成。",
+        "Msg_20028": "此占成违反超级总代理的最高占成。",
+        "Msg_20029": "此占成违反超级总代理的最低占成。",
+        "Msg_20030": "此代理最低占成违反总代理的最高占成。",
+        "Msg_20031": "此占成违反总代理的最高占成。",
+        "Msg_20032": "此占成违反总代理的最低占成。",
+        "Msg_20033": "此占成违反代理的最低/最高占成。",
+        "Msg_20034": "此占成违反代理的最高占成。",
+        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "超级总代理的自动占成必须少于或相等于超级总代理的最高占成。",
+        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "超级总代理于会员的自动占成必须少于或相等于超级总代理的最高占成。",
+        "SuperAutoPTOnMemberCannotBeLessThan": "超级总代理于会员的自动占成必须大于或相等于 {0}。",
+        "SuperMaxPTCannotBeGreaterThan": "超级总代理的最高占成必须少于或相等于 {0}。",
+        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "超级总代理的最低占成必须少于或相等于超级总代理的最高占成。",
+        "SuperPTCannotBeGreaterThanSuperMaxPT": "超级总代理的占成必须少于或相等于超级总代理的最高占成。",
+        "SuperPTOnMemberCannotBeGreaterThan": "超级总代理于会员的占成必须少于或相等于 {0}。",
+        "SuperPTOnMemberCannotBeLessThan": "超级总代理于会员的占成必须大于或相等于 {0}。",
+        "UpdatePositionTakingSuccessfully": "占成数设定已更新成功."
+    };
+    
+    positionTakingResources["message"] = positionTakingResources["message"] || {};
+    positionTakingResources["message"]["zh-tw"] = {
+        "AgentMaxPTCannotBeGreaterThan": "代理最高占成必須少於或相等於{0}",
+        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "代理最高占成必須少於或相等於總代理最高占成",
+        "AgentMaxPTCannotBeLessThan": "代理最高占成必須大於或相等於{0}",
+        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "代理最低占成必須少於或相等於代理最高占成",
+        "AgentPTCannotBeGreaterThanAgentMaxPT": "代理占成必須少於或相等於代理最高占成",
+        "AgentPTCannotBeLessThanAgentMinPT": "代理占成必須大於或相等於代理最低占成",
+        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "總代理自動占成必須少於或相等於總代理最高占成",
+        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "總代理自動占成在會員必須少於或相等於總代理最高占成",
+        "MasterAutoPTOnMemberCannotBeLessThan": "總代理自動占成在會員必須大於或相等於{0}",
+        "MasterMaxPTCannotBeGreaterThan": "總代理最高占成必須少於或相等於{0}",
+        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "總代理最高占成必須少於或相等於超級總代理最高占成",
+        "MasterMaxPTCannotBeLessThan": "總代理最高占成必須大於或相等於{0}",
+        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "總代理最低占成必須少於或相等於總代理最高占成",
+        "MasterPTCannotBeGreaterThanMasterMaxPT": "總代理占成必須低於或相等於總代理最高占成。",
+        "MasterPTCannotBeLessThan": "總代理占成必須大於或相等於 {0}。",
+        "MasterPTOnMemberCannotBeGreaterThan": "總代理於會員的占成必須小於或相等於 {0}。",
+        "MasterPTOnMemberCannotBeLessThan": "總代理於會員的占成必須大於或相等於 {0}。",
+        "Msg_20001": "占成無效",
+        "Msg_20019": "現有總代理超過新增超級總代理的最高占成",
+        "Msg_20020": "現有會員超過新增超級總代理的最高占成。",
+        "Msg_20021": "現有總代理超過新增總代理的最高占成。",
+        "Msg_20022": "現有會員超過新增總代理的最高占成。",
+        "Msg_20023": "現有代理超過新增代理的最高占成。",
+        "Msg_20024": "現有會員超過新增代理的最高占成。",
+        "Msg_20025": "此占成違反上線的最低/最高占成.",
+        "Msg_20026": "現有代理超過新增總代理的最高占成。",
+        "Msg_20027": "此占成違反公司設置於總代理的最高占成。",
+        "Msg_20028": "此占成違反超級總代理的最高占成。",
+        "Msg_20029": "此占成違反超級總代理的最低占成。",
+        "Msg_20030": "此代理最低占成違反總代理的最高占成。",
+        "Msg_20031": "此占成違反總代理的最高占成。",
+        "Msg_20032": "此占成違反總代理的最低占成。",
+        "Msg_20033": "此占成違反代理的最低/最高占成。",
+        "Msg_20034": "此占成違反代理的最高占成。",
+        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "超級總代理的自動占成必須少於或相等於超級總代理的最高占成。",
+        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "超級總代理於會員的自動占成必須少於或相等於超級總代理的最高占成。",
+        "SuperAutoPTOnMemberCannotBeLessThan": "超級總代理於會員的自動占成必須大於或相等於 {0}。",
+        "SuperMaxPTCannotBeGreaterThan": "超級總代理的最高占成必須少於或相等於 {0}。",
+        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "超級總代理的最低占成必須少於或相等於超級總代理的最高占成。",
+        "SuperPTCannotBeGreaterThanSuperMaxPT": "超級總代理的占成必須少於或相等於超級總代理的最高占成。",
+        "SuperPTOnMemberCannotBeGreaterThan": "超級總代理於會員的占成必須少於或相等於{0}。",
+        "SuperPTOnMemberCannotBeLessThan": "超級總代理於會員的占成必須大於或相等於 {0}。",
+        "UpdatePositionTakingSuccessfully": "佔成數設定已更新成功."
+    };
+    
+    positionTakingResources["message"] = positionTakingResources["message"] || {};
+    positionTakingResources["message"]["ko-kr"] = {
+        "UpdatePositionTakingSuccessfully": "포지션 설정이 성공적으로 업데이트되었습니다."
+    };
+    
+    positionTakingResources["message"] = positionTakingResources["message"] || {};
+    positionTakingResources["message"]["ja-jp"] = {
+        "UpdatePositionTakingSuccessfully": "Position taking is updated successfully."
+    };
+    
+    positionTakingResources["message"] = positionTakingResources["message"] || {};
+    positionTakingResources["message"]["th-th"] = {
+        "AgentMaxPTCannotBeGreaterThan": "ค่าความเสี่ยงสูงสุดของเอเจนท์ ต้องน้อยกว่าหรือเท่ากับ {0}.",
+        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "ค่าความเสี่ยงสูงสุดของเอเจนท์ ต้องน้อยกว่าหรือเท่ากับ ค่าความเสี่ยงสูงสุดของมาสเตอร์",
+        "AgentMaxPTCannotBeLessThan": "ค่าความเสี่ยงสูงสุดของเอเจนท์ ต้องมากกว่าหรือเท่ากับ {0}.",
+        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "ค่าความเสี่ยงขั้นต่ำของเอเจนท์ ต้องน้อยกว่าหรือเท่ากับ ค่าความเสี่ยงสูงสุดของเอเจนท์",
+        "AgentPTCannotBeGreaterThanAgentMaxPT": "ค่าความเสี่ยงของเอเจนท์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของเอเจนท์",
+        "AgentPTCannotBeLessThanAgentMinPT": "ค่าความเสี่ยงของเอเจนท์ต้องมากกว่าหรือเท่ากับค่าความเสี่ยงต่ำสุดของเอเจนท์",
+        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "ค่าความเสี่ยงแบบอัตโนมัติของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์",
+        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "ค่าความเสี่ยงแบบอัตโนมัติของมาสเตอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์",
+        "MasterAutoPTOnMemberCannotBeLessThan": "ค่าความเสี่ยงแบบอัตโนมัติของมาสเตอร์ต้องมากกว่าหรือเท่ากับ {0}.",
+        "MasterMaxPTCannotBeGreaterThan": "ค่าความเสี่ยงสูงสุดของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับ {0}.",
+        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "ค่าความเสี่ยงสูงสุดของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์",
+        "MasterMaxPTCannotBeLessThan": "ค่าความเสี่ยงสูงสุดของมาสเตอร์ต้องมากกว่าหรือเท่ากับ {0}.",
+        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "ค่าความเสี่ยงขั้นต่ำของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์",
+        "MasterPTCannotBeGreaterThanMasterMaxPT": "ค่าความเสี่ยงของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์",
+        "MasterPTCannotBeLessThan": "ค่าความเสี่ยงของมาสเตอร์ต้องมากกว่าหรือเท่ากับ {0}.",
+        "MasterPTOnMemberCannotBeGreaterThan": "ค่าความเสี่ยงของมาสเตอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับ {0}.",
+        "MasterPTOnMemberCannotBeLessThan": "ค่าความเสี่ยงของมาสเตอร์ต่อเมมเบอร์ต้องมากกว่าหรือเท่ากับ {0}.",
+        "Msg_20001": "ค่าความเสี่ยงไม่ถูกต้อง",
+        "Msg_20019": "การตั้งค่ามาสเตอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของซูเปอร์",
+        "Msg_20020": "การตั้งค่าเมมเบอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของซูเปอร์",
+        "Msg_20021": "การตั้งค่ามาสเตอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของมาสเตอร์",
+        "Msg_20022": "การตั้งค่าเมมเบอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของมาสเตอร์",
+        "Msg_20023": "การตั้งค่าเอเจนท์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของเอเจนท์",
+        "Msg_20024": "การตั้งค่าเมมเบอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของเอเจนท์",
+        "Msg_20025": "ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นต่ำ/ขั้นสูงสุดของทางต้นสาย",
+        "Msg_20026": "การตั้งค่าเอเจนท์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของมาสเตอร์",
+        "Msg_20027": "ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของมาสเตอร์ ที่ทางบริษัทตั้งค่าไว้",
+        "Msg_20028": "ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของซูเปอร์",
+        "Msg_20029": "ค่าความเสี่ยงขัดกับการตั้งค่าความเสี่ยงขั้นต่ำของซูเปอร์",
+        "Msg_20030": "ค่าความเสี่ยงของเอเจนท์ขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของมาสเตอร์",
+        "Msg_20031": "ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของมาสเตอร์",
+        "Msg_20032": "ค่าความเสี่ยงขัดกับการตั้งค่าความเสี่ยงขั้นต่ำของมาสเตอร์",
+        "Msg_20033": "ค่าความเสี่ยงขัดกับการตั้งค่าความเสี่ยงขั้นต่ำสุด/สูงสุดของเอเจนท์",
+        "Msg_20034": "ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของเอเจนท์",
+        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "ค่าความเสี่ยงแบบอัตโนมัติของซูเปอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์",
+        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "ค่าความเสี่ยงแบบอัตโนมัติของซูเปอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์",
+        "SuperAutoPTOnMemberCannotBeLessThan": "ค่าความเสี่ยงแบบอัตโนมัติของซูเปอร์ต่อเมมเบอร์ต้องมากกว่าหรือเท่ากับ {0}.",
+        "SuperMaxPTCannotBeGreaterThan": "ค่าความเสี่ยงของซูเปอร์ต้องน้อยกว่าหรือเท่ากับ {0}.",
+        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "ค่าความเสี่ยงขั้นต่ำของซูเปอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์",
+        "SuperPTCannotBeGreaterThanSuperMaxPT": "ค่าความเสี่ยงของซูเปอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์",
+        "SuperPTOnMemberCannotBeGreaterThan": "ค่าความเสี่ยงของซูเปอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับ {0}.",
+        "SuperPTOnMemberCannotBeLessThan": "ค่าความเสี่ยงของซูเปอร์ต่อเมมเบอร์ต้องมากกว่ากว่าหรือเท่ากับ {0}.",
+        "UpdatePositionTakingSuccessfully": "การตั้งค่าแบ่งสู้ ได้อัพเดทเรียบร้อยแล้ว."
+    };
+    
+    positionTakingResources["message"] = positionTakingResources["message"] || {};
+    positionTakingResources["message"]["vi-vn"] = {
+        "UpdatePositionTakingSuccessfully": "PT được cập nhật thành công."
+    };
+
+    angular.module("customerSetting").value("positionTakingResources", positionTakingResources);
 })();
 
 /*jshint -W101,-W106,-W044,-W098*/

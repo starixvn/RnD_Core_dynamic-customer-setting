@@ -284,6 +284,7 @@
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <Content Include="App_Data\PluggableTasks\settingtype-13.json" />
+    <Content Include="App_Data\PluggableTasks\product-33.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

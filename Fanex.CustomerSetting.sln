@@ -164,6 +164,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Setti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType16.Tests", "SettingTypes\SettingType16\Fanex.CustomerSetting.SettingType16.Tests\Fanex.CustomerSetting.SettingType16.Tests.csproj", "{43B35507-5DC8-4958-A41A-5FE26D036093}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Product33", "Product33", "{79B7BD78-506F-443C-B153-BEB2A88D798F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.Product33", "Tasks\Product33\Fanex.CustomerSetting.Tasks.Product33\Fanex.CustomerSetting.Tasks.Product33.csproj", "{EEBDFA6F-9BC7-4D39-AE27-E40D94742287}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.Product33.Tests", "Tasks\Product33\Fanex.CustomerSetting.Tasks.Product33.Tests\Fanex.CustomerSetting.Tasks.Product33.Tests.csproj", "{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -390,6 +396,14 @@ Global
 		{43B35507-5DC8-4958-A41A-5FE26D036093}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43B35507-5DC8-4958-A41A-5FE26D036093}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43B35507-5DC8-4958-A41A-5FE26D036093}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEBDFA6F-9BC7-4D39-AE27-E40D94742287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEBDFA6F-9BC7-4D39-AE27-E40D94742287}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEBDFA6F-9BC7-4D39-AE27-E40D94742287}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEBDFA6F-9BC7-4D39-AE27-E40D94742287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -468,9 +482,12 @@ Global
 		{2A304D4B-9FAE-49F2-A705-BE6D383E5686} = {B306779E-7128-423D-AC57-5963D0629397}
 		{4002EA81-5EB7-4037-BF1B-D6CF95C329BB} = {2A304D4B-9FAE-49F2-A705-BE6D383E5686}
 		{43B35507-5DC8-4958-A41A-5FE26D036093} = {2A304D4B-9FAE-49F2-A705-BE6D383E5686}
+		{79B7BD78-506F-443C-B153-BEB2A88D798F} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
+		{EEBDFA6F-9BC7-4D39-AE27-E40D94742287} = {79B7BD78-506F-443C-B153-BEB2A88D798F}
+		{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848} = {79B7BD78-506F-443C-B153-BEB2A88D798F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
 		SolutionGuid = {0E5B53E6-7B52-44B7-9EC9-E6557921FED2}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal
