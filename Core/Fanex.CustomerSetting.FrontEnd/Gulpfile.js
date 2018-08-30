@@ -53,13 +53,13 @@
 
     gulp.task("install", ["libraries:install", "tsd:install"]);
 
-    gulp.task("publish", ["clean"], function (callback) {
-        runSequence(["styles:publish", "scripts:publish"], ["ie8:styles:publish", "ie8:scripts:publish"], "matrix:publish", "copy-packages", callback);
-    });
-
     gulp.task("copy-packages", function () {
         return gulp.src(path.join(process.cwd(), configs.root, configs.publish, "**/**"))
-                   .pipe(gulp.dest(configs.staticResourceProject));
+            .pipe(gulp.dest(configs.staticResourceProject));
+    });
+
+    gulp.task("publish", ["clean"], function (callback) {
+        runSequence(["styles:publish", "scripts:publish"], ["ie8:styles:publish", "ie8:scripts:publish"], "matrix:publish", "copy-packages", callback);
     });
 
     gulp.task("default", ["install"], function () {

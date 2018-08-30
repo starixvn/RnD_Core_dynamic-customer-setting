@@ -353,6 +353,10 @@
       <Project>{59db75bf-2708-4018-8c16-0a392e35431d}</Project>
       <Name>Fanex.CustomerSetting.Tasks.Product21</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Tasks\Product33\Fanex.CustomerSetting.Tasks.Product33\Fanex.CustomerSetting.Tasks.Product33.csproj">
+      <Project>{eebdfa6f-9bc7-4d39-ae27-e40d94742287}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.Product33</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Tasks\SettingType13\Fanex.CustomerSetting.Tasks.SettingType13\Fanex.CustomerSetting.Tasks.SettingType13.csproj">
       <Project>{6d79d74e-f7e8-4963-813a-7b3bf21c8fe9}</Project>
       <Name>Fanex.CustomerSetting.Tasks.SettingType13</Name>

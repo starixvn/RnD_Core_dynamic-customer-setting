@@ -5,12 +5,10 @@ module.exports = function (configs) {
 
     var concat = require("gulp-concat");
     var gulp = require("gulp");
-    var gulpif = require("gulp-if");
     var merge = require("merge-stream");
     var minifyHTML = require("gulp-minify-html");
     var path = require("path");
     var rename = require("gulp-rename");
-    var rimraf = require("rimraf");
     var runSequence = require("run-sequence");
     var templateCache = require("gulp-angular-templatecache");
     var ts = require("gulp-typescript");
@@ -36,26 +34,38 @@ module.exports = function (configs) {
         var streams = [];
 
         productsConfigs.forEach(function (prodConfig) {
-            var sources = [
-                path.join(sourceDir, "Core/**/*.{htm,ts}"),
+            var productTempDir = path.join(tempDir, "product-" + prodConfig.productId);
+            var tsSources = [
+                path.join(sourceDir, "Core/**/*.ts"),
+                path.join(sourceDir, "Resource/*.ts")
+            ];
+            var htmSources = [
+                path.join(sourceDir, "Core/**/*.htm"),
                 path.join(sourceDir, "!customer-setting.htm"),
-                path.join(sourceDir, "Resource/*.{htm,ts}")
+                path.join(sourceDir, "Resource/*.htm")
             ];
 
             if (prodConfig.settingTypes.length > 0) {
                 prodConfig.settingTypes.forEach(function (item) {
-                    sources.push(path.join(sourceDir, "SettingType" + item, "*.{htm,ts}"));
+                    tsSources.push(path.join(sourceDir, "SettingType" + item, "*.ts"));
+                    htmSources.push(path.join(sourceDir, "SettingType" + item, "*.htm"));
                 });
             }
 
-            streams.push(gulp.src(sources)
-                             .pipe(gulpif(/[.]ts$/, ts(tsCompilingConfig)))
-                             .pipe(gulpif(/[.]htm$/, minifyHTML({ empty: true, quotes: true })))
-                             .pipe(gulpif(/[.]htm$/, templateCache({
-                                 module: "customerSetting"
-                             })))
-                             .pipe(concat("product-" + prodConfig.productId + ".js"))
-                             .pipe(gulp.dest(tempDir)));
+            gulp.src(tsSources)
+                .pipe(ts(tsCompilingConfig))
+                .pipe(concat("1js-" + prodConfig.productId + ".js"))
+                .pipe(gulp.dest(productTempDir));
+            gulp.src(htmSources)
+                .pipe(minifyHTML({ empty: true, quotes: true }))
+                .pipe(templateCache({
+                    module: "customerSetting"
+                }))
+                .pipe(concat("2htm-" + prodConfig.productId + ".js"))
+                .pipe(gulp.dest(productTempDir));
+            streams.push(gulp.src(path.join(productTempDir, "*.js"))
+                .pipe(concat("product-" + prodConfig.productId + ".js"))
+                .pipe(gulp.dest(tempDir)));
         });
 
         return merge(streams);
@@ -81,37 +91,33 @@ module.exports = function (configs) {
             }
 
             streams.push(gulp.src(sources)
-                             .pipe(concat("product-" + prodConfig.productId + ".js"))
-                             .pipe(gulp.dest(destination))
-                             .pipe(uglify())
-                             .pipe(rename({ suffix: ".min" }))
-                             .pipe(gulp.dest(destination)));
+                .pipe(concat("product-" + prodConfig.productId + ".js"))
+                .pipe(gulp.dest(destination))
+                .pipe(uglify())
+                .pipe(rename({ suffix: ".min" }))
+                .pipe(gulp.dest(destination)));
         });
 
         return merge(streams);
     });
 
-    gulp.task("product:temp:clean", function (callback) {
-        rimraf(tempDir, callback);
-    });
-
     gulp.task("template:copy", function () {
         return gulp.src(path.join(sourceDir, "*.htm"))
-                   .pipe(minifyHTML({ conditionals : true, empty: true, quotes: true }))
-                   .pipe(gulp.dest(path.join(process.cwd(), configs.templatesDir)));
+            .pipe(minifyHTML({ conditionals: true, empty: true, quotes: true }))
+            .pipe(gulp.dest(path.join(process.cwd(), configs.templatesDir)));
     });
 
     gulp.task("scripts:publish", function () {
-        runSequence("product:js:combine", "template:copy", "product:temp:clean");
+        runSequence("product:js:combine", "template:copy");
     });
 
     gulp.task("images:publish", function () {
         return gulp.src(path.join(process.cwd(), configs.root, configs.styles, "Images/*.*"))
-                   .pipe(gulp.dest(path.join(destinationDir, configs.styles, "Images")));
+            .pipe(gulp.dest(path.join(destinationDir, configs.styles, "Images")));
     });
 
     gulp.task("styles:publish", ["images:publish"], function () {
         return gulp.src(styleResources)
-                   .pipe(gulp.dest(path.join(destinationDir, configs.styles)));
+            .pipe(gulp.dest(path.join(destinationDir, configs.styles)));
     });
 };

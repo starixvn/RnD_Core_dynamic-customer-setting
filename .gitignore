@@ -91,3 +91,4 @@ bower_components
 **/Compass/**
 Fanex.CustomerSetting.DemoSite/App/
 .vs/
+**/Temp/**
