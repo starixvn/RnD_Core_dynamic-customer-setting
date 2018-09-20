@@ -456,7 +456,7 @@
             border: none;
             color: $error-color;
             font-weight: bold;
-            line-height: 2.6rem;
+            line-height: 2.64rem;
             padding: 0 3px;
             text-align: center;
             width: 100%;
@@ -465,8 +465,8 @@
 
     &__cell {
         @include border(right);
-        line-height: 2.6rem;
-        min-height: 24px;
+        line-height: 2.64rem;
+        min-height: 2.64rem;
 
         &--no-border {
             border: none;

@@ -1,4 +1,11 @@
-﻿.block__item-group {
+﻿.msg {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.block__item-group {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -49,17 +56,10 @@
     display: -moz-box;
     display: -ms-flexbox;
     display: flex;
-    height: auto !important;
-    min-height: 2.6rem;
 
     .showing-name {
         flex-grow: 1;
     }
-}
-
-.block__cell {
-    height: auto !important;
-    min-height: 2.6rem;
 }
 
 .settingtype7 {
@@ -113,6 +113,7 @@
         display: -moz-box;
         display: -ms-flexbox;
         display: flex;
+        height: auto !important;
     }
 
     .block__lbl .block__lbl-wrapper {

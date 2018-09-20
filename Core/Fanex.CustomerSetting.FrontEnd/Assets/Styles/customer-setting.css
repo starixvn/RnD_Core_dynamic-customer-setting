@@ -564,14 +564,14 @@ th {
       border: none;
       color: #e9322d;
       font-weight: bold;
-      line-height: 2.6rem;
+      line-height: 2.64rem;
       padding: 0 3px;
       text-align: center;
       width: 100%; }
   .block__cell, .block__lbl, .block__value {
     border-right: 1px solid #7c98a4;
-    line-height: 2.6rem;
-    min-height: 24px; }
+    line-height: 2.64rem;
+    min-height: 2.64rem; }
     .block__cell--no-border {
       border: none; }
     .block__cell--border-top {
@@ -792,7 +792,8 @@ select.setting-field {
   overflow-x: auto;
   white-space: nowrap; }
   .settingtype8 .scrollable-area .block__cell, .settingtype8 .scrollable-area .block__lbl, .settingtype8 .scrollable-area .block__value {
-    background-color: #fff; }
+    background-color: #fff;
+    min-height: 30px; }
 
 .settingtype8 .setting-field--checkfield {
   margin: 0; }
@@ -880,4 +881,3 @@ select.setting-field {
 
 .settingtype12 select.setting-field {
   margin-right: 5px; }
-
