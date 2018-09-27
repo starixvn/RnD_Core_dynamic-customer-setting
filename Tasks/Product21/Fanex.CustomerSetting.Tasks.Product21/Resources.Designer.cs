@@ -19,7 +19,7 @@ namespace Fanex.CustomerSetting.Tasks.Product21 {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -57,6 +57,24 @@ namespace Fanex.CustomerSetting.Tasks.Product21 {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabling Product Status or removing Bet Limit of VIP Baccarat only affects VIP Baccarat - Join/Reserve, VIP Baccarat - Side Bet&apos;s settings remain unchanged..
+        /// </summary>
+        internal static string BetSettingAndProductStatusSettingNote {
+            get {
+                return ResourceManager.GetString("BetSettingAndProductStatusSettingNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The settings of Normal games are applied to Normal Baccarat, Roulette, SicBo, DragonTiger, VIP Baccarat – Side Bet..
+        /// </summary>
+        internal static string GeneralSettingNote {
+            get {
+                return ResourceManager.GetString("GeneralSettingNote", resourceCulture);
             }
         }
         

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BetSettingAndProductStatusSettingNote" xml:space="preserve">
+    <value>Disabling Product Status or removing Bet Limit of VIP Baccarat only affects VIP Baccarat - Join/Reserve, VIP Baccarat - Side Bet's settings remain unchanged.</value>
+  </data>
+  <data name="GeneralSettingNote" xml:space="preserve">
+    <value>The settings of Normal games are applied to Normal Baccarat, Roulette, SicBo, DragonTiger, VIP Baccarat – Side Bet.</value>
+  </data>
   <data name="OtherDisplayingTextForBaccarat" xml:space="preserve">
     <value>Baccarat, Roulette, Sic Bo, Dragon Tiger</value>
   </data>

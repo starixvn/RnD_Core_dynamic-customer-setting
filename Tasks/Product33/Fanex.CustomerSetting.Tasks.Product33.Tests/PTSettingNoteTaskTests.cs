@@ -91,7 +91,7 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.IsTrue(_setting?.WarningMessage?.Code == PTSettingNoteTask.PTSettingNoteCode);
+            Assert.IsTrue(_setting.WarningMessage?.Code == PTSettingNoteTask.PTSettingNoteCode);
         }
 
         [Test]
