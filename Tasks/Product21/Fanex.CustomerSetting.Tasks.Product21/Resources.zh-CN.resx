@@ -123,4 +123,10 @@
   <data name="OtherDisplayingTextForVipBaccarat" xml:space="preserve">
     <value>VIP百家乐（不同的桌面最小赌注设置可能会不一样）</value>
   </data>
+  <data name="BetSettingAndProductStatusSettingNote" xml:space="preserve">
+    <value>关闭产品状态 或 移除VIP百家乐的投注限额仅影响 VIP百家乐 - 进座/包桌，除了“VIP百家乐 - 旁观下注” 的投注设定保持不变。</value>
+  </data>
+  <data name="GeneralSettingNote" xml:space="preserve">
+    <value>普通游戏的设置适用于百家乐，轮盘，骰宝，龙虎 ，VIP百家乐 - 旁观下注</value>
+  </data>
 </root>

@@ -123,4 +123,10 @@
   <data name="OtherDisplayingTextForVipBaccarat" xml:space="preserve">
     <value>วีไอพี บาคาร่า (การตั้งค่าเดิมพันขั้นต่ำอาจแตกต่างจากตารางต่างๆ)</value>
   </data>
+  <data name="BetSettingAndProductStatusSettingNote" xml:space="preserve">
+    <value>การปิดการใช้งาน หรือ ลบวงเงินเดิมพันของ VIP Baccarat จะใช้ได้กับโต๊ะ VIP Baccarat - Join/Reserve, เท่านั้น โต๊ะ VIP Baccarat - Side Bet's จะยังคงค่าเดิม</value>
+  </data>
+  <data name="GeneralSettingNote" xml:space="preserve">
+    <value>การตั้งค่าของเกมธรรมดานั้นจะใช้กับ Baccarat, Roulette, SicBo, DragonTiger แบบธรรมดา, และโต๊ะ VIP Baccarat – Side Bet.</value>
+  </data>
 </root>

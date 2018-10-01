@@ -123,4 +123,10 @@
   <data name="OtherDisplayingTextForVipBaccarat" xml:space="preserve">
     <value>VIP Baccarat (Mỗi bàn có thể thiết lập Tiền Cược Nhỏ Nhất khác nhau)</value>
   </data>
+  <data name="GeneralSettingNote" xml:space="preserve">
+    <value>Thiết lập của các trò chơi thông thường được áp dụng cho Baccarat thường, Roulette, SicBo, DragonTiger, VIP Baccarat – Side Bet.</value>
+  </data>
+  <data name="BetSettingAndProductStatusSettingNote" xml:space="preserve">
+    <value>Việc hủy kích hoạt sản phẩm hay bỏ Giới Hạn Cược trên VIP Baccarat chỉ ảnh hưởng tới VIP Baccarat - Join/Reserve, thiết lập của VIP Baccarat - Side Bet vẫn giữ nguyên.</value>
+  </data>
 </root>
