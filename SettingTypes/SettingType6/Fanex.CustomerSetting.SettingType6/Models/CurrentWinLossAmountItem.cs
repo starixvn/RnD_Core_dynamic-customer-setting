@@ -2,6 +2,8 @@
 {
     public class CurrentWinLossAmountItem
     {
+        public decimal CurrentAmount { get; set; }
+
         public decimal WinPercent { get; set; }
 
         public decimal MaxWinAmount { get; set; }
@@ -18,18 +20,18 @@
             {
                 return false;
             }
-            else
-            {
-                return Equals(WinPercent, otherObj.WinPercent)
-                    && Equals(MaxWinAmount, otherObj.MaxWinAmount)
-                    && Equals(LossPercent, otherObj.LossPercent)
-                    && Equals(MaxLossAmount, otherObj.MaxLossAmount);
-            }
+
+            return Equals(CurrentAmount, otherObj.CurrentAmount)
+                && Equals(WinPercent, otherObj.WinPercent)
+                && Equals(MaxWinAmount, otherObj.MaxWinAmount)
+                && Equals(LossPercent, otherObj.LossPercent)
+                && Equals(MaxLossAmount, otherObj.MaxLossAmount);
         }
 
         public override int GetHashCode()
         {
-            return WinPercent.GetHashCode()
+            return CurrentAmount.GetHashCode()
+                ^ WinPercent.GetHashCode()
                 ^ MaxWinAmount.GetHashCode()
                 ^ LossPercent.GetHashCode()
                 ^ MaxLossAmount.GetHashCode();

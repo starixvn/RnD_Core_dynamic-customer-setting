@@ -69,14 +69,14 @@
                         <a href="javascript:void(0);" data-ng-click="getCurrentLoss(item)">{{'ClickToViewCurrentLossAmount' | settingType12Label}}</a>
                     </div>
                     <div class="block__value w60-percent setting-field-wrapper" data-ng-if="item.currentLossAmount">
-                        <span>{{'Losing' | settingType12Label}}: </span>
-                        <span data-ng-if="item.lossLimit === 0">{{'Unlimited' | settingType12Label}}</span>
+                        <span>{{'Losing' | settingType12Label}}%: </span>
+                        <span data-ng-if="item.currentLossAmount.lossPercent === -1">{{'Unlimited' | settingType12Label}}</span>
+                        <span data-ng-if="item.currentLossAmount.lossPercent === 0">{{item.currentLossAmount.lossPercent}}%</span>
                         <span data-ng-if="item.lossLimit > 0">
                             <span data-ng-class="{ 'red-text': item.currentLossAmount.lossPercent >= highestPercentageRange }">
                                 {{item.currentLossAmount.lossPercent | formatNumber}}%
                             </span>
-                            <span>{{'Of' | settingType12Label}}</span>
-                            <span>{{item.currentLossAmount.maxLossAmount | formatNumber}}</span>
+                            <span> (<span data-ng-class="{ 'red-text': item.currentLossAmount.lossPercent >= highestPercentageRange }">{{-item.currentLossAmount.currentAmount | formatNumber}}</span>/<span>{{item.currentLossAmount.maxLossAmount | formatNumber}}</span>)</span>
                         </span>
                     </div>
                 </div>

@@ -88,11 +88,13 @@ module CustomerSetting {
     }
 
     export class CurrentLossAmountItem {
+        public currentAmount: number;
         public lossPercent: number;
         public maxLossAmount: number;
 
         constructor(currentLosingAmount: any) {
             if (currentLosingAmount) {
+                this.currentAmount = currentLosingAmount.currentAmount;
                 this.lossPercent = currentLosingAmount.lossPercent;
                 this.maxLossAmount = currentLosingAmount.maxLossAmount;
             }

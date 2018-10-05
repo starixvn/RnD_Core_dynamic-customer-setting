@@ -135,9 +135,6 @@
   <data name="MaximumWin" xml:space="preserve">
     <value>Tiền thắng cược lớn nhất</value>
   </data>
-  <data name="Of" xml:space="preserve">
-    <value>của</value>
-  </data>
   <data name="OnGivenCredit" xml:space="preserve">
     <value>trong hạn mức tín dụng được cấp</value>
   </data>

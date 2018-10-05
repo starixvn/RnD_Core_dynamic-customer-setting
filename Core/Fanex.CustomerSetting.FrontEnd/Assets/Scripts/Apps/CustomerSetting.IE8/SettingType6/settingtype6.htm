@@ -79,25 +79,29 @@
                     </div>
                     <div class="block__value w60-percent setting-field-wrapper" data-ng-if="item.currentWinLossAmount">
                         <div>
-                            <span>{{'Winning' | settingType6Label}}: </span>
-                            <span data-ng-if="item.winLimit === 0">{{'Unlimited' | settingType6Label}}</span>
-                            <span data-ng-if="item.winLimit > 0">
+                            <span>{{'Winning' | settingType6Label}}%: </span>
+                            <span data-ng-if="item.currentWinLossAmount.winPercent === -2">
+                                <span class="red-text">{{'NotAvailable' | settingType6Label}}</span>
+                                <span> ({{item.currentWinLossAmount.currentAmount | formatNumber}}/<span class="red-text">{{item.currentWinLossAmount.maxWinAmount}}</span>)</span>
+                            </span>
+                            <span data-ng-if="item.currentWinLossAmount.winPercent === -1">{{'Unlimited' | settingType6Label}}</span>
+                            <span data-ng-if="item.currentWinLossAmount.winPercent === 0">{{item.currentWinLossAmount.winPercent}}%</span>
+                            <span data-ng-if="item.currentWinLossAmount.winPercent > 0">
                                 <span data-ng-class="{ 'red-text': item.currentWinLossAmount.winPercent >= highestPercentageRange }">
                                     {{item.currentWinLossAmount.winPercent | formatNumber}}%
                                 </span>
-                                <span>{{'Of' | settingType6Label}}</span>
-                                <span>{{item.currentWinLossAmount.maxWinAmount | formatNumber}}</span>
+                                <span> (<span data-ng-class="{ 'red-text': item.currentWinLossAmount.winPercent >= highestPercentageRange }">{{item.currentWinLossAmount.currentAmount | formatNumber}}</span>/{{item.currentWinLossAmount.maxWinAmount | formatNumber}})</span>
                             </span>
                         </div>
                         <div>
-                            <span>{{'Losing' | settingType6Label}}: </span>
-                            <span data-ng-if="item.lossLimit === 0">{{'Unlimited' | settingType6Label}}</span>
-                            <span data-ng-if="item.lossLimit > 0">
+                            <span>{{'Losing' | settingType6Label}}%: </span>
+                            <span data-ng-if="item.currentWinLossAmount.lossPercent === -1">{{'Unlimited' | settingType6Label}}</span>
+                            <span data-ng-if="item.currentWinLossAmount.lossPercent === 0">{{item.currentWinLossAmount.lossPercent}}%</span>
+                            <span data-ng-if="item.currentWinLossAmount.lossPercent > 0">
                                 <span data-ng-class="{ 'red-text': item.currentWinLossAmount.lossPercent >= highestPercentageRange }">
                                     {{item.currentWinLossAmount.lossPercent | formatNumber}}%
                                 </span>
-                                <span>{{'Of' | settingType6Label}}</span>
-                                <span>{{item.currentWinLossAmount.maxLossAmount | formatNumber}}</span>
+                                <span>(<span data-ng-class="{ 'red-text': item.currentWinLossAmount.lossPercent >= highestPercentageRange }">{{item.currentWinLossAmount.currentAmount | formatNumber}}</span>/{{item.currentWinLossAmount.maxLossAmount | formatNumber}})</span>
                             </span>
                         </div>
                     </div>

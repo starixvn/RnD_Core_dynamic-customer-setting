@@ -135,9 +135,6 @@
   <data name="MaximumWin" xml:space="preserve">
     <value>最高赢额</value>
   </data>
-  <data name="Of" xml:space="preserve">
-    <value>的</value>
-  </data>
   <data name="OnGivenCredit" xml:space="preserve">
     <value>无信用额</value>
   </data>

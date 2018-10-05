@@ -126,9 +126,6 @@
   <data name="MaximumLoss" xml:space="preserve">
     <value>แพ้สูงสุด</value>
   </data>
-  <data name="Of" xml:space="preserve">
-    <value>ของ</value>
-  </data>
   <data name="OnGivenCredit" xml:space="preserve">
     <value>ยอดคงเหลือที่ได้รับ</value>
   </data>

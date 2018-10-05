@@ -2,6 +2,8 @@
 {
     public class CurrentLossAmountItem
     {
+        public decimal CurrentAmount { get; set; }
+
         public decimal LossPercent { get; set; }
 
         public decimal MaxLossAmount { get; set; }
@@ -14,16 +16,17 @@
             {
                 return false;
             }
-            else
-            {
-                return Equals(LossPercent, otherObj.LossPercent)
-                    && Equals(MaxLossAmount, otherObj.MaxLossAmount);
-            }
+
+            return Equals(CurrentAmount, otherObj.CurrentAmount)
+                && Equals(LossPercent, otherObj.LossPercent)
+                && Equals(MaxLossAmount, otherObj.MaxLossAmount);
         }
 
         public override int GetHashCode()
         {
-            return LossPercent.GetHashCode() ^ MaxLossAmount.GetHashCode();
+            return CurrentAmount.GetHashCode()
+                ^ LossPercent.GetHashCode()
+                ^ MaxLossAmount.GetHashCode();
         }
     }
 }

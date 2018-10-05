@@ -13,7 +13,6 @@
         "Losing": "Losing",
         "LossLimit": "Loss Limit",
         "MaximumLoss": "Maximum Loss",
-        "Of": "of",
         "OnGivenCredit": "on given credit",
         "Unlimited": "Unlimited"
     };
@@ -26,7 +25,6 @@
         "Losing": "输",
         "LossLimit": "输的限额",
         "MaximumLoss": "最高输额",
-        "Of": "的",
         "OnGivenCredit": "无信用额",
         "Unlimited": "无限"
     };
@@ -39,7 +37,6 @@
         "Losing": "輸",
         "LossLimit": "輸的限額",
         "MaximumLoss": "最高輸額",
-        "Of": "的",
         "OnGivenCredit": "無信用額",
         "Unlimited": "無限"
     };
@@ -52,7 +49,6 @@
         "Losing": "แพ้",
         "LossLimit": "จำกัดยอดเสีย",
         "MaximumLoss": "แพ้สูงสุด",
-        "Of": "ของ",
         "OnGivenCredit": "ยอดคงเหลือที่ได้รับ",
         "Unlimited": "ไม่จำกัด"
     };
@@ -65,7 +61,6 @@
         "Losing": "Thua",
         "LossLimit": "Giới Hạn Tiền Thua",
         "MaximumLoss": "Tiền thua cược lớn nhất",
-        "Of": "của",
         "OnGivenCredit": "trong hạn mức tín dụng được cấp",
         "Unlimited": "Không giới hạn"
     };

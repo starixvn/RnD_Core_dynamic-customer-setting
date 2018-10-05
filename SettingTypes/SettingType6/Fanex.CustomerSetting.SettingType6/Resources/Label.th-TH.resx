@@ -135,9 +135,6 @@
   <data name="MaximumWin" xml:space="preserve">
     <value>ชนะสูงสุด</value>
   </data>
-  <data name="Of" xml:space="preserve">
-    <value>ของ</value>
-  </data>
   <data name="OnGivenCredit" xml:space="preserve">
     <value>ยอดคงเหลือที่ได้รับ</value>
   </data>

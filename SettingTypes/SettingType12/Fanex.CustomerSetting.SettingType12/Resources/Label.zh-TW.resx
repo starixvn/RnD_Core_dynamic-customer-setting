@@ -126,9 +126,6 @@
   <data name="MaximumLoss" xml:space="preserve">
     <value>最高輸額</value>
   </data>
-  <data name="Of" xml:space="preserve">
-    <value>的</value>
-  </data>
   <data name="OnGivenCredit" xml:space="preserve">
     <value>無信用額</value>
   </data>

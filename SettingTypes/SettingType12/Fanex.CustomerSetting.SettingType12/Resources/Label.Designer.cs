@@ -19,7 +19,7 @@ namespace Fanex.CustomerSetting.SettingType12.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Label {
@@ -111,15 +111,6 @@ namespace Fanex.CustomerSetting.SettingType12.Resources {
         internal static string MaximumLoss {
             get {
                 return ResourceManager.GetString("MaximumLoss", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to of.
-        /// </summary>
-        internal static string Of {
-            get {
-                return ResourceManager.GetString("Of", resourceCulture);
             }
         }
         

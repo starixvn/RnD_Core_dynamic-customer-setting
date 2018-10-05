@@ -135,8 +135,8 @@
   <data name="MaximumWin" xml:space="preserve">
     <value>Maximum Win</value>
   </data>
-  <data name="Of" xml:space="preserve">
-    <value>of</value>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>N/A</value>
   </data>
   <data name="OnGivenCredit" xml:space="preserve">
     <value>on given credit</value>
