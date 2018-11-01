@@ -9,6 +9,10 @@ body {
     line-height: $ie8-line-height;
 }
 
+.msg__icon {
+    vertical-align: top;
+}
+
 .block {
     &__header,
     &__sub-header {

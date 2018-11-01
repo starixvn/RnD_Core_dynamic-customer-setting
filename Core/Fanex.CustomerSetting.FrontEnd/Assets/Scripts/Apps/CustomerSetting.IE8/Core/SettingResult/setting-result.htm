@@ -17,11 +17,13 @@
              data-ng-if="subResult.settingResults"
              data-ng-repeat="settingResult in subResult.settingResults">
             <div class="icon msg__icon"></div>
-            <div class="msg__content">{{settingResult.message}}</div>
-            <div class="msg__sub-message"
-                 data-ng-if="settingResult.messages"
-                 data-ng-repeat="message in settingResult.messages">
-                {{message}}
+            <div class="msg__content">
+                <div class="msg__main-message">{{settingResult.message}}</div>
+                <div class="msg__sub-message"
+                     data-ng-if="settingResult.messages"
+                     data-ng-repeat="message in settingResult.messages">
+                    {{message}}
+                </div>
             </div>
         </div>
     </div>

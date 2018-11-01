@@ -473,7 +473,7 @@ th {
     padding-left: 5px; }
   .msg__sub-message {
     font-weight: normal;
-    margin-left: 25px; }
+    margin-left: 5px; }
   .msg__icon {
     height: 13px;
     vertical-align: middle;
@@ -885,6 +885,9 @@ select.setting-field {
 body {
   font-size: 11px;
   line-height: 16.5px; }
+
+.msg__icon {
+  vertical-align: top; }
 
 .block__header, .block__sub-header {
   line-height: 29.7px; }
