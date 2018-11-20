@@ -19,7 +19,10 @@
 
             RefDataTypeContainer
                 .ConnectTo(new Uri(SettingMatrixApiConfiguration.Settings.FanexRemotingRefService))
-                .FromApplication(SettingMatrixApiConfiguration.Settings.InstanceName);
+                .FromApplication(SettingMatrixApiConfiguration.Settings.InstanceName)
+                .Register(RefDataType.BetTypeName, new RefDataTypeHandlerOptions { SlidingTimeout = TimeSpan.MaxValue })
+                .Register(RefDataType.SportName, new RefDataTypeHandlerOptions { SlidingTimeout = TimeSpan.MaxValue })
+                .Register(RefDataType.RefResource, new RefDataTypeHandlerOptions { SlidingTimeout = TimeSpan.MaxValue });
         }
 
         protected void Application_Error(object sender, EventArgs e)

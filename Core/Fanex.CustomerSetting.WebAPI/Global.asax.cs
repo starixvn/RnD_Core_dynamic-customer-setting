@@ -21,7 +21,10 @@
 
             RefDataTypeContainer
                 .ConnectTo(new Uri(CustomerSettingApiConfiguration.Settings.FanexRemotingRefService))
-                .FromApplication(CustomerSettingApiConfiguration.Settings.InstanceName);
+                .FromApplication(CustomerSettingApiConfiguration.Settings.InstanceName)
+                .Register(RefDataType.BetTypeName, new RefDataTypeHandlerOptions { SlidingTimeout = TimeSpan.MaxValue })
+                .Register(RefDataType.SportName, new RefDataTypeHandlerOptions { SlidingTimeout = TimeSpan.MaxValue })
+                .Register(RefDataType.RefResource, new RefDataTypeHandlerOptions { SlidingTimeout = TimeSpan.MaxValue });
         }
 
         protected void Application_Error(object sender, EventArgs e)
