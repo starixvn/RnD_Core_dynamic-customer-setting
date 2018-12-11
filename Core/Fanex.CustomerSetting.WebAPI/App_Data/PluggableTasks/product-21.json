@@ -5,8 +5,7 @@
       {
         "taskNames": [
           "Fanex.CustomerSetting.Tasks.SettingType13.AddSettingType13QueryWarningTask, Fanex.CustomerSetting.Tasks.SettingType13",
-          "Fanex.CustomerSetting.Tasks.Product21.RenameBetTypesTask, Fanex.CustomerSetting.Tasks.Product21",
-          "Fanex.CustomerSetting.Tasks.Product21.AddSettingNoteTask, Fanex.CustomerSetting.Tasks.Product21"
+          "Fanex.CustomerSetting.Tasks.Product21.RenameBetTypesTask, Fanex.CustomerSetting.Tasks.Product21"
         ]
       }
     ]

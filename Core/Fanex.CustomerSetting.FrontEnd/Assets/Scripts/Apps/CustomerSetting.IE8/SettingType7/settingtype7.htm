@@ -12,6 +12,7 @@
     </div>
     <div class="block__item-group" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
         <div class="block__sub-header"
+             data-ng-if="settingType.settingLevel !== avaiSettingLevels.product"
              data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }">
             <div class="block__header-cell"
                  data-ng-class="{ 'block__header-cell--no-border': !(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member) }">
