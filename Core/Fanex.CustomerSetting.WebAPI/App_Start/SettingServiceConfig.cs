@@ -2,6 +2,7 @@
 {
     using Casino.Services.Impl;
     using CustomerSetting.Configurations;
+    using CustomerSetting.Services.Impl;
     using NumberGames2.Services.Impl;
 
     public static class SettingServiceConfig
@@ -22,7 +23,7 @@
                 .Apply();
 
             configurator
-                .UseQueryServiceType(typeof(QueryNumberGames2SettingService))
+                .UseQueryServiceType(typeof(QuerySettingService))
                 .UseUpdateServiceType(typeof(UpdateNumberGames2SettingService))
                 .ForProducts(NumberGames2)
                 .ForAllSystems()

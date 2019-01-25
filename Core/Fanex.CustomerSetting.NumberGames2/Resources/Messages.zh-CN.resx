@@ -120,7 +120,4 @@
   <data name="UnableToUpdateProductStatus" xml:space="preserve">
     <value>暂时无法更新产品状态。 请稍后再试。</value>
   </data>
-  <data name="ProductStatusNoteForExternalSites" xml:space="preserve">
-    <value>根据公司的政策, 您不允許禁用此产品于下線。</value>
-  </data>
 </root>

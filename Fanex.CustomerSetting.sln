@@ -168,6 +168,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.Product33.Tests", "Tasks\Product33\Fanex.CustomerSetting.Tasks.Product33.Tests\Fanex.CustomerSetting.Tasks.Product33.Tests.csproj", "{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingType2", "SettingType2", "{F0053074-D332-4CA1-9108-1A4A388BA152}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType2", "Tasks\SettingType2\Fanex.CustomerSetting.Tasks.SettingType2\Fanex.CustomerSetting.Tasks.SettingType2.csproj", "{CE688F6E-48C3-4036-A393-DC22109659BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingType9", "SettingType9", "{A4BA79E8-B830-4F09-B6A7-81B54CDDF6C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType9", "Tasks\SettingType9\Fanex.CustomerSetting.Tasks.SettingType9\Fanex.CustomerSetting.Tasks.SettingType9.csproj", "{C7ED70AD-54E8-48DD-B6F7-F42FE3B8788F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -398,6 +406,14 @@ Global
 		{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE688F6E-48C3-4036-A393-DC22109659BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE688F6E-48C3-4036-A393-DC22109659BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE688F6E-48C3-4036-A393-DC22109659BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE688F6E-48C3-4036-A393-DC22109659BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7ED70AD-54E8-48DD-B6F7-F42FE3B8788F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7ED70AD-54E8-48DD-B6F7-F42FE3B8788F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7ED70AD-54E8-48DD-B6F7-F42FE3B8788F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7ED70AD-54E8-48DD-B6F7-F42FE3B8788F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -478,9 +494,13 @@ Global
 		{79B7BD78-506F-443C-B153-BEB2A88D798F} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
 		{EEBDFA6F-9BC7-4D39-AE27-E40D94742287} = {79B7BD78-506F-443C-B153-BEB2A88D798F}
 		{2F66F731-C0D0-4CA2-B669-E0EBFDCE1848} = {79B7BD78-506F-443C-B153-BEB2A88D798F}
+		{F0053074-D332-4CA1-9108-1A4A388BA152} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
+		{CE688F6E-48C3-4036-A393-DC22109659BA} = {F0053074-D332-4CA1-9108-1A4A388BA152}
+		{A4BA79E8-B830-4F09-B6A7-81B54CDDF6C6} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
+		{C7ED70AD-54E8-48DD-B6F7-F42FE3B8788F} = {A4BA79E8-B830-4F09-B6A7-81B54CDDF6C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0E5B53E6-7B52-44B7-9EC9-E6557921FED2}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
+		SolutionGuid = {0E5B53E6-7B52-44B7-9EC9-E6557921FED2}
 	EndGlobalSection
 EndGlobal

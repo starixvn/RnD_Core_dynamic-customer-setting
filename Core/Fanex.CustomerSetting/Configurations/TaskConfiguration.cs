@@ -25,7 +25,39 @@
             cachedTasks = new ConcurrentDictionary<string, object>();
         }
 
-        public static IEnumerable<T> PickTasks<T>(byte systemId, byte productId, short? settingTypeId = default(short?)) where T : class
+        public static IEnumerable<T> PickTasks<T>(byte systemId, byte productId) where T : class
+        {
+            IEnumerable<T> runnableTasks = Enumerable.Empty<T>();
+
+            if (configuredTasks.Any())
+            {
+                runnableTasks = configuredTasks
+                    .Where(siteProductTasks => IsMatchedSiteProductTasks(siteProductTasks, systemId, productId))
+                    .SelectMany(siteProductTasks => PickAllTaskNames(siteProductTasks))
+                    .Select(taskName => InjectTask<T>(taskName))
+                    .Where(task => task != null);
+            }
+
+            return runnableTasks;
+        }
+
+        public static IEnumerable<T> PickTasks<T>(byte systemId, byte productId, IEnumerable<short> settingTypeIds) where T : class
+        {
+            IEnumerable<T> runnableTasks = Enumerable.Empty<T>();
+
+            if (configuredTasks.Any())
+            {
+                runnableTasks = configuredTasks
+                    .Where(siteProductTasks => IsMatchedSiteProductTasks(siteProductTasks, systemId, productId))
+                    .SelectMany(siteProductTasks => PickSettingTypesTaskNames(siteProductTasks, settingTypeIds))
+                    .Select(taskName => InjectTask<T>(taskName))
+                    .Where(task => task != null);
+            }
+
+            return runnableTasks;
+        }
+
+        public static IEnumerable<T> PickTasks<T>(byte systemId, byte productId, short settingTypeId) where T : class
         {
             IEnumerable<T> runnableTasks = Enumerable.Empty<T>();
 
@@ -35,8 +67,7 @@
                     .Where(siteProductTasks => IsMatchedSiteProductTasks(siteProductTasks, systemId, productId))
                     .SelectMany(siteProductTasks => PickSettingTypeTaskNames(siteProductTasks, settingTypeId))
                     .Select(taskName => InjectTask<T>(taskName))
-                    .Where(task => task != null)
-                    .ToList();
+                    .Where(task => task != null);
             }
 
             return runnableTasks;
@@ -48,10 +79,23 @@
                 && (taskList.ProductId == null || taskList.ProductId == productId);
         }
 
-        private static IEnumerable<string> PickSettingTypeTaskNames(SiteProductTasks productTask, short? settingTypeId = default(short?))
+        private static IEnumerable<string> PickAllTaskNames(SiteProductTasks productTask)
         {
             return productTask.Tasks
-                .Where(settingTypeTasks => settingTypeId == null || settingTypeTasks.SettingTypeId == null || settingTypeTasks.SettingTypeId == settingTypeId)
+                .SelectMany(settingTypeTask => settingTypeTask.TaskNames);
+        }
+
+        private static IEnumerable<string> PickSettingTypesTaskNames(SiteProductTasks productTask, IEnumerable<short> settingTypeIds)
+        {
+            return productTask.Tasks
+                .Where(settingTypeTasks => settingTypeTasks.SettingTypeId == null || settingTypeIds.Any(settingTypeId => settingTypeId == settingTypeTasks.SettingTypeId))
+                .SelectMany(settingTypeTask => settingTypeTask.TaskNames);
+        }
+
+        private static IEnumerable<string> PickSettingTypeTaskNames(SiteProductTasks productTask, short settingTypeId)
+        {
+            return productTask.Tasks
+                .Where(settingTypeTasks => settingTypeTasks.SettingTypeId == null || settingTypeTasks.SettingTypeId == settingTypeId)
                 .SelectMany(settingTypeTask => settingTypeTask.TaskNames);
         }
 

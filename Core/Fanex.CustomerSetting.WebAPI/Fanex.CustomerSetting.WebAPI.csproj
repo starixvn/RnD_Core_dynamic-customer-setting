@@ -275,6 +275,8 @@
     </Content>
     <Content Include="App_Data\PluggableTasks\settingtype-13.json" />
     <Content Include="App_Data\PluggableTasks\product-33.json" />
+    <Content Include="App_Data\PluggableTasks\settingtype-9.json" />
+    <Content Include="App_Data\PluggableTasks\settingtype-2.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -350,6 +352,14 @@
     <ProjectReference Include="..\..\Tasks\SettingType13\Fanex.CustomerSetting.Tasks.SettingType13\Fanex.CustomerSetting.Tasks.SettingType13.csproj">
       <Project>{6d79d74e-f7e8-4963-813a-7b3bf21c8fe9}</Project>
       <Name>Fanex.CustomerSetting.Tasks.SettingType13</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tasks\SettingType2\Fanex.CustomerSetting.Tasks.SettingType2\Fanex.CustomerSetting.Tasks.SettingType2.csproj">
+      <Project>{ce688f6e-48c3-4036-a393-dc22109659ba}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.SettingType2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tasks\SettingType9\Fanex.CustomerSetting.Tasks.SettingType9\Fanex.CustomerSetting.Tasks.SettingType9.csproj">
+      <Project>{c7ed70ad-54e8-48dd-b6f7-f42fe3b8788f}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.SettingType9</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Casino\Fanex.CustomerSetting.Casino.csproj">
       <Project>{6fe2478f-9e93-48d1-95b9-cad78704b67e}</Project>

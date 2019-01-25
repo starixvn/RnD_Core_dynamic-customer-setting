@@ -1,7 +1,7 @@
 ﻿<div data-ng-show="result">
     <div class="msg msg--{{result.msgTypeName}}" data-ng-if="!result.subResults">
         <div class="icon msg__icon"></div>
-        <div class="msg__content">{{result.message}}</div>
+        <div class="msg__content" data-ng-bind-html="result.message | unsafe"></div>
     </div>
     <div data-ng-if="result.subResults" data-ng-repeat="subResult in result.subResults">
         <div class="msg__customer-name"
@@ -11,18 +11,18 @@
         <div class="msg msg--{{subResult.msgTypeName}}"
              data-ng-if="!subResult.settingResults">
             <div class="icon msg__icon"></div>
-            <div class="msg__content">{{subResult.message}}</div>
+            <div class="msg__content" data-ng-bind-html="subResult.message | unsafe"></div>
         </div>
         <div class="msg msg--{{settingResult.msgTypeName}}"
              data-ng-if="subResult.settingResults"
              data-ng-repeat="settingResult in subResult.settingResults">
             <div class="icon msg__icon"></div>
             <div class="msg__content">
-                <div class="msg__main-message">{{settingResult.message}}</div>
+                <div class="msg__main-message" data-ng-bind-html="settingResult.message | unsafe"></div>
                 <div class="msg__sub-message"
                      data-ng-if="settingResult.messages"
-                     data-ng-repeat="message in settingResult.messages">
-                    {{message}}
+                     data-ng-repeat="message in settingResult.messages"
+                     data-ng-bind-html="message | unsafe">
                 </div>
             </div>
         </div>

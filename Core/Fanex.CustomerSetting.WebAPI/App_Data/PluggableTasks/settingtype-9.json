@@ -1,0 +1,12 @@
+﻿[
+  {
+    "tasks": [
+      {
+        "settingTypeId": 9,
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.SettingType9.BetSettingNotesTask, Fanex.CustomerSetting.Tasks.SettingType9"
+        ]
+      }
+    ]
+  }
+]

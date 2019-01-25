@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tasks.SettingType13
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Common.Helper;
     using Models;
     using Models.Enumerations;
@@ -18,8 +17,7 @@
             Check.Argument.IsNotNull(query, nameof(query));
             Check.Argument.IsNotNull(setting, nameof(setting));
 
-            if ((query.CustomerLevel.IsMasterLevel() || query.CustomerLevel.IsAgentLevel())
-                && FilterSettingType13OnAlpha(settingContext, setting) != null)
+            if (CheckIfEditingCustomerIsMasterOrAgent(query) && IsAlphaSite(settingContext))
             {
                 var note = new Result(ProductStatusNoteForExternalSitesCode, Resources.ProductStatusNoteForExternalSites);
 
@@ -40,14 +38,14 @@
             }
         }
 
-        private SettingType FilterSettingType13OnAlpha(ISettingContext settingContext, ISetting setting)
+        private static bool CheckIfEditingCustomerIsMasterOrAgent(CustomerSettingQuery query)
         {
-            if (settingContext.System == (byte)SystemType.Alpha || settingContext.System == (byte)SystemType.InternalAlpha)
-            {
-                return setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == Constants.SettingType13Id);
-            }
+            return query.CustomerLevel.IsMasterLevel() || query.CustomerLevel.IsAgentLevel();
+        }
 
-            return null;
+        private static bool IsAlphaSite(ISettingContext settingContext)
+        {
+            return settingContext.System == (byte)SystemType.Alpha || settingContext.System == (byte)SystemType.InternalAlpha;
         }
     }
 }

@@ -54,10 +54,6 @@
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\SettingTypes\SettingType13\Fanex.CustomerSetting.SettingType13\Fanex.CustomerSetting.SettingType13.csproj">
-      <Project>{a43de0a6-ee77-4e8a-91dc-3e8e6089c1f1}</Project>
-      <Name>Fanex.CustomerSetting.SettingType13</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Tasks.SettingType13\Fanex.CustomerSetting.Tasks.SettingType13.csproj">
       <Project>{6d79d74e-f7e8-4963-813a-7b3bf21c8fe9}</Project>
       <Name>Fanex.CustomerSetting.Tasks.SettingType13</Name>

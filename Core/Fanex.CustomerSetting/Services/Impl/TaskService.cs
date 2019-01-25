@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Configurations;
     using Models;
     using Models.Enumerations;
@@ -29,7 +30,8 @@
 
         public void Run(byte productId, CustomerSettingQuery query, ISetting setting)
         {
-            var tasks = TaskConfiguration.PickTasks<IPostQueryCustomerSettingTask>(_settingContext.System, productId);
+            var settingTypeIds = setting.SettingTypes.Select(settingType => settingType.Id);
+            var tasks = TaskConfiguration.PickTasks<IPostQueryCustomerSettingTask>(_settingContext.System, productId, settingTypeIds);
 
             foreach (IPostQueryCustomerSettingTask task in tasks)
             {
@@ -39,7 +41,8 @@
 
         public void Run(byte productId, UpdateCustomerSettingCommand command)
         {
-            var tasks = TaskConfiguration.PickTasks<IPreUpdateCustomerSettingTask>(_settingContext.System, productId);
+            var settingTypeIds = command.Setting.SettingTypes.Select(settingType => settingType.Id);
+            var tasks = TaskConfiguration.PickTasks<IPreUpdateCustomerSettingTask>(_settingContext.System, productId, settingTypeIds);
 
             foreach (IPreUpdateCustomerSettingTask task in tasks)
             {
@@ -49,7 +52,8 @@
 
         public void Run(byte productId, UpdateCustomerSettingCommand command, IResult result)
         {
-            var tasks = TaskConfiguration.PickTasks<IPostUpdateCustomerSettingTask>(_settingContext.System, productId);
+            var settingTypeIds = command.Setting.SettingTypes.Select(settingType => settingType.Id);
+            var tasks = TaskConfiguration.PickTasks<IPostUpdateCustomerSettingTask>(_settingContext.System, productId, settingTypeIds);
 
             foreach (IPostUpdateCustomerSettingTask task in tasks)
             {
@@ -59,7 +63,8 @@
 
         public void Run(byte productId, MultipleUpdateCustomerSettingCommand command)
         {
-            var tasks = TaskConfiguration.PickTasks<IPreUpdateMultipleCustomersSettingTask>(_settingContext.System, productId);
+            var settingTypeIds = command.Setting.SettingTypes.Select(settingType => settingType.Id);
+            var tasks = TaskConfiguration.PickTasks<IPreUpdateMultipleCustomersSettingTask>(_settingContext.System, productId, settingTypeIds);
 
             foreach (IPreUpdateMultipleCustomersSettingTask task in tasks)
             {
@@ -69,7 +74,8 @@
 
         public void Run(byte productId, MultipleUpdateCustomerSettingCommand command, IResult result)
         {
-            var tasks = TaskConfiguration.PickTasks<IPostUpdateMultipleCustomersSettingTask>(_settingContext.System, productId);
+            var settingTypeIds = command.Setting.SettingTypes.Select(settingType => settingType.Id);
+            var tasks = TaskConfiguration.PickTasks<IPostUpdateMultipleCustomersSettingTask>(_settingContext.System, productId, settingTypeIds);
 
             foreach (IPostUpdateMultipleCustomersSettingTask task in tasks)
             {
