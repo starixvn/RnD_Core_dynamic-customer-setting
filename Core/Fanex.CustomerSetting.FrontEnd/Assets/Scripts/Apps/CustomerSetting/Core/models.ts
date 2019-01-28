@@ -317,7 +317,7 @@ module CustomerSetting {
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
-        public warningMessage: UpdatingSettingResult;
+        public warningMessages: UpdatingSettingResult;
         public isNormalMode: boolean;
 
         constructor();
@@ -331,8 +331,8 @@ module CustomerSetting {
                 this.productName = setting.productName;
                 this.isNormalMode = setting.isNormalMode === null || setting.isNormalMode === undefined ? true : setting.isNormalMode;
 
-                if (setting.warningMessage) {
-                    this.initializeWarningMessage(setting.warningMessage);
+                if (setting.warningMessages) {
+                    this.initializeWarningMessages(setting.warningMessages);
                 }
 
                 if (setting.settingTypes) {
@@ -443,12 +443,12 @@ module CustomerSetting {
             });
         }
 
-        private initializeWarningMessage(warningMessage: any): void {
-            this.warningMessage = new UpdatingSettingResult(warningMessage);
-            this.warningMessage.msgType = MessageType.warning;
+        private initializeWarningMessages(warningMessages: any): void {
+            this.warningMessages = new UpdatingSettingResult(warningMessages);
+            this.warningMessages.msgType = MessageType.warning;
 
-            if (this.warningMessage.subResults) {
-                this.warningMessage.subResults.forEach((subResult: CustomerSettingResult) => {
+            if (this.warningMessages.subResults) {
+                this.warningMessages.subResults.forEach((subResult: CustomerSettingResult) => {
                     subResult.settingResults.forEach((settingResult: SettingResult) => {
                         settingResult.msgType = MessageType.warning;
                     });

@@ -8,7 +8,7 @@
         public UpdateSettingResult(IEnumerable<SettingResult> subResults)
             : base(0)
         {
-            SubResults = subResults;
+            SubResults = subResults.ToList();
         }
 
         public UpdateSettingResult(IEnumerable<IResult> results)
@@ -51,7 +51,21 @@
             SubResults = new List<SettingResult> { new SettingResult(result) };
         }
 
-        public IEnumerable<SettingResult> SubResults { get; private set; }
+        public List<SettingResult> SubResults { get; private set; }
+
+        public void AddSubResult(IResult result)
+        {
+            var settingResult = result as SettingResult;
+
+            if (settingResult == null)
+            {
+                SubResults.Add(new SettingResult(result));
+            }
+            else
+            {
+                SubResults.Add(settingResult);
+            }
+        }
 
         public override bool IsSuccessful
         {

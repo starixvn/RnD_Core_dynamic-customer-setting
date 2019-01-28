@@ -31050,8 +31050,8 @@ var CustomerSetting;
                 this.productId = setting.productId;
                 this.productName = setting.productName;
                 this.isNormalMode = setting.isNormalMode === null || setting.isNormalMode === undefined ? true : setting.isNormalMode;
-                if (setting.warningMessage) {
-                    this.initializeWarningMessage(setting.warningMessage);
+                if (setting.warningMessages) {
+                    this.initializeWarningMessages(setting.warningMessages);
                 }
                 if (setting.settingTypes) {
                     this.settingTypes = setting.settingTypes.map(function (settingType) { return new SettingType(settingType); });
@@ -31145,11 +31145,11 @@ var CustomerSetting;
                 return settingType.displayMode === CustomerSetting.DisplayMode.editable;
             });
         };
-        Setting.prototype.initializeWarningMessage = function (warningMessage) {
-            this.warningMessage = new UpdatingSettingResult(warningMessage);
-            this.warningMessage.msgType = CustomerSetting.MessageType.warning;
-            if (this.warningMessage.subResults) {
-                this.warningMessage.subResults.forEach(function (subResult) {
+        Setting.prototype.initializeWarningMessages = function (warningMessages) {
+            this.warningMessages = new UpdatingSettingResult(warningMessages);
+            this.warningMessages.msgType = CustomerSetting.MessageType.warning;
+            if (this.warningMessages.subResults) {
+                this.warningMessages.subResults.forEach(function (subResult) {
                     subResult.settingResults.forEach(function (settingResult) {
                         settingResult.msgType = CustomerSetting.MessageType.warning;
                     });
@@ -32121,7 +32121,7 @@ var CustomerSetting;
             if (query) {
                 this.requestService.request(this.appConfigService.getQueryPath(), query.toJson(), function (response) {
                     _this.setting = new CustomerSetting.Setting(response.data);
-                    _this.warningMessages = _this.setting.warningMessage;
+                    _this.warningMessages = _this.setting.warningMessages;
                     _this.settingTypesSharedValuesService.register(_this.setting, _this.parametersService.uplineLevel);
                     _this.$rootScope.$emit("queriedSetting");
                 });

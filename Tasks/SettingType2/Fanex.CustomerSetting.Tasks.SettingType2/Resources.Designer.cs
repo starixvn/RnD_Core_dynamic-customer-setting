@@ -22,7 +22,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType2 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType2 {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.Tasks.SettingType2.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType2 {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType2 {
         /// <summary>
         ///   Looks up a localized string similar to Inputting 0 / 0 / 0 into Min Bet / Max Bet / Max Per Match will prevent member from playing the game..
         /// </summary>
-        internal static string MemberNote {
+        public static string MemberNote {
             get {
                 return ResourceManager.GetString("MemberNote", resourceCulture);
             }
@@ -73,7 +73,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType2 {
         ///   Looks up a localized string similar to Inputting Min Bet = Max Bet = Max Per Match = 0 means that you will not limit the bet setting of this account.&lt;br/&gt;
         ///In order to prevent members from playing the game, set the value to 0 / 0.1 / 0.1 for Min Bet / Max Bet / Max Per Match..
         /// </summary>
-        internal static string SMANote {
+        public static string SMANote {
             get {
                 return ResourceManager.GetString("SMANote", resourceCulture);
             }

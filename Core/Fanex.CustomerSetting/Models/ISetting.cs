@@ -18,6 +18,8 @@
 
         IEnumerable<SettingType> SettingTypes { get; set; }
 
-        IResult WarningMessage { get; set; }
+        IResult WarningMessages { get; }
+
+        void AddWarningMessages(params string[] messages);
     }
 }

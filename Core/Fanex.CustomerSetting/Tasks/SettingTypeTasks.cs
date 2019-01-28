@@ -6,6 +6,8 @@
     {
         public short? SettingTypeId { get; set; }
 
+        public byte Order { get; set; }
+
         public IEnumerable<string> TaskNames { get; set; }
     }
 }

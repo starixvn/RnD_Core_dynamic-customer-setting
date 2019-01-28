@@ -96,6 +96,11 @@
             SubMessages = subMessages;
         }
 
+        public SettingResult(int code, string mainMessage)
+            : base(code, mainMessage)
+        {
+        }
+
         public int CustomerId { get; private set; }
 
         public string CustomerName { get; set; }

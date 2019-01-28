@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using CustomerSetting.Models.Results;
     using CustomerSetting.Tests;
     using Models;
@@ -27,9 +26,6 @@
 
             _task = new AddSettingNoteTask();
             _settingContext = Substitute.For<ISettingContext>();
-            _settingContext.Actor = Substitute.For<User>();
-            _settingContext.Actor.Level = Level.Super;
-            _settingContext.System = (byte)SystemType.Alpha;
             _query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
             _setting = new Setting(customerId, customerLevel, productId, null);
         }
@@ -87,7 +83,7 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.NotNull(_setting.WarningMessage);
+            Assert.NotNull(_setting.WarningMessages);
         }
 
         [TestCase(13)]
@@ -104,9 +100,9 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            var shownNotes = _setting.WarningMessage as UpdateSettingResult;
+            var shownNotes = _setting.WarningMessages as UpdateSettingResult;
 
-            Assert.AreEqual(2, shownNotes?.SubResults.Count());
+            Assert.AreEqual(2, shownNotes.SubResults.Count);
         }
 
         [TestCase(13)]
@@ -123,8 +119,8 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            var shownNotes = _setting.WarningMessage as UpdateSettingResult;
-            var firstNote = shownNotes?.SubResults.ElementAt(0)?.Message;
+            var shownNotes = _setting.WarningMessages as UpdateSettingResult;
+            var firstNote = shownNotes.SubResults[0].Message;
 
             Assert.AreEqual(Resources.GeneralSettingNote, firstNote);
         }
@@ -143,8 +139,8 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            var shownNotes = _setting.WarningMessage as UpdateSettingResult;
-            var firstNote = shownNotes?.SubResults.ElementAt(1)?.Message;
+            var shownNotes = _setting.WarningMessages as UpdateSettingResult;
+            var firstNote = shownNotes.SubResults[1].Message;
 
             Assert.AreEqual(Resources.BetSettingAndProductStatusSettingNote, firstNote);
         }
@@ -162,7 +158,7 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.Null(_setting.WarningMessage);
+            Assert.Null(_setting.WarningMessages);
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
     using System;
+    using System.Linq;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Results;
     using NUnit.Framework;
 
     [TestFixture]
@@ -76,6 +78,67 @@
 
             //// Assert
             Assert.IsEmpty(setting.SettingTypes);
+        }
+
+        [Test]
+        public void AddWarningMessages_InputMessagesIsNull_WarningMessagesStaysNull()
+        {
+            // Arrange.
+            var setting = new Setting();
+            string[] messages = null;
+
+            // Act.
+            setting.AddWarningMessages(messages);
+
+            // Assert.
+            Assert.IsNull(setting.WarningMessages);
+        }
+
+        [Test]
+        public void AddWarningMessages_InputMessagesIsEmpty_WarningMessagesStaysNull()
+        {
+            // Arrange.
+            var setting = new Setting();
+            var messages = Array.Empty<string>();
+
+            // Act.
+            setting.AddWarningMessages(messages);
+
+            // Assert.
+            Assert.IsNull(setting.WarningMessages);
+        }
+
+        [Test]
+        public void AddWarningMessages_InputSomeMessages_WarningMessagesIsInstanceOfUpdateSettingResult()
+        {
+            // Arrange.
+            var setting = new Setting();
+            var messages = new string[] { "Any message" };
+
+            // Act.
+            setting.AddWarningMessages(messages);
+
+            // Assert.
+            Assert.IsInstanceOf<UpdateSettingResult>(setting.WarningMessages);
+        }
+
+        [Test]
+        public void AddWarningMessages_AddNewMessages_AppendNewMessageAtTheEndOfList()
+        {
+            // Arrange.
+            var newMessages = new string[] { "New message" };
+            var setting = new Setting
+            {
+                WarningMessages = new UpdateSettingResult(new SettingResult(0, "Old message"))
+            };
+
+            // Act.
+            setting.AddWarningMessages(newMessages);
+            var allAddedMessages = (setting.WarningMessages as UpdateSettingResult).SubResults.Select(subResult => subResult.Message);
+
+            // Assert.
+            var expectedMessagesOrder = new string[] { "Old message", "New message" };
+            CollectionAssert.AreEqual(expectedMessagesOrder, allAddedMessages);
         }
     }
 }

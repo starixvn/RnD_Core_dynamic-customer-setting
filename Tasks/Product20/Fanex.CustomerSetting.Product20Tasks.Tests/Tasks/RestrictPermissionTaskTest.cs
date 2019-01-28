@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using CustomerSetting.Models.Results;
     using CustomerSetting.Tasks.Product20;
     using CustomerSetting.Tasks.Product20.Criteria;
     using CustomerSetting.Tasks.Product20.Models;
@@ -64,7 +65,7 @@
         }
 
         [Test]
-        public void PostQueryCustomerSetting_NoRestrictionConfigured_WarningMessageIsNull()
+        public void PostQueryCustomerSetting_NoRestrictionConfigured_WarningMessagesDoesNotContainUpdateRestrictionMessage()
         {
             // Arrange.
             ISetting setting = CreateSampleSettingData1();
@@ -75,7 +76,7 @@
             _task.Invoke(_settingContext, query, setting);
 
             // Assert.
-            Assert.IsNull(setting.WarningMessage);
+            Assert.IsNull(setting.WarningMessages);
         }
 
         [Test]
@@ -95,7 +96,7 @@
         }
 
         [Test]
-        public void PostQueryCustomerSetting_SettingTypesDoNotMatch_WarningMessageIsNull()
+        public void PostQueryCustomerSetting_SettingTypesDoNotMatch_WarningMessagesDoesNotContainUpdateRestrictionMessage()
         {
             // Arrange.
             ISetting setting = CreateSampleSettingData2();
@@ -105,7 +106,7 @@
             _task.Invoke(_settingContext, query, setting);
 
             // Assert.
-            Assert.IsNull(setting.WarningMessage);
+            Assert.IsNull(setting.WarningMessages);
         }
 
         [Test]
@@ -139,7 +140,7 @@
         }
 
         [Test]
-        public void PostQueryCustomerSetting_HaveRestrictedSettingType_WarningMessageIsNotNull()
+        public void PostQueryCustomerSetting_HaveRestrictedSettingType_WarningMessagesIsTypeOfUpdateSettingResult()
         {
             // Arrange.
             ISetting setting = CreateSampleSettingData1();
@@ -149,11 +150,11 @@
             _task.Invoke(_settingContext, query, setting);
 
             // Assert.
-            Assert.IsNotNull(setting.WarningMessage);
+            Assert.IsInstanceOf<UpdateSettingResult>(setting.WarningMessages);
         }
 
         [Test]
-        public void PostQueryCustomerSetting_HaveRestrictedSettingType_WarningMessageCodeIs20029()
+        public void PostQueryCustomerSetting_HaveRestrictedSettingType_WarningMessagesContainsUpdateRestrictionMessage()
         {
             // Arrange.
             ISetting setting = CreateSampleSettingData1();
@@ -163,21 +164,9 @@
             _task.Invoke(_settingContext, query, setting);
 
             // Assert.
-            Assert.AreEqual(20029, setting.WarningMessage.Code);
-        }
+            var messageContainer = setting.WarningMessages as UpdateSettingResult;
 
-        [Test]
-        public void PostQueryCustomerSetting_HaveRestrictedSettingType_WarningMessageContainsSummaryMessage()
-        {
-            // Arrange.
-            ISetting setting = CreateSampleSettingData1();
-            CustomerSettingQuery query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)20, null);
-
-            // Act.
-            _task.Invoke(_settingContext, query, setting);
-
-            // Assert.
-            StringAssert.Contains(Message.Msg_20029, setting.WarningMessage.Message);
+            Assert.IsTrue(messageContainer?.SubResults.Any(subResult => subResult.Message.Contains(Message.Msg_20029)));
         }
 
         [Test]
@@ -356,7 +345,7 @@
 
         private ISetting CreateSampleSettingData1()
         {
-            ISetting setting = Substitute.For<ISetting>();
+            Setting setting = new Setting();
             SettingType settingType1 = Substitute.For<SettingType>();
             SettingType settingType2 = Substitute.For<SettingType>();
             SettingType settingType5 = Substitute.For<SettingType>();
@@ -376,7 +365,6 @@
                 settingType2,
                 settingType5
             };
-            setting.WarningMessage = null;
             setting.CustomerLevel = Level.Agent;
 
             return setting;
@@ -384,7 +372,7 @@
 
         private ISetting CreateSampleSettingData2()
         {
-            ISetting setting = Substitute.For<ISetting>();
+            Setting setting = new Setting();
             SettingType settingType3 = Substitute.For<SettingType>();
             SettingType settingType4 = Substitute.For<SettingType>();
             SettingType settingType6 = Substitute.For<SettingType>();
@@ -404,7 +392,6 @@
                 settingType4,
                 settingType6
             };
-            setting.WarningMessage = null;
             setting.CustomerLevel = Level.Agent;
 
             return setting;

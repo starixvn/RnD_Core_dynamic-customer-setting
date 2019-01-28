@@ -130,7 +130,7 @@ module CustomerSetting {
             if (query) {
                 this.requestService.request(this.appConfigService.getQueryPath(), query.toJson(), (response: ng.IHttpPromiseCallbackArg<any>) => {
                     this.setting = new Setting(response.data);
-                    this.warningMessages = this.setting.warningMessage;
+                    this.warningMessages = this.setting.warningMessages;
                     this.settingTypesSharedValuesService.register(this.setting, this.parametersService.uplineLevel);
                     this.$rootScope.$emit("queriedSetting");
                 });

@@ -178,6 +178,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType2.Tests", "Tasks\SettingType2\Fanex.CustomerSetting.Tasks.SettingType2.Tests\Fanex.CustomerSetting.Tasks.SettingType2.Tests.csproj", "{2647525B-34D2-4D36-834F-7EDC5C489308}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType9.Tests", "Tasks\SettingType9\Fanex.CustomerSetting.Tasks.SettingType9.Tests\Fanex.CustomerSetting.Tasks.SettingType9.Tests.csproj", "{F62F8DC8-7B19-4C6F-8E5E-C94DCEE088D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -420,6 +422,10 @@ Global
 		{2647525B-34D2-4D36-834F-7EDC5C489308}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2647525B-34D2-4D36-834F-7EDC5C489308}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2647525B-34D2-4D36-834F-7EDC5C489308}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62F8DC8-7B19-4C6F-8E5E-C94DCEE088D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62F8DC8-7B19-4C6F-8E5E-C94DCEE088D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62F8DC8-7B19-4C6F-8E5E-C94DCEE088D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62F8DC8-7B19-4C6F-8E5E-C94DCEE088D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -505,9 +511,10 @@ Global
 		{A4BA79E8-B830-4F09-B6A7-81B54CDDF6C6} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
 		{C7ED70AD-54E8-48DD-B6F7-F42FE3B8788F} = {A4BA79E8-B830-4F09-B6A7-81B54CDDF6C6}
 		{2647525B-34D2-4D36-834F-7EDC5C489308} = {F0053074-D332-4CA1-9108-1A4A388BA152}
+		{F62F8DC8-7B19-4C6F-8E5E-C94DCEE088D6} = {A4BA79E8-B830-4F09-B6A7-81B54CDDF6C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
 		SolutionGuid = {0E5B53E6-7B52-44B7-9EC9-E6557921FED2}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal

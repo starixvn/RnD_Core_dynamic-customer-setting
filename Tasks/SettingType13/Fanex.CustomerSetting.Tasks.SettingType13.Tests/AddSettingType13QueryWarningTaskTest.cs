@@ -13,7 +13,7 @@
     {
         private AddSettingType13QueryWarningTask _task;
         private ISettingContext _settingContext;
-        private ISetting _setting;
+        private Setting _setting;
         private CustomerSettingQuery _query;
 
         [SetUp]
@@ -29,8 +29,7 @@
             _settingContext.Actor.Level = Level.Master;
             _settingContext.System = (byte)SystemType.Alpha;
             _query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
-            _setting = Substitute.For<ISetting>();
-            _setting.WarningMessage = null;
+            _setting = new Setting();
         }
 
         [Test]
@@ -82,7 +81,7 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.Null(_setting.WarningMessage);
+            Assert.Null(_setting.WarningMessages);
         }
 
         [Test]
@@ -95,7 +94,7 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.Null(_setting.WarningMessage);
+            Assert.Null(_setting.WarningMessages);
         }
 
         [Test]
@@ -108,20 +107,9 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.IsTrue(_setting.WarningMessage?.Message == Resources.ProductStatusNoteForExternalSites);
-        }
+            var messageContainer = _setting.WarningMessages as UpdateSettingResult;
 
-        [Test]
-        public void PostQueryCustomerSetting_CustomerLevelIsMaster_AddWarningMessageWithCodeIsNegative9102()
-        {
-            // Arrange.
-            _query.CustomerLevel = Level.Master;
-
-            // Act.
-            _task.Invoke(_settingContext, _query, _setting);
-
-            // Assert.
-            Assert.IsTrue(_setting.WarningMessage?.Code == AddSettingType13QueryWarningTask.ProductStatusNoteForExternalSitesCode);
+            Assert.IsTrue(messageContainer?.SubResults.Any(subResult => subResult.Message == Resources.ProductStatusNoteForExternalSites));
         }
 
         [Test]
@@ -134,20 +122,9 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.IsTrue(_setting.WarningMessage?.Message == Resources.ProductStatusNoteForExternalSites);
-        }
+            var messageContainer = _setting.WarningMessages as UpdateSettingResult;
 
-        [Test]
-        public void PostQueryCustomerSetting_CustomerLevelIsAgent_AddWarningMessageWithCodeIsNegative9102()
-        {
-            // Arrange.
-            _query.CustomerLevel = Level.Agent;
-
-            // Act.
-            _task.Invoke(_settingContext, _query, _setting);
-
-            // Assert.
-            Assert.IsTrue(_setting.WarningMessage?.Code == AddSettingType13QueryWarningTask.ProductStatusNoteForExternalSitesCode);
+            Assert.IsTrue(messageContainer?.SubResults.Any(subResult => subResult.Message == Resources.ProductStatusNoteForExternalSites));
         }
 
         [Test]
@@ -160,21 +137,7 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.Null(_setting.WarningMessage);
-        }
-
-        [TestCase((byte)SystemType.Alpha)]
-        [TestCase((byte)SystemType.InternalAlpha)]
-        public void PostQueryCustomerSetting_OnAlpha_AddWarningMessageWithCodeIsNegative9102(byte systemId)
-        {
-            // Arrange.
-            _settingContext.System = systemId;
-
-            // Act.
-            _task.Invoke(_settingContext, _query, _setting);
-
-            // Assert.
-            Assert.IsTrue(_setting.WarningMessage?.Code == AddSettingType13QueryWarningTask.ProductStatusNoteForExternalSitesCode);
+            Assert.Null(_setting.WarningMessages);
         }
 
         [TestCase((byte)SystemType.Alpha)]
@@ -188,7 +151,9 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.IsTrue(_setting.WarningMessage?.Message == Resources.ProductStatusNoteForExternalSites);
+            var messageContainer = _setting.WarningMessages as UpdateSettingResult;
+
+            Assert.IsTrue(messageContainer?.SubResults.Any(subResult => subResult.Message == Resources.ProductStatusNoteForExternalSites));
         }
 
         [TestCase((byte)SystemType.Nap)]
@@ -202,22 +167,7 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.Null(_setting.WarningMessage);
-        }
-
-        [Test]
-        public void PostQueryCustomerSetting_AnyWarningMessageExists_AddWarningNodeToTheTop()
-        {
-            // Arrange.
-            _setting.WarningMessage = Substitute.For<IResult>();
-
-            // Act.
-            _task.Invoke(_settingContext, _query, _setting);
-
-            // Assert.
-            var allWarningMessages = (_setting.WarningMessage as UpdateSettingResult)?.SubResults;
-
-            Assert.IsTrue(allWarningMessages.ElementAt(0).Message == Resources.ProductStatusNoteForExternalSites);
+            Assert.Null(_setting.WarningMessages);
         }
     }
 }

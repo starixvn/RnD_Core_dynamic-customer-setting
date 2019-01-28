@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Enumerations;
     using Results;
 
@@ -123,6 +124,30 @@
             }
         }
 
-        public IResult WarningMessage { get; set; }
+        public IResult WarningMessages { get; internal protected set; }
+
+        public void AddWarningMessages(params string[] messages)
+        {
+            if (messages == null || messages.Length == 0)
+            {
+                return;
+            }
+
+            var warningMessagesContainer = WarningMessages as UpdateSettingResult;
+            var messageWrappers = messages.Where(message => !string.IsNullOrEmpty(message)).Select(message => new SettingResult(0, message));
+
+            if (warningMessagesContainer == null)
+            {
+                warningMessagesContainer = new UpdateSettingResult(messageWrappers);
+                WarningMessages = warningMessagesContainer;
+            }
+            else
+            {
+                foreach (var messageWrapper in messageWrappers)
+                {
+                    warningMessagesContainer.AddSubResult(messageWrapper);
+                }
+            }
+        }
     }
 }

@@ -318,7 +318,7 @@ module CustomerSetting.IE8 {
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
-        public warningMessage: UpdatingSettingResult;
+        public warningMessages: UpdatingSettingResult;
         public isNormalMode: boolean;
 
         constructor();
@@ -332,8 +332,8 @@ module CustomerSetting.IE8 {
                 this.productName = setting.productName;
                 this.isNormalMode = setting.isNormalMode === null || setting.isNormalMode === undefined ? true : setting.isNormalMode;
 
-                if (setting.warningMessage) {
-                    this.initializeWarningMessage(setting.warningMessage);
+                if (setting.warningMessages) {
+                    this.initializeWarningMessages(setting.warningMessages);
                 }
 
                 if (setting.settingTypes) {
@@ -444,13 +444,13 @@ module CustomerSetting.IE8 {
             });
         }
 
-        private initializeWarningMessage(warningMessage: any): void {
-            this.warningMessage = new UpdatingSettingResult(warningMessage);
-            this.warningMessage.msgType = MessageType.warning;
-            this.warningMessage.msgTypeName = "warning";
+        private initializeWarningMessages(warningMessages: any): void {
+            this.warningMessages = new UpdatingSettingResult(warningMessages);
+            this.warningMessages.msgType = MessageType.warning;
+            this.warningMessages.msgTypeName = "warning";
 
-            if (this.warningMessage.subResults) {
-                _.forEach(this.warningMessage.subResults, (subResult: CustomerSettingResult) => {
+            if (this.warningMessages.subResults) {
+                _.forEach(this.warningMessages.subResults, (subResult: CustomerSettingResult) => {
                     _.forEach(subResult.settingResults, (settingResult: SettingResult) => {
                         settingResult.msgType = MessageType.warning;
                     });

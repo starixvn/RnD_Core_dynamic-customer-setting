@@ -34503,8 +34503,8 @@ var CustomerSetting;
                     this.productId = setting.productId;
                     this.productName = setting.productName;
                     this.isNormalMode = setting.isNormalMode === null || setting.isNormalMode === undefined ? true : setting.isNormalMode;
-                    if (setting.warningMessage) {
-                        this.initializeWarningMessage(setting.warningMessage);
+                    if (setting.warningMessages) {
+                        this.initializeWarningMessages(setting.warningMessages);
                     }
                     if (setting.settingTypes) {
                         this.settingTypes = _.map(setting.settingTypes, function (settingType) { return new SettingType(settingType); });
@@ -34598,12 +34598,12 @@ var CustomerSetting;
                     return settingType.displayMode === IE8.DisplayMode.editable;
                 });
             };
-            Setting.prototype.initializeWarningMessage = function (warningMessage) {
-                this.warningMessage = new UpdatingSettingResult(warningMessage);
-                this.warningMessage.msgType = IE8.MessageType.warning;
-                this.warningMessage.msgTypeName = "warning";
-                if (this.warningMessage.subResults) {
-                    _.forEach(this.warningMessage.subResults, function (subResult) {
+            Setting.prototype.initializeWarningMessages = function (warningMessages) {
+                this.warningMessages = new UpdatingSettingResult(warningMessages);
+                this.warningMessages.msgType = IE8.MessageType.warning;
+                this.warningMessages.msgTypeName = "warning";
+                if (this.warningMessages.subResults) {
+                    _.forEach(this.warningMessages.subResults, function (subResult) {
                         _.forEach(subResult.settingResults, function (settingResult) {
                             settingResult.msgType = IE8.MessageType.warning;
                         });
@@ -35477,7 +35477,7 @@ var CustomerSetting;
                 if (query) {
                     this.requestService.request(this.appConfigService.getQueryPath(), query.toJson(), function (response) {
                         _this.setting = new IE8.Setting(response.data);
-                        _this.warningMessages = _this.setting.warningMessage;
+                        _this.warningMessages = _this.setting.warningMessages;
                         _this.settingTypesSharedValuesService.register(_this.setting, _this.parametersService.getUplineLevel());
                         _this.$rootScope.$emit("queriedSetting");
                     });

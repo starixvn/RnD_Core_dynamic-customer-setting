@@ -8,6 +8,8 @@
 
         public byte? ProductId { get; set; }
 
+        public byte Order { get; set; }
+
         public IEnumerable<SettingTypeTasks> Tasks { get; set; }
     }
 }

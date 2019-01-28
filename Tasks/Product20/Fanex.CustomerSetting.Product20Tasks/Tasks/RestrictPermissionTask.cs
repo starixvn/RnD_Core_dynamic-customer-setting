@@ -8,7 +8,6 @@
     using Criteria;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Requests;
-    using CustomerSetting.Models.Results;
     using Data.Repository;
     using Models;
     using Resources;
@@ -67,8 +66,7 @@
                 {
                     string warningMessage = Message.ResourceManager.GetString($"Msg_{ErrorCodes.RunningGameUpdateRestrictionError}");
 
-                    setting.WarningMessage
-                        = new Result(ErrorCodes.RunningGameUpdateRestrictionError, $"{warningMessage}: {string.Join(", ", restrictedSettingTypeNames)}.");
+                    setting.AddWarningMessages($"{warningMessage}: {string.Join(", ", restrictedSettingTypeNames)}.");
                 }
 
                 setting.SettingTypes = setting.SettingTypes.Where(settingType => settingType.DisplayMode != RestrictionModes.Hidden);

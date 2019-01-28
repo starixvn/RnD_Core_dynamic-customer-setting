@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using CustomerSetting.Models.Results;
     using CustomerSetting.Tests;
     using Models;
     using Models.Enumerations;
@@ -25,9 +26,6 @@
 
             _task = new PTSettingNoteTask();
             _settingContext = Substitute.For<ISettingContext>();
-            _settingContext.Actor = Substitute.For<User>();
-            _settingContext.Actor.Level = Level.Master;
-            _settingContext.System = (byte)SystemType.Alpha;
             _setting = InstanceFactory.CreateCustomerSetting(customerId, customerLevel, productId);
             _query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
         }
@@ -72,7 +70,7 @@
         }
 
         [Test]
-        public void PostQueryCustomerSetting_DoesNotUpdateSettingType1_DoNotAddNote()
+        public void PostQueryCustomerSetting_DoesNotUpdateSettingType1_DoNotShowPTNote()
         {
             // Arrange.
             _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != 1);
@@ -81,27 +79,19 @@
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.Null(_setting.WarningMessage);
+            Assert.Null(_setting.WarningMessages);
         }
 
         [Test]
-        public void PostQueryCustomerSetting_UpdateSettingType1_AddNoteWithCodeMatchedDefinedCode()
+        public void PostQueryCustomerSetting_UpdateSettingType1_ShowPTNote()
         {
             // Act.
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.IsTrue(_setting.WarningMessage?.Code == PTSettingNoteTask.PTSettingNoteCode);
-        }
+            var shownNotes = _setting.WarningMessages as UpdateSettingResult;
 
-        [Test]
-        public void PostQueryCustomerSetting_UpdateSettingType1_ShowNoteToUser()
-        {
-            // Act.
-            _task.Invoke(_settingContext, _query, _setting);
-
-            // Assert.
-            Assert.AreEqual(Resources.PTAppliedForInsuranceAndGemsBought, _setting?.WarningMessage?.Message);
+            Assert.AreEqual(Resources.PTAppliedForInsuranceAndGemsBought, shownNotes.SubResults[0].Message);
         }
     }
 }

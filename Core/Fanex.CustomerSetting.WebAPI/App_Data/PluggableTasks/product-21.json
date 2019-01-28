@@ -1,6 +1,7 @@
 ﻿[
   {
     "productId": 21,
+    "order": 2,
     "tasks": [
       {
         "taskNames": [

@@ -15,7 +15,7 @@
             ProductId = setting.ProductId;
             ProductName = setting.ProductName;
             SettingTypes = setting.SettingTypes;
-            WarningMessage = setting.WarningMessage;
+            WarningMessages = setting.WarningMessages;
             IsNormalMode = customerProductSyncedStatus;
         }
 
