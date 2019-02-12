@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
     <Function Name="WinLossLimit">
-        <Setting Key="CustSetting_WinLossLimitSelect" SpName="Acc_CustSetting_WinLossLimitSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+        <Setting Key="CustSetting_WinLossLimitSelect" SpName="Acc_CustSetting_WinLossLimitSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
             <Mapping DataField="MaxWinLimit" ObjectProperty="WinLimit" />
             <Mapping DataField="MaxLossLimit" ObjectProperty="LossLimit" />
         </Setting>
 
-        <Setting Key="CustSetting_WinLossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+        <Setting Key="CustSetting_WinLossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
 
-        <Setting Key="CustSetting_WinLossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+        <Setting Key="CustSetting_WinLossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
     </Function>
 </Functions>

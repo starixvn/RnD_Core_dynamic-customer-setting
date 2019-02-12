@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions SiteId="68" SiteName="DCS">
     <Function Name="StakeLevelGroup">
-        <Setting Key="CustSetting_StakeLevelGroupSelect" SpName="Acc_CustSetting_StakeLevelGroupSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+        <Setting Key="CustSetting_StakeLevelGroupSelect" SpName="Acc_CustSetting_StakeLevelGroupSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
             <Mapping DataField="IsChecked" ObjectProperty="Selected" />
         </Setting>
 
-        <Setting Key="CustSetting_StakeLevelGroupDetailSelect" SpName="Acc_CustSetting_StakeLevelGroupDetailSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+        <Setting Key="CustSetting_StakeLevelGroupDetailSelect" SpName="Acc_CustSetting_StakeLevelGroupDetailSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
         </Setting>
 
-        <Setting Key="CustSetting_StakeLevelGroupUpd" SpName="Acc_CustSetting_StakeLevelUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+        <Setting Key="CustSetting_StakeLevelGroupUpd" SpName="Acc_CustSetting_StakeLevelUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     </Function>
 </Functions>

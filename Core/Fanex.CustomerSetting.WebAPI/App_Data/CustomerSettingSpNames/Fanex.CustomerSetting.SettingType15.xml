@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions SiteId="68" SiteName="DCS">
     <Function Name="ShareCommission">
-        <Setting Key="Acc_CustSetting_WinningShareCommissionSelect" SpName="Acc_CustSetting_WinningShareCommissionSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+        <Setting Key="Acc_CustSetting_WinningShareCommissionSelect" SpName="Acc_CustSetting_WinningShareCommissionSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
             <Mapping DataField="WinningShareCommission" ObjectProperty="WinningShare" />

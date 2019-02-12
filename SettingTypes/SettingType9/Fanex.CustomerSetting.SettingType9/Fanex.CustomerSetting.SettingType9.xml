@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="GameBetLimit">
-    <Setting Key="Acc_CustSetting_GameBetLimitSelect" SpName="Acc_CustSetting_GameBetLimitSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+    <Setting Key="Acc_CustSetting_GameBetLimitSelect" SpName="Acc_CustSetting_GameBetLimitSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
-    <Setting Key="Acc_CustSetting_GameBetLimitUpd" SpName="Acc_CustSetting_GameBetLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_GameBetLimitUpd" SpName="Acc_CustSetting_GameBetLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>
