@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType2 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inputting 0 / 0 / 0 into Min Bet / Max Bet / Max Per Match will prevent member from playing the game..
+        ///   Looks up a localized string similar to Inputting 0 / 0 / 0 for Min Bet / Max Bet / Max Per Match will prevent members from playing the game..
         /// </summary>
         public static string MemberNote {
             get {

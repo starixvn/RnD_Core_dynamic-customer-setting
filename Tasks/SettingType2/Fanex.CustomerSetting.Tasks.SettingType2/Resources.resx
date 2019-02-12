@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MemberNote" xml:space="preserve">
-    <value>Inputting 0 / 0 / 0 into Min Bet / Max Bet / Max Per Match will prevent member from playing the game.</value>
+    <value>Inputting 0 / 0 / 0 for Min Bet / Max Bet / Max Per Match will prevent members from playing the game.</value>
   </data>
   <data name="SMANote" xml:space="preserve">
     <value>Inputting Min Bet = Max Bet = Max Per Match = 0 means that you will not limit the bet setting of this account.&lt;br/&gt;
