@@ -61,6 +61,16 @@ namespace Fanex.CustomerSetting.NumberGames2.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The bet settings of {0} are applied to {1}, {2}, {3}, {4}, and {5}.&lt;br/&gt;
+        ///The bet settings of {6} are applied to {7}..
+        /// </summary>
+        internal static string BetSettingReferenceNote {
+            get {
+                return ResourceManager.GetString("BetSettingReferenceNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to update the Product Status for the time being. Please try again later..
         /// </summary>
         internal static string UnableToUpdateProductStatus {

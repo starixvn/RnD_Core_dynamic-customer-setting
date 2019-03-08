@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BetSettingReferenceNote" xml:space="preserve">
+    <value>The bet settings of {0} are applied to {1}, {2}, {3}, {4}, and {5}.&lt;br/&gt;
+The bet settings of {6} are applied to {7}.</value>
+  </data>
   <data name="UnableToUpdateProductStatus" xml:space="preserve">
     <value>Unable to update the Product Status for the time being. Please try again later.</value>
   </data>
