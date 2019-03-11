@@ -3,13 +3,19 @@
     using System.Linq;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Requests;
-    using CustomerSetting.Models.Results;
+    using CustomerSetting.NumberGames2.Resources;
+    using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.NumberGames2.Resources;
 
     public class QueryNumberGames2SettingService : QuerySettingService
     {
-        public QueryNumberGames2SettingService(ISettingContext settingContext) : base(settingContext)
+        public QueryNumberGames2SettingService(ISettingContext settingContext)
+            : base(settingContext)
+        {
+        }
+
+        public QueryNumberGames2SettingService(ISettingContext settingContext, IResourceService resourceService, ITaskService pluggableTaskService)
+            : base(settingContext, resourceService: resourceService, pluggableTaskService: pluggableTaskService)
         {
         }
 

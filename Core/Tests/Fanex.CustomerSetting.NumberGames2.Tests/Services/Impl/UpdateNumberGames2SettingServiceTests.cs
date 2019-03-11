@@ -8,11 +8,11 @@
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
+    using CustomerSetting.NumberGames2.Models;
     using CustomerSetting.Services;
     using Data.Repository;
     using Exceptions;
     using Logging;
-    using Models;
     using NSubstitute;
     using NumberGames2.Services;
     using NumberGames2.Services.Impl;

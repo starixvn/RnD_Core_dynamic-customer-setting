@@ -15,15 +15,6 @@
         private IQuerySettingService _queryCasinoSettingService;
         private ICustomerProductSyncedStatusService _customerProductSyncedStatusService;
 
-        private CustomerSettingQuery CreateCustomerSettingQuery(byte levelValue)
-        {
-            Level level = Enumeration.FromValue<Level>(levelValue);
-            Level uplineLevel = level.IsMemberLevel() ? Enumeration.FromValue<Level>(++levelValue) : null;
-            var query = new CustomerSettingQuery(10000, level, 110, uplineLevel);
-
-            return query;
-        }
-
         [SetUp]
         public void Setup()
         {
@@ -73,6 +64,15 @@
 
             // Assert.
             Assert.AreEqual(true, setting.IsNormalMode);
+        }
+
+        private CustomerSettingQuery CreateCustomerSettingQuery(byte levelValue)
+        {
+            Level level = Enumeration.FromValue<Level>(levelValue);
+            Level uplineLevel = level.IsMemberLevel() ? Enumeration.FromValue<Level>(++levelValue) : null;
+            var query = new CustomerSettingQuery(10000, level, 110, uplineLevel);
+
+            return query;
         }
     }
 }

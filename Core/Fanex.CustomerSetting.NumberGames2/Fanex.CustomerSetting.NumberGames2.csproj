@@ -120,6 +120,10 @@
     <Compile Include="Services\Impl\UpdateNumberGames2SettingService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
+      <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
+      <Name>Fanex.CustomerSetting.Resource</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
