@@ -26,7 +26,7 @@
             // Run plugged tasks before querying data.
             TaskService.Run(query.ProductId, query);
 
-            const short betSettingSettingTypeId = 11;
+            const short betSettingSettingTypeId = 9;
 
             var customerInfo = GetCustomerInfo(query.CustomerId);
             var product = GetProductInfo(query.ProductId, SettingContext.System);
@@ -40,7 +40,7 @@
                 product.Name,
                 customerSettingTypes);
 
-            if (customerSettingTypes.Any(settingType => settingType.Id == betSettingSettingTypeId))
+            if (customerSettingTypes.Any(settingType => settingType.Id == betSettingSettingTypeId && settingType.SettingItems.Any()))
             {
                 setting.AddWarningMessages(GenerateBetSettingReferenceNote());
             }
@@ -53,7 +53,7 @@
 
         private string GenerateBetSettingReferenceNote()
         {
-            var betTypeIds = new short[] { 2502, 2523, 2534, 2525, 2526, 2527, 2504, 2528 };
+            var betTypeIds = new short[] { 2502, 2523, 2524, 2525, 2526, 2527, 2504, 2528 };
             var betTypeNames = betTypeIds.Select(betTypeId => ResourceService.GetBetTypeName(betTypeId, SettingContext.Language)).ToArray();
 
             return string.Format(Messages.BetSettingReferenceNote, betTypeNames);

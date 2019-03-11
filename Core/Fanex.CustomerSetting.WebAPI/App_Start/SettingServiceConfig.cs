@@ -2,7 +2,6 @@
 {
     using Casino.Services.Impl;
     using CustomerSetting.Configurations;
-    using CustomerSetting.Services.Impl;
     using NumberGames2.Services.Impl;
 
     public static class SettingServiceConfig

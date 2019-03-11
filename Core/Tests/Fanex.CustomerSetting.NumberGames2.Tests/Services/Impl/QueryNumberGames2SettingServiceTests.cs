@@ -30,14 +30,14 @@
         }
 
         [Test]
-        public void GetCustomerSetting_SettingTypeHasBetBetSetting_ShowBetSettingReferenceNote()
+        public void GetCustomerSetting_SettingTypeHasBetSetting_ShowBetSettingReferenceNote()
         {
             // Arrange.
             _querySettingService = new QueryNumberGames2SettingServiceStub(
                 _settingContext,
                 _resourceService,
                 _pluggableTaskService,
-                new short[] { 11 });
+                new short[] { 9 });
 
             // Act.
             var setting = _querySettingService.GetCustomerSetting(_query);
@@ -47,17 +47,17 @@
         }
 
         [Test]
-        public void GetCustomerSetting_SettingTypeHasBetBetSetting_WarningMessagesPropertyContainsExpectedBetSettingReferenceNote()
+        public void GetCustomerSetting_SettingTypeHasBetSetting_WarningMessagesPropertyContainsExpectedBetSettingReferenceNote()
         {
             // Arrange.
-            var betTypeIdsInTesting = new short[] { 2502, 2523, 2534, 2525, 2526, 2527, 2504, 2528 };
+            var betTypeIdsInTesting = new short[] { 2502, 2523, 2524, 2525, 2526, 2527, 2504, 2528 };
 
             _resourceService.GetBetTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(callInfo => $"Bet type {callInfo.ArgAt<int>(0)}");
             _querySettingService = new QueryNumberGames2SettingServiceStub(
                 _settingContext,
                 _resourceService,
                 _pluggableTaskService,
-                new short[] { 11 });
+                new short[] { 9 });
 
             // Act.
             var setting = _querySettingService.GetCustomerSetting(_query);
@@ -71,14 +71,14 @@
         }
 
         [Test]
-        public void GetCustomerSetting_SettingTypeDoesNotHaveBetBetSetting_DoNotShowBetSettingReferenceNote()
+        public void GetCustomerSetting_SettingTypeDoesNotHaveBetSetting_DoNotShowBetSettingReferenceNote()
         {
             // Arrange.
             _querySettingService = new QueryNumberGames2SettingServiceStub(
                 _settingContext,
                 _resourceService,
                 _pluggableTaskService,
-                new short[] { 9, 3, 1 });
+                new short[] { 11, 3, 1 });
 
             // Act.
             var setting = _querySettingService.GetCustomerSetting(_query);

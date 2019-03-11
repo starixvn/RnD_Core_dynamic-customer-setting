@@ -5,6 +5,7 @@
     using CustomerSetting.Models.Requests;
     using CustomerSetting.NumberGames2.Services.Impl;
     using CustomerSetting.Services;
+    using NSubstitute;
 
     public class QueryNumberGames2SettingServiceStub : QueryNumberGames2SettingService
     {
@@ -38,7 +39,11 @@
             {
                 customerSettingTypes.Add(new SettingType
                 {
-                    Id = settingTypeId
+                    Id = settingTypeId,
+                    SettingItems = new List<SettingItemDefault>
+                    {
+                        Substitute.For<SettingItemDefault>()
+                    }
                 });
             }
 
