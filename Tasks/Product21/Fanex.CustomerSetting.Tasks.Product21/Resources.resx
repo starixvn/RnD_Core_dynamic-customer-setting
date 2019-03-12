@@ -123,8 +123,8 @@
   <data name="GeneralSettingNote" xml:space="preserve">
     <value>The settings of Normal games are applied to Normal Baccarat, Roulette, SicBo, DragonTiger, VIP Baccarat – Side Bet.</value>
   </data>
-  <data name="OtherDisplayingTextForBaccarat" xml:space="preserve">
-    <value>Baccarat, Roulette, Sic Bo, Dragon Tiger</value>
+  <data name="ReferencingBaccaratBetTypes" xml:space="preserve">
+    <value>{0}, {1}, {2}, {3}, {4}</value>
   </data>
   <data name="OtherDisplayingTextForVipBaccarat" xml:space="preserve">
     <value>VIP Baccarat (min bet might vary from different tables)</value>

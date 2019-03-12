@@ -12,7 +12,11 @@
 
         private readonly IRemotingRefService _remotingRef;
 
-        public ResourceService(IRemotingRefService remotingRef = null)
+        public ResourceService() : this(null)
+        {
+        }
+
+        public ResourceService(IRemotingRefService remotingRef)
         {
             _remotingRef = remotingRef ?? new RemotingRefService();
         }

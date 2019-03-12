@@ -2,6 +2,8 @@
 {
     using System.Linq;
     using Common.Helper;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
     using Models;
     using Models.Requests;
     using Tasks;
@@ -10,8 +12,18 @@
     {
         private const short ProductStatusSettingType = 13;
         private const short StakeLevelSettingType = 7;
-        private const int Baccarat = 2401;
-        private const int VipBaccarat = 2402;
+        private const short Baccarat = 2401;
+        private const short VipBaccarat = 2402;
+
+        private readonly IResourceService _resourceService;
+        private readonly short[] _referencingBaccaratBetTypeIds = { Baccarat, 2403, 2404, 2405, 2406 };
+
+        public RenameBetTypesTask() : this(null)
+        {
+        }
+
+        public RenameBetTypesTask(IResourceService resourceService)
+            => _resourceService = resourceService ?? new ResourceService();
 
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, SettingType settingTypeData)
         {
@@ -25,7 +37,7 @@
 
                 if (baccarat != null)
                 {
-                    baccarat.BetTypeName = Resources.OtherDisplayingTextForBaccarat;
+                    baccarat.BetTypeName = BuildReferencingBaccaracBetTypeNames(settingContext);
                 }
             }
 
@@ -36,7 +48,7 @@
 
                 if (baccarat != null)
                 {
-                    baccarat.BetTypeName = Resources.OtherDisplayingTextForBaccarat;
+                    baccarat.BetTypeName = BuildReferencingBaccaracBetTypeNames(settingContext);
                 }
 
                 if (vipBaccarat != null)
@@ -44,6 +56,15 @@
                     vipBaccarat.BetTypeName = Resources.OtherDisplayingTextForVipBaccarat;
                 }
             }
+        }
+
+        private string BuildReferencingBaccaracBetTypeNames(ISettingContext settingContext)
+        {
+            var referencingBetTypeNames = _referencingBaccaratBetTypeIds
+                .Select(betTypeId => _resourceService.GetBetTypeName(betTypeId, settingContext.Language))
+                .ToArray();
+
+            return string.Format(Resources.ReferencingBaccaratBetTypes, referencingBetTypeNames);
         }
     }
 }

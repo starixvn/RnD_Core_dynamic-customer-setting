@@ -481,6 +481,7 @@
         @extend .block__cell;
         @include col(40%);
         background-color: $block-item-lbl-bg;
+        line-height: 1.5rem;
         padding: 0 3px;
 
         &--white {

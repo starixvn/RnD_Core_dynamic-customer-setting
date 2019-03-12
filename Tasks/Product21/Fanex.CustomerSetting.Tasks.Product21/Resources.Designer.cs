@@ -79,20 +79,20 @@ namespace Fanex.CustomerSetting.Tasks.Product21 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Baccarat, Roulette, Sic Bo, Dragon Tiger.
-        /// </summary>
-        internal static string OtherDisplayingTextForBaccarat {
-            get {
-                return ResourceManager.GetString("OtherDisplayingTextForBaccarat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to VIP Baccarat (min bet might vary from different tables).
         /// </summary>
         internal static string OtherDisplayingTextForVipBaccarat {
             get {
                 return ResourceManager.GetString("OtherDisplayingTextForVipBaccarat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}, {1}, {2}, {3}, {4}.
+        /// </summary>
+        internal static string ReferencingBaccaratBetTypes {
+            get {
+                return ResourceManager.GetString("ReferencingBaccaratBetTypes", resourceCulture);
             }
         }
     }

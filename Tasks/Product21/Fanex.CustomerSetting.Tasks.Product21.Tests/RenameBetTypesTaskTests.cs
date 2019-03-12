@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using CustomerSetting.Services;
     using Models;
     using Models.Enumerations;
     using Models.Requests;
@@ -11,13 +12,17 @@
 
     public class RenameBetTypesTaskTests
     {
+        private readonly short[] _referencingBaccaratBetTypeIds = { 2401, 2403, 2404, 2405, 2406 };
+
         private RenameBetTypesTask _task;
+        private IResourceService _resourceService;
         private ISettingContext _settingContext;
 
         [SetUp]
         public void SetUp()
         {
-            _task = new RenameBetTypesTask();
+            _resourceService = Substitute.For<IResourceService>();
+            _task = new RenameBetTypesTask(_resourceService);
             _settingContext = Substitute.For<ISettingContext>();
             _settingContext.Actor = Substitute.For<User>();
             _settingContext.Actor.Level = Level.Master;
@@ -42,16 +47,20 @@
         {
             // Arrange.
             var query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)21, null);
-            SettingType settingType = CreateSampleSettingType4Data();
+            var settingType = CreateSampleSettingType4Data();
+
+            _resourceService.GetBetTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(callInfo => $"Bet type {callInfo.ArgAt<int>(0)}");
 
             // Act.
             _task.Invoke(_settingContext, query, settingType);
 
             // Assert.
+            var expectedBetTypeNames = _referencingBaccaratBetTypeIds.Select(betTypeId => $"Bet type {betTypeId}").ToArray();
+            var expectedDisplayedName = string.Format(Resources.ReferencingBaccaratBetTypes, expectedBetTypeNames);
             var assertedSettingItem = settingType.SettingItems.FirstOrDefault(
                 settingItem => (settingItem as SettingItemDefault).BetTypeId == 2401) as SettingItemDefault;
 
-            Assert.AreEqual(Resources.OtherDisplayingTextForBaccarat, assertedSettingItem.BetTypeName);
+            Assert.AreEqual(expectedDisplayedName, assertedSettingItem.BetTypeName);
         }
 
         [Test]
@@ -59,16 +68,20 @@
         {
             // Arrange.
             var query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)21, null);
-            SettingType settingType = CreateSampleSettingType7Data();
+            var settingType = CreateSampleSettingType7Data();
+
+            _resourceService.GetBetTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(callInfo => $"Bet type {callInfo.ArgAt<int>(0)}");
 
             // Act.
             _task.Invoke(_settingContext, query, settingType);
 
             // Assert.
+            var expectedBetTypeNames = _referencingBaccaratBetTypeIds.Select(betTypeId => $"Bet type {betTypeId}").ToArray();
+            var expectedDisplayedName = string.Format(Resources.ReferencingBaccaratBetTypes, expectedBetTypeNames);
             var assertedSettingItem = settingType.SettingItems.FirstOrDefault(
                 settingItem => (settingItem as SettingItemDefault).BetTypeId == 2401) as SettingItemDefault;
 
-            Assert.AreEqual(Resources.OtherDisplayingTextForBaccarat, assertedSettingItem.BetTypeName);
+            Assert.AreEqual(expectedDisplayedName, assertedSettingItem.BetTypeName);
         }
 
         [Test]
@@ -76,7 +89,7 @@
         {
             // Arrange.
             var query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)21, null);
-            SettingType settingType = CreateSampleSettingType4Data();
+            var settingType = CreateSampleSettingType4Data();
 
             // Act.
             _task.Invoke(_settingContext, query, settingType);
@@ -93,7 +106,7 @@
         {
             // Arrange.
             var query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)21, null);
-            SettingType settingType = CreateSampleSettingType7Data();
+            var settingType = CreateSampleSettingType7Data();
 
             // Act.
             _task.Invoke(_settingContext, query, settingType);
@@ -107,7 +120,7 @@
 
         private SettingType CreateSampleSettingType4Data()
         {
-            SettingType settingType13 = Substitute.For<SettingType>();
+            var settingType13 = Substitute.For<SettingType>();
             var betType2401 = Substitute.For<SettingItemDefault>();
             var betType2402 = Substitute.For<SettingItemDefault>();
             var settingItems = new List<SettingItemDefault>();
@@ -125,7 +138,7 @@
 
         private SettingType CreateSampleSettingType7Data()
         {
-            SettingType settingType7 = Substitute.For<SettingType>();
+            var settingType7 = Substitute.For<SettingType>();
             var betType2401 = Substitute.For<SettingItemDefault>();
             var betType2402 = Substitute.For<SettingItemDefault>();
             var settingItems = new List<SettingItemDefault>();

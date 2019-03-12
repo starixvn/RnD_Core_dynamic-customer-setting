@@ -11,6 +11,7 @@
 
     .check-all-field-lbl {
         @extend %display-table-cell;
+        padding-right: 5px;
         width: 100%;
     }
 

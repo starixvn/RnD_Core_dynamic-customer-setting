@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="OtherDisplayingTextForBaccarat" xml:space="preserve">
-    <value>百家樂，輪盤，骰寶，龍虎</value>
-  </data>
   <data name="OtherDisplayingTextForVipBaccarat" xml:space="preserve">
     <value>VIP百家樂（不同的桌面最小賭注設置可能會不一樣）</value>
   </data>

@@ -579,6 +579,7 @@ th {
   .block__lbl {
     width: 40%;
     background-color: #b5c4d0;
+    line-height: 1.5rem;
     padding: 0 3px; }
     .block__lbl--white {
       background-color: #fff; }
@@ -715,6 +716,7 @@ select.setting-field {
   vertical-align: middle; }
 
 .settingtype7 .check-all-field-lbl {
+  padding-right: 5px;
   width: 100%; }
 
 .settingtype7 .check-all-field {
