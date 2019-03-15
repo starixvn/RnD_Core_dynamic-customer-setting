@@ -120,4 +120,8 @@
   <data name="UnableToUpdateProductStatus" xml:space="preserve">
     <value>Trạng thái của trò chơi hiện không thể cập nhật. Vui lòng thử lại sau. </value>
   </data>
+  <data name="BetSettingReferenceNote" xml:space="preserve">
+    <value>Thiết lập về tiền cược của {0} được áp dụng cho {1}, {2}, {3}, {4}, và {5}. &lt;br/&gt;
+Thiết lập về tiền cược của {6} được áp dụng cho {7}</value>
+  </data>
 </root>

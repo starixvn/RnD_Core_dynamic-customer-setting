@@ -120,4 +120,8 @@
   <data name="UnableToUpdateProductStatus" xml:space="preserve">
     <value>暂时无法更新产品状态。 请稍后再试。</value>
   </data>
+  <data name="BetSettingReferenceNote" xml:space="preserve">
+    <value>{0} 投注设置应用于{1}, {2}, {3}, {4}, 及 {5} &lt;br/&gt;
+{6} 投注设置应用于{7}</value>
+  </data>
 </root>
