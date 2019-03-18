@@ -579,7 +579,7 @@ th {
   .block__lbl {
     width: 40%;
     background-color: #b5c4d0;
-    line-height: 1.5rem;
+    line-height: 1.5;
     padding: 0 3px; }
     .block__lbl--white {
       background-color: #fff; }

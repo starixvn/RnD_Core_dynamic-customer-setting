@@ -34,6 +34,25 @@
   .block__value > div {
     width: 100%; }
 
+.block__cell-group {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  width: 100%; }
+  .block__cell-group .block__cell {
+    align-items: center;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: initial; }
+    .block__cell-group .block__cell .setting-field--has-constraint {
+      margin-right: 5px; }
+  .block__cell-group .align-center {
+    justify-content: center; }
+
 .block__lbl-group {
   width: 100%; }
   .block__lbl-group .block__lbl {

@@ -1,4 +1,4 @@
-﻿<div data-ng-if="settingType | editableSettingType">
+﻿<div class="block__cell-group" data-ng-if="settingType | editableSettingType">
     <bet-setting-input class="block__cell w33-percent setting-field-wrapper"
                        data-setting-item="item"
                        data-upline-level="uplineLevel"
@@ -18,9 +18,8 @@
                        data-field-name="maxPerMatch">
     </bet-setting-input>
 </div>
-<div class="align-center"
-     data-ng-if="!(settingType | editableSettingType)">
-    <div class="block__cell w33-percent">{{item.minBet | formatNumber}}</div>
-    <div class="block__cell w33-percent">{{item.maxBet | formatNumber}}</div>
-    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.maxPerMatch | formatNumber}}</div>
+<div class="block__cell-group" data-ng-if="!(settingType | editableSettingType)">
+    <div class="block__cell w33-percent align-center">{{item.minBet | formatNumber}}</div>
+    <div class="block__cell w33-percent align-center">{{item.maxBet | formatNumber}}</div>
+    <div class="block__cell block__cell--no-border w33-percent w33-percent--last align-center">{{item.maxPerMatch | formatNumber}}</div>
 </div>
