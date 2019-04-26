@@ -28,7 +28,7 @@
         "Losing": "输",
         "MaximumLoss": "最高输额",
         "MaximumWin": "最高赢额",
-        "OnGivenCredit": "无信用额",
+        "OnGivenCredit": "信用额",
         "Unlimited": "无限",
         "WinLossLimit": "输赢限额",
         "Winning": "赢"
@@ -42,7 +42,7 @@
         "Losing": "輸",
         "MaximumLoss": "最高輸額",
         "MaximumWin": "最高赢額",
-        "OnGivenCredit": "無信用額",
+        "OnGivenCredit": "信用額",
         "Unlimited": "無限",
         "WinLossLimit": "輸贏限額",
         "Winning": "贏"

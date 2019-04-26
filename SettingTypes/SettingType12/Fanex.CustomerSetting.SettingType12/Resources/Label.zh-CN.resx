@@ -127,7 +127,7 @@
     <value>最高输额</value>
   </data>
   <data name="OnGivenCredit" xml:space="preserve">
-    <value>无信用额</value>
+    <value>信用额</value>
   </data>
   <data name="Unlimited" xml:space="preserve">
     <value>无限</value>
