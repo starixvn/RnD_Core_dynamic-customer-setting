@@ -4,11 +4,6 @@
     {
         public string UserName { get; set; }
 
-        /// <summary>
-        /// Customer nick name for credit model or login name for deposit model.
-        /// </summary>
-        public string UserName2 { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

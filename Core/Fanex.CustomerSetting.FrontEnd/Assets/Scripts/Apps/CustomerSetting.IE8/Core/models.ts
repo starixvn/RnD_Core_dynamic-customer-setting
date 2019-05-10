@@ -22,7 +22,6 @@ module CustomerSetting.IE8 {
 
     export class CustomerInfo {
         public userName: string;
-        public userName2: string;
         public firstName: string;
         public lastName: string;
         public phone: string;
@@ -34,7 +33,6 @@ module CustomerSetting.IE8 {
         constructor(info: any) {
             if (info) {
                 this.userName = info.userName;
-                this.userName2 = info.userName2;
                 this.firstName = info.firstName;
                 this.lastName = info.lastName;
                 this.phone = info.phone;
