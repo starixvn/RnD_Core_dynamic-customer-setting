@@ -16,7 +16,7 @@
         private const short VipBaccarat = 2402;
 
         private readonly IResourceService _resourceService;
-        private readonly short[] _referencingBaccaratBetTypeIds = { Baccarat, 2403, 2404, 2405, 2406 };
+        private readonly short[] _referencingBaccaratBetTypeIds = { Baccarat, 2403, 2404, 2405, 2406, 2407 };
 
         public RenameBetTypesTask() : this(null)
         {

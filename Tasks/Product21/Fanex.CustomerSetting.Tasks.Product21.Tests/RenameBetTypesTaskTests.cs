@@ -12,7 +12,7 @@
 
     public class RenameBetTypesTaskTests
     {
-        private readonly short[] _referencingBaccaratBetTypeIds = { 2401, 2403, 2404, 2405, 2406 };
+        private readonly short[] _referencingBaccaratBetTypeIds = { 2401, 2403, 2404, 2405, 2406, 2407 };
 
         private RenameBetTypesTask _task;
         private IResourceService _resourceService;

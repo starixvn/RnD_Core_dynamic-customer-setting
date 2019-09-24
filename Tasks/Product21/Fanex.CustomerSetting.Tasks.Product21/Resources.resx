@@ -124,7 +124,7 @@
     <value>The settings of Normal games are applied to Normal Baccarat, Roulette, SicBo, DragonTiger, VIP Baccarat – Side Bet.</value>
   </data>
   <data name="ReferencingBaccaratBetTypes" xml:space="preserve">
-    <value>{0}, {1}, {2}, {3}, {4}</value>
+    <value>{0}, {1}, {2}, {3}, {4}, {5}</value>
   </data>
   <data name="OtherDisplayingTextForVipBaccarat" xml:space="preserve">
     <value>VIP Baccarat (min bet might vary from different tables)</value>

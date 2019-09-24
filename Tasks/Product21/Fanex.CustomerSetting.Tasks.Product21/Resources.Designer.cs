@@ -88,7 +88,7 @@ namespace Fanex.CustomerSetting.Tasks.Product21 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}, {1}, {2}, {3}, {4}.
+        ///   Looks up a localized string similar to {0}, {1}, {2}, {3}, {4}, {5}.
         /// </summary>
         internal static string ReferencingBaccaratBetTypes {
             get {
