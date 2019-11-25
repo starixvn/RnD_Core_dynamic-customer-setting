@@ -186,7 +186,6 @@
     <Content Include="App_Data\CustomerSettingSpNames\APILoggerSpNames.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Casino.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.NumberGames2.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Product20Tasks.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType11.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType12.xml" />
@@ -243,7 +242,6 @@
     <Content Include="Web.ConnectionStrings.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Data\PluggableTasks\product-20.json" />
     <Content Include="Web.backupMNL.config" />
     <Content Include="App_Data\ApiConfigurations\LogsConfiguration.config" />
     <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.config" />
@@ -274,7 +272,6 @@
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <Content Include="App_Data\PluggableTasks\settingtype-13.json" />
-    <Content Include="App_Data\PluggableTasks\product-33.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-9.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-2.json" />
     <None Include="Web.Debug.config">
@@ -337,17 +334,9 @@
       <Project>{3fcf65fb-a2e7-4b82-b0d1-665d73468c3a}</Project>
       <Name>Fanex.CustomerSetting.SettingType9</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Tasks\Product20\Fanex.CustomerSetting.Product20Tasks\Fanex.CustomerSetting.Tasks.Product20.csproj">
-      <Project>{ca48c0d3-b8bb-42ba-b26a-e0689419f088}</Project>
-      <Name>Fanex.CustomerSetting.Tasks.Product20</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Tasks\Product21\Fanex.CustomerSetting.Tasks.Product21\Fanex.CustomerSetting.Tasks.Product21.csproj">
       <Project>{59db75bf-2708-4018-8c16-0a392e35431d}</Project>
       <Name>Fanex.CustomerSetting.Tasks.Product21</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tasks\Product33\Fanex.CustomerSetting.Tasks.Product33\Fanex.CustomerSetting.Tasks.Product33.csproj">
-      <Project>{eebdfa6f-9bc7-4d39-ae27-e40d94742287}</Project>
-      <Name>Fanex.CustomerSetting.Tasks.Product33</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tasks\SettingType13\Fanex.CustomerSetting.Tasks.SettingType13\Fanex.CustomerSetting.Tasks.SettingType13.csproj">
       <Project>{6d79d74e-f7e8-4963-813a-7b3bf21c8fe9}</Project>
