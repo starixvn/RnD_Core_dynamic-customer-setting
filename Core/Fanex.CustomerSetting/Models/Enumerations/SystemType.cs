@@ -1,15 +1,44 @@
 ﻿namespace Fanex.CustomerSetting.Models.Enumerations
 {
-    public enum SystemType
+    public static class SystemType
     {
-        Nap = 1,
+        public const byte Nap = 1;
+        public const byte Alpha = 2;
+        public const byte InternalAlpha = 3;
+        public const byte ExternalNap = 4;
+        public const byte ExternalNapBetSetting = 5;
+        public const byte Y7Alpha = 6;
+        public const byte Y7InternalAlpha = 7;
+        public const byte Y7ExternalNap = 8;
+        public const byte Y7ExternalNapBetSetting = 9;
 
-        Alpha = 2,
+        public static bool IsExternalNap(byte systemId)
+        {
+            return ExternalNap == systemId
+                || Y7ExternalNap == systemId
+                || ExternalNapBetSetting == systemId
+                || Y7ExternalNapBetSetting == systemId;
+        }
 
-        InternalAlpha = 3,
+        public static bool IsNotExternalNapBetSetting(byte systemId)
+        {
+            return ExternalNapBetSetting != systemId && Y7ExternalNapBetSetting != systemId;
+        }
 
-        ExternalNap = 4,
+        public static bool IsAlpha(byte systemId)
+        {
+            return InternalAlpha == systemId
+                || Alpha == systemId
+                || Y7InternalAlpha == systemId
+                || Y7Alpha == systemId;
+        }
 
-        ExternalNapBetSetting = 5
+        public static bool IsY7(byte systemId)
+        {
+            return Y7InternalAlpha == systemId
+                || Y7Alpha == systemId
+                || Y7ExternalNap == systemId
+                || Y7ExternalNapBetSetting == systemId;
+        }
     }
 }

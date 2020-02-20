@@ -97,7 +97,7 @@
             {
                 InstanceFactory.CreateCustomerSettingType(1)
             };
-            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, (byte)SystemType.Nap)
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, SystemType.Nap)
                 .Returns(new List<SettingType>
                 {
                     InstanceFactory.CreateCustomerSettingType(2)
@@ -122,7 +122,7 @@
             {
                 InstanceFactory.CreateCustomerSettingType(1)
             };
-            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, (byte)SystemType.Nap)
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, SystemType.Nap)
                 .Returns(new List<SettingType>
                 {
                     InstanceFactory.CreateCustomerSettingType(1)

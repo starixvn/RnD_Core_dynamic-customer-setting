@@ -52,7 +52,7 @@
               .Returns(settingTypes);
 
             //// Act
-            var actualSettingTypes = _productService.GetProductSettingTypes(productId, (byte)SystemType.Nap);
+            var actualSettingTypes = _productService.GetProductSettingTypes(productId, SystemType.Nap);
 
             //// Assert
             Assert.AreSame(settingTypes, actualSettingTypes);
@@ -69,7 +69,7 @@
             var productService = new ProductService(_dynamicRepository, cachingServiceStub);
 
             //// Act
-            productService.GetProductSettingTypes(productId, (byte)SystemType.Nap);
+            productService.GetProductSettingTypes(productId, SystemType.Nap);
 
             //// Assert
             _dynamicRepository.Received().Fetch<SettingType>(Arg.Is<ProductSettingTypesQueryCriteria>(
@@ -90,7 +90,7 @@
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
-            var actualSettingTypes = productService.GetProductSettingTypes(productId, (byte)SystemType.Nap);
+            var actualSettingTypes = productService.GetProductSettingTypes(productId, SystemType.Nap);
 
             //// Assert
             Assert.AreSame(settingTypesFromDatabase, actualSettingTypes);
@@ -113,7 +113,7 @@
                 .Returns(settingTypes);
 
             //// Act
-            var actualSettingType = _productService.GetProductSettingType(productId, settingType, (byte)SystemType.Nap);
+            var actualSettingType = _productService.GetProductSettingType(productId, settingType, SystemType.Nap);
 
             //// Assert
             Assert.AreSame(settingTypes.First(), actualSettingType);
@@ -134,7 +134,7 @@
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
-            var actualSettingType = _productService.GetProductSettingType(productId, settingType, (byte)SystemType.Nap);
+            var actualSettingType = _productService.GetProductSettingType(productId, settingType, SystemType.Nap);
 
             //// Assert
             Assert.IsNull(actualSettingType);

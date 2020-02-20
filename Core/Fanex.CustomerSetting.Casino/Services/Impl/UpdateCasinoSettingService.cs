@@ -109,7 +109,7 @@
                     settingTypeResults.Add(updateSettingTypeResult);
                 });
 
-            if (settingTypeResults.All(settingTypeResult => settingTypeResult.IsOk) && SettingContext.System != (byte)SystemType.ExternalNapBetSetting)
+            if (settingTypeResults.All(settingTypeResult => settingTypeResult.IsOk) && SystemType.IsNotExternalNapBetSetting(SettingContext.System))
             {
                 var productStatusResult = UpdateProductStatus(command);
 

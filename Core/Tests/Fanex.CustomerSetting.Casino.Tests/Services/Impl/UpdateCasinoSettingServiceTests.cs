@@ -48,10 +48,13 @@
                 .ReturnsForAnyArgs(syncedStatus);
         }
 
-        [TestCase((byte)SystemType.Nap)]
-        [TestCase((byte)SystemType.InternalAlpha)]
-        [TestCase((byte)SystemType.Alpha)]
-        [TestCase((byte)SystemType.ExternalNap)]
+        [TestCase(SystemType.Nap)]
+        [TestCase(SystemType.InternalAlpha)]
+        [TestCase(SystemType.Y7InternalAlpha)]
+        [TestCase(SystemType.Alpha)]
+        [TestCase(SystemType.Y7Alpha)]
+        [TestCase(SystemType.ExternalNap)]
+        [TestCase(SystemType.Y7ExternalNap)]
         public void Update_CustomerIsSynced_RunNormalFlow(byte systemId)
         {
             // Arrange.
@@ -70,10 +73,13 @@
             Assert.AreEqual(_settingTypeIds, orderOfUpdate);
         }
 
-        [TestCase((byte)SystemType.Nap)]
-        [TestCase((byte)SystemType.InternalAlpha)]
-        [TestCase((byte)SystemType.Alpha)]
-        [TestCase((byte)SystemType.ExternalNap)]
+        [TestCase(SystemType.Nap)]
+        [TestCase(SystemType.InternalAlpha)]
+        [TestCase(SystemType.Y7InternalAlpha)]
+        [TestCase(SystemType.Alpha)]
+        [TestCase(SystemType.Y7Alpha)]
+        [TestCase(SystemType.ExternalNap)]
+        [TestCase(SystemType.Y7ExternalNap)]
         public void Update_CustomerIsSynced_DoNotCallUpdateCustomerProductSyncedStatus(byte systemId)
         {
             // Arrange.
@@ -121,10 +127,13 @@
                     command.Setting.SettingTypes.FirstOrDefault(s => s.Id == StatusSettingTypeValue));
         }
 
-        [TestCase((byte)SystemType.Nap)]
-        [TestCase((byte)SystemType.InternalAlpha)]
-        [TestCase((byte)SystemType.Alpha)]
-        [TestCase((byte)SystemType.ExternalNap)]
+        [TestCase(SystemType.Nap)]
+        [TestCase(SystemType.InternalAlpha)]
+        [TestCase(SystemType.Y7InternalAlpha)]
+        [TestCase(SystemType.Alpha)]
+        [TestCase(SystemType.Y7Alpha)]
+        [TestCase(SystemType.ExternalNap)]
+        [TestCase(SystemType.Y7ExternalNap)]
         public void Update_CustomerIsUnsyncedAndUpdateAllSettingTypesSuccessfully_CallUpdateCustomerProductSyncedStatus(byte systemId)
         {
             // Arrange.
@@ -147,16 +156,17 @@
                     _settingContext.Actor.SubAccountId,
                     _settingContext.IP);
         }
-
-        [Test]
-        public void UpdateInExternalNapSetSettingFuction_CustomerIsUnsynced_DoNotCallUpdateCustomerProductStatusSynced()
+        
+        [TestCase(SystemType.ExternalNapBetSetting)]
+        [TestCase(SystemType.Y7ExternalNapBetSetting)]
+        public void UpdateInExternalNapSetSettingFuction_CustomerIsUnsynced_DoNotCallUpdateCustomerProductStatusSynced(byte systemId)
         {
             // Arrange.
             var services = new List<ISettingTypeService>();
             var command = PrepareCommand(services, Result.Success);
 
             ArrangeCustomerCasinoStatus(command, false);
-            _settingContext.System = (byte)SystemType.ExternalNapBetSetting;
+            _settingContext.System = systemId;
 
             // Act.
             _updateCasinoSettingService.Update(command);

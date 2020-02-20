@@ -205,12 +205,10 @@
         private int MapAccessingSiteId()
         {
             // Accept to hard-code the site ID here since the IDs take different values for both sides.
-            int napSiteId = 2000;
-            int alphaSiteId = 3000;
+            const int napSiteId = 2000;
+            const int alphaSiteId = 3000;
 
-            return SettingContext.System == (byte)SystemType.Alpha || SettingContext.System == (byte)SystemType.InternalAlpha
-                ? alphaSiteId
-                : napSiteId;
+            return SystemType.IsAlpha(SettingContext.System) ? alphaSiteId : napSiteId;
         }
 
         private int GetDirectUplineId(int customerId)

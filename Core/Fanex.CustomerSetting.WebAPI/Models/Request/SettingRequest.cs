@@ -23,7 +23,7 @@
         [Range(0, int.MaxValue)]
         public int SubAccountId { get; set; }
 
-        [Range(1, 5)]
+        [Range(1, 9)]
         public byte System { get; set; }
 
         public string Domain { get; set; }

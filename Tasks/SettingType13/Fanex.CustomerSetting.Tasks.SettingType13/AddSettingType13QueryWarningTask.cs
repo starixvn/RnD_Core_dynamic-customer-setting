@@ -13,7 +13,7 @@
             Check.Argument.IsNotNull(query, nameof(query));
             Check.Argument.IsNotNull(setting, nameof(setting));
 
-            if (CheckIfEditingCustomerIsMasterOrAgent(query) && IsAlphaSite(settingContext))
+            if (CheckIfEditingCustomerIsMasterOrAgent(query) && SystemType.IsAlpha(settingContext.System))
             {
                 setting.AddWarningMessages(Resources.ProductStatusNoteForExternalSites);
             }
@@ -22,11 +22,6 @@
         private static bool CheckIfEditingCustomerIsMasterOrAgent(CustomerSettingQuery query)
         {
             return query.CustomerLevel.IsMasterLevel() || query.CustomerLevel.IsAgentLevel();
-        }
-
-        private static bool IsAlphaSite(ISettingContext settingContext)
-        {
-            return settingContext.System == (byte)SystemType.Alpha || settingContext.System == (byte)SystemType.InternalAlpha;
         }
     }
 }

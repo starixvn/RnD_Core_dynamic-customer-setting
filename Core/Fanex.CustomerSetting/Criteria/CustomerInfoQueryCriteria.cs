@@ -12,7 +12,7 @@
 
         public override string GetSettingKey()
         {
-            if (System == (byte)SystemType.ExternalNap || System == (byte)SystemType.ExternalNapBetSetting)
+            if (SystemType.IsExternalNap(System))
             {
                 return "EAS_CustSetting_CustomerInfoSelect";
             }

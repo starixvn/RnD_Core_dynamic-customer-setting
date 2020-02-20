@@ -27,7 +27,7 @@
             _settingContext = Substitute.For<ISettingContext>();
             _settingContext.Actor = Substitute.For<User>();
             _settingContext.Actor.Level = Level.Master;
-            _settingContext.System = (byte)SystemType.Alpha;
+            _settingContext.System = SystemType.Alpha;
             _query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
             _setting = new Setting();
         }
@@ -75,7 +75,7 @@
         public void PostQueryCustomerSetting_SystemIsNap_DoNotAddWarningMessage()
         {
             // Arrange.
-            _settingContext.System = (byte)SystemType.Nap;
+            _settingContext.System = SystemType.Nap;
 
             // Act.
             _task.Invoke(_settingContext, _query, _setting);
@@ -140,8 +140,10 @@
             Assert.Null(_setting.WarningMessages);
         }
 
-        [TestCase((byte)SystemType.Alpha)]
-        [TestCase((byte)SystemType.InternalAlpha)]
+        [TestCase(SystemType.Alpha)]
+        [TestCase(SystemType.InternalAlpha)]
+        [TestCase(SystemType.Y7Alpha)]
+        [TestCase(SystemType.Y7InternalAlpha)]
         public void PostQueryCustomerSetting_OnAlpha_AddWarningNoteToUser(byte systemId)
         {
             // Arrange.
@@ -156,8 +158,9 @@
             Assert.IsTrue(messageContainer?.SubResults.Any(subResult => subResult.Message == Resources.ProductStatusNoteForExternalSites));
         }
 
-        [TestCase((byte)SystemType.Nap)]
-        [TestCase((byte)SystemType.ExternalNap)]
+        [TestCase(SystemType.Nap)]
+        [TestCase(SystemType.ExternalNap)]
+        [TestCase(SystemType.Y7ExternalNap)]
         public void PostQueryCustomerSetting_OnNap_DoNotAddWarningMessage(byte systemId)
         {
             // Arrange.

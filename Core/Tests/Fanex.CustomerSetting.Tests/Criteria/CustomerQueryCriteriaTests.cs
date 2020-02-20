@@ -37,12 +37,16 @@
             Assert.IsTrue(actualResult);
         }
 
-        [Test]
-        public void GetSettingKey_SystemIsNotExtNap_ReturnSettingKeyOfAccSystem()
+        [TestCase(SystemType.Nap)]
+        [TestCase(SystemType.InternalAlpha)]
+        [TestCase(SystemType.Y7InternalAlpha)]
+        [TestCase(SystemType.Alpha)]
+        [TestCase(SystemType.Y7Alpha)]
+        public void GetSettingKey_SystemIsNotExtNap_ReturnSettingKeyOfAccSystem(byte system)
         {
             //// Arrange
             var criteria = CreateCustomerQueryCriteriaInstance();
-            criteria.System = (byte)SystemType.Alpha;
+            criteria.System = system;
 
             //// Act
             var actualSettingKey = criteria.GetSettingKey();
@@ -51,12 +55,15 @@
             Assert.AreEqual("CustSetting_CustomerInfoSelect", actualSettingKey);
         }
 
-        [Test]
-        public void GetSettingKey_SystemIsExtNap_ReturnSettingKeyOfExtNapSystem()
+        [TestCase(SystemType.ExternalNap)]
+        [TestCase(SystemType.Y7ExternalNap)]
+        [TestCase(SystemType.ExternalNapBetSetting)]
+        [TestCase(SystemType.Y7ExternalNapBetSetting)]
+        public void GetSettingKey_SystemIsExtNap_ReturnSettingKeyOfExtNapSystem(byte system)
         {
             //// Arrange
             var criteria = CreateCustomerQueryCriteriaInstance();
-            criteria.System = (byte)SystemType.ExternalNap;
+            criteria.System = system;
 
             //// Act
             var actualSettingKey = criteria.GetSettingKey();

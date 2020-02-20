@@ -180,7 +180,7 @@
 
         [TestCase(-1)]
         [TestCase(0)]
-        [TestCase(6)]
+        [TestCase(10)]
         public void BindModel_SystemIsOutOfRange_ModelStateIsInValid(int system)
         {
             // Arrange.
