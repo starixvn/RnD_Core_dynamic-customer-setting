@@ -15,11 +15,13 @@
             {{productName}}
         </div>
         <div class="block__sub-header"
-             data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType">
+             data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
+             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }">
             {{group[0].sportTypeName}}
         </div>
         <div class="block__sub-header"
-             data-ng-if="settingType.settingLevel === avaiSettingLevels.betType">
+             data-ng-if="settingType.settingLevel === avaiSettingLevels.betType"
+             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }">
             {{group[0].betTypeName}}
         </div>
         <div class="block__item-group"

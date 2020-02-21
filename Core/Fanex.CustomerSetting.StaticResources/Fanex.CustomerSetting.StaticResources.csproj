@@ -60,6 +60,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CustomerSetting.IE8\Scripts\product-41.js" />
+    <Content Include="CustomerSetting.IE8\Scripts\product-41.min.js" />
     <Content Include="CustomerSettingMatrix\customer-setting-matrix.js" />
     <Content Include="CustomerSettingMatrix\customer-setting-matrix.min.js" />
     <Content Include="CustomerSettingMatrix\Styles\customer-setting-matrix.css" />
@@ -70,8 +72,6 @@
     <Content Include="CustomerSettingMatrix\Styles\Images\sprite.png" />
     <Content Include="CustomerSetting\Scripts\product-16.js" />
     <Content Include="CustomerSetting\Scripts\product-16.min.js" />
-    <Content Include="CustomerSetting\Scripts\product-21.js" />
-    <Content Include="CustomerSetting\Scripts\product-21.min.js" />
     <Content Include="CustomerSetting\Scripts\product-22.js" />
     <Content Include="CustomerSetting\Scripts\product-22.min.js" />
     <Content Include="CustomerSetting\Scripts\product-23.js" />

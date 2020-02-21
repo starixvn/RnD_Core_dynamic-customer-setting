@@ -244,7 +244,6 @@
     <Content Include="Web.backupMNL.config" />
     <Content Include="App_Data\ApiConfigurations\LogsConfiguration.config" />
     <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.config" />
-    <Content Include="App_Data\PluggableTasks\product-21.json" />
     <Content Include="Web.ConnectionStrings.backupMNL.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
@@ -332,10 +331,6 @@
     <ProjectReference Include="..\..\SettingTypes\SettingType9\Fanex.CustomerSetting.SettingType9\Fanex.CustomerSetting.SettingType9.csproj">
       <Project>{3fcf65fb-a2e7-4b82-b0d1-665d73468c3a}</Project>
       <Name>Fanex.CustomerSetting.SettingType9</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tasks\Product21\Fanex.CustomerSetting.Tasks.Product21\Fanex.CustomerSetting.Tasks.Product21.csproj">
-      <Project>{59db75bf-2708-4018-8c16-0a392e35431d}</Project>
-      <Name>Fanex.CustomerSetting.Tasks.Product21</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tasks\SettingType13\Fanex.CustomerSetting.Tasks.SettingType13\Fanex.CustomerSetting.Tasks.SettingType13.csproj">
       <Project>{6d79d74e-f7e8-4963-813a-7b3bf21c8fe9}</Project>

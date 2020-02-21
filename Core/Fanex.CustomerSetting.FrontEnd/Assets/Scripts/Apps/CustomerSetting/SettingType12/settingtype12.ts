@@ -67,7 +67,7 @@ module CustomerSetting {
                                 }
                             });
 
-                            if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
+                            if (settingType.settingLevel === SettingLevel.sportType || settingType.settingLevel === SettingLevel.sportTypeBetType) {
                                 $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
                             } else {
                                 $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
