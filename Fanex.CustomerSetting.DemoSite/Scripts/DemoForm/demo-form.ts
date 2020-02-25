@@ -212,7 +212,7 @@ module DemoFrom {
     app.service("postingToIframeService", PostingToIframeService);
 
     class SampleDataFactory {
-        private static defaultProductId: number = 33;
+        private static defaultProductId: number = 16;
         private static defaultLanguage: string = "en-US";
 
         public static getSystemTypes(): KeyValuePair<number, string>[] {
@@ -221,7 +221,11 @@ module DemoFrom {
                 new KeyValuePair<number, string>(2, "Alpha"),
                 new KeyValuePair<number, string>(3, "Internal Alpha"),
                 new KeyValuePair<number, string>(4, "External NAP"),
-                new KeyValuePair<number, string>(5, "External NAP Bet Setting"));
+                new KeyValuePair<number, string>(5, "External NAP Bet Setting"),
+                new KeyValuePair<number, string>(6, "789y Alpha"),
+                new KeyValuePair<number, string>(7, "789y Internal Alpha"),
+                new KeyValuePair<number, string>(8, "789y External NAP"),
+                new KeyValuePair<number, string>(9, "789y External NAP Bet Setting"));
         }
 
         public static getLanuages(): KeyValuePair<string, string>[] {

@@ -137,7 +137,7 @@ var DemoForm;
         function SampleDataFactory() {
         }
         SampleDataFactory.getSystemTypes = function () {
-            return new Array(new KeyValuePair(1, "NAP"), new KeyValuePair(2, "Alpha"), new KeyValuePair(3, "Internal Alpha"), new KeyValuePair(4, "External NAP"));
+            return new Array(new KeyValuePair(1, "NAP"), new KeyValuePair(2, "Alpha"), new KeyValuePair(3, "Internal Alpha"), new KeyValuePair(4, "External NAP"), new KeyValuePair(5, "External NAP Bet Setting"), new KeyValuePair(6, "789y Alpha"), new KeyValuePair(7, "789y Internal Alpha"), new KeyValuePair(8, "789y External NAP"), new KeyValuePair(9, "789y External NAP Bet Setting"));
         };
         SampleDataFactory.getLanuages = function () {
             return new Array(new KeyValuePair("en-US", "English (en-US)"), new KeyValuePair("zh-TW", "繁體中文 (zh-TW)"), new KeyValuePair("zh-CN", "简体中文 (zh-CN)"), new KeyValuePair("ja-JP", "日本語 (ja-JP)"), new KeyValuePair("th-TH", "ภาษาไทย (th-TH)"), new KeyValuePair("ko-KR", "한국어 (ko-KR)"), new KeyValuePair("vi-VN", "Tiếng Việt (vi-VN)"));
@@ -224,7 +224,7 @@ var DemoForm;
         SampleDataFactory.createMultipleTargetInfo = function (ids, names, role, uplineRole) {
             return new MultipleTargets(ids, names, role, uplineRole, this.defaultProductId);
         };
-        SampleDataFactory.defaultProductId = 33;
+        SampleDataFactory.defaultProductId = 16;
         SampleDataFactory.defaultLanguage = "en-US";
         return SampleDataFactory;
     }());
