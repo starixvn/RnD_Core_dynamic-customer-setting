@@ -192,4 +192,7 @@
   <data name="Msg_10039" xml:space="preserve">
     <value>最高數額必須小於或等於代理的最高數額。</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>必填欄</value>
+  </data>
 </root>

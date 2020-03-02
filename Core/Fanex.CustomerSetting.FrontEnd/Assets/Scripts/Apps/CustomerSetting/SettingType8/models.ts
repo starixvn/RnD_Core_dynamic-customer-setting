@@ -1,4 +1,5 @@
-﻿/// <reference path="../core/models.ts" />
+﻿/// <reference path="../core/common.ts" />
+/// <reference path="../core/models.ts" />
 
 module CustomerSetting {
     "use strict";
@@ -12,13 +13,14 @@ module CustomerSetting {
         public showingDetails: boolean;
         public styles: {};
 
+        private systemId: number;
         private customerLevel: Level;
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
-        constructor(settingItem?: any, backup?: boolean, customerLevel?: Level)
-        constructor(settingItem?: any, backup: boolean = false, customerLevel?: Level) {
+        constructor(settingItem: any, backup: boolean, customerLevel: Level);
+        constructor(settingItem: any, backup: boolean, customerLevel: Level, systemId: number);
+        constructor(settingItem?: any, backup: boolean = false, customerLevel?: Level, systemId: number = 0) {
             super(settingItem);
 
             if (settingItem) {
@@ -37,6 +39,7 @@ module CustomerSetting {
                 }
 
                 this.hasMoreDetails = settingItem.hasMoreDetails;
+                this.systemId = systemId;
                 this.customerLevel = customerLevel;
                 this.styles = {
                     "min-width": (100 / this.groups.length) + "%"
@@ -74,8 +77,9 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
+            var isViolated: boolean = false;
+
             if (this.customerLevel && this.customerLevel === Level.member) {
-                var isViolated: boolean = true;
 
                 this.groups.forEach((group: SettingType8LevelGroup) => {
                     group.selected = this.selectedLevelId === group.levelId;
@@ -85,6 +89,14 @@ module CustomerSetting {
 
                 if (isViolated) {
                     this.validationState = new ValidationResult("MemberStakeLevelGroupMustBeSelected");
+
+                    return false;
+                }
+            } else if (System.isY7(this.systemId)) {
+                isViolated = this.groups.filter((group: SettingType8LevelGroup) => group.selected).length === 0;
+
+                if (isViolated) {
+                    this.validationState = new ValidationResult("Y7StakeLevelRequired", "checkAll");
 
                     return false;
                 }
@@ -127,7 +139,7 @@ module CustomerSetting {
 
         constructor();
         constructor(stakeLevelGroup: any);
-        constructor(stakeLevelGroup: any, backup: boolean)
+        constructor(stakeLevelGroup: any, backup: boolean);
         constructor(stakeLevelGroup?: any, backup: boolean = false) {
             if (stakeLevelGroup) {
                 this.levelId = stakeLevelGroup.levelId;
@@ -158,7 +170,7 @@ module CustomerSetting {
         public stakeRanges: Array<SettingType8StakeRange>;
 
         constructor();
-        constructor(stakeLevelDetailedItem: any, levelGroups: SettingType8LevelGroup[])
+        constructor(stakeLevelDetailedItem: any, levelGroups: SettingType8LevelGroup[]);
         constructor(stakeLevelDetailedItem?: any, levelGroups?: SettingType8LevelGroup[]) {
             super(stakeLevelDetailedItem);
 
@@ -193,7 +205,7 @@ module CustomerSetting {
         public value: string;
 
         constructor();
-        constructor(stakeRange: any)
+        constructor(stakeRange: any);
         constructor(stakeRange?: any) {
             if (stakeRange) {
                 this.id = stakeRange.id;

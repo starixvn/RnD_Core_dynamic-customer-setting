@@ -4,7 +4,6 @@
     using Common.Helper;
     using Configurations;
     using Models;
-    using Services;
 
     public class SettingServiceFactory : ISettingServiceFactory
     {

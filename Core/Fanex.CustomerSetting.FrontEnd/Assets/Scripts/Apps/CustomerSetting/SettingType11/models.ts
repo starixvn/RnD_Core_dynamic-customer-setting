@@ -24,7 +24,7 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean, customerLevel: Level, systemId: number)
+        constructor(settingItem: any, backup: boolean, customerLevel: Level, systemId: number);
         constructor(settingItem?: any, backup: boolean = false, customerLevel: Level = null, systemId: number = 0) {
             super(settingItem);
 

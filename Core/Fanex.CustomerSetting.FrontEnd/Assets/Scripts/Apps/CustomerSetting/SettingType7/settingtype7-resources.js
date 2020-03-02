@@ -34,7 +34,8 @@
     settingType7Resource["message"]["en-us"] = {
         "MemberStakeLevelMustBeSelectedForBetType": "Each bet type must have one Bet Limit value to be selected.",
         "Msg_10034": "This user&apos;s upline does not have Stake Level.",
-        "UpdatedBetLimitSuccessfully": "Updated Bet Limit successfully."
+        "UpdatedBetLimitSuccessfully": "Updated Bet Limit successfully.",
+        "Y7StakeLevelRequired": "Each bet type must have at least one Bet Limit value to be selected."
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};

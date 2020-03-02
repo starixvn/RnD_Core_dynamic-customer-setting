@@ -112,10 +112,10 @@ module CustomerSetting {
 
         public toJson(): {} {
             var settingItem: any = {};
-            var reservedProperties: string[] = ["oldSetting", "validationState", "highlightState", "$$hashKey"];
+            var reservedProperties: string[] = ["oldSetting", "validationState", "highlightState"];
 
             Object.keys(this).forEach((prop: string) => {
-                if (this[prop] !== undefined && this[prop] !== null && reservedProperties.indexOf(prop) < 0) {
+                if (this[prop] !== undefined && this[prop] !== null && reservedProperties.indexOf(prop) < 0 && prop.charAt(0) !== "$") {
                     if (this[prop].toJson) {
                         settingItem[prop] = this[prop].toJson();
                     } else {
@@ -214,7 +214,7 @@ module CustomerSetting {
         public extraData: Array<KeyValuePair<string, any>>;
 
         constructor();
-        constructor(settingType: any)
+        constructor(settingType: any);
         constructor(settingType?: any) {
             if (settingType) {
                 this.id = settingType.id;
@@ -319,7 +319,7 @@ module CustomerSetting {
         public isNormalMode: boolean;
 
         constructor();
-        constructor(setting: any)
+        constructor(setting: any);
         constructor(setting?: any) {
             if (setting) {
                 this.customerId = setting.customerId;

@@ -74,9 +74,11 @@
                 return (T)item;
             }
 
-            if (item is Lazy<T>)
+            var lazy = item as Lazy<T>;
+
+            if (lazy != null)
             {
-                return ((Lazy<T>)item).Value;
+                return lazy.Value;
             }
 
             return default(T);
@@ -112,9 +114,11 @@
                     return (T)existingCacheItem;
                 }
 
-                if (existingCacheItem is Lazy<T>)
+                var lazy = existingCacheItem as Lazy<T>;
+
+                if (lazy != null)
                 {
-                    return ((Lazy<T>)existingCacheItem).Value;
+                    return lazy.Value;
                 }
 
                 return default(T);

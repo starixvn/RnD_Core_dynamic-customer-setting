@@ -193,4 +193,7 @@
   <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
     <value>จำนวนการเดิมพันต่ำสุดต้องมากกว่า หรือเท่ากับ {0}.</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>จำเป็นต้องใส่ข้อมูลนี้</value>
+  </data>
 </root>

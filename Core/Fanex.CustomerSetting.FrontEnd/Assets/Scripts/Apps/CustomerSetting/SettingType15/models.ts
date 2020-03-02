@@ -11,7 +11,7 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem: any, backup: boolean);
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
 

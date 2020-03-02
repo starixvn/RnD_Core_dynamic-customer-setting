@@ -4,7 +4,8 @@
 module CustomerSetting {
     "use strict";
 
-    var app: ng.IModule = angular.module("customerSetting", []);
+    export const moduleName: string = "customerSetting";
+    var app: ng.IModule = angular.module(moduleName, []);
 
     export class ModuleRegister {
         public static controller(name: string, target: Function) {

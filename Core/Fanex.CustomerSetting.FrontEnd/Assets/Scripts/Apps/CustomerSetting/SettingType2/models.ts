@@ -1,7 +1,10 @@
-﻿/// <reference path="../core/models.ts" />
+﻿/// <reference path="../core/common.ts" />
+/// <reference path="../core/models.ts" />
 
 module CustomerSetting {
     "use strict";
+
+    const sportsbook2ProductId: number = 16;
 
     export class SettingType2Item extends DefaultSettingItem {
         public minBet: number;
@@ -9,10 +12,13 @@ module CustomerSetting {
         public maxPerMatch: number;
         public upline: SettingType2Item;
 
+        private $minConstraint: number;
+        private $specialCasesAllowed: boolean;
+
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
-        constructor(settingItem?: any, backup: boolean = false) {
+        constructor(settingItem: any, backup: boolean, systemId: number, productId: number);
+        constructor(settingItem?: any, backup: boolean = false, systemId: number = 0, productId: number = 0) {
             super(settingItem);
 
             if (settingItem) {
@@ -28,6 +34,13 @@ module CustomerSetting {
             if (backup) {
                 this.oldSetting = new SettingType2Item(this);
             }
+
+            this.$specialCasesAllowed = !System.isY7(systemId) || productId === sportsbook2ProductId;
+
+            var minConstraintBySystem = this.$specialCasesAllowed ? 0 : 1;
+            var uplineMinBet = this.upline ? this.upline.minBet : 0;
+
+            this.$minConstraint = Math.max(minConstraintBySystem, uplineMinBet);
         }
 
         public isChanged(): boolean {
@@ -75,6 +88,10 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
+            if (!this.validateRequiredFields()) {
+                return false;
+            }
+
             if (!this.validateMinBet()) {
                 return false;
             }
@@ -87,27 +104,50 @@ module CustomerSetting {
                 return false;
             }
 
+            return true;
+        }
+
+        public validateRequiredFields(): boolean {
             this.resetValidationState();
+
+            if (this.minBet === null) {
+                this.validationState = new ValidationResult("RequiredField", "minBet");
+
+                return false;
+            }
+
+            if (this.maxBet === null) {
+                this.validationState = new ValidationResult("RequiredField", "maxBet");
+
+                return false;
+            }
+
+            if (this.maxPerMatch === null) {
+                this.validationState = new ValidationResult("RequiredField", "maxPerMatch");
+
+                return false;
+            }
 
             return true;
         }
 
         public validateSpecialCase(): boolean {
-            if (this.minBet === this.maxBet && this.maxBet === this.maxPerMatch && this.maxPerMatch === 0) {
-                this.resetValidationState();
-
+            if (this.$specialCasesAllowed
+                && this.minBet === 0
+                && this.maxBet >= 0 && this.maxBet <= this.maxPerMatch
+                && this.maxPerMatch < 1) {
                 return true;
             }
+
+            return false;
         }
 
         public validateMinBet(): boolean {
-            if (this.validateSpecialCase()) {
-                return true;
-            }
+            this.resetValidationState();
 
-            if (this.minBet !== 0) {
-                if (this.minBet < this.upline.minBet) {
-                    this.validationState = new ValidationResult("MinBetMoreThanOrEqualTo", "minBet", [this.upline.minBet]);
+            if (this.minBet !== null && !this.validateSpecialCase()) {
+                if (this.minBet < this.$minConstraint) {
+                    this.validationState = new ValidationResult("MinBetMoreThanOrEqualTo", "minBet", [this.$minConstraint]);
 
                     return false;
                 }
@@ -119,17 +159,13 @@ module CustomerSetting {
                 }
             }
 
-            this.resetValidationState();
-
             return true;
         }
 
         public validateMaxBet(): boolean {
-            if (this.validateSpecialCase()) {
-                return true;
-            }
+            this.resetValidationState();
 
-            if (this.maxBet !== 0) {
+            if (this.maxBet !== null && !this.validateSpecialCase()) {
                 if (this.upline.maxBet > 0 && this.maxBet > this.upline.maxBet) {
                     this.validationState = new ValidationResult("MaxBetLessThanOrEqualTo", "maxBet", [this.upline.maxBet]);
 
@@ -149,17 +185,13 @@ module CustomerSetting {
                 }
             }
 
-            this.resetValidationState();
-
             return true;
         }
 
         public validateMaxPerMatch(): boolean {
-            if (this.validateSpecialCase()) {
-                return true;
-            }
+            this.resetValidationState();
 
-            if (this.maxPerMatch !== 0) {
+            if (this.maxPerMatch !== null && !this.validateSpecialCase()) {
                 if (this.upline.maxPerMatch > 0 && this.maxPerMatch > this.upline.maxPerMatch) {
                     this.validationState = new ValidationResult("MaxPerMatchLessThanOrEqualTo", "maxPerMatch", [this.upline.maxPerMatch]);
 
@@ -172,8 +204,6 @@ module CustomerSetting {
                     return false;
                 }
             }
-
-            this.resetValidationState();
 
             return true;
         }

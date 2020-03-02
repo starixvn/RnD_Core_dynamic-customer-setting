@@ -1,15 +1,16 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="../core/common.ts" />
 /// <reference path="../core/module-registrater.ts" />
-/// <reference path="settingtype9-resources.ts" />
 /// <reference path="models.ts" />
+/// <reference path="settingtype9-resources.ts" />
 
 module CustomerSetting {
     "use strict";
 
     class SettingType9Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["settingType9ResourceService"];
+        public static $inject: string[] = ["settingType9ResourceService", "parametersService"];
 
         public templateUrl: string = "settingtype9.htm";
 
@@ -22,8 +23,8 @@ module CustomerSetting {
 
         private settingType9ResourceService: SettingType9ResourceService;
 
-        constructor(settingType9ResourceService: SettingType9ResourceService) {
-            super((settingItem: any, backup?: boolean) => new SettingType9Item(settingItem, backup));
+        constructor(settingType9ResourceService: SettingType9ResourceService, parametersService: ParametersService) {
+            super((settingItem: any, backup?: boolean) => new SettingType9Item(settingItem, backup, parametersService.systemId));
 
             this.settingType9ResourceService = settingType9ResourceService;
         }

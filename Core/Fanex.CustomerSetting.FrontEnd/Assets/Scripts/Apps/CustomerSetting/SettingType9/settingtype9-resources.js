@@ -83,6 +83,7 @@
         "Msg_10037": "Max Per Number must be less than or equal to Super Agent&apos;s Max Per Number.",
         "Msg_10038": "Max Per Number must be less than or equal to Master Agent&apos;s Max Per Number.",
         "Msg_10039": "Max Per Number must be less than or equal to Agent Max Per Number.",
+        "RequiredField": "This field is required.",
         "UpdateBetSettingSuccessfully": "Bet Setting is updated successfully."
     };
     
@@ -112,6 +113,7 @@
         "Msg_10037": "最高数额必须小于或等于超级总代理的最高数额。",
         "Msg_10038": "最高数额必须小于或等于总代理的最高数额。",
         "Msg_10039": "最高数额必须小于或等于代理的最高数额。",
+        "RequiredField": "必填栏",
         "UpdateBetSettingSuccessfully": "投注设定已更新成功."
     };
     
@@ -141,6 +143,7 @@
         "Msg_10037": "最高數額必須小於或等於超級總代理的最高數額。",
         "Msg_10038": "最高數額必須小於或等於總代理的最高數額。",
         "Msg_10039": "最高數額必須小於或等於代理的最高數額。",
+        "RequiredField": "必填欄",
         "UpdateBetSettingSuccessfully": "投注設定已更新成功."
     };
     
@@ -183,6 +186,7 @@
         "Msg_10037": "ค่าเดิมพันสูงสุดต่อหมายเลขต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อหมายเลขของซุปเปอร์เอเจ่นต์",
         "Msg_10038": "ค่าเดิมพันสูงสุดต่อหมายเลขต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อหมายเลขของมาสเตอร์เอเจ่นต์",
         "Msg_10039": "ค่าเดิมพันสูงสุดต่อหมายเลขต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อหมายเลขของเอเจ่นต์",
+        "RequiredField": "จำเป็นต้องใส่ข้อมูลนี้",
         "UpdateBetSettingSuccessfully": "การตั้งค่าเดิมพัน ได้อัพเดทเรียบร้อยแล้ว."
     };
     
@@ -212,6 +216,7 @@
         "Msg_10037": "Tiền Cược tối đa cho mỗi số phải nhỏ hơn hoặc bằng Tiền Cược tối đa cho mỗi số của Super.",
         "Msg_10038": "Tiền Cược tối đa cho mỗi số phải nhỏ hơn hoặc bằng Tiền Cược tối đa cho mỗi số của Master.",
         "Msg_10039": "Tiền Cược tối đa cho mỗi số phải nhỏ hơn hoặc bằng Tiền Cược tối đa cho mỗi số của Agent.",
+        "RequiredField": "Thông tin này bắt buộc phải nhập.",
         "UpdateBetSettingSuccessfully": "Thiết lập về tiền cược được cập nhật thành công"
     };
 

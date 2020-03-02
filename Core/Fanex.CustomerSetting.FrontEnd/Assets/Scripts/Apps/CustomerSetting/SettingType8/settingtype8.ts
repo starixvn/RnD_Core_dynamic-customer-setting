@@ -31,11 +31,13 @@ module CustomerSetting {
             "appConfigService",
             "requestService",
             "settingTypesSharedValuesService",
+            "parametersService",
             (
                 $scope: ISettingType8DirectiveScope,
                 appConfigService: AppConfigService,
                 requestService: RequestService,
-                settingTypesSharedValuesService: SettingTypesSharedValuesService
+                settingTypesSharedValuesService: SettingTypesSharedValuesService,
+                parametersService: ParametersService
             ) => {
                 $scope.customerId = settingTypesSharedValuesService.customerId;
                 $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
@@ -56,7 +58,11 @@ module CustomerSetting {
                         } else {
                             settingType.settingItems.forEach((item: any, index: number) => {
                                 if (item) {
-                                    settingType.settingItems[index] = new SettingType8Item(item, true, $scope.customerLevel);
+                                    settingType.settingItems[index] = new SettingType8Item(
+                                        item,
+                                        true,
+                                        $scope.customerLevel,
+                                        parametersService.systemId);
                                 }
                             });
                         }

@@ -16,7 +16,22 @@
          data-ng-repeat="item in settingType.settingItems">
         <div class="col col--lbl w20-percent"
              data-ng-class="{ 'col--border-top': ($index > 0) }">
+            <div class="block__sub-header" data-ng-if="customerLevel !== avaiCustomerLevels.member">
+                <label class="check-all-field-lbl"
+                       data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType">
+                    {{item.sportTypeName}}
+                </label>
+                <label class="check-all-field-lbl"
+                       data-ng-if="settingType.settingLevel === avaiSettingLevels.product">
+                    {{productName}}
+                </label>
+                <setting-type8-checkbox-group data-ng-if="(settingType | editableSettingType) && !popupMode"
+                                              data-items="item.groups"
+                                              data-highlight-state="item.highlightState"
+                                              data-tooltip-message="{{item.validationState | tooltipMessage:'settingType8ResourceService'}}" />
+            </div>
             <div class="block__sub-header"
+                 data-ng-if="customerLevel === avaiCustomerLevels.member"
                  data-field-highlighting
                  data-tooltip-message="{{item.validationState | tooltipMessage:'settingType8ResourceService'}}">
                 <label class="check-all-field-lbl"
@@ -27,8 +42,6 @@
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.product">
                     {{productName}}
                 </label>
-                <setting-type8-checkbox-group data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member) && !popupMode"
-                                              data-items="item.groups" />
             </div>
             <div class="block__cell"
                  data-ng-repeat="detail in item.details"
@@ -55,14 +68,14 @@
                                class="setting-field--checkfield__check-ctrl"
                                data-ng-model="group.selected"
                                data-ng-disabled="!(settingType | editableSettingType)"
-                               data-ng-if="customerLevel !== avaiCustomerLevels.member && !popupMode">
+                               data-ng-if="customerLevel !== avaiCustomerLevels.member && !popupMode" />
                         <input id="{{group.levelId}}"
                                type="radio"
                                class="setting-field--checkfield__check-ctrl"
                                data-ng-model="item.selectedLevelId"
                                data-ng-value="group.levelId"
                                data-ng-disabled="!(settingType | editableSettingType)"
-                               data-ng-if="customerLevel === avaiCustomerLevels.member && !popupMode">
+                               data-ng-if="customerLevel === avaiCustomerLevels.member && !popupMode" />
                         <label class="setting-field--checkfield__check-ctrl-lbl" for="{{group.levelId}}">
                             {{group.levelGroupName}}
                         </label>

@@ -3,14 +3,6 @@
 module CustomerSetting {
     "use strict";
 
-    export enum System {
-        nap = 1,
-        alpha = 2,
-        internalAlpha = 3,
-        externalNap = 4,
-        externalNapBetSetting = 5
-    }
-
     export enum SettingLevel {
         product = 1,
         sportType = 2,
@@ -47,6 +39,25 @@ module CustomerSetting {
         relative = 1,
         absolute = 2,
         fixed = 3
+    }
+
+    export class System {
+        public static nap: number = 1;
+        public static alpha: number = 2;
+        public static internalAlpha: number = 3;
+        public static externalNap: number = 4;
+        public static externalNapBetSetting: number = 5;
+        public static y7Alpha: number = 6;
+        public static y7InternalAlpha: number = 7;
+        public static y7ExternalNap: number = 8;
+        public static y7ExternalNapBetSetting: number = 9;
+
+        public static isY7(systemId: number): boolean {
+            return this.y7Alpha === systemId
+                || this.y7InternalAlpha === systemId
+                || this.y7ExternalNap === systemId
+                || this.y7ExternalNapBetSetting === systemId;
+        }
     }
 
     export class Exceptions {

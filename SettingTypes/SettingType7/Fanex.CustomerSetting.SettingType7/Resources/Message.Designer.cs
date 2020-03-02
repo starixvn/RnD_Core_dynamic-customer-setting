@@ -19,7 +19,7 @@ namespace Fanex.CustomerSetting.SettingType7.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Message {
@@ -84,6 +84,15 @@ namespace Fanex.CustomerSetting.SettingType7.Resources {
         internal static string UpdatedBetLimitSuccessfully {
             get {
                 return ResourceManager.GetString("UpdatedBetLimitSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Each bet type must have at least one Bet Limit value to be selected..
+        /// </summary>
+        internal static string Y7StakeLevelRequired {
+            get {
+                return ResourceManager.GetString("Y7StakeLevelRequired", resourceCulture);
             }
         }
     }

@@ -192,4 +192,7 @@
   <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
     <value>Bet Setting is updated successfully.</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>This field is required.</value>
+  </data>
 </root>

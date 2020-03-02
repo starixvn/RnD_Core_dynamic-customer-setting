@@ -15,6 +15,18 @@ module CustomerSetting {
 
         private $window: ng.IWindowService;
 
+        public get thousandSeparator(): string {
+            return ",";
+        }
+
+        public get decimalSeparator(): string {
+            return ".";
+        }
+
+        public get defaultPrecision(): number {
+            return 2;
+        }
+
         constructor($window: ng.IWindowService) {
             var appConfig: any;
 
@@ -237,6 +249,7 @@ module CustomerSetting {
     export class SettingTypesSharedValuesService {
         public static $inject: string[] = ["parametersService"];
 
+        public systemId: number;
         public customerId: number
         public uplineLevel: Level;
         public customerLevel: Level;
@@ -248,6 +261,7 @@ module CustomerSetting {
 
         constructor(parametersService: ParametersService) {
             this.parametersService = parametersService;
+            this.systemId = parametersService.systemId;
         }
 
         public register(setting: Setting, uplineLevel: Level): void {

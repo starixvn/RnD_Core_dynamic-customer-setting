@@ -126,4 +126,7 @@
   <data name="UpdatedBetLimitSuccessfully" xml:space="preserve">
     <value>Updated Bet Limit successfully.</value>
   </data>
+  <data name="Y7StakeLevelRequired" xml:space="preserve">
+    <value>Each bet type must have at least one Bet Limit value to be selected.</value>
+  </data>
 </root>

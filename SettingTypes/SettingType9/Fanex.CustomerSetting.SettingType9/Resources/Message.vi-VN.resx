@@ -192,4 +192,7 @@
   <data name="Msg_10020" xml:space="preserve">
     <value>Tiền Cược lớn nhất phải nhỏ hơn hoặc bằng Tiền Cược lớn nhất của Master.</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Thông tin này bắt buộc phải nhập.</value>
+  </data>
 </root>

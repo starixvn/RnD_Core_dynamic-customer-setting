@@ -1,4 +1,5 @@
-﻿/// <reference path="../core/models.ts" />
+﻿/// <reference path="../core/common.ts" />
+/// <reference path="../core/models.ts" />
 
 module CustomerSetting {
     "use strict";
@@ -10,13 +11,13 @@ module CustomerSetting {
         public stakeRangeGroups: Array<Array<SettingType7StakeRange>>;
         public selectStakeLevelId: number;
 
+        private systemId: number;
         private customerLevel: Level;
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
-        constructor(settingItem?: any, backup?: boolean, customerLevel?: Level)
-        constructor(settingItem?: any, backup: boolean = false, customerLevel?: Level) {
+        constructor(settingItem: any, backup: boolean, customerLevel: Level, systemId: number);
+        constructor(settingItem?: any, backup: boolean = false, customerLevel: Level = null, systemId: number = 0) {
             super(settingItem);
 
             if (settingItem) {
@@ -28,6 +29,7 @@ module CustomerSetting {
                     });
                 }
 
+                this.systemId = systemId;
                 this.customerLevel = customerLevel;
 
                 if (this.customerLevel && this.customerLevel === Level.member) {
@@ -63,9 +65,9 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (this.customerLevel && this.customerLevel === Level.member) {
-                var isViolated: boolean = true;
+            var isViolated: boolean = false;
 
+            if (this.customerLevel && this.customerLevel === Level.member) {
                 this.stakeRanges.forEach((stakeLevel: SettingType7StakeRange) => {
                     stakeLevel.selected = this.selectStakeLevelId === stakeLevel.stakeLevelId;
                 });
@@ -74,6 +76,14 @@ module CustomerSetting {
 
                 if (isViolated) {
                     this.validationState = new ValidationResult("MemberStakeLevelMustBeSelectedForBetType");
+
+                    return false;
+                }
+            } else if (System.isY7(this.systemId)) {
+                isViolated = this.stakeRanges.filter((stakeRange: SettingType7StakeRange) => stakeRange.selected).length === 0;
+
+                if (isViolated) {
+                    this.validationState = new ValidationResult("Y7StakeLevelRequired", "checkAll");
 
                     return false;
                 }
@@ -143,7 +153,7 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem: any, backup: boolean);
         constructor(settingItem?: any, backup: boolean = false) {
             if (settingItem) {
                 this.stakeLevelId = settingItem.stakeLevelId;

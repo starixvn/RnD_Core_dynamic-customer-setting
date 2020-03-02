@@ -138,4 +138,7 @@
   <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
     <value>Thiết lập về tiền cược được cập nhật thành công</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Thông tin này bắt buộc phải nhập.</value>
+  </data>
 </root>

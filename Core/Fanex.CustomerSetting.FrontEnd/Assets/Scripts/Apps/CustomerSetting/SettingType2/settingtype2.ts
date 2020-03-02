@@ -8,7 +8,7 @@ module CustomerSetting {
     "use strict";
 
     class SettingType2Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["betSettingResourceService"];
+        public static $inject: string[] = ["betSettingResourceService", "settingTypesSharedValuesService"];
 
         public templateUrl: string = "settingtype2.htm";
 
@@ -20,8 +20,8 @@ module CustomerSetting {
 
         private betSettingResourceService: BetSettingResourceService;
 
-        constructor(betSettingResourceService: BetSettingResourceService) {
-            super((settingItem: any, backup?: boolean) => new SettingType2Item(settingItem, backup));
+        constructor(betSettingResourceService: BetSettingResourceService, settingTypesSharedValuesService: SettingTypesSharedValuesService) {
+            super((settingItem: any, backup?: boolean) => new SettingType2Item(settingItem, backup, settingTypesSharedValuesService.systemId, settingTypesSharedValuesService.productId));
 
             this.betSettingResourceService = betSettingResourceService;
         }

@@ -754,7 +754,6 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\models.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14-resources.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType14\settingtype14-input.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType15\models.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType15\settingtype15.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType15\settingtype15-resources.ts" />
@@ -779,7 +778,6 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5-input.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5-resources.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6-win-limit-select.ts" />
@@ -825,6 +823,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Scripts\Specs\CustomerSetting.IE8\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\NumericInput\numeric-input.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,7 +4,6 @@
     using System.Collections.Concurrent;
     using Common.Helper;
     using Models;
-    using Services;
 
     internal class SettingTypeServiceFactory : ISettingTypeServiceFactory
     {

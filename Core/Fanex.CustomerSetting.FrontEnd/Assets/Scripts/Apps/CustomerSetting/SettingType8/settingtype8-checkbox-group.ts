@@ -8,6 +8,8 @@ module CustomerSetting {
     interface ICheckboxGroupScope extends ng.IScope {
         checked: boolean;
         items: Array<SettingType8LevelGroup>;
+        tooltipMessage: string;
+        highlightState: string;
         checkAll: Function;
     }
 
@@ -17,7 +19,9 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
-                items: "="
+                items: "=",
+                tooltipMessage: "@?",
+                highlightState: "=?"
             };
         }
 

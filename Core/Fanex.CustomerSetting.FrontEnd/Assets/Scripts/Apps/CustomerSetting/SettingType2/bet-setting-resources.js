@@ -85,6 +85,7 @@
         "Msg_10019": "Min bet must be greater than or equal to Master Agent min bet.",
         "Msg_10020": "Max bet must be less than or equal to Master Agent max bet.",
         "Msg_10021": "Max Per Match must be less than or equal to Master Agent Max Per Match.",
+        "RequiredField": "This field is required.",
         "UpdateBetSettingSuccessfully": "Bet Setting is updated successfully."
     };
     
@@ -110,6 +111,7 @@
         "Msg_10019": "最低投注大于或相等于总代理最低投注限额",
         "Msg_10020": "最高投注必须少于或相等于总代理最高投注限额",
         "Msg_10021": "单场限额必须少于或相等于总代理单场投注限额",
+        "RequiredField": "必填栏",
         "UpdateBetSettingSuccessfully": "投注设定已更新成功."
     };
     
@@ -135,6 +137,7 @@
         "Msg_10019": "最低投註大於或相等於總代理最低投註限額",
         "Msg_10020": "最高投註必須少於或相等於總代理最高投註限額",
         "Msg_10021": "單場限額必須少於或相等於總代理單場投註限額",
+        "RequiredField": "必填欄",
         "UpdateBetSettingSuccessfully": "投注設定已更新成功."
     };
     
@@ -181,6 +184,7 @@
         "Msg_10019": "ค่าวางเดิมพันขั้นต่ำต้องมากกว่าหรือเท่ากับ ค่าการเดิมพันขั้นต่ำของมาสเตอร์เอเจนท์",
         "Msg_10020": "ค่าวางเดิมพันขั้นสูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดของมาสเตอร์เอเจนท์",
         "Msg_10021": "ค่าวางเดิมพันต่อแมทซ์สูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดต่อแมทซ์ของมาสเตอร์เอเจนท์",
+        "RequiredField": "จำเป็นต้องใส่ข้อมูลนี้",
         "UpdateBetSettingSuccessfully": "การตั้งค่าเดิมพัน ได้อัพเดทเรียบร้อยแล้ว."
     };
     
@@ -192,6 +196,7 @@
         "MaxPerMatchLessThanOrEqualTo": "Tiền cược tối đa cho mỗi trận phài ít hơn hoặc bằng {0}",
         "MinBetCannotBeGreaterThanMaxBet": "Tiền cược nhỏ nhất không thể lớn hơn Tiền cược lớn nhất",
         "MinBetLessThanOrEqualMaxBet": "Tiền cược nhỏ nhất phải nhỏ hơn hoặc bằng Tiền cược lớn nhất.",
+        "RequiredField": "Thông tin này bắt buộc phải nhập.",
         "UpdateBetSettingSuccessfully": "Thiết lập về tiền cược được cập nhật thành công"
     };
 

@@ -177,4 +177,7 @@
   <data name="Msg_10021" xml:space="preserve">
     <value>ค่าวางเดิมพันต่อแมทซ์สูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดต่อแมทซ์ของมาสเตอร์เอเจนท์</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>จำเป็นต้องใส่ข้อมูลนี้</value>
+  </data>
 </root>

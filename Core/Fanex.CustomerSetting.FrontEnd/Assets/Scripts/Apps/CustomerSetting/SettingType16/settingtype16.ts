@@ -9,11 +9,11 @@ module CustomerSetting {
     "use strict";
 
     class SettingType16Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["settingType16ResourceService"];
+        public static $inject: string[] = ["settingType16ResourceService", "parametersService"];
 
         public templateUrl: string = "settingtype16.htm";
 
-        public link: ng.IDirectiveLinkFn = (scope: IDefaultSettingTypeDirectiveScope) => {
+        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
             scope.headerTemplateUrl = "settingtype16-header.htm";
             scope.valueTemplateUrl = "settingtype16-value.htm";
             scope.settingTypeName = this.settingType16ResourceService.getLabel("BetSetting");
@@ -21,8 +21,8 @@ module CustomerSetting {
 
         private settingType16ResourceService: SettingType16ResourceService;
 
-        constructor(settingType16ResourceService: SettingType16ResourceService) {
-            super((settingItem: any, backup?: boolean) => new SettingType16Item(settingItem, backup));
+        constructor(settingType16ResourceService: SettingType16ResourceService, parametersService: ParametersService) {
+            super((settingItem: any, backup?: boolean) => new SettingType16Item(settingItem, backup, parametersService.systemId));
 
             this.settingType16ResourceService = settingType16ResourceService;
         }

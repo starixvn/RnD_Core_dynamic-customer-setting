@@ -71,7 +71,7 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem: any, backup: boolean);
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, <SuperPositionTaking>this);
@@ -169,7 +169,7 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem: any, backup: boolean);
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, this);
@@ -388,7 +388,7 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem: any, backup: boolean);
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, this);
@@ -606,7 +606,7 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem: any, backup: boolean);
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, this);
@@ -742,7 +742,7 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean, extraData: Array<KeyValuePair<string, any>>)
+        constructor(settingItem: any, backup: boolean, extraData: Array<KeyValuePair<string, any>>);
         constructor(settingItem?: any, backup: boolean = false, extraData?: Array<KeyValuePair<string, any>>) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, this);
@@ -882,7 +882,7 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem: any, backup: boolean);
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, this);

@@ -180,4 +180,7 @@
   <data name="Msg_10021" xml:space="preserve">
     <value>單場限額必須少於或相等於總代理單場投註限額</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>必填欄</value>
+  </data>
 </root>

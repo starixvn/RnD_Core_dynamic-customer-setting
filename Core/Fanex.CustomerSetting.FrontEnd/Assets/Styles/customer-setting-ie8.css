@@ -414,8 +414,10 @@ th {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=85);
     opacity: 0.85;
     color: #fff;
+    font-weight: normal;
+    line-height: 1.5;
     max-width: 300px;
-    padding: 4px 8px;
+    padding: 8px;
     text-align: center;
     text-decoration: none; }
   .tooltip--right:after {

@@ -20,10 +20,12 @@ module CustomerSetting {
         public controller: any = [
             "$scope",
             "settingTypesSharedValuesService",
+            "parametersService",
             "settingType7ResourceService",
             (
                 $scope: IDefaultSettingTypeDirectiveScope,
                 settingTypesSharedValuesService: SettingTypesSharedValuesService,
+                parametersService: ParametersService,
                 settingType7ResourceService: SettingType7ResourceService
             ) => {
                 $scope.customerId = settingTypesSharedValuesService.customerId;
@@ -46,7 +48,11 @@ module CustomerSetting {
                         } else {
                             settingType.settingItems.forEach((item: any, index: number) => {
                                 if (item) {
-                                    settingType.settingItems[index] = new SettingType7Item(item, true, $scope.customerLevel);
+                                    settingType.settingItems[index] = new SettingType7Item(
+                                        item,
+                                        true,
+                                        $scope.customerLevel,
+                                        parametersService.systemId);
                                 }
                             });
 
