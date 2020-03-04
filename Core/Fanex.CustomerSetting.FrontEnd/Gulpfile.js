@@ -23,7 +23,6 @@
         staticResourceProject: "../Fanex.CustomerSetting.StaticResources/",
         packages: {
             customerSetting: "CustomerSetting",
-            customerSettingIe8: "CustomerSetting.IE8",
             customerSettingMatrix: "CustomerSettingMatrix"
         },
         configFiles: {
@@ -59,7 +58,7 @@
     });
 
     gulp.task("publish", ["clean"], function (callback) {
-        runSequence(["styles:publish", "scripts:publish"], ["ie8:styles:publish", "ie8:scripts:publish"], "matrix:publish", "copy-packages", callback);
+        runSequence(["styles:publish", "scripts:publish"], "matrix:publish", "copy-packages", callback);
     });
 
     gulp.task("default", ["install"], function () {

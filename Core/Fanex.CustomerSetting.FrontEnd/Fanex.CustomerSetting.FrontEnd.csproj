@@ -150,10 +150,6 @@
     <None Include="Assets\Styles\Compass\_animate.scss" />
     <None Include="Assets\Styles\Compass\_compass.scss" />
     <None Include="Assets\Styles\Compass\_lemonade.scss" />
-    <None Include="Assets\Styles\customer-setting-ie8.css.map">
-      <DependentUpon>customer-setting-ie8.scss</DependentUpon>
-    </None>
-    <None Include="Assets\Styles\customer-setting-ie8.scss" />
     <None Include="Assets\Styles\customer-setting-matrix.css.map">
       <DependentUpon>customer-setting-matrix.scss</DependentUpon>
     </None>
@@ -186,201 +182,6 @@
     <None Include="package.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\BlockUI\block-ui.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\CustomerInfo\customer-info.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\CopySetting\copy-setting.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\default-setting-block.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\HighlightField\tooltip.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingResult\setting-result.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\customer-setting-ie8.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\customer-setting-resource.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>customer-setting-resource.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\customer-setting-resource.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>customer-setting-resource.tt</DependentUpon>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11-resources.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>settingtype11-resources.tt</DependentUpon>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype11-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12-resources.js">
-      <DependentUpon>settingtype12-resources.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype12-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13-resources.js">
-      <DependentUpon>settingtype13-resources.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype13-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType14\settingtype14-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType14\settingtype14-resources.js">
-      <DependentUpon>settingtype14-resources.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType14\settingtype14-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype14-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType14\settingtype14-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType14\settingtype14.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType15\settingtype15-resources.js">
-      <DependentUpon>settingtype15-resources.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType15\settingtype15-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype15-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType15\settingtype15-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType15\settingtype15.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType16\settingtype16-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType16\settingtype16-input.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType16\settingtype16-resources.js">
-      <DependentUpon>settingtype16-resources.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType16\settingtype16-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype16-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType16\settingtype16-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType16\settingtype16.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\adjust-member-pt-modal.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>position-taking-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>position-taking-resources.tt</DependentUpon>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-select.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-input.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>bet-setting-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>bet-setting-resources.tt</DependentUpon>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>commission-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>commission-resources.tt</DependentUpon>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\comm-rate-select.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>product-status-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>product-status-resources.tt</DependentUpon>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-resources.js">
-      <DependentUpon>settingtype5-resources.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype5-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-resources.js">
-      <DependentUpon>settingtype6-resources.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype6-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-win-limit-select.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-checkbox-group.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-resources.js">
-      <DependentUpon>settingtype7-resources.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype7-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-groupdetails.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-checkbox-group.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-groupdetails-modal.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-resources.js">
-      <DependentUpon>settingtype8-resources.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype8-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-input.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-resources.js">
-      <DependentUpon>settingtype9-resources.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype9-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\customer-setting-matrix.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.htm" />
@@ -590,12 +391,6 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9.htm" />
     <Content Include="Assets\Scripts\NodeModules\embeded-template.js" />
-    <Content Include="Assets\Styles\customer-setting-ie8.css">
-      <DependentUpon>customer-setting-ie8.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\Styles\customer-setting-ie8.min.css">
-      <DependentUpon>customer-setting-ie8.css</DependentUpon>
-    </Content>
     <Content Include="Assets\Styles\customer-setting-matrix.css">
       <DependentUpon>customer-setting-matrix.scss</DependentUpon>
     </Content>
@@ -619,7 +414,6 @@
     <Content Include="Assets\Styles\Images\not-allow-auto-pt.gif" />
     <Content Include="Assets\Styles\Images\sprite.png" />
     <Content Include="Gulpfile.js" />
-    <Content Include="Gulp\combine-scripts.ie8.js" />
     <Content Include="Gulp\combine-scripts.js" />
     <Content Include="Gulp\libraries.js" />
     <Content Include="Gulp\matrix.js" />
@@ -630,86 +424,6 @@
     <Content Include="Gulp\watch.js" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\BlockUI\block-ui.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\common.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\controller.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\CustomerInfo\customer-info.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\CopySetting\copy-setting.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\default-setting-block.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\HighlightField\highlight-field.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\Modal\detect-max-height.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\Modal\draggable.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\ToggleSettingBlock\togglable-setting-block-shared-states.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\ToggleSettingBlock\toggle-setting-block.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\helper-services.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\helpers.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\module-registrater.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\parameters.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\requesting-server-service.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingResult\setting-result.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingType\setting-type-base-directive.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingType\setting-type-directive-loader.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\resource-translation.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12-input.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12-resource.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType14\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType14\settingtype14-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType14\settingtype14.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType14\settingtype14-input.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType15\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType15\settingtype15.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType15\settingtype15-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType16\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType16\settingtype16-input.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType16\settingtype16-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType16\settingtype16.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\adjust-member-pt-modal.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-select.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-input.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\comm-rate-select.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-input.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-input.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-resource.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-win-limit-select.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-checkbox-group.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-resource.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-checkbox-group.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-groupdetails-modal.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-resource.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-input.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\controller.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.ts" />
@@ -801,29 +515,11 @@
     <Content Include="Assets\Scripts\NodeModules\embeded-template.ts" />
     <Content Include="Assets\Scripts\NodeModules\js-string-escape.d.ts" />
     <Content Include="Assets\Scripts\NodeModules\minimize.d.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Core\controller.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Core\customer-info.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Core\default-setting-block.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Core\helper-services.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Core\helpers.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Core\models.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Core\parameters.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Core\setting-result.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Core\setting-type-directive-loader.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Core\tooltip.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\Resource\resource-translation.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\SettingType1\adjust-member-pt-modal.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\SettingType1\settingtype1-template1.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\SettingType2\settingtype2-template1.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\SettingType3\settingtype3-template1.ts" />
-    <Content Include="Assets\Scripts\Specs\CustomerSetting\SettingType4\settingtype4-template1.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Scripts\Specs\CustomerSetting.IE8\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\NumericInput\numeric-input.ts" />
   </ItemGroup>

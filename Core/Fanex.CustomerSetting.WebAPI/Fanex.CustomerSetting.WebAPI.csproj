@@ -202,7 +202,6 @@
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType8.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType9.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml" />
-    <Content Include="App_Data\Templates\customer-setting-ie8.htm" />
     <Content Include="App_Data\Templates\customer-setting.htm" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
