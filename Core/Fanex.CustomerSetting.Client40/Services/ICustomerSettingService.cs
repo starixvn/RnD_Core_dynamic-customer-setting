@@ -11,6 +11,6 @@
 
         IRestResponse MultipleUpdateCustomerSetting(MultipleUpdateSettingRequest multipleUpdate);
 
-        IRestResponse QueryCustomerSettingTemplate(bool isIe8);
+        IRestResponse QueryCustomerSettingTemplate();
     }
 }

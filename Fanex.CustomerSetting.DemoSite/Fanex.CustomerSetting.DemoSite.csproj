@@ -201,32 +201,13 @@
     <Content Include="Global.asax" />
     <None Include="bundleconfig.json" />
     <None Include="Gulpfile.js" />
-    <Content Include="Scripts\DemoForm.IE8\demo-form.js">
-      <DependentUpon>demo-form.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\DemoForm.IE8\posting-to-iframe.htm" />
     <Content Include="Scripts\DemoForm\demo-form.js">
       <DependentUpon>demo-form.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
-    <Content Include="Scripts\Libraries\Angular-Legacy\angular.js" />
-    <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js" />
-    <Content Include="Scripts\Libraries\AngularJs\angular-csp.css" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.js" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js" />
     <Content Include="Scripts\Libraries\Angular\angular-csp.css" />
     <Content Include="Scripts\Libraries\Angular\angular.js" />
     <Content Include="Scripts\Libraries\Angular\angular.min.js" />
-    <Content Include="Scripts\Libraries\Es5-Shim\es5-shim.js" />
-    <Content Include="Scripts\Libraries\Es5-Shim\es5-shim.min.js" />
-    <Content Include="Scripts\Libraries\Html5shiv\html5shiv-printshiv.js" />
-    <Content Include="Scripts\Libraries\Html5shiv\html5shiv-printshiv.min.js" />
-    <Content Include="Scripts\Libraries\Html5shiv\html5shiv.js" />
-    <Content Include="Scripts\Libraries\Html5shiv\html5shiv.min.js" />
-    <Content Include="Scripts\Libraries\JQuery\jquery.js" />
-    <Content Include="Scripts\Libraries\JQuery\jquery.min.js" />
-    <Content Include="Scripts\Libraries\Underscore\underscore-min.js" />
-    <Content Include="Scripts\Libraries\Underscore\underscore.js" />
     <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -261,13 +242,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\DemoForm.IE8\demo-form.ts" />
     <Content Include="Scripts\DemoForm\demo-form.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bower.json" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.gzip" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.map" />
     <None Include="tsd.json" />
     <Content Include="Content\site.scss" />
     <Content Include="Content\site.css.map">
@@ -276,12 +254,7 @@
     <None Include="package.json" />
     <None Include="tslint.json" />
     <Content Include="Scripts\sample-data.json" />
-    <Content Include="Views\Home\Index-IE8.cshtml" />
-    <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js.map" />
     <Content Include="Scripts\Libraries\Angular\angular.min.js.map" />
-    <Content Include="Scripts\Libraries\Es5-Shim\es5-shim.map" />
-    <Content Include="Scripts\Libraries\JQuery\jquery.min.map" />
-    <Content Include="Scripts\Libraries\Underscore\underscore-min.map" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

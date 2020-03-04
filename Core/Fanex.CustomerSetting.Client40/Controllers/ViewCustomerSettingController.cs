@@ -17,7 +17,6 @@
     public class ViewCustomerSettingController : Controller
     {
         private const string SettingTemplateCachingKey = "CustomerSettingTemplate";
-        private const string SettingTemplateIe8CachingKey = "CustomerSettingIE8Template";
         private const byte CachingHours = 4;
 
         private readonly ICustomerSettingService _customerSettingService;
@@ -42,14 +41,12 @@
             }
 
             ObjectCache cache = MemoryCache.Default;
-            bool isIe8 = Request.Browser.Browser == "IE" && Request.Browser.MajorVersion < 9;
-            string cachedKey = isIe8 ? SettingTemplateIe8CachingKey : SettingTemplateCachingKey;
-            string template = cache.Get(cachedKey) as string;
+            string template = cache.Get(SettingTemplateCachingKey) as string;
 
             if (string.IsNullOrEmpty(template))
             {
-                template = BuildTemplate(isIe8);
-                cache.Set(cachedKey, template, DateTime.Now.AddHours(CachingHours));
+                template = BuildTemplate();
+                cache.Set(SettingTemplateCachingKey, template, DateTime.Now.AddHours(CachingHours));
             }
 
             if (!string.IsNullOrEmpty(template))
@@ -93,9 +90,9 @@
             return Content(customerSettingResponse.Content);
         }
 
-        private string BuildTemplate(bool isIe8)
+        private string BuildTemplate()
         {
-            IRestResponse response = _customerSettingService.QueryCustomerSettingTemplate(isIe8);
+            IRestResponse response = _customerSettingService.QueryCustomerSettingTemplate();
             bool isDebug = HttpContext.IsDebuggingEnabled;
             string cdn = RandomHelper.GetRandomUri(CustomerSettingConfiguration.Settings.CdnUris);
 

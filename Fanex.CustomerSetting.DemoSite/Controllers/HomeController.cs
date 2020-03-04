@@ -14,14 +14,8 @@
         public ActionResult Index()
         {
             FormsAuthentication.SetAuthCookie("DemoName", true);
-            if (Request.Browser.Browser == "IE" && (Request.Browser.MajorVersion < 9))
-            {
-                return View("Index-IE8");
-            }
-            else
-            {
-                return View();
-            }
+
+            return View();
         }
 
         public JsonResult SaveSession(

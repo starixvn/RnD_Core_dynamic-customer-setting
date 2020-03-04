@@ -2,12 +2,7 @@
     "name": "fanex-customer-setting-demo-site",
     "private": true,
     "dependencies": {
-        "angular": "^1.4.4",
-        "angular-legacy": "angular#1.2.28",
-        "es5-shim": "^4.1.10",
-        "html5shiv": "^3.7.3",
-        "jquery": "1.11.3",
-        "underscore": "^1.8.3"
+        "angular": "^1.4.4"
     },
     "devDependencies": {
         "compass-mixins": "^1.0.2"

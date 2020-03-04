@@ -19,12 +19,10 @@
     {
         private const string CustomerSettingTemplateCachingKey = "CustomerSettingTemplate";
         private const string CustomerSettingTemplateFilePath = "~/App_Data/Templates/customer-setting.htm";
-        private const string CustomerSettingTemplateIe8CachingKey = "CustomerSettingIE8Template";
-        private const string CustomerSettingTemplateIe8FilePath = "~/App_Data/Templates/customer-setting-ie8.htm";
         private const byte CachingHours = 4;
         private readonly ISettingServiceFactory settingServiceFactory;
 
-        public CustomerSettingController(ISettingServiceFactory settingServiceFactory = null)
+        public CustomerSettingController(ISettingServiceFactory settingServiceFactory)
         {
             this.settingServiceFactory = settingServiceFactory ?? new SettingServiceFactory();
         }
@@ -105,18 +103,12 @@
             return Request.CreateResponse(result);
         }
 
-        public HttpResponseMessage GetTemplate([FromUri]bool isIe8)
+        public HttpResponseMessage GetTemplate()
         {
             ObjectCache cache = MemoryCache.Default;
             string template = string.Empty;
             string customerSettingTemplatePath = CustomerSettingTemplateFilePath;
             string customerSettingTemplateCacheKey = CustomerSettingTemplateCachingKey;
-
-            if (isIe8)
-            {
-                customerSettingTemplatePath = CustomerSettingTemplateIe8FilePath;
-                customerSettingTemplateCacheKey = CustomerSettingTemplateIe8CachingKey;
-            }
 
             template = cache.Get(customerSettingTemplateCacheKey) as string;
 

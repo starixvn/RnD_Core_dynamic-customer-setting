@@ -44,12 +44,7 @@
 
     gulp.task("libraries:copy", function () {
         var bower = {
-            "Angular": "angular/angular*.{js,map,css}",
-            "Angular-Legacy": "angular-legacy/angular*.{js,map}",
-            "Es5-Shim": "es5-shim/es5-shim*.{js,map}",
-            "Html5shiv": "html5shiv/dist/html5shiv*.js",
-            "JQuery": "jquery/dist/jquery*.{js,map}",
-            "Underscore": "Underscore/underscore*.{js,map}"
+            "Angular": "angular/angular*.{js,map,css}"
         };
 
         for (var destinationDir in bower) {
@@ -92,28 +87,7 @@
                    .pipe(gulp.dest(dest));
     });
 
-    gulp.task("scripts:ie8:compile", function () {
-        var dest = path.join(paths.scripts, "DemoForm.IE8");
-        var sources = [
-            path.join(dest, "demo-form.ts"),
-            path.join(dest, "posting-to-iframe.htm")
-        ];
-
-        return gulp.src(sources)
-                   .pipe(gulpif(/[.]ts$/, ts({
-                       typescript: require("typescript"),
-                       target: "ES3",
-                       noImplicitAny: false,
-                       removeComments: true
-                   })))
-                   .pipe(gulpif(/[.]htm$/, templateCache({
-                       module: "actorForm"
-                   })))
-                   .pipe(concat("demo-form.js"))
-                   .pipe(gulp.dest(dest));
-    });
-
-    gulp.task("watch", ["clean", "customer-setting:copy", "scripts:compile", "scripts:ie8:compile"], function () {
+    gulp.task("watch", ["clean", "customer-setting:copy", "scripts:compile"], function () {
         gulp.watch(paths.source, function () {
             setTimeout(function () {
                 runSequence("clean", "customer-setting:copy");
@@ -123,10 +97,6 @@
         gulp.watch(path.join(paths.scripts + "DemoForm/*.{ts,htm}"), function () {
             runSequence("tslint:check", "scripts:compile");
         });
-
-        gulp.watch(path.join(paths.scripts + "DemoForm.IE8/*.{ts,htm}"), function () {
-            runSequence("tslint:check", "scripts:ie8:compile");
-        });
     });
 
     gulp.task("default", ["clean"], function () {
@@ -135,7 +105,6 @@
             ["compass:install", "libraries:copy"],
             "tslint:check",
             "scripts:compile",
-            "scripts:ie8:compile",
             "customer-setting:copy");
     });
 

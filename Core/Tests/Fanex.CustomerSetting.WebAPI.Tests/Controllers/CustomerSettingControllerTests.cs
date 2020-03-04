@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Formatting;
@@ -314,25 +313,6 @@
             using (HttpResponseMessage response = _messageInvoker.SendAsync(_request, _cancellationToken.Token).Result)
             {
                 Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            }
-        }
-
-        /// <summary>
-        /// Cannot test the GetTemplate method since the HostingEnvironment.MapPath returns
-        /// null in the context of unit test runner.
-        /// </summary>
-        public void GetTemplate_IsIe8IsFalse_ReturnIe8Template()
-        {
-            // Arrange.
-            _request.RequestUri = new Uri(BaseAddress + "api/customersetting/gettemplate?isIe8=true");
-            _request.Method = HttpMethod.Get;
-
-            // Act and Assert.
-            using (HttpResponseMessage response = _messageInvoker.SendAsync(_request, _cancellationToken.Token).Result)
-            {
-                string ie8Template = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\Templates\customer-setting-ie8.htm");
-
-                Assert.AreEqual(ie8Template, response.Content.ToString());
             }
         }
 
