@@ -67,6 +67,7 @@
             {
                 { "userid", settingContext.Actor.Id },
                 { "subaccid", settingContext.Actor.SubAccountId },
+                { "systemid", settingContext.System },
                 { "custid", customerId },
                 { "ip", settingContext.IP },
                 { "stakelevel", stakeLevelGroupXml },

@@ -42,6 +42,7 @@
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
             param.Add("subaccid", settingContext.Actor.SubAccountId);
+            param.Add("systemid", settingContext.System);
             param.Add("custid", customerId);
             param.Add("ip", settingContext.IP);
             param.Add("betlimit", betLimitXml);
