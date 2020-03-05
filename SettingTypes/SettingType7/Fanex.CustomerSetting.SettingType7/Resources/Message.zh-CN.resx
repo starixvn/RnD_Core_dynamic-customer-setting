@@ -126,4 +126,7 @@
   <data name="UpdatedBetLimitSuccessfully" xml:space="preserve">
     <value>投注限额已成功更新.</value>
   </data>
+  <data name="Y7StakeLevelRequired" xml:space="preserve">
+    <value>每种投注类型至少需要选择一个投注限额。</value>
+  </data>
 </root>

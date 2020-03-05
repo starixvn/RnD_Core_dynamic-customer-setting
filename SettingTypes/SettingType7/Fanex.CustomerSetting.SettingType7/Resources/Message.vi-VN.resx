@@ -126,4 +126,7 @@
   <data name="UpdatedBetLimitSuccessfully" xml:space="preserve">
     <value>Cập nhật Giới hạn cược thành công.</value>
   </data>
+  <data name="Y7StakeLevelRequired" xml:space="preserve">
+    <value>Mỗi loại cược phải có ít nhất một Giới Hạn Cược.</value>
+  </data>
 </root>

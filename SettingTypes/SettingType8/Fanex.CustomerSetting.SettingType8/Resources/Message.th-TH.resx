@@ -123,4 +123,7 @@
   <data name="UpdatedBetLimitSuccessfully" xml:space="preserve">
     <value>ปรับข้อมูลวงเงินเดิมพันเรียบร้อยแล้ว</value>
   </data>
+  <data name="Y7StakeLevelRequired" xml:space="preserve">
+    <value>การเดิมพันแต่ละประเภทจะต้องเลือกอย่างน้อยหนึ่งวงเงินเดิมพัน</value>
+  </data>
 </root>

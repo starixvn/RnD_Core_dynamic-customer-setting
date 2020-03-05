@@ -204,7 +204,7 @@
         "MinBetCannotBeGreaterThanMaxBet": "Tiền cược nhỏ nhất không thể lớn hơn Tiền cược lớn nhất",
         "MinBetCannotBeNegative": "Tiền Cược nhỏ nhất không thể là số âm.",
         "MinBetLessThanOrEqualMaxBet": "Tiền cược nhỏ nhất phải nhỏ hơn hoặc bằng Tiền cược lớn nhất.",
-        "MinBetMoreThanOrEqualTo": "Tiền cược nhỏ nhất phải lớn hơn hoặc bằng {0}.",
+        "MinBetMoreThanOrEqualTo": "Cược Nhỏ Nhất phải lớn hơn hay bằng {1}.",
         "Msg_10006": "Tiền Cược nhỏ nhất phải lớn hơn hoặc bằng Tiền Cược nhỏ nhất của Agent.",
         "Msg_10007": "Tiền Cược lớn nhất phải nhỏ hơn hoặc bằng Tiền Cược lớn nhất của Agent.",
         "Msg_10016": "Tiền Cược nhỏ nhất phải lớn hơn hoặc bằng Tiền Cược nhỏ nhất của Super.",

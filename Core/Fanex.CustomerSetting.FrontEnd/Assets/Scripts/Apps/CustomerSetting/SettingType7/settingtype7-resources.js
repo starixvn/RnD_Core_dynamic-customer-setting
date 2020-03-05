@@ -42,28 +42,32 @@
     settingType7Resource["message"]["zh-cn"] = {
         "MemberStakeLevelMustBeSelectedForBetType": "每项投注类别需至少选择一个投注限额.",
         "Msg_10034": "这帐号的上线无投注本金级别.",
-        "UpdatedBetLimitSuccessfully": "投注限额已成功更新."
+        "UpdatedBetLimitSuccessfully": "投注限额已成功更新.",
+        "Y7StakeLevelRequired": "每种投注类型至少需要选择一个投注限额。"
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["zh-tw"] = {
         "MemberStakeLevelMustBeSelectedForBetType": "每項投注類別需至少選擇一個投注限額.",
         "Msg_10034": "這帳號的上線無投註本金級別.",
-        "UpdatedBetLimitSuccessfully": "投注限額已成功更新."
+        "UpdatedBetLimitSuccessfully": "投注限額已成功更新.",
+        "Y7StakeLevelRequired": "每種投注類型至少需要選擇一個投注限額。"
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["th-th"] = {
         "MemberStakeLevelMustBeSelectedForBetType": "การเดิมพันแต่ละประเภทต้องมีค่าวงเงินเดิมพันหนึ่งค่าให้เลือก",
         "Msg_10034": "อัปไลน์ของผู้ใช้รายนี้ไม่มีระดับเงินเดิมพัน",
-        "UpdatedBetLimitSuccessfully": "ปรับข้อมูลวงเงินเดิมพันเรียบร้อยแล้ว"
+        "UpdatedBetLimitSuccessfully": "ปรับข้อมูลวงเงินเดิมพันเรียบร้อยแล้ว",
+        "Y7StakeLevelRequired": "การเดิมพันแต่ละประเภทจะต้องเลือกอย่างน้อยหนึ่งวงเงินเดิมพัน"
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["vi-vn"] = {
         "MemberStakeLevelMustBeSelectedForBetType": "Mỗi loại cược phải chọn một giá trị Giới hạn cược.",
         "Msg_10034": "Cấp trên của người dùng này chưa cấu hình cấp độ đặt cược.",
-        "UpdatedBetLimitSuccessfully": "Cập nhật Giới hạn cược thành công."
+        "UpdatedBetLimitSuccessfully": "Cập nhật Giới hạn cược thành công.",
+        "Y7StakeLevelRequired": "Mỗi loại cược phải có ít nhất một Giới Hạn Cược."
     };
 
     angular.module("customerSetting").value("settingType7Resource", settingType7Resource);
