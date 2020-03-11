@@ -32447,7 +32447,9 @@ var CustomerSetting;
                         var toBeValidValue = value;
                         var toBeValidFormattedValue = formattedValue;
                         var allowedLength = maxLength;
-                        if (scope.precision > 0 && toBeValidFormattedValue.indexOf(_this.decimalSeparator) < 0) {
+                        if (scope.strictlyFormat
+                            && scope.precision > 0
+                            && toBeValidFormattedValue.indexOf(_this.decimalSeparator) < 0) {
                             allowedLength = maxLength - scope.precision - 1;
                         }
                         if (toBeValidFormattedValue.length > allowedLength) {

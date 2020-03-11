@@ -122,7 +122,9 @@ module CustomerSetting {
                     var toBeValidFormattedValue: string = formattedValue;
                     var allowedLength: number = maxLength;
 
-                    if (scope.precision > 0 && toBeValidFormattedValue.indexOf(this.decimalSeparator) < 0) {
+                    if (scope.strictlyFormat
+                        && scope.precision > 0
+                        && toBeValidFormattedValue.indexOf(this.decimalSeparator) < 0) {
                         allowedLength = maxLength - scope.precision - 1;
                     }
 
