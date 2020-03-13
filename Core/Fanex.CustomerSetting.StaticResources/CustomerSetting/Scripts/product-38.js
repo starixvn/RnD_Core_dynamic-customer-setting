@@ -30650,14 +30650,6 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    (function (System) {
-        System[System["nap"] = 1] = "nap";
-        System[System["alpha"] = 2] = "alpha";
-        System[System["internalAlpha"] = 3] = "internalAlpha";
-        System[System["externalNap"] = 4] = "externalNap";
-        System[System["externalNapBetSetting"] = 5] = "externalNapBetSetting";
-    })(CustomerSetting.System || (CustomerSetting.System = {}));
-    var System = CustomerSetting.System;
     (function (SettingLevel) {
         SettingLevel[SettingLevel["product"] = 1] = "product";
         SettingLevel[SettingLevel["sportType"] = 2] = "sportType";
@@ -30696,6 +30688,27 @@ var CustomerSetting;
         PositionModel[PositionModel["fixed"] = 3] = "fixed";
     })(CustomerSetting.PositionModel || (CustomerSetting.PositionModel = {}));
     var PositionModel = CustomerSetting.PositionModel;
+    var System = (function () {
+        function System() {
+        }
+        System.isY7 = function (systemId) {
+            return this.y7Alpha === systemId
+                || this.y7InternalAlpha === systemId
+                || this.y7ExternalNap === systemId
+                || this.y7ExternalNapBetSetting === systemId;
+        };
+        System.nap = 1;
+        System.alpha = 2;
+        System.internalAlpha = 3;
+        System.externalNap = 4;
+        System.externalNapBetSetting = 5;
+        System.y7Alpha = 6;
+        System.y7InternalAlpha = 7;
+        System.y7ExternalNap = 8;
+        System.y7ExternalNapBetSetting = 9;
+        return System;
+    }());
+    CustomerSetting.System = System;
     var Exceptions = (function () {
         function Exceptions() {
         }
@@ -30767,7 +30780,8 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var app = angular.module("customerSetting", []);
+    CustomerSetting.moduleName = "customerSetting";
+    var app = angular.module(CustomerSetting.moduleName, []);
     var ModuleRegister = (function () {
         function ModuleRegister() {
         }
@@ -30881,9 +30895,9 @@ var CustomerSetting;
         DefaultSettingItem.prototype.toJson = function () {
             var _this = this;
             var settingItem = {};
-            var reservedProperties = ["oldSetting", "validationState", "highlightState", "$$hashKey"];
+            var reservedProperties = ["oldSetting", "validationState", "highlightState"];
             Object.keys(this).forEach(function (prop) {
-                if (_this[prop] !== undefined && _this[prop] !== null && reservedProperties.indexOf(prop) < 0) {
+                if (_this[prop] !== undefined && _this[prop] !== null && reservedProperties.indexOf(prop) < 0 && prop.charAt(0) !== "$") {
                     if (_this[prop].toJson) {
                         settingItem[prop] = _this[prop].toJson();
                     }
@@ -31599,6 +31613,27 @@ var CustomerSetting;
                 }
             }
         }
+        Object.defineProperty(AppConfigService.prototype, "thousandSeparator", {
+            get: function () {
+                return ",";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(AppConfigService.prototype, "decimalSeparator", {
+            get: function () {
+                return ".";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(AppConfigService.prototype, "defaultPrecision", {
+            get: function () {
+                return 2;
+            },
+            enumerable: true,
+            configurable: true
+        });
         AppConfigService.prototype.getQueryPath = function () {
             return this.applicationPath + "viewCustomerSetting/querySetting?";
         };
@@ -31757,6 +31792,7 @@ var CustomerSetting;
     var SettingTypesSharedValuesService = (function () {
         function SettingTypesSharedValuesService(parametersService) {
             this.parametersService = parametersService;
+            this.systemId = parametersService.systemId;
         }
         SettingTypesSharedValuesService.prototype.register = function (setting, uplineLevel) {
             this.uplineLevel = uplineLevel;
@@ -32325,6 +32361,199 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
 })(CustomerSetting || (CustomerSetting = {}));
 
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var NumericInputDirective = (function () {
+        function NumericInputDirective($filter, appConfigService) {
+            var _this = this;
+            this.restrict = "A";
+            this.require = "ngModel";
+            this.link = function (scope, originalElement) {
+                var element = angular.element(originalElement[0]);
+                var input = element[0];
+                var maxLength = parseInt(element.attr("maxlength"), 10);
+                var modelCtrl = element.controller("ngModel");
+                var latestValidValue;
+                var latestValidFormattedValue;
+                if (scope.precision === null || scope.precision === undefined) {
+                    scope.precision = _this.defaultPrecision;
+                }
+                element.attr("inputmode", "numeric");
+                element.on("focus", function () {
+                    element.data("focused", true);
+                });
+                element.on("focusout", function () {
+                    element.data("focused", false);
+                    if (scope.strictlyFormat && scope.precision > 0) {
+                        latestValidValue = modelCtrl.$modelValue;
+                        latestValidFormattedValue = _this.numberFilter(modelCtrl.$modelValue, scope.precision);
+                        element.val(latestValidFormattedValue);
+                    }
+                });
+                element.on("mouseup", function () {
+                    if (element.data("focused")) {
+                        input.select();
+                        element.data("focused", false);
+                    }
+                });
+                element.on("keydown", function (event) {
+                    var value = element.val();
+                    var cursorPosition = input.selectionStart;
+                    if (event.keyCode === 8) {
+                        if ((input.selectionStart === input.selectionEnd)
+                            && (cursorPosition > 0)
+                            && (value[cursorPosition - 1] === _this.thousandSeparator)) {
+                            input.selectionStart = cursorPosition - 1;
+                            input.selectionEnd = cursorPosition - 1;
+                        }
+                        return;
+                    }
+                    if (event.keyCode === 46) {
+                        if ((input.selectionStart === input.selectionEnd)
+                            && (cursorPosition > 0)
+                            && (value[cursorPosition] === _this.thousandSeparator)) {
+                            input.selectionStart = cursorPosition + 1;
+                            input.selectionEnd = cursorPosition + 1;
+                        }
+                        return;
+                    }
+                    if (event.keyCode === 69) {
+                        event.preventDefault();
+                        return;
+                    }
+                });
+                modelCtrl.$formatters.unshift(function () {
+                    latestValidValue = modelCtrl.$modelValue;
+                    latestValidFormattedValue = _this.formatModelValue(latestValidValue, scope);
+                    return latestValidFormattedValue;
+                });
+                modelCtrl.$parsers.unshift(function (viewValue) {
+                    if (modelCtrl.$isEmpty(viewValue)) {
+                        latestValidValue = null;
+                        latestValidFormattedValue = viewValue;
+                        return latestValidValue;
+                    }
+                    if (latestValidFormattedValue === viewValue) {
+                        return latestValidValue;
+                    }
+                    var caretPosition = input.selectionStart;
+                    var _a = _this.parseAndFormatViewValue(viewValue, scope.precision, scope.roundingAllowed), formattedValue = _a.formattedValue, value = _a.value;
+                    if (!isNaN(value) && (scope.negativeAllowed || value >= 0)) {
+                        var toBeValidValue = value;
+                        var toBeValidFormattedValue = formattedValue;
+                        var allowedLength = maxLength;
+                        if (scope.strictlyFormat
+                            && scope.precision > 0
+                            && toBeValidFormattedValue.indexOf(_this.decimalSeparator) < 0) {
+                            allowedLength = maxLength - scope.precision - 1;
+                        }
+                        if (toBeValidFormattedValue.length > allowedLength) {
+                            toBeValidValue = latestValidValue;
+                            toBeValidFormattedValue = latestValidFormattedValue;
+                        }
+                        latestValidValue = toBeValidValue;
+                        latestValidFormattedValue = toBeValidFormattedValue;
+                    }
+                    modelCtrl.$setViewValue(latestValidFormattedValue);
+                    modelCtrl.$render();
+                    _this.setCaretPosition(input, caretPosition, viewValue, latestValidFormattedValue);
+                    return latestValidValue;
+                });
+            };
+            this.numberFilter = $filter("number");
+            this.thousandSeparator = appConfigService.thousandSeparator;
+            this.decimalSeparator = appConfigService.decimalSeparator;
+            this.defaultPrecision = appConfigService.defaultPrecision;
+        }
+        NumericInputDirective.prototype.formatModelValue = function (modelValue, scope) {
+            return scope.strictlyFormat ? this.numberFilter(modelValue, scope.precision) : this.numberFilter(modelValue);
+        };
+        NumericInputDirective.prototype.parseAndFormatViewValue = function (viewValue, precision, rounding) {
+            var value;
+            var formattedValue = "";
+            var numberParts = viewValue ? viewValue.split(this.decimalSeparator) : [];
+            if (numberParts.length > 1) {
+                if (precision > 0 && !/[\,\.]/.test(numberParts[1])) {
+                    var plainIntegerPart = numberParts[0].replace(/[\,]/g, "");
+                    var decimalPart = rounding ? numberParts[1] : numberParts[1].substring(0, precision);
+                    value = +(plainIntegerPart + this.decimalSeparator + decimalPart);
+                    if (!isNaN(value)) {
+                        formattedValue = rounding
+                            ? this.numberFilter(value, precision)
+                            : this.numberFilter(plainIntegerPart) + this.decimalSeparator + decimalPart;
+                    }
+                }
+            }
+            else if (numberParts.length > 0) {
+                var plainNumber = numberParts[0].replace(/[\,]/g, "");
+                value = +plainNumber;
+                if (!isNaN(value)) {
+                    formattedValue = this.numberFilter(value);
+                }
+            }
+            return {
+                formattedValue: formattedValue,
+                value: value
+            };
+        };
+        NumericInputDirective.prototype.setCaretPosition = function (input, originalCaretPosition, originalValue, formattedValue) {
+            var caretPosition = originalCaretPosition;
+            if (originalValue.length !== caretPosition) {
+                var offset = originalValue.length - formattedValue.length;
+                caretPosition = Math.max(0, caretPosition - offset);
+                if (input.selectionStart === input.selectionEnd) {
+                    input.selectionEnd = caretPosition;
+                }
+                input.selectionStart = caretPosition;
+            }
+        };
+        NumericInputDirective.$inject = ["$filter", "appConfigService"];
+        return NumericInputDirective;
+    }());
+    CustomerSetting.NumericInputDirective = NumericInputDirective;
+    CustomerSetting.ModuleRegister.directive("numericInput", NumericInputDirective);
+    var CustomizableNumericInputDirective = (function (_super) {
+        __extends(CustomizableNumericInputDirective, _super);
+        function CustomizableNumericInputDirective() {
+            _super.apply(this, arguments);
+        }
+        Object.defineProperty(CustomizableNumericInputDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    precision: "=?numericInput",
+                    strictlyFormat: "=?",
+                    roundingAllowed: "=?",
+                    negativeAllowed: "=?"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return CustomizableNumericInputDirective;
+    }(NumericInputDirective));
+    CustomerSetting.ModuleRegister.directive("customizableNumericInput", CustomizableNumericInputDirective);
+    var NumericInputExtension = (function () {
+        function NumericInputExtension() {
+        }
+        NumericInputExtension.extend = function (element, scope) {
+            if (this.numericInput === null) {
+                var filterService = angular.injector(["ng"]).get("$filter");
+                var appConfigService = angular.injector(["ng", CustomerSetting.moduleName]).get("appConfigService");
+                this.numericInput = new NumericInputDirective(filterService, appConfigService);
+            }
+            this.numericInput.link(scope, element, null, null, null);
+        };
+        NumericInputExtension.numericInput = null;
+        return NumericInputExtension;
+    }());
+    CustomerSetting.NumericInputExtension = NumericInputExtension;
+})(CustomerSetting || (CustomerSetting = {}));
+
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32542,6 +32771,120 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var DetectMaxHeightDirective = (function () {
+        function DetectMaxHeightDirective($window, $timeout) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var container = angular.element(element.parent());
+                var debounceResize = CustomerSetting.debounce(function () {
+                    if (!element.hasClass("ng-hide")) {
+                        _this.calculateHeight(element, container);
+                    }
+                }, 100);
+                _this.calculateHeight(element, container);
+                container.css({ "height": "auto" });
+                angular.element(_this.$window).on("resize", debounceResize);
+            };
+            this.$window = $window;
+            this.$timeout = $timeout;
+        }
+        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
+            var _this = this;
+            this.$timeout(function () {
+                var outerHeight = _this.$window.innerHeight;
+                var maxHeigth = outerHeight * 0.6;
+                var marginTop = outerHeight * 0.2 - 35;
+                element.css({
+                    "max-height": maxHeigth + "px"
+                });
+                container.css({ "margin-top": marginTop + "px" });
+            });
+        };
+        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
+        return DetectMaxHeightDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DraggableDirective = (function () {
+        function DraggableDirective($document) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
+                var container = angular.element(element.parent())[0];
+                var width;
+                var height;
+                var startX;
+                var startY;
+                var currentX;
+                var currentY;
+                draggableBanner.css({
+                    cursor: "move"
+                });
+                draggableBanner.on("mousedown", function (event) {
+                    startX = event.clientX - element[0].offsetLeft;
+                    startY = event.clientY - element[0].offsetTop;
+                    width = element[0].offsetWidth;
+                    height = element[0].offsetHeight;
+                    _this.$document.on("mousemove", mouseMove);
+                    _this.$document.on("mouseup", mouseUp);
+                });
+                var mouseMove = function (event) {
+                    currentX = event.clientX - startX;
+                    currentY = event.clientY - startY;
+                    updatePosition();
+                };
+                var mouseUp = function (event) {
+                    _this.$document.off("mousemove", mouseMove);
+                    _this.$document.off("mouseup", mouseUp);
+                };
+                function updatePosition() {
+                    if (container) {
+                        var containerClientRect = container.getBoundingClientRect();
+                        if (currentX < containerClientRect.left) {
+                            currentX = containerClientRect.left;
+                        }
+                        else if (currentX > containerClientRect.right - width) {
+                            currentX = containerClientRect.right - width;
+                        }
+                        if (currentY < containerClientRect.top) {
+                            currentY = containerClientRect.top;
+                        }
+                        else if (currentY > containerClientRect.bottom - height) {
+                            currentY = containerClientRect.bottom - height;
+                        }
+                    }
+                    element.css({
+                        "margin-top": currentY + "px",
+                        "margin-left": currentX + "px"
+                    });
+                }
+            };
+            this.$document = $document;
+        }
+        Object.defineProperty(DraggableDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    draggableBanner: "=draggable"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        DraggableDirective.$inject = ["$document"];
+        return DraggableDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var FieldHighlightingDirective = (function () {
         function FieldHighlightingDirective($window, $compile, $timeout, $templateCache, $rootScope) {
             var _this = this;
@@ -32706,120 +33049,6 @@ var CustomerSetting;
     }
     TooltipMessage.$inject = ["$injector", "$filter"];
     CustomerSetting.ModuleRegister.filter("tooltipMessage", TooltipMessage);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DetectMaxHeightDirective = (function () {
-        function DetectMaxHeightDirective($window, $timeout) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var container = angular.element(element.parent());
-                var debounceResize = CustomerSetting.debounce(function () {
-                    if (!element.hasClass("ng-hide")) {
-                        _this.calculateHeight(element, container);
-                    }
-                }, 100);
-                _this.calculateHeight(element, container);
-                container.css({ "height": "auto" });
-                angular.element(_this.$window).on("resize", debounceResize);
-            };
-            this.$window = $window;
-            this.$timeout = $timeout;
-        }
-        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
-            var _this = this;
-            this.$timeout(function () {
-                var outerHeight = _this.$window.innerHeight;
-                var maxHeigth = outerHeight * 0.6;
-                var marginTop = outerHeight * 0.2 - 35;
-                element.css({
-                    "max-height": maxHeigth + "px"
-                });
-                container.css({ "margin-top": marginTop + "px" });
-            });
-        };
-        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
-        return DetectMaxHeightDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DraggableDirective = (function () {
-        function DraggableDirective($document) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
-                var container = angular.element(element.parent())[0];
-                var width;
-                var height;
-                var startX;
-                var startY;
-                var currentX;
-                var currentY;
-                draggableBanner.css({
-                    cursor: "move"
-                });
-                draggableBanner.on("mousedown", function (event) {
-                    startX = event.clientX - element[0].offsetLeft;
-                    startY = event.clientY - element[0].offsetTop;
-                    width = element[0].offsetWidth;
-                    height = element[0].offsetHeight;
-                    _this.$document.on("mousemove", mouseMove);
-                    _this.$document.on("mouseup", mouseUp);
-                });
-                var mouseMove = function (event) {
-                    currentX = event.clientX - startX;
-                    currentY = event.clientY - startY;
-                    updatePosition();
-                };
-                var mouseUp = function (event) {
-                    _this.$document.off("mousemove", mouseMove);
-                    _this.$document.off("mouseup", mouseUp);
-                };
-                function updatePosition() {
-                    if (container) {
-                        var containerClientRect = container.getBoundingClientRect();
-                        if (currentX < containerClientRect.left) {
-                            currentX = containerClientRect.left;
-                        }
-                        else if (currentX > containerClientRect.right - width) {
-                            currentX = containerClientRect.right - width;
-                        }
-                        if (currentY < containerClientRect.top) {
-                            currentY = containerClientRect.top;
-                        }
-                        else if (currentY > containerClientRect.bottom - height) {
-                            currentY = containerClientRect.bottom - height;
-                        }
-                    }
-                    element.css({
-                        "margin-top": currentY + "px",
-                        "margin-left": currentX + "px"
-                    });
-                }
-            };
-            this.$document = $document;
-        }
-        Object.defineProperty(DraggableDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    draggableBanner: "=draggable"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        DraggableDirective.$inject = ["$document"];
-        return DraggableDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -34292,114 +34521,47 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("settingType6Message", SettingType6MessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var SettingType6LossLimitInputDirective = (function () {
-        function SettingType6LossLimitInputDirective($compile, $filter, settingType6ResourceService) {
-            var _this = this;
-            this.restrict = "A";
-            this.require = "ngModel";
+    var SettingType6LossLimitInputDirective = (function (_super) {
+        __extends(SettingType6LossLimitInputDirective, _super);
+        function SettingType6LossLimitInputDirective($filter, appConfigService, settingType6ResourceService) {
+            _super.call(this, $filter, appConfigService);
             this.controller = ["$scope", function ($scope) {
                     $scope.updateValue = function () {
                         $scope.item.validate();
                     };
                 }];
-            this.link = function (scope, element, attributes, modelCtrl) {
-                element.on("focus", function () {
-                    element.data("focused", true);
-                });
-                element.on("focusout", function () {
-                    element.data("focused", false);
-                });
-                element.on("mouseup", function () {
-                    if (element.data("focused")) {
-                        var input = element[0];
-                        input.select();
-                    }
-                });
-                element.on("keydown", function (event) {
-                    var value = element.val();
-                    var dotPistion = value.indexOf(".");
-                    var numberParts = value.split(".");
-                    var input = element[0];
-                    if (value.length === 0 && event.keyCode === 96) {
-                        event.preventDefault();
-                        return;
-                    }
-                    if ([110, 190].indexOf(event.keyCode) >= 0) {
-                        if (numberParts.length > 1) {
-                            event.preventDefault();
-                            return;
-                        }
-                        else {
-                            return;
-                        }
-                    }
-                    if ([46, 8, 9, 27, 13].indexOf(event.keyCode) >= 0
-                        || (event.keyCode === 65 && event.ctrlKey === true)
-                        || (event.keyCode >= 35 && event.keyCode <= 40)) {
-                        return;
-                    }
-                    if ((event.shiftKey || (event.keyCode < 48 || event.keyCode > 57))
-                        && (event.keyCode < 96 || event.keyCode > 105)) {
-                        event.preventDefault();
-                        return;
-                    }
-                    if (dotPistion >= 0 && dotPistion < input.selectionStart && numberParts[1].length > 1) {
-                        event.preventDefault();
-                        return;
-                    }
-                });
-                modelCtrl.$formatters.unshift(function () {
-                    if (modelCtrl.$modelValue === 0) {
-                        return _this.settingType6ResourceService.getLabel("Unlimited");
-                    }
-                    else {
-                        return _this.$filter("number")(modelCtrl.$modelValue);
-                    }
-                });
-                modelCtrl.$parsers.unshift(function (viewValue) {
-                    var input = element[0];
-                    var value = 0;
-                    var formattedValue = viewValue;
-                    var caretPosition = input.selectionStart;
-                    var numberParts = viewValue ? viewValue.split(".") : [];
-                    if (numberParts.length > 1) {
-                        var plainIntegerPart = numberParts[0].replace(/[\,]/g, "") || "0";
-                        var decimalPart = numberParts[1].replace(/[\,\.]/g, "") || "";
-                        decimalPart = decimalPart.substring(0, 2);
-                        value = parseFloat(plainIntegerPart + "." + decimalPart);
-                        formattedValue = _this.$filter("number")(plainIntegerPart) + "." + decimalPart;
-                    }
-                    else if (numberParts.length > 0) {
-                        var plainNumber = viewValue.replace(/[\,]/g, "");
-                        value = parseInt(plainNumber, 10) || 0;
-                        formattedValue = _this.$filter("number")(value);
-                    }
-                    if (value === 0) {
-                        formattedValue = "";
-                        value = null;
-                    }
-                    element.val(formattedValue);
-                    if (viewValue.length !== caretPosition) {
-                        var offset = viewValue.length - formattedValue.length;
-                        caretPosition -= offset;
-                        if (input.selectionStart === input.selectionEnd) {
-                            input.selectionEnd = caretPosition;
-                        }
-                        input.selectionStart = caretPosition;
-                    }
-                    return value;
-                });
-            };
-            this.$compile = $compile;
-            this.$filter = $filter;
             this.settingType6ResourceService = settingType6ResourceService;
         }
-        SettingType6LossLimitInputDirective.$inject = ["$compile", "$filter", "settingType6ResourceService"];
+        SettingType6LossLimitInputDirective.prototype.formatModelValue = function (modelValue, scope) {
+            if (modelValue === 0) {
+                return this.settingType6ResourceService.getLabel("Unlimited");
+            }
+            else {
+                return _super.prototype.formatModelValue.call(this, modelValue, scope);
+            }
+        };
+        SettingType6LossLimitInputDirective.prototype.parseAndFormatViewValue = function (viewValue, precision, rounding) {
+            var _a = _super.prototype.parseAndFormatViewValue.call(this, viewValue, precision, rounding), formattedValue = _a.formattedValue, value = _a.value;
+            if (value === 0) {
+                formattedValue = "";
+                value = null;
+            }
+            return {
+                formattedValue: formattedValue,
+                value: value
+            };
+        };
+        SettingType6LossLimitInputDirective.$inject = ["$filter", "appConfigService", "settingType6ResourceService"];
         return SettingType6LossLimitInputDirective;
-    }());
+    }(CustomerSetting.NumericInputDirective));
     CustomerSetting.ModuleRegister.directive("settingtype6LossLimitInput", SettingType6LossLimitInputDirective);
     var SettingType6UnlimitedCheckboxDirective = (function () {
         function SettingType6UnlimitedCheckboxDirective() {
@@ -34563,8 +34725,10 @@ var CustomerSetting;
     var numberOfCellsOnEachRow = 5;
     var SettingType7Item = (function (_super) {
         __extends(SettingType7Item, _super);
-        function SettingType7Item(settingItem, backup, customerLevel) {
+        function SettingType7Item(settingItem, backup, customerLevel, systemId) {
             if (backup === void 0) { backup = false; }
+            if (customerLevel === void 0) { customerLevel = null; }
+            if (systemId === void 0) { systemId = 0; }
             _super.call(this, settingItem);
             if (settingItem) {
                 this.stakeRanges = new Array();
@@ -34573,6 +34737,7 @@ var CustomerSetting;
                         return new SettingType7StakeRange(stakeLevelValue, true);
                     });
                 }
+                this.systemId = systemId;
                 this.customerLevel = customerLevel;
                 if (this.customerLevel && this.customerLevel === CustomerSetting.Level.member) {
                     var selectedStakeRanges = this.stakeRanges.filter(function (stakeRange) { return stakeRange.selected; });
@@ -34600,14 +34765,21 @@ var CustomerSetting;
         };
         SettingType7Item.prototype.validate = function () {
             var _this = this;
+            var isViolated = false;
             if (this.customerLevel && this.customerLevel === CustomerSetting.Level.member) {
-                var isViolated = true;
                 this.stakeRanges.forEach(function (stakeLevel) {
                     stakeLevel.selected = _this.selectStakeLevelId === stakeLevel.stakeLevelId;
                 });
                 isViolated = this.stakeRanges.filter(function (stakeRange) { return stakeRange.selected; }).length !== 1;
                 if (isViolated) {
                     this.validationState = new CustomerSetting.ValidationResult("MemberStakeLevelMustBeSelectedForBetType");
+                    return false;
+                }
+            }
+            else if (CustomerSetting.System.isY7(this.systemId)) {
+                isViolated = this.stakeRanges.filter(function (stakeRange) { return stakeRange.selected; }).length === 0;
+                if (isViolated) {
+                    this.validationState = new CustomerSetting.ValidationResult("Y7StakeLevelRequired", "checkAll");
                     return false;
                 }
             }
@@ -34705,7 +34877,9 @@ var CustomerSetting;
         Object.defineProperty(SettingType7CheckboxGroupDirective.prototype, "scope", {
             get: function () {
                 return {
-                    items: "="
+                    items: "=",
+                    tooltipMessage: "@?",
+                    highlightState: "=?"
                 };
             },
             enumerable: true,
@@ -34818,8 +34992,9 @@ var CustomerSetting;
             this.controller = [
                 "$scope",
                 "settingTypesSharedValuesService",
+                "parametersService",
                 "settingType7ResourceService",
-                function ($scope, settingTypesSharedValuesService, settingType7ResourceService) {
+                function ($scope, settingTypesSharedValuesService, parametersService, settingType7ResourceService) {
                     $scope.customerId = settingTypesSharedValuesService.customerId;
                     $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
                     $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
@@ -34839,7 +35014,7 @@ var CustomerSetting;
                             else {
                                 settingType.settingItems.forEach(function (item, index) {
                                     if (item) {
-                                        settingType.settingItems[index] = new CustomerSetting.SettingType7Item(item, true, $scope.customerLevel);
+                                        settingType.settingItems[index] = new CustomerSetting.SettingType7Item(item, true, $scope.customerLevel, parametersService.systemId);
                                     }
                                 });
                                 if (settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
@@ -34883,8 +35058,8 @@ $templateCache.put("settingtype1-value.htm","<div class=\"block__cell-group\" da
 $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping><adjust-member-pt-modal data-ng-if=\"settingType | editableSettingType\"></adjust-member-pt-modal></div>");
 $templateCache.put("settingtype6-win-limit-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-model=\"settingItem.winLimit\" data-ng-options=\"item.key as item.value for item in range\" data-field-highlighting data-field-name=\"winLimit\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'settingType6ResourceService\':\'winLimit\':\'unlimitedLimit\'}}\"></select><span>{{::(\'OnGivenCredit\' | settingType6Label)}}</span></div>");
 $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype6\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\">{{group[0].betTypeName}}</div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumWin\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><settingtype6-win-limit-select data-setting-item=\"item\"></settingtype6-win-limit-select></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? \'X\' : \'\'}} {{::(\'OnGivenCredit\' | settingType6Label)}}</div></div><div class=\"block__row block__row--border-top\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype6-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-field-highlighting data-field-name=\"lossLimit\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype6-unlimited-checkbox data-ng-model=\"isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType6Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentWinLossAmount\' | settingType6Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentWinLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentWinLoss(item)\">{{::(\'ClickToViewCurrentWinLossLimit\' | settingType6Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentWinLossAmount\"><div><span>{{\'Winning\' | settingType6Label}}%:</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === -2\"><span class=\"red-text\">{{\'NotAvailable\' | settingType6Label}}</span> <span>({{item.currentWinLossAmount.currentAmount | formatNumber}}/<span class=\"red-text\">{{item.currentWinLossAmount.maxWinAmount}}</span>)</span></span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === -1\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === 0\">{{item.currentWinLossAmount.winPercent}}%</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.winPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.currentAmount | formatNumber}}</span>/{{item.currentWinLossAmount.maxWinAmount | formatNumber}})</span></span></div><div><span>{{\'Losing\' | settingType6Label}}%:</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent === -1\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent === 0\">{{item.currentWinLossAmount.lossPercent}}%</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.lossPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{-item.currentWinLossAmount.currentAmount | formatNumber}}</span>/{{item.currentWinLossAmount.maxLossAmount | formatNumber}})</span></span></div></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-highlight-state=\"item.highlightState\" data-field-name=\"isAutoReset\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType6Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
-$templateCache.put("settingtype7-checkbox-group.htm","<label class=\"check-all-field\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"checked\" data-ng-click=\"checkAll()\"></label>");
-$templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype7\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel !== avaiSettingLevels.product\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': !(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member) }\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType\">{{productName}}</label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></setting-type7-checkbox-group></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-field-highlighting data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"item.stakeRanges\"></setting-type7-checkbox-group></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\"><div class=\"block__cell setting-field-wrapper\" data-ng-class=\"{ \'block__cell--no-border\': $last }\" data-ng-repeat=\"stakeRange in stakeRangeGroup\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input id=\"{{stakeRange.stakeLevelId}}\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"> <input id=\"{{stakeRange.stakeLevelId}}\" type=\"radio\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.selectStakeLevelId\" data-ng-value=\"stakeRange.stakeLevelId\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
+$templateCache.put("settingtype7-checkbox-group.htm","<label class=\"check-all-field\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-name=\"checkAll\" data-field-highlighting data-tooltip-message=\"{{tooltipMessage}}\" data-highlight-state=\"highlightState\" data-ng-model=\"checked\" data-ng-click=\"checkAll()\"></label>");
+$templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype7\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel !== avaiSettingLevels.product\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': !(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member) }\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType\">{{productName}}</label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></setting-type7-checkbox-group></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType)\" data-items=\"item.stakeRanges\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"></setting-type7-checkbox-group></div><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\" data-field-highlighting data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\"><div class=\"block__cell setting-field-wrapper\" data-ng-class=\"{ \'block__cell--no-border\': $last }\" data-ng-repeat=\"stakeRange in stakeRangeGroup\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input id=\"{{stakeRange.stakeLevelId}}\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"> <input id=\"{{stakeRange.stakeLevelId}}\" type=\"radio\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.selectStakeLevelId\" data-ng-value=\"stakeRange.stakeLevelId\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
 
 (function () {
@@ -35795,35 +35970,40 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     settingType7Resource["message"]["en-us"] = {
         "MemberStakeLevelMustBeSelectedForBetType": "Each bet type must have one Bet Limit value to be selected.",
         "Msg_10034": "This user&apos;s upline does not have Stake Level.",
-        "UpdatedBetLimitSuccessfully": "Updated Bet Limit successfully."
+        "UpdatedBetLimitSuccessfully": "Updated Bet Limit successfully.",
+        "Y7StakeLevelRequired": "Each bet type must have at least one Bet Limit value to be selected."
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["zh-cn"] = {
         "MemberStakeLevelMustBeSelectedForBetType": "每项投注类别需至少选择一个投注限额.",
         "Msg_10034": "这帐号的上线无投注本金级别.",
-        "UpdatedBetLimitSuccessfully": "投注限额已成功更新."
+        "UpdatedBetLimitSuccessfully": "投注限额已成功更新.",
+        "Y7StakeLevelRequired": "每种投注类型至少需要选择一个投注限额。"
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["zh-tw"] = {
         "MemberStakeLevelMustBeSelectedForBetType": "每項投注類別需至少選擇一個投注限額.",
         "Msg_10034": "這帳號的上線無投註本金級別.",
-        "UpdatedBetLimitSuccessfully": "投注限額已成功更新."
+        "UpdatedBetLimitSuccessfully": "投注限額已成功更新.",
+        "Y7StakeLevelRequired": "每種投注類型至少需要選擇一個投注限額。"
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["th-th"] = {
         "MemberStakeLevelMustBeSelectedForBetType": "การเดิมพันแต่ละประเภทต้องมีค่าวงเงินเดิมพันหนึ่งค่าให้เลือก",
         "Msg_10034": "อัปไลน์ของผู้ใช้รายนี้ไม่มีระดับเงินเดิมพัน",
-        "UpdatedBetLimitSuccessfully": "ปรับข้อมูลวงเงินเดิมพันเรียบร้อยแล้ว"
+        "UpdatedBetLimitSuccessfully": "ปรับข้อมูลวงเงินเดิมพันเรียบร้อยแล้ว",
+        "Y7StakeLevelRequired": "การเดิมพันแต่ละประเภทจะต้องเลือกอย่างน้อยหนึ่งวงเงินเดิมพัน"
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["vi-vn"] = {
         "MemberStakeLevelMustBeSelectedForBetType": "Mỗi loại cược phải chọn một giá trị Giới hạn cược.",
         "Msg_10034": "Cấp trên của người dùng này chưa cấu hình cấp độ đặt cược.",
-        "UpdatedBetLimitSuccessfully": "Cập nhật Giới hạn cược thành công."
+        "UpdatedBetLimitSuccessfully": "Cập nhật Giới hạn cược thành công.",
+        "Y7StakeLevelRequired": "Mỗi loại cược phải có ít nhất một Giới Hạn Cược."
     };
 
     angular.module("customerSetting").value("settingType7Resource", settingType7Resource);
