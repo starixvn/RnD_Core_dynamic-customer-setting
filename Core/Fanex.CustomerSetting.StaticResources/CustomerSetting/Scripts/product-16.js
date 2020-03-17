@@ -32361,6 +32361,98 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
 })(CustomerSetting || (CustomerSetting = {}));
 
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingResultDirective = (function () {
+        function SettingResultDirective() {
+            this.replace = true;
+            this.templateUrl = "SettingResult/setting-result.htm";
+            this.controller = ["$rootScope", "$scope", "$window", function ($rootScope, $scope, $window) {
+                    $scope.$watch("result", function (result) {
+                        $rootScope.$emit("page-height-changed");
+                        if (result) {
+                            $window.scrollTo(0, 0);
+                        }
+                    });
+                }];
+        }
+        Object.defineProperty(SettingResultDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    result: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return SettingResultDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingTypeDirectiveLoader = (function () {
+        function SettingTypeDirectiveLoader($compile) {
+            var _this = this;
+            this.replace = true;
+            this.link = function (scope, element) {
+                scope.$watch("setting.settingTypes", function () {
+                    _this.generateNodes(scope, element);
+                });
+            };
+            this.$compile = $compile;
+            this.loadedSettingTypes = new Array();
+        }
+        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
+            get: function () {
+                return {
+                    setting: "=",
+                    update: "&"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
+            var _this = this;
+            if (scope.setting && scope.setting.settingTypes && angular.isArray(scope.setting.settingTypes)) {
+                scope.setting.settingTypes.forEach(function (settingType, index) {
+                    var loaded = _this.loadedSettingTypes.some(function (item) {
+                        return item === settingType.id;
+                    });
+                    if (!loaded) {
+                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
+                        var newNodeParts = [
+                            "<",
+                            settingTypeName,
+                            " data-setting-type=\"setting.settingTypes[",
+                            index,
+                            "]\"",
+                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
+                            "></",
+                            settingTypeName,
+                            ">"
+                        ];
+                        var settingTypeElement = angular.element(newNodeParts.join(""));
+                        if (index === scope.setting.settingTypes.length - 1) {
+                            settingTypeElement.addClass("last-setting-type");
+                        }
+                        element.append(settingTypeElement);
+                        _this.$compile(settingTypeElement)(scope);
+                        _this.loadedSettingTypes.push(settingType.id);
+                    }
+                });
+            }
+        };
+        SettingTypeDirectiveLoader.$inject = ["$compile"];
+        return SettingTypeDirectiveLoader;
+    }());
+    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+})(CustomerSetting || (CustomerSetting = {}));
+
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -32552,98 +32644,6 @@ var CustomerSetting;
         return NumericInputExtension;
     }());
     CustomerSetting.NumericInputExtension = NumericInputExtension;
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingResultDirective = (function () {
-        function SettingResultDirective() {
-            this.replace = true;
-            this.templateUrl = "SettingResult/setting-result.htm";
-            this.controller = ["$rootScope", "$scope", "$window", function ($rootScope, $scope, $window) {
-                    $scope.$watch("result", function (result) {
-                        $rootScope.$emit("page-height-changed");
-                        if (result) {
-                            $window.scrollTo(0, 0);
-                        }
-                    });
-                }];
-        }
-        Object.defineProperty(SettingResultDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    result: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return SettingResultDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingTypeDirectiveLoader = (function () {
-        function SettingTypeDirectiveLoader($compile) {
-            var _this = this;
-            this.replace = true;
-            this.link = function (scope, element) {
-                scope.$watch("setting.settingTypes", function () {
-                    _this.generateNodes(scope, element);
-                });
-            };
-            this.$compile = $compile;
-            this.loadedSettingTypes = new Array();
-        }
-        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
-            get: function () {
-                return {
-                    setting: "=",
-                    update: "&"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
-            var _this = this;
-            if (scope.setting && scope.setting.settingTypes && angular.isArray(scope.setting.settingTypes)) {
-                scope.setting.settingTypes.forEach(function (settingType, index) {
-                    var loaded = _this.loadedSettingTypes.some(function (item) {
-                        return item === settingType.id;
-                    });
-                    if (!loaded) {
-                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
-                        var newNodeParts = [
-                            "<",
-                            settingTypeName,
-                            " data-setting-type=\"setting.settingTypes[",
-                            index,
-                            "]\"",
-                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
-                            "></",
-                            settingTypeName,
-                            ">"
-                        ];
-                        var settingTypeElement = angular.element(newNodeParts.join(""));
-                        if (index === scope.setting.settingTypes.length - 1) {
-                            settingTypeElement.addClass("last-setting-type");
-                        }
-                        element.append(settingTypeElement);
-                        _this.$compile(settingTypeElement)(scope);
-                        _this.loadedSettingTypes.push(settingType.id);
-                    }
-                });
-            }
-        };
-        SettingTypeDirectiveLoader.$inject = ["$compile"];
-        return SettingTypeDirectiveLoader;
-    }());
-    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -35229,7 +35229,7 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
         "MaxPerMatchLessThanOrEqualTo": "Tiền cược tối đa cho mỗi trận phài ít hơn hoặc bằng {0}",
         "MinBetCannotBeGreaterThanMaxBet": "Tiền cược nhỏ nhất không thể lớn hơn Tiền cược lớn nhất",
         "MinBetLessThanOrEqualMaxBet": "Tiền cược nhỏ nhất phải nhỏ hơn hoặc bằng Tiền cược lớn nhất.",
-        "MinBetMoreThanOrEqualTo": "Cược Nhỏ Nhất phải lớn hơn hay bằng {1}.",
+        "MinBetMoreThanOrEqualTo": "Cược Nhỏ Nhất phải lớn hơn hay bằng {0}.",
         "RequiredField": "Thông tin này bắt buộc phải nhập.",
         "UpdateBetSettingSuccessfully": "Thiết lập về tiền cược được cập nhật thành công"
     };

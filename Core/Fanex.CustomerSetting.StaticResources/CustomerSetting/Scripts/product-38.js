@@ -32361,6 +32361,98 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
 })(CustomerSetting || (CustomerSetting = {}));
 
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingResultDirective = (function () {
+        function SettingResultDirective() {
+            this.replace = true;
+            this.templateUrl = "SettingResult/setting-result.htm";
+            this.controller = ["$rootScope", "$scope", "$window", function ($rootScope, $scope, $window) {
+                    $scope.$watch("result", function (result) {
+                        $rootScope.$emit("page-height-changed");
+                        if (result) {
+                            $window.scrollTo(0, 0);
+                        }
+                    });
+                }];
+        }
+        Object.defineProperty(SettingResultDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    result: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return SettingResultDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingTypeDirectiveLoader = (function () {
+        function SettingTypeDirectiveLoader($compile) {
+            var _this = this;
+            this.replace = true;
+            this.link = function (scope, element) {
+                scope.$watch("setting.settingTypes", function () {
+                    _this.generateNodes(scope, element);
+                });
+            };
+            this.$compile = $compile;
+            this.loadedSettingTypes = new Array();
+        }
+        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
+            get: function () {
+                return {
+                    setting: "=",
+                    update: "&"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
+            var _this = this;
+            if (scope.setting && scope.setting.settingTypes && angular.isArray(scope.setting.settingTypes)) {
+                scope.setting.settingTypes.forEach(function (settingType, index) {
+                    var loaded = _this.loadedSettingTypes.some(function (item) {
+                        return item === settingType.id;
+                    });
+                    if (!loaded) {
+                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
+                        var newNodeParts = [
+                            "<",
+                            settingTypeName,
+                            " data-setting-type=\"setting.settingTypes[",
+                            index,
+                            "]\"",
+                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
+                            "></",
+                            settingTypeName,
+                            ">"
+                        ];
+                        var settingTypeElement = angular.element(newNodeParts.join(""));
+                        if (index === scope.setting.settingTypes.length - 1) {
+                            settingTypeElement.addClass("last-setting-type");
+                        }
+                        element.append(settingTypeElement);
+                        _this.$compile(settingTypeElement)(scope);
+                        _this.loadedSettingTypes.push(settingType.id);
+                    }
+                });
+            }
+        };
+        SettingTypeDirectiveLoader.$inject = ["$compile"];
+        return SettingTypeDirectiveLoader;
+    }());
+    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+})(CustomerSetting || (CustomerSetting = {}));
+
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -32557,98 +32649,6 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var SettingResultDirective = (function () {
-        function SettingResultDirective() {
-            this.replace = true;
-            this.templateUrl = "SettingResult/setting-result.htm";
-            this.controller = ["$rootScope", "$scope", "$window", function ($rootScope, $scope, $window) {
-                    $scope.$watch("result", function (result) {
-                        $rootScope.$emit("page-height-changed");
-                        if (result) {
-                            $window.scrollTo(0, 0);
-                        }
-                    });
-                }];
-        }
-        Object.defineProperty(SettingResultDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    result: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return SettingResultDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingTypeDirectiveLoader = (function () {
-        function SettingTypeDirectiveLoader($compile) {
-            var _this = this;
-            this.replace = true;
-            this.link = function (scope, element) {
-                scope.$watch("setting.settingTypes", function () {
-                    _this.generateNodes(scope, element);
-                });
-            };
-            this.$compile = $compile;
-            this.loadedSettingTypes = new Array();
-        }
-        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
-            get: function () {
-                return {
-                    setting: "=",
-                    update: "&"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
-            var _this = this;
-            if (scope.setting && scope.setting.settingTypes && angular.isArray(scope.setting.settingTypes)) {
-                scope.setting.settingTypes.forEach(function (settingType, index) {
-                    var loaded = _this.loadedSettingTypes.some(function (item) {
-                        return item === settingType.id;
-                    });
-                    if (!loaded) {
-                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
-                        var newNodeParts = [
-                            "<",
-                            settingTypeName,
-                            " data-setting-type=\"setting.settingTypes[",
-                            index,
-                            "]\"",
-                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
-                            "></",
-                            settingTypeName,
-                            ">"
-                        ];
-                        var settingTypeElement = angular.element(newNodeParts.join(""));
-                        if (index === scope.setting.settingTypes.length - 1) {
-                            settingTypeElement.addClass("last-setting-type");
-                        }
-                        element.append(settingTypeElement);
-                        _this.$compile(settingTypeElement)(scope);
-                        _this.loadedSettingTypes.push(settingType.id);
-                    }
-                });
-            }
-        };
-        SettingTypeDirectiveLoader.$inject = ["$compile"];
-        return SettingTypeDirectiveLoader;
-    }());
-    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
     var CopyingState = (function () {
         function CopyingState(positionModel, displayingSeconds) {
             if (displayingSeconds === void 0) { displayingSeconds = 5; }
@@ -32766,120 +32766,6 @@ var CustomerSetting;
         return CopyingSettingService;
     }());
     CustomerSetting.ModuleRegister.service("copyingSettingService", CopyingSettingService);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DetectMaxHeightDirective = (function () {
-        function DetectMaxHeightDirective($window, $timeout) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var container = angular.element(element.parent());
-                var debounceResize = CustomerSetting.debounce(function () {
-                    if (!element.hasClass("ng-hide")) {
-                        _this.calculateHeight(element, container);
-                    }
-                }, 100);
-                _this.calculateHeight(element, container);
-                container.css({ "height": "auto" });
-                angular.element(_this.$window).on("resize", debounceResize);
-            };
-            this.$window = $window;
-            this.$timeout = $timeout;
-        }
-        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
-            var _this = this;
-            this.$timeout(function () {
-                var outerHeight = _this.$window.innerHeight;
-                var maxHeigth = outerHeight * 0.6;
-                var marginTop = outerHeight * 0.2 - 35;
-                element.css({
-                    "max-height": maxHeigth + "px"
-                });
-                container.css({ "margin-top": marginTop + "px" });
-            });
-        };
-        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
-        return DetectMaxHeightDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DraggableDirective = (function () {
-        function DraggableDirective($document) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
-                var container = angular.element(element.parent())[0];
-                var width;
-                var height;
-                var startX;
-                var startY;
-                var currentX;
-                var currentY;
-                draggableBanner.css({
-                    cursor: "move"
-                });
-                draggableBanner.on("mousedown", function (event) {
-                    startX = event.clientX - element[0].offsetLeft;
-                    startY = event.clientY - element[0].offsetTop;
-                    width = element[0].offsetWidth;
-                    height = element[0].offsetHeight;
-                    _this.$document.on("mousemove", mouseMove);
-                    _this.$document.on("mouseup", mouseUp);
-                });
-                var mouseMove = function (event) {
-                    currentX = event.clientX - startX;
-                    currentY = event.clientY - startY;
-                    updatePosition();
-                };
-                var mouseUp = function (event) {
-                    _this.$document.off("mousemove", mouseMove);
-                    _this.$document.off("mouseup", mouseUp);
-                };
-                function updatePosition() {
-                    if (container) {
-                        var containerClientRect = container.getBoundingClientRect();
-                        if (currentX < containerClientRect.left) {
-                            currentX = containerClientRect.left;
-                        }
-                        else if (currentX > containerClientRect.right - width) {
-                            currentX = containerClientRect.right - width;
-                        }
-                        if (currentY < containerClientRect.top) {
-                            currentY = containerClientRect.top;
-                        }
-                        else if (currentY > containerClientRect.bottom - height) {
-                            currentY = containerClientRect.bottom - height;
-                        }
-                    }
-                    element.css({
-                        "margin-top": currentY + "px",
-                        "margin-left": currentX + "px"
-                    });
-                }
-            };
-            this.$document = $document;
-        }
-        Object.defineProperty(DraggableDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    draggableBanner: "=draggable"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        DraggableDirective.$inject = ["$document"];
-        return DraggableDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -33049,6 +32935,120 @@ var CustomerSetting;
     }
     TooltipMessage.$inject = ["$injector", "$filter"];
     CustomerSetting.ModuleRegister.filter("tooltipMessage", TooltipMessage);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DetectMaxHeightDirective = (function () {
+        function DetectMaxHeightDirective($window, $timeout) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var container = angular.element(element.parent());
+                var debounceResize = CustomerSetting.debounce(function () {
+                    if (!element.hasClass("ng-hide")) {
+                        _this.calculateHeight(element, container);
+                    }
+                }, 100);
+                _this.calculateHeight(element, container);
+                container.css({ "height": "auto" });
+                angular.element(_this.$window).on("resize", debounceResize);
+            };
+            this.$window = $window;
+            this.$timeout = $timeout;
+        }
+        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
+            var _this = this;
+            this.$timeout(function () {
+                var outerHeight = _this.$window.innerHeight;
+                var maxHeigth = outerHeight * 0.6;
+                var marginTop = outerHeight * 0.2 - 35;
+                element.css({
+                    "max-height": maxHeigth + "px"
+                });
+                container.css({ "margin-top": marginTop + "px" });
+            });
+        };
+        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
+        return DetectMaxHeightDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DraggableDirective = (function () {
+        function DraggableDirective($document) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
+                var container = angular.element(element.parent())[0];
+                var width;
+                var height;
+                var startX;
+                var startY;
+                var currentX;
+                var currentY;
+                draggableBanner.css({
+                    cursor: "move"
+                });
+                draggableBanner.on("mousedown", function (event) {
+                    startX = event.clientX - element[0].offsetLeft;
+                    startY = event.clientY - element[0].offsetTop;
+                    width = element[0].offsetWidth;
+                    height = element[0].offsetHeight;
+                    _this.$document.on("mousemove", mouseMove);
+                    _this.$document.on("mouseup", mouseUp);
+                });
+                var mouseMove = function (event) {
+                    currentX = event.clientX - startX;
+                    currentY = event.clientY - startY;
+                    updatePosition();
+                };
+                var mouseUp = function (event) {
+                    _this.$document.off("mousemove", mouseMove);
+                    _this.$document.off("mouseup", mouseUp);
+                };
+                function updatePosition() {
+                    if (container) {
+                        var containerClientRect = container.getBoundingClientRect();
+                        if (currentX < containerClientRect.left) {
+                            currentX = containerClientRect.left;
+                        }
+                        else if (currentX > containerClientRect.right - width) {
+                            currentX = containerClientRect.right - width;
+                        }
+                        if (currentY < containerClientRect.top) {
+                            currentY = containerClientRect.top;
+                        }
+                        else if (currentY > containerClientRect.bottom - height) {
+                            currentY = containerClientRect.bottom - height;
+                        }
+                    }
+                    element.css({
+                        "margin-top": currentY + "px",
+                        "margin-left": currentX + "px"
+                    });
+                }
+            };
+            this.$document = $document;
+        }
+        Object.defineProperty(DraggableDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    draggableBanner: "=draggable"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        DraggableDirective.$inject = ["$document"];
+        return DraggableDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
