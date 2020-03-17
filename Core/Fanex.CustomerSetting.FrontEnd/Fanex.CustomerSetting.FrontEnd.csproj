@@ -170,7 +170,6 @@
     <None Include="Assets\Styles\_other.scss" />
     <None Include="Assets\Styles\_shame.scss" />
     <None Include="Assets\Styles\_variables.scss" />
-    <None Include="bower.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -415,7 +414,6 @@
     <Content Include="Assets\Styles\Images\sprite.png" />
     <Content Include="Gulpfile.js" />
     <Content Include="Gulp\combine-scripts.js" />
-    <Content Include="Gulp\libraries.js" />
     <Content Include="Gulp\matrix.js" />
     <Content Include="Gulp\node-module.js" />
     <Content Include="Gulp\products-config.js" />
@@ -522,6 +520,22 @@
   <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\NumericInput\numeric-input.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-animate.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-cookies.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-mocks.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-resource.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-route.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-sanitize.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\chalk\chalk.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\gulp-util\gulp-util.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\htmlparser2\htmlparser2.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\node\node.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\through2\through2.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\tsd.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\underscore\underscore.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Typings\vinyl\vinyl.d.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

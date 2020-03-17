@@ -77,7 +77,7 @@ module.exports = function (configs) {
 
         productsConfigs.forEach(function (prodConfig) {
             var sources = [
-                path.join(process.cwd(), configs.bower, "angular/angular.js"),
+                path.join(process.cwd(), configs.nodeModules, "angular/angular.js"),
                 path.join(tempDir, "product-" + prodConfig.productId + ".js"),
                 path.join(sourceDir, "Core/**/*.js"),
                 path.join(sourceDir, "Resource/*.js")

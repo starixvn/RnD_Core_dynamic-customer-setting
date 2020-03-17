@@ -1,4 +1,4 @@
-﻿{
+{
     "name": "customer-setting-demo-site",
     "version": "0.0.1",
     "description": "Install Node.js packages to run the demostration site",
@@ -9,7 +9,6 @@
     },
     "devDependencies": {
         "gulp": "^3.9.0",
-        "gulp-bower": "^0.0.10",
         "gulp-concat": "^2.6.0",
         "gulp-if": "^1.2.5",
         "gulp-tsd": "^0.0.4",

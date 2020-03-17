@@ -19,7 +19,7 @@ module.exports = function (configs) {
 
     gulp.task("matrix:script:publish", function () {
         var sources = [
-            path.join(process.cwd(), configs.bower, "angular/angular.js"),
+            path.join(process.cwd(), configs.nodeModules, "angular/angular.js"),
             path.join(sourceDir, "**/*.{htm,js,ts}")
         ];
 

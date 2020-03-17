@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -30,6 +31,7 @@
     <OldToolsVersion>12.0</OldToolsVersion>
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -200,6 +202,112 @@
     </Content>
     <Content Include="Global.asax" />
     <None Include="bundleconfig.json" />
+    <Content Include="Content\Compass\animation\animate\bouncing\_bouncing-entrances.scss" />
+    <Content Include="Content\Compass\animation\animate\bouncing\_bouncing-exits.scss" />
+    <Content Include="Content\Compass\animation\animate\fading\_fading-entrances.scss" />
+    <Content Include="Content\Compass\animation\animate\fading\_fading-exits.scss" />
+    <Content Include="Content\Compass\animation\animate\rotating\_rotating-entrances.scss" />
+    <Content Include="Content\Compass\animation\animate\rotating\_rotating-exits.scss" />
+    <Content Include="Content\Compass\animation\animate\_attention-seekers.scss" />
+    <Content Include="Content\Compass\animation\animate\_bouncing.scss" />
+    <Content Include="Content\Compass\animation\animate\_classes.scss" />
+    <Content Include="Content\Compass\animation\animate\_fading.scss" />
+    <Content Include="Content\Compass\animation\animate\_flippers.scss" />
+    <Content Include="Content\Compass\animation\animate\_lightspeed.scss" />
+    <Content Include="Content\Compass\animation\animate\_rotating.scss" />
+    <Content Include="Content\Compass\animation\animate\_specials.scss" />
+    <Content Include="Content\Compass\animation\_animate.scss" />
+    <Content Include="Content\Compass\animation\_core.scss" />
+    <Content Include="Content\Compass\animation\_shared.scss" />
+    <Content Include="Content\Compass\compass\css3\_animation.scss" />
+    <Content Include="Content\Compass\compass\css3\_appearance.scss" />
+    <Content Include="Content\Compass\compass\css3\_background-clip.scss" />
+    <Content Include="Content\Compass\compass\css3\_background-origin.scss" />
+    <Content Include="Content\Compass\compass\css3\_background-size.scss" />
+    <Content Include="Content\Compass\compass\css3\_border-radius.scss" />
+    <Content Include="Content\Compass\compass\css3\_box-shadow.scss" />
+    <Content Include="Content\Compass\compass\css3\_box-sizing.scss" />
+    <Content Include="Content\Compass\compass\css3\_box.scss" />
+    <Content Include="Content\Compass\compass\css3\_columns.scss" />
+    <Content Include="Content\Compass\compass\css3\_filter.scss" />
+    <Content Include="Content\Compass\compass\css3\_font-face.scss" />
+    <Content Include="Content\Compass\compass\css3\_hyphenation.scss" />
+    <Content Include="Content\Compass\compass\css3\_images.scss" />
+    <Content Include="Content\Compass\compass\css3\_inline-block.scss" />
+    <Content Include="Content\Compass\compass\css3\_opacity.scss" />
+    <Content Include="Content\Compass\compass\css3\_pie.scss" />
+    <Content Include="Content\Compass\compass\css3\_regions.scss" />
+    <Content Include="Content\Compass\compass\css3\_shared.scss" />
+    <Content Include="Content\Compass\compass\css3\_text-shadow.scss" />
+    <Content Include="Content\Compass\compass\css3\_transform-legacy.scss" />
+    <Content Include="Content\Compass\compass\css3\_transform.scss" />
+    <Content Include="Content\Compass\compass\css3\_transition.scss" />
+    <Content Include="Content\Compass\compass\css3\_user-interface.scss" />
+    <Content Include="Content\Compass\compass\functions\_constants.scss" />
+    <Content Include="Content\Compass\compass\functions\_display.scss" />
+    <Content Include="Content\Compass\compass\functions\_lists.scss" />
+    <Content Include="Content\Compass\compass\layout\_grid-background.scss" />
+    <Content Include="Content\Compass\compass\layout\_sticky-footer.scss" />
+    <Content Include="Content\Compass\compass\layout\_stretching.scss" />
+    <Content Include="Content\Compass\compass\reset\_utilities-legacy.scss" />
+    <Content Include="Content\Compass\compass\reset\_utilities.scss" />
+    <Content Include="Content\Compass\compass\typography\links\_hover-link.scss" />
+    <Content Include="Content\Compass\compass\typography\links\_link-colors.scss" />
+    <Content Include="Content\Compass\compass\typography\links\_unstyled-link.scss" />
+    <Content Include="Content\Compass\compass\typography\lists\_bullets.scss" />
+    <Content Include="Content\Compass\compass\typography\lists\_horizontal-list.scss" />
+    <Content Include="Content\Compass\compass\typography\lists\_inline-block-list.scss" />
+    <Content Include="Content\Compass\compass\typography\lists\_inline-list.scss" />
+    <Content Include="Content\Compass\compass\typography\text\_ellipsis.scss" />
+    <Content Include="Content\Compass\compass\typography\text\_force-wrap.scss" />
+    <Content Include="Content\Compass\compass\typography\text\_nowrap.scss" />
+    <Content Include="Content\Compass\compass\typography\text\_replacement.scss" />
+    <Content Include="Content\Compass\compass\typography\_links.scss" />
+    <Content Include="Content\Compass\compass\typography\_lists.scss" />
+    <Content Include="Content\Compass\compass\typography\_text.scss" />
+    <Content Include="Content\Compass\compass\typography\_vertical_rhythm.scss" />
+    <Content Include="Content\Compass\compass\utilities\color\_contrast.scss" />
+    <Content Include="Content\Compass\compass\utilities\general\_clearfix.scss" />
+    <Content Include="Content\Compass\compass\utilities\general\_float.scss" />
+    <Content Include="Content\Compass\compass\utilities\general\_hacks.scss" />
+    <Content Include="Content\Compass\compass\utilities\general\_min.scss" />
+    <Content Include="Content\Compass\compass\utilities\general\_reset.scss" />
+    <Content Include="Content\Compass\compass\utilities\general\_tabs.scss" />
+    <Content Include="Content\Compass\compass\utilities\general\_tag-cloud.scss" />
+    <Content Include="Content\Compass\compass\utilities\links\_hover-link.scss" />
+    <Content Include="Content\Compass\compass\utilities\links\_link-colors.scss" />
+    <Content Include="Content\Compass\compass\utilities\links\_unstyled-link.scss" />
+    <Content Include="Content\Compass\compass\utilities\lists\_bullets.scss" />
+    <Content Include="Content\Compass\compass\utilities\lists\_horizontal-list.scss" />
+    <Content Include="Content\Compass\compass\utilities\lists\_inline-block-list.scss" />
+    <Content Include="Content\Compass\compass\utilities\lists\_inline-list.scss" />
+    <Content Include="Content\Compass\compass\utilities\sprites\_base.scss" />
+    <Content Include="Content\Compass\compass\utilities\sprites\_sprite-img.scss" />
+    <Content Include="Content\Compass\compass\utilities\tables\_alternating-rows-and-columns.scss" />
+    <Content Include="Content\Compass\compass\utilities\tables\_borders.scss" />
+    <Content Include="Content\Compass\compass\utilities\tables\_scaffolding.scss" />
+    <Content Include="Content\Compass\compass\utilities\text\_ellipsis.scss" />
+    <Content Include="Content\Compass\compass\utilities\text\_nowrap.scss" />
+    <Content Include="Content\Compass\compass\utilities\text\_replacement.scss" />
+    <Content Include="Content\Compass\compass\utilities\_color.scss" />
+    <Content Include="Content\Compass\compass\utilities\_general.scss" />
+    <Content Include="Content\Compass\compass\utilities\_links.scss" />
+    <Content Include="Content\Compass\compass\utilities\_lists.scss" />
+    <Content Include="Content\Compass\compass\utilities\_print.scss" />
+    <Content Include="Content\Compass\compass\utilities\_sprites.scss" />
+    <Content Include="Content\Compass\compass\utilities\_tables.scss" />
+    <Content Include="Content\Compass\compass\utilities\_text.scss" />
+    <Content Include="Content\Compass\compass\_css3.scss" />
+    <Content Include="Content\Compass\compass\_functions.scss" />
+    <Content Include="Content\Compass\compass\_layout.scss" />
+    <Content Include="Content\Compass\compass\_reset-legacy.scss" />
+    <Content Include="Content\Compass\compass\_reset.scss" />
+    <Content Include="Content\Compass\compass\_support.scss" />
+    <Content Include="Content\Compass\compass\_typography.scss" />
+    <Content Include="Content\Compass\compass\_utilities.scss" />
+    <Content Include="Content\Compass\_animate.scss" />
+    <Content Include="Content\Compass\_compass.scss" />
+    <Content Include="Content\Compass\_lemonade.scss" />
     <None Include="Gulpfile.js" />
     <Content Include="Scripts\DemoForm\demo-form.js">
       <DependentUpon>demo-form.ts</DependentUpon>
@@ -245,7 +353,6 @@
     <Content Include="Scripts\DemoForm\demo-form.ts" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bower.json" />
     <None Include="tsd.json" />
     <Content Include="Content\site.scss" />
     <Content Include="Content\site.css.map">
@@ -256,12 +363,33 @@
     <Content Include="Scripts\sample-data.json" />
     <Content Include="Scripts\Libraries\Angular\angular.min.js.map" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\Typings\angularjs\angular-animate.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\angularjs\angular-cookies.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\angularjs\angular-mocks.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\angularjs\angular-resource.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\angularjs\angular-route.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\angularjs\angular-sanitize.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\angularjs\angular.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\chalk\chalk.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\gulp-util\gulp-util.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\htmlparser2\htmlparser2.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\node\node.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\through2\through2.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\tsd.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\underscore\underscore.d.ts" />
+    <TypeScriptCompile Include="Scripts\Typings\vinyl\vinyl.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

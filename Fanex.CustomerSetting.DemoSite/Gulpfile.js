@@ -2,7 +2,6 @@
 (function (require) {
     "use strict";
 
-    var bower = require("gulp-bower");
     var concat = require("gulp-concat");
     var gulp = require("gulp");
     var gulpif = require("gulp-if");
@@ -17,7 +16,6 @@
     var paths = {
         source: "../Fanex.CustomerSetting.FrontEnd/Assets/Publish/**",
         app: "./App/",
-        bower: "./bower_components",
         content: "./Content",
         scripts: "./Scripts"
     };
@@ -31,26 +29,6 @@
             command: "reinstall",
             config: "tsd.json"
         }, callback);
-    });
-
-    gulp.task("bower:install", function () {
-        return bower();
-    });
-
-    gulp.task("compass:install", function () {
-        return gulp.src(path.join(paths.bower, "compass-mixins/lib/**"))
-                   .pipe(gulp.dest(path.join(paths.content, "Compass")));
-    });
-
-    gulp.task("libraries:copy", function () {
-        var bower = {
-            "Angular": "angular/angular*.{js,map,css}"
-        };
-
-        for (var destinationDir in bower) {
-            gulp.src(path.join(paths.bower, bower[destinationDir]))
-                .pipe(gulp.dest(path.join(paths.scripts, "Libraries", destinationDir)));
-        }
     });
 
     gulp.task("customer-setting:copy", function () {
@@ -101,8 +79,6 @@
 
     gulp.task("default", ["clean"], function () {
         runSequence(
-            ["tsd:install", "bower:install"],
-            ["compass:install", "libraries:copy"],
             "tslint:check",
             "scripts:compile",
             "customer-setting:copy");

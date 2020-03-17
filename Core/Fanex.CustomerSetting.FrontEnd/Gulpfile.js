@@ -11,7 +11,7 @@
 
     var configs = {
         gulpDir: "Gulp",
-        bower: "bower_components",
+        nodeModules: "node_modules",
         root: "Assets",
         scripts: "Scripts",
         styles: "Styles",
@@ -26,7 +26,6 @@
             customerSettingMatrix: "CustomerSettingMatrix"
         },
         configFiles: {
-            bower: "bower.json",
             tslint: "tslint.json",
             tsd: "gulp-tsd.json",
             productsConfig: "products-config.json",
@@ -50,8 +49,6 @@
         rimraf(path.join(process.cwd(), configs.root, configs.publish), callback);
     });
 
-    gulp.task("install", ["libraries:install", "tsd:install"]);
-
     gulp.task("copy-packages", function () {
         return gulp.src(path.join(process.cwd(), configs.root, configs.publish, "**/**"))
             .pipe(gulp.dest(configs.staticResourceProject));
@@ -61,7 +58,7 @@
         runSequence(["styles:publish", "scripts:publish"], "matrix:publish", "copy-packages", callback);
     });
 
-    gulp.task("default", ["install"], function () {
+    gulp.task("default", function () {
         gulp.start("publish");
     });
 })(require);
