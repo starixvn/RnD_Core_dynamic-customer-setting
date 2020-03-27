@@ -11,7 +11,7 @@
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
 
-            if (SystemType.IsY7(settingContext.System) && IsNotSportsbookRelatedProducts(query.ProductId))
+            if (SystemType.IsY7(settingContext.System))
             {
                 return;
             }
@@ -22,13 +22,6 @@
             var note = query.CustomerLevel.IsMemberLevel() ? Resources.MemberNote : Resources.SMANote;
 
             setting.AddWarningMessages(note);
-        }
-
-        private static bool IsNotSportsbookRelatedProducts(byte productId)
-        {
-            const byte sportsbook2ProductId = 16;
-
-            return productId != sportsbook2ProductId;
         }
     }
 }

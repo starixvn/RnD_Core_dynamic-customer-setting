@@ -91,38 +91,16 @@
         [TestCase(SystemType.Y7InternalAlpha)]
         [TestCase(SystemType.Y7ExternalNap)]
         [TestCase(SystemType.Y7ExternalNapBetSetting)]
-        public void PostQueryCustomerSetting_SystemIs789YAndProductIsNotSportsbook2_DoNotShowUnlimitedBetSettingNote(byte system)
+        public void PostQueryCustomerSetting_SystemIs789Y_DoNotShowUnlimitedBetSettingNote(byte system)
         {
             // Arrange.
-            const byte virtualSportsProductId = 5;
-
             _settingContext.System = system;
-            _query.ProductId = virtualSportsProductId;
 
             // Act.
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
             Assert.Null(_setting.WarningMessages);
-        }
-
-        [TestCase(SystemType.Y7Alpha)]
-        [TestCase(SystemType.Y7InternalAlpha)]
-        [TestCase(SystemType.Y7ExternalNap)]
-        [TestCase(SystemType.Y7ExternalNapBetSetting)]
-        public void PostQueryCustomerSetting_SystemIs789YAndProductIsSportsbook2_ShowUnlimitedBetSettingNote(byte system)
-        {
-            // Arrange.
-            const byte sportsbook2ProductId = 16;
-
-            _settingContext.System = system;
-            _query.ProductId = sportsbook2ProductId;
-
-            // Act.
-            _task.Invoke(_settingContext, _query, _setting);
-
-            // Assert.
-            Assert.NotNull(_setting.WarningMessages);
         }
 
         [Test]

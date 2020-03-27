@@ -4,8 +4,6 @@
 module CustomerSetting {
     "use strict";
 
-    const sportsbook2ProductId: number = 16;
-
     export class SettingType2Item extends DefaultSettingItem {
         public minBet: number;
         public maxBet: number;
@@ -35,7 +33,7 @@ module CustomerSetting {
                 this.oldSetting = new SettingType2Item(this);
             }
 
-            this.$specialCasesAllowed = !System.isY7(systemId) || productId === sportsbook2ProductId;
+            this.$specialCasesAllowed = !System.isY7(systemId);
 
             var minConstraintBySystem = this.$specialCasesAllowed ? 0 : 1;
             var uplineMinBet = this.upline ? this.upline.minBet : 0;
