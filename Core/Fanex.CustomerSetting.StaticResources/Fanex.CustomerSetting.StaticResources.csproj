@@ -82,6 +82,8 @@
     <Content Include="CustomerSetting\Scripts\product-42.min.js" />
     <Content Include="CustomerSetting\Scripts\product-41.js" />
     <Content Include="CustomerSetting\Scripts\product-41.min.js" />
+    <Content Include="CustomerSetting\Scripts\product-44.js" />
+    <Content Include="CustomerSetting\Scripts\product-44.min.js" />
     <Content Include="CustomerSetting\Scripts\product-5.js" />
     <Content Include="CustomerSetting\Scripts\product-5.min.js" />
     <Content Include="CustomerSetting\Scripts\product-28.js" />
