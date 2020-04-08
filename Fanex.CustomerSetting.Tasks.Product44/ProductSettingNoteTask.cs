@@ -11,7 +11,7 @@
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
             Check.Argument.IsNotNull(query, nameof(query));
             Check.Argument.IsNotNull(setting, nameof(setting));
-
+            Fanex.Logging.LogService.Info("ProductSettingNoteTask.Invoke was called");
             setting.AddWarningMessages(Resource.BBinSettingNote);
         }
     }
