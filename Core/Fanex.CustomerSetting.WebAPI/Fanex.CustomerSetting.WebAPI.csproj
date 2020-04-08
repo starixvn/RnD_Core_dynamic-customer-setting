@@ -272,6 +272,7 @@
     <Content Include="App_Data\PluggableTasks\settingtype-13.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-9.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-2.json" />
+    <Content Include="App_Data\PluggableTasks\product-41.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -288,6 +289,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\Fanex.CustomerSetting.Tasks.Product44\Fanex.CustomerSetting.Tasks.Product41.csproj">
+      <Project>{c2a70d3e-3d35-46eb-bff3-af224090bacb}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.Product41</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SettingTypes\SettingType11\Fanex.CustomerSetting.SettingType11\Fanex.CustomerSetting.SettingType11.csproj">
       <Project>{24fd214c-e151-4f97-95c7-924680d84c74}</Project>
       <Name>Fanex.CustomerSetting.SettingType11</Name>
