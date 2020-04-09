@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.Tasks.Product41 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For BBIN, when uplines edit member&apos;s settings will take effect on member&apos;s next transfer..
+        ///   Looks up a localized string similar to Note that: [BBIN] when you edit member&apos;s settings, these new settings will take effect on member&apos;s next transfer..
         /// </summary>
         internal static string BBinSettingNote {
             get {

@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BBinSettingNote" xml:space="preserve">
-    <value>For BBIN, when uplines edit member's settings will take effect on member's next transfer.</value>
+    <value>Note that: [BBIN] when you edit member's settings, these new settings will take effect on member's next transfer.</value>
   </data>
 </root>
