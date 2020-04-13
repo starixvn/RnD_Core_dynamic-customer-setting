@@ -668,11 +668,11 @@ select.setting-field {
 .setting-type-1 .question-block {
   margin: 5px 0; }
 
-.settingtype6 .block__item, .settingtype6 .block__item-group, .settingtype6 .block__row, .settingtype6 .settingtype7 .block__lbl-wrapper, .settingtype7 .settingtype6 .block__lbl-wrapper, .settingtype6 .settingtype7 .block__header-cell, .settingtype7 .settingtype6 .block__header-cell {
+.settingtype6 .block__item, .settingtype6 .block__item-group, .settingtype6 .block__row, .settingtype6 .settingtype7 .block__lbl-wrapper, .settingtype7 .settingtype6 .block__lbl-wrapper, .settingtype6 .settingtype7 .block__header-cell, .settingtype7 .settingtype6 .block__header-cell, .settingtype6 .settingtype17 .block__lbl-wrapper, .settingtype17 .settingtype6 .block__lbl-wrapper, .settingtype6 .settingtype17 .block__header-cell, .settingtype17 .settingtype6 .block__header-cell {
   display: table;
   table-layout: fixed; }
 
-.settingtype6 .block__column, .settingtype6 .block__cell, .settingtype6 .block__lbl, .settingtype6 .block__value, .settingtype6 .settingtype7 .check-all-field-lbl, .settingtype7 .settingtype6 .check-all-field-lbl, .settingtype6 .settingtype7 .check-all-field, .settingtype7 .settingtype6 .check-all-field, .settingtype6 .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .settingtype6 .setting-field--checkfield__check-ctrl-wrapper, .settingtype6 .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .settingtype6 .setting-field--checkfield__check-ctrl-lbl {
+.settingtype6 .block__column, .settingtype6 .block__cell, .settingtype6 .block__lbl, .settingtype6 .block__value, .settingtype6 .settingtype7 .check-all-field-lbl, .settingtype7 .settingtype6 .check-all-field-lbl, .settingtype6 .settingtype7 .check-all-field, .settingtype7 .settingtype6 .check-all-field, .settingtype6 .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .settingtype6 .setting-field--checkfield__check-ctrl-wrapper, .settingtype6 .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .settingtype6 .setting-field--checkfield__check-ctrl-lbl, .settingtype6 .settingtype17 .check-all-field-lbl, .settingtype17 .settingtype6 .check-all-field-lbl, .settingtype6 .settingtype17 .check-all-field, .settingtype17 .settingtype6 .check-all-field, .settingtype6 .settingtype17 .setting-field--checkfield__check-ctrl-wrapper, .settingtype17 .settingtype6 .setting-field--checkfield__check-ctrl-wrapper, .settingtype6 .settingtype17 .setting-field--checkfield__check-ctrl-lbl, .settingtype17 .settingtype6 .setting-field--checkfield__check-ctrl-lbl {
   display: table-cell;
   float: none;
   vertical-align: middle; }
@@ -810,11 +810,11 @@ select.setting-field {
 .settingtype8 .modal {
   width: 80%; }
 
-.settingtype10 .settingtype6 .block__item-group, .settingtype6 .settingtype10 .block__item-group, .settingtype10 .settingtype7 .block__lbl-wrapper, .settingtype7 .settingtype10 .block__lbl-wrapper, .settingtype10 .settingtype7 .block__header-cell, .settingtype7 .settingtype10 .block__header-cell, .settingtype10 .block__item, .settingtype10 .block__row, .settingtype10 .settingtype12 .block__item-group, .settingtype12 .settingtype10 .block__item-group {
+.settingtype10 .settingtype6 .block__item-group, .settingtype6 .settingtype10 .block__item-group, .settingtype10 .settingtype7 .block__lbl-wrapper, .settingtype7 .settingtype10 .block__lbl-wrapper, .settingtype10 .settingtype7 .block__header-cell, .settingtype7 .settingtype10 .block__header-cell, .settingtype10 .block__item, .settingtype10 .block__row, .settingtype10 .settingtype12 .block__item-group, .settingtype12 .settingtype10 .block__item-group, .settingtype10 .settingtype17 .block__lbl-wrapper, .settingtype17 .settingtype10 .block__lbl-wrapper, .settingtype10 .settingtype17 .block__header-cell, .settingtype17 .settingtype10 .block__header-cell {
   display: table;
   table-layout: fixed; }
 
-.settingtype10 .settingtype6 .block__column, .settingtype6 .settingtype10 .block__column, .settingtype10 .settingtype7 .check-all-field-lbl, .settingtype7 .settingtype10 .check-all-field-lbl, .settingtype10 .settingtype7 .check-all-field, .settingtype7 .settingtype10 .check-all-field, .settingtype10 .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .settingtype10 .setting-field--checkfield__check-ctrl-wrapper, .settingtype10 .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .settingtype10 .setting-field--checkfield__check-ctrl-lbl, .settingtype10 .block__cell, .settingtype10 .block__lbl, .settingtype10 .block__value, .settingtype10 .settingtype12 .block__column, .settingtype12 .settingtype10 .block__column {
+.settingtype10 .settingtype6 .block__column, .settingtype6 .settingtype10 .block__column, .settingtype10 .settingtype7 .check-all-field-lbl, .settingtype7 .settingtype10 .check-all-field-lbl, .settingtype10 .settingtype7 .check-all-field, .settingtype7 .settingtype10 .check-all-field, .settingtype10 .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .settingtype10 .setting-field--checkfield__check-ctrl-wrapper, .settingtype10 .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .settingtype10 .setting-field--checkfield__check-ctrl-lbl, .settingtype10 .block__cell, .settingtype10 .block__lbl, .settingtype10 .block__value, .settingtype10 .settingtype12 .block__column, .settingtype12 .settingtype10 .block__column, .settingtype10 .settingtype17 .check-all-field-lbl, .settingtype17 .settingtype10 .check-all-field-lbl, .settingtype10 .settingtype17 .check-all-field, .settingtype17 .settingtype10 .check-all-field, .settingtype10 .settingtype17 .setting-field--checkfield__check-ctrl-wrapper, .settingtype17 .settingtype10 .setting-field--checkfield__check-ctrl-wrapper, .settingtype10 .settingtype17 .setting-field--checkfield__check-ctrl-lbl, .settingtype17 .settingtype10 .setting-field--checkfield__check-ctrl-lbl {
   display: table-cell;
   vertical-align: middle; }
 
@@ -845,11 +845,11 @@ select.setting-field {
 .settingtype10 .block__sub-header {
   padding: 0; }
 
-.settingtype12 .settingtype7 .block__lbl-wrapper, .settingtype7 .settingtype12 .block__lbl-wrapper, .settingtype12 .settingtype7 .block__header-cell, .settingtype7 .settingtype12 .block__header-cell, .settingtype12 .block__item, .settingtype12 .block__item-group, .settingtype12 .block__row {
+.settingtype12 .settingtype7 .block__lbl-wrapper, .settingtype7 .settingtype12 .block__lbl-wrapper, .settingtype12 .settingtype7 .block__header-cell, .settingtype7 .settingtype12 .block__header-cell, .settingtype12 .block__item, .settingtype12 .block__item-group, .settingtype12 .block__row, .settingtype12 .settingtype17 .block__lbl-wrapper, .settingtype17 .settingtype12 .block__lbl-wrapper, .settingtype12 .settingtype17 .block__header-cell, .settingtype17 .settingtype12 .block__header-cell {
   display: table;
   table-layout: fixed; }
 
-.settingtype12 .settingtype7 .check-all-field-lbl, .settingtype7 .settingtype12 .check-all-field-lbl, .settingtype12 .settingtype7 .check-all-field, .settingtype7 .settingtype12 .check-all-field, .settingtype12 .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .settingtype12 .setting-field--checkfield__check-ctrl-wrapper, .settingtype12 .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .settingtype12 .setting-field--checkfield__check-ctrl-lbl, .settingtype12 .block__column, .settingtype12 .block__cell, .settingtype12 .block__lbl, .settingtype12 .block__value {
+.settingtype12 .settingtype7 .check-all-field-lbl, .settingtype7 .settingtype12 .check-all-field-lbl, .settingtype12 .settingtype7 .check-all-field, .settingtype7 .settingtype12 .check-all-field, .settingtype12 .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .settingtype12 .setting-field--checkfield__check-ctrl-wrapper, .settingtype12 .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .settingtype12 .setting-field--checkfield__check-ctrl-lbl, .settingtype12 .block__column, .settingtype12 .block__cell, .settingtype12 .block__lbl, .settingtype12 .block__value, .settingtype12 .settingtype17 .check-all-field-lbl, .settingtype17 .settingtype12 .check-all-field-lbl, .settingtype12 .settingtype17 .check-all-field, .settingtype17 .settingtype12 .check-all-field, .settingtype12 .settingtype17 .setting-field--checkfield__check-ctrl-wrapper, .settingtype17 .settingtype12 .setting-field--checkfield__check-ctrl-wrapper, .settingtype12 .settingtype17 .setting-field--checkfield__check-ctrl-lbl, .settingtype17 .settingtype12 .setting-field--checkfield__check-ctrl-lbl {
   display: table-cell;
   float: none;
   vertical-align: middle; }
@@ -885,3 +885,57 @@ select.setting-field {
 
 .settingtype12 select.setting-field {
   margin-right: 5px; }
+
+.settingtype17 .settingtype6 .block__item-group, .settingtype6 .settingtype17 .block__item-group, .settingtype17 .settingtype12 .block__item-group, .settingtype12 .settingtype17 .block__item-group, .settingtype17 .block__item, .settingtype17 .block__lbl-wrapper, .settingtype17 .block__row, .settingtype17 .block__header-cell {
+  display: table;
+  table-layout: fixed; }
+
+.settingtype17 .settingtype6 .block__column, .settingtype6 .settingtype17 .block__column, .settingtype17 .settingtype12 .block__column, .settingtype12 .settingtype17 .block__column, .settingtype17 .check-all-field-lbl, .settingtype17 .check-all-field, .settingtype17 .setting-field--checkfield__check-ctrl-wrapper, .settingtype17 .setting-field--checkfield__check-ctrl-lbl, .settingtype17 .block__cell, .settingtype17 .block__lbl, .settingtype17 .block__value {
+  display: table-cell;
+  vertical-align: middle; }
+
+.settingtype17 .check-all-field-lbl {
+  padding-right: 5px;
+  width: 100%; }
+
+.settingtype17 .check-all-field {
+  padding: 0 3px; }
+
+.settingtype17 .setting-field--checkfield {
+  margin: 0; }
+  .settingtype17 .setting-field--checkfield__check-ctrl-lbl {
+    cursor: pointer;
+    padding-left: 5px; }
+
+.settingtype17 .block__item {
+  float: none;
+  height: 100%; }
+
+.settingtype17 .block__lbl {
+  padding-right: 0; }
+  .settingtype17 .block__lbl-wrapper {
+    height: 100%; }
+
+.settingtype17 .block__row {
+  width: 100%; }
+  .settingtype17 .block__row--border-top {
+    border-top: 1px solid #7c98a4; }
+
+.settingtype17 .block__cell, .settingtype17 .block__lbl, .settingtype17 .block__value {
+  float: none;
+  width: 20%; }
+
+.settingtype17 .block__value {
+  float: none;
+  width: auto; }
+
+.settingtype17 .block__sub-header {
+  padding: 0; }
+
+.settingtype17 .block__header-cell {
+  border-right: 1px solid #7c98a4;
+  table-layout: auto;
+  padding-left: 3px;
+  width: 20%; }
+  .settingtype17 .block__header-cell--no-border {
+    border: none; }

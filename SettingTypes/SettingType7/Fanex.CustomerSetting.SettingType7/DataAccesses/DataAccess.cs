@@ -19,7 +19,8 @@
                 var parameterValues = new Hashtable
                 {
                     { "custid", query.CustomerId },
-                    { "productid", query.ProductId }
+                    { "productid", query.ProductId },
+                    { "settingType", Constants.Constants.SettingTypeId }
                 };
 
                 return objectDb.Query<StakeLevelDto>(parameterValues);
@@ -37,6 +38,7 @@
                 { "ip", settingContext.IP },
                 { "stakelevel", stakeLevelXml },
                 { "msgtype", 0 },
+                { "settingType", Constants.Constants.SettingTypeId },
                 { "errcode", 0 },
                 { "errmsg", string.Empty }
             };

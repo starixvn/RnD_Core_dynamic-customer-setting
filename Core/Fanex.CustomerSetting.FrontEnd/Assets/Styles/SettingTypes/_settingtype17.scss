@@ -1,0 +1,88 @@
+﻿.settingtype17 {
+    %display-table {
+        display: table;
+        table-layout: fixed;
+    }
+
+    %display-table-cell {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .check-all-field-lbl {
+        @extend %display-table-cell;
+        padding-right: 5px;
+        width: 100%;
+    }
+
+    .check-all-field {
+        @extend %display-table-cell;
+        padding: 0 3px;
+    }
+
+    .setting-field--checkfield {
+        margin: 0;
+
+        &__check-ctrl {
+            &-wrapper, &-lbl {
+                @extend %display-table-cell;
+            }
+
+            &-lbl {
+                cursor: pointer;
+                padding-left: 5px;
+            }
+        }
+    }
+
+    .block__item {
+        @extend %display-table;
+        float: none;
+        height: 100%;
+    }
+
+    .block__lbl {
+        padding-right: 0;
+
+        &-wrapper {
+            @extend %display-table;
+            height: 100%;
+        }
+    }
+
+    .block__row {
+        @extend %display-table;
+        width: 100%;
+
+        &--border-top {
+            @include border(top);
+        }
+    }
+
+    .block__cell {
+        @extend %display-table-cell;
+        float: none;
+        width: 20%;
+    }
+
+    .block__value {
+        float: none;
+        width: auto;
+    }
+
+    .block__sub-header {
+        padding: 0;
+    }
+
+    .block__header-cell {
+        @extend %display-table;
+        @include border(right);
+        table-layout: auto;
+        padding-left: 3px;
+        width: 20%;
+
+        &--no-border {
+            border: none;
+        }
+    }
+}

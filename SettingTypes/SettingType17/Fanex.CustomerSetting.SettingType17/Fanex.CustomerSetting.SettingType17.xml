@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+    <Function Name="StakeLevel">
+        <Setting Key="CustSetting_StakeLevelSelect" SpName="Acc_CustSetting_StakeLevelSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+            <Mapping DataField="StakeLevelName" ObjectProperty="StakeLevelRange" />
+            <Mapping DataField="IsChecked" ObjectProperty="Selected" />
+        </Setting>
+
+        <Setting Key="CustSetting_StakeLevelUpd" SpName="Acc_CustSetting_StakeLevelUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    </Function>
+</Functions>
