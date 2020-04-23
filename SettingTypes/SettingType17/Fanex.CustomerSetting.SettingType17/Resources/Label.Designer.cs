@@ -68,5 +68,14 @@ namespace Fanex.CustomerSetting.SettingType17.Resources {
                 return ResourceManager.GetString("BetLimit", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} - Assign maximum &quot;{1}&quot; bet limits to member level..
+        /// </summary>
+        internal static string MemberMaxStakeLevelCanBeChoosen {
+            get {
+                return ResourceManager.GetString("MemberMaxStakeLevelCanBeChoosen", resourceCulture);
+            }
+        }
     }
 }

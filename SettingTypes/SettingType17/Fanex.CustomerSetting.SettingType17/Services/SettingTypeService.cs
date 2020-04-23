@@ -46,7 +46,7 @@
             var customerStakeLevels = new SettingType
             {
                 Name = Label.BetLimit,
-                SettingItems = MapStakeLevelItems(stakeLevelRawData)
+                SettingItems = MapStakeLevelItems(stakeLevelRawData, settingContext.Language)
             };
 
             SetSettingTypeReadOnlyWhenIndirectUplineEditMember(customerStakeLevels, query);
@@ -73,6 +73,16 @@
                     throw new CustomerSettingException(validationResult.Message);
                 }
             }
+            if (customerLevel.IsMemberLevel())
+            {
+                IResult validationResult = ValidateMemberSelectedStakeValue(settingType);
+
+                if (validationResult.IsFailed)
+                {
+                    throw new CustomerSettingException(validationResult.Message);
+                }
+
+            }
 
             IResult result = _stakeLevelDataAccess.UpdateCustomerStakeLevel(
                     settingContext,
@@ -89,16 +99,19 @@
                 settingContext.Language);
         }
 
-        private List<StakeLevelItem> MapStakeLevelItems(IEnumerable<StakeLevelDto> stakeLevelRawData)
+        private List<StakeLevelItem> MapStakeLevelItems(IEnumerable<StakeLevelDto> stakeLevelRawData, string language)
         {
             return stakeLevelRawData
-                .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId })
+                .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId, rawItem.MaxChoice })
                 .Select(group =>
                 {
                     var stakeLevelItem = new StakeLevelItem();
 
                     stakeLevelItem.SportTypeId = group.Key.SportTypeId;
                     stakeLevelItem.BetTypeId = group.Key.BetTypeId;
+                    stakeLevelItem.ShowIconTooltipMessage = group.Count() > group.Key.MaxChoice;
+                    stakeLevelItem.TooltipMessage = string.Format(Label.MemberMaxStakeLevelCanBeChoosen, ResourceService.GetSportTypeName(group.Key.SportTypeId, language), group.Key.MaxChoice);
+                    stakeLevelItem.MaxChoice = group.Key.MaxChoice;
                     stakeLevelItem.StakeRanges = group
                         .Select(item => new StakeRange(item.StakeLevelId, item.StakeLevelRange, item.Selected))
                         .ToList();
@@ -120,6 +133,23 @@
                 return new Result(
                     ErrorCodes.MemberStakeLevelMustBeSelectedForSportBetType,
                     Message.MemberStakeLevelMustBeSelectedForBetType);
+            }
+
+            return Result.Success;
+        }
+
+        private IResult ValidateMemberSelectedStakeValue(SettingType settingType)
+        {
+            var hasViolatedItem = settingType.SettingItems.Cast<StakeLevelItem>().FirstOrDefault(stakeLevelItem =>
+            {
+                return stakeLevelItem?.StakeRanges?.Count(stakeLevelValue => stakeLevelValue.Selected) > stakeLevelItem?.MaxChoice;
+            });
+
+            if (hasViolatedItem != null)
+            {
+                return new Result(
+                    ErrorCodes.MemberStakeLevelMustBeSelectedForSportBetType,
+                    string.Format(Message.Msg_10036, hasViolatedItem.MaxChoice, hasViolatedItem.SportTypeName));
             }
 
             return Result.Success;

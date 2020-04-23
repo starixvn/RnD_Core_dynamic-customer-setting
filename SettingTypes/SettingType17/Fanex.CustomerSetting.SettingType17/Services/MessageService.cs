@@ -4,7 +4,9 @@
     using CustomerSetting.Models.Messages;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.SettingType17.Models.Messages;
     using Resources;
+    using System.Resources;
 
     internal class MessageService : MessageServiceBase, IMessageService
     {
@@ -18,11 +20,26 @@
             switch (msgType)
             {
                 case MessageTypes.StakeLevelViolation:
-                    return TranslateDefaultSettingTypeViolationMessage(Message.ResourceManager, rawMessage, settingLevel, language);
+                    return TranslateViolationMessage(Message.ResourceManager, rawMessage, language);
 
                 default:
                     return base.TranslateMessage(msgType, rawMessage, settingLevel, language);
             }
+        }
+
+        private MessageContent TranslateViolationMessage(
+            ResourceManager resouceManager,
+            string rawMessage,
+            string language)
+        {
+            var mainMessage = Deserialize<MainMessage<ViolateStakeLevelUpdateSubMessage>>(rawMessage);
+
+            var translatedMainMessage = string.Format(
+                GetMessage(resouceManager, mainMessage.MessageId), 
+                mainMessage.SubMessages[0].MaxChoice, 
+                ResourceService.GetSportTypeName(mainMessage.SubMessages[0].SportType, language));
+
+            return new MessageContent(translatedMainMessage);
         }
     }
 }

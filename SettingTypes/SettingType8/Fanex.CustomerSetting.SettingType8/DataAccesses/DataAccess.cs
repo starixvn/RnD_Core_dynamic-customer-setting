@@ -72,6 +72,7 @@
                 { "ip", settingContext.IP },
                 { "stakelevel", stakeLevelGroupXml },
                 { "msgtype", 0 },
+                { "settingType", Constants.Constants.SettingTypeId },
                 { "errcode", 0 },
                 { "errmsg", string.Empty }
             };

@@ -106,6 +106,18 @@
         width: 14px;
     }
 
+    &--warning {
+        background-position: -51px 0;
+        height: 13px;
+        width: 14px;
+        &--pointer{
+            cursor: pointer;
+            &--margintop{
+                margin-top: 5px;
+            }
+        }
+    }
+
     &--collapse {
         background-position: -1px -26px;
         height: 17px;

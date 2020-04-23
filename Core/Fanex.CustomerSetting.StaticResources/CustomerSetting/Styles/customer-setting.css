@@ -333,6 +333,14 @@ th {
     background-position: -35px 0;
     height: 14px;
     width: 14px; }
+  .icon--warning {
+    background-position: -51px 0;
+    height: 13px;
+    width: 14px; }
+    .icon--warning--pointer {
+      cursor: pointer; }
+      .icon--warning--pointer--margintop {
+        margin-top: 5px; }
   .icon--collapse {
     background-position: -1px -26px;
     height: 17px;

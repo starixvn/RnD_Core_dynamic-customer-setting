@@ -1,4 +1,6 @@
-﻿namespace Fanex.CustomerSetting.SettingType17.Dtos
+﻿using Fanex.CustomerSetting.SettingType17.Resources;
+
+namespace Fanex.CustomerSetting.SettingType17.Dtos
 {
     internal class StakeLevelDto
     {
@@ -11,5 +13,7 @@
         public string StakeLevelRange { get; set; }
 
         public bool Selected { get; set; }
+
+        public int MaxChoice { get; set; }
     }
 }

@@ -10,6 +10,9 @@ module CustomerSetting {
         public stakeRanges: Array<SettingType17StakeRange>;
         public stakeRangeGroups: Array<Array<SettingType17StakeRange>>;
         public selectStakeLevelId: number;
+        public tooltipMessage: string;
+        public showIconTooltipMessage: boolean;
+        public maxChoice: number;
 
         private systemId: number;
         private customerLevel: Level;
@@ -32,6 +35,9 @@ module CustomerSetting {
                 this.systemId = systemId;
                 this.customerLevel = customerLevel;
                 this.stakeRangeGroups = this.groupStakeRanges();
+                this.tooltipMessage = settingItem.tooltipMessage;
+                this.showIconTooltipMessage = settingItem.showIconTooltipMessage;
+                this.maxChoice = settingItem.maxChoice;
             }
 
             if (backup) {
@@ -75,6 +81,7 @@ module CustomerSetting {
                 betTypeId: this.betTypeId,
                 betTypeName: this.betTypeName,
                 typeName: this.typeName,
+                maxChoice: this.maxChoice,
                 stakeRanges: []
             };
 
@@ -122,6 +129,8 @@ module CustomerSetting {
         public stakeLevelId: number;
         public stakeLevelRange: string;
         public selected: boolean;
+        public maxChoice: number;
+        public disabled: boolean;
 
         private oldStakeLevelValue: SettingType17StakeRange;
 
@@ -133,6 +142,8 @@ module CustomerSetting {
                 this.stakeLevelId = settingItem.stakeLevelId;
                 this.stakeLevelRange = settingItem.stakeLevelRange;
                 this.selected = settingItem.selected;
+                this.maxChoice = settingItem.maxChoice;
+                this.disabled = false;
             }
 
             if (backup) {
@@ -148,7 +159,8 @@ module CustomerSetting {
             return {
                 stakeLevelId: this.stakeLevelId,
                 stakeLevelRange: this.stakeLevelRange,
-                selected: this.selected
+                selected: this.selected,
+                maxChoice: this.maxChoice
             };
         }
     }

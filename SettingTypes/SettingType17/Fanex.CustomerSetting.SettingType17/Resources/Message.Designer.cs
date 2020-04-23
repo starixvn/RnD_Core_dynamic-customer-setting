@@ -79,6 +79,15 @@ namespace Fanex.CustomerSetting.SettingType17.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can only assign maximum {0} bet limits to member level for {1}..
+        /// </summary>
+        internal static string Msg_10036 {
+            get {
+                return ResourceManager.GetString("Msg_10036", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updated Bet Limit successfully..
         /// </summary>
         internal static string UpdatedBetLimitSuccessfully {

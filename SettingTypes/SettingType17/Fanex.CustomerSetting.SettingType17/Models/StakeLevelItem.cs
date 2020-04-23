@@ -15,6 +15,12 @@
 
         public List<StakeRange> StakeRanges { get; set; }
 
+        public bool ShowIconTooltipMessage { get; set; }
+
+        public string TooltipMessage { get; set; }
+
+        public int MaxChoice { get; set; }
+
         public override string ToXml()
         {
             var checkedStakeLevelIds = StakeRanges

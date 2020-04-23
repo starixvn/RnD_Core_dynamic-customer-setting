@@ -24,7 +24,7 @@
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType">
                     {{productName}}
                 </label>
-                <setting-type17-checkbox-group data-ng-if="(settingType | editableSettingType)"
+                <setting-type17-checkbox-group data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
                                               data-items="group" />
             </div>
         </div>
@@ -35,15 +35,27 @@
                  data-product="{{productId}}"
                  data-sport-type="{{item.sportTypeId}}"
                  data-bet-type="{{item.betTypeId}}">
-                <div class="block__lbl-wrapper" >
+                <div class="block__lbl-wrapper" data-ng-if="customerLevel !== avaiCustomerLevels.member">
                     <label class="check-all-field-lbl">
                         {{item | showingName:settingType.settingLevel:productName }}
                         {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
                     </label>
-                    <setting-type17-checkbox-group data-ng-if="(settingType | editableSettingType)"
-                                                  data-items="item.stakeRanges"
-                                                  data-highlight-state="item.highlightState"
-                                                  data-tooltip-message="{{item.validationState | tooltipMessage:'settingType17ResourceService'}}" />
+                    <setting-type17-checkbox-group data-ng-if="(settingType | editableSettingType) && customerLevel !== avaiCustomerLevels.member"
+                                                   data-items="item.stakeRanges"
+                                                   data-highlight-state="item.highlightState"
+                                                   data-tooltip-message="{{item.validationState | tooltipMessage:'settingType7ResourceService'}}" />
+                </div>
+                <div class="block__lbl-wrapper" data-ng-if="customerLevel === avaiCustomerLevels.member">
+                    <label class="check-all-field-lbl">
+                        {{item | showingName:settingType.settingLevel:productName }}
+                        {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
+                    </label>
+                    <setting-type17-stake-icon-tooltip data-ng-if="(settingType | editableSettingType) && customerLevel === avaiCustomerLevels.member && item.showIconTooltipMessage"
+                                                       data-items="item.stakeRanges"
+                                                       data-max-choice="item.maxChoice"
+                                                       data-tooltip-message
+                                                       data-tooltip-message-backup="{{item.tooltipMessage}}"
+                                                       data-tooltip-type />
                 </div>
             </div>
             <div class="block__value">
@@ -59,7 +71,7 @@
                                        type="checkbox"
                                        class="setting-field--checkfield__check-ctrl"
                                        data-ng-model="stakeRange.selected"
-                                       data-ng-disabled="!(settingType | editableSettingType)" />
+                                       data-ng-disabled="!(settingType | editableSettingType) || stakeRange.disabled" />
                             </div>
                             <label class="setting-field--checkfield__check-ctrl-lbl" for="{{stakeRange.stakeLevelId}}">{{stakeRange.stakeLevelRange}}</label>
                         </div>
