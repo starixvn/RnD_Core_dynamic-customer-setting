@@ -120,4 +120,7 @@
   <data name="BetLimit" xml:space="preserve">
     <value>投注限额</value>
   </data>
+  <data name="MemberMaxStakeLevelCanBeChoosen" xml:space="preserve">
+    <value>{0} - 分配最大{1}投注限额给会员。</value>
+  </data>
 </root>

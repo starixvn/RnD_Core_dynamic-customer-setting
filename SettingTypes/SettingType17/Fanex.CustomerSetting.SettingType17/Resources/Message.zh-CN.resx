@@ -123,6 +123,9 @@
   <data name="Msg_10034" xml:space="preserve">
     <value>这帐号的上线无投注本金级别.</value>
   </data>
+  <data name="Msg_10036" xml:space="preserve">
+    <value>对于{1} 您只能将最大{0} 投注限额分配给会员。</value>
+  </data>
   <data name="UpdatedBetLimitSuccessfully" xml:space="preserve">
     <value>投注限额已成功更新.</value>
   </data>

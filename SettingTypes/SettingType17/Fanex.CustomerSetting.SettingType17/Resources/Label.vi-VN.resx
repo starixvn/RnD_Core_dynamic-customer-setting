@@ -120,4 +120,7 @@
   <data name="BetLimit" xml:space="preserve">
     <value>Giới hạn cược</value>
   </data>
+  <data name="MemberMaxStakeLevelCanBeChoosen" xml:space="preserve">
+    <value>{0} - Được gán tối đa "{1}" giới hạn cược cho cấp Member.</value>
+  </data>
 </root>

@@ -120,4 +120,7 @@
   <data name="BetLimit" xml:space="preserve">
     <value>วงเงินเดิมพัน</value>
   </data>
+  <data name="MemberMaxStakeLevelCanBeChoosen" xml:space="preserve">
+    <value>{0} - กำหนดวงเงินเดิมพันสูงสุด {1} ในระดับสมาชิก</value>
+  </data>
 </root>

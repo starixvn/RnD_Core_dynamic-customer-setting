@@ -123,6 +123,9 @@
   <data name="Msg_10034" xml:space="preserve">
     <value>อัปไลน์ของผู้ใช้รายนี้ไม่มีระดับเงินเดิมพัน</value>
   </data>
+  <data name="Msg_10036" xml:space="preserve">
+    <value>คุณสามารถกำหนดวงเงินเดิมพันสูงสุด {0} เฉพาะระดับสมาชิกสำหรับ {1}</value>
+  </data>
   <data name="UpdatedBetLimitSuccessfully" xml:space="preserve">
     <value>ปรับข้อมูลวงเงินเดิมพันเรียบร้อยแล้ว</value>
   </data>
