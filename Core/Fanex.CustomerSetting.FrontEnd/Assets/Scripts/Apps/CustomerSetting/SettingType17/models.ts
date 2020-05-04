@@ -59,11 +59,11 @@ module CustomerSetting {
 
         public validate(): boolean {
             var isViolated: boolean = false;
-            if (System.isY7(this.systemId)) {
+            if (this.customerLevel === Level.member || System.isY7(this.systemId)) {
                 isViolated = this.stakeRanges.filter((stakeRange: SettingType17StakeRange) => stakeRange.selected).length === 0;
 
                 if (isViolated) {
-                    this.validationState = new ValidationResult("Y7StakeLevelRequired", "checkAll");
+                    this.validationState = new ValidationResult("Y7StakeLevelRequired", this.customerLevel === Level.member ? this.stakeRanges[0].stakeLevelId.toString() : "checkAll");
 
                     return false;
                 }

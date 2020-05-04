@@ -79,6 +79,15 @@ namespace Fanex.CustomerSetting.SettingType17.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Each bet type must have at least one Bet Limit value to be selected.
+        /// </summary>
+        internal static string Msg_10035 {
+            get {
+                return ResourceManager.GetString("Msg_10035", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can only assign maximum {0} bet limits to member level for {1}..
         /// </summary>
         internal static string Msg_10036 {

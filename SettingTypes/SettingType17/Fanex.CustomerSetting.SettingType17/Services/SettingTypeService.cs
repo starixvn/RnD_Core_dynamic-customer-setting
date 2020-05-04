@@ -64,7 +64,7 @@
         {
             Check.Argument.IsNotNull(settingType, nameof(settingType));
 
-            if (SystemType.IsY7(settingContext.System))
+            if (customerLevel.IsMemberLevel() || SystemType.IsY7(settingContext.System))
             {
                 IResult validationResult = ValidateY7SelectedStakeValue(settingType);
 
