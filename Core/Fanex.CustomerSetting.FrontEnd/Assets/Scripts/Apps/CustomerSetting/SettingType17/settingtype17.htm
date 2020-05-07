@@ -50,7 +50,7 @@
                         {{item | showingName:settingType.settingLevel:productName }}
                         {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
                     </label>
-                    <setting-type17-stake-icon-tooltip data-ng-if="(settingType | editableSettingType) && customerLevel === avaiCustomerLevels.member && item.showIconTooltipMessage"
+                    <setting-type17-stake-icon-tooltip data-ng-if="(settingType | editableSettingType) && customerLevel === avaiCustomerLevels.member && item.showIconTooltipMessage && item.maxChoice > 0"
                                                        data-items="item.stakeRanges"
                                                        data-max-choice="item.maxChoice"
                                                        data-tooltip-message
@@ -69,7 +69,7 @@
                             <div class="setting-field--checkfield__check-ctrl-wrapper">
 
                                 <input id="{{stakeRange.stakeLevelId}}"
-                                       data-ng-if="$first && customerLevel === avaiCustomerLevels.member"
+                                       data-ng-if="$first && $parent.$parent.$first && customerLevel === avaiCustomerLevels.member"
                                        type="checkbox"
                                        class="setting-field--checkfield__check-ctrl"
                                        data-ng-model="stakeRange.selected"
@@ -80,7 +80,7 @@
                                        data-ng-disabled="!(settingType | editableSettingType) || stakeRange.disabled" />
 
                                 <input id="{{stakeRange.stakeLevelId}}"
-                                       data-ng-if="!$first || customerLevel !== avaiCustomerLevels.member"
+                                       data-ng-if="!$first || !$parent.$parent.$first || customerLevel !== avaiCustomerLevels.member"
                                        type="checkbox"
                                        class="setting-field--checkfield__check-ctrl"
                                        data-ng-model="stakeRange.selected"

@@ -142,7 +142,8 @@
         {
             var hasViolatedItem = settingType.SettingItems.Cast<StakeLevelItem>().FirstOrDefault(stakeLevelItem =>
             {
-                return stakeLevelItem?.StakeRanges?.Count(stakeLevelValue => stakeLevelValue.Selected) > stakeLevelItem?.MaxChoice;
+                return stakeLevelItem?.MaxChoice > 0
+                    && stakeLevelItem?.StakeRanges?.Count(stakeLevelValue => stakeLevelValue.Selected) > stakeLevelItem?.MaxChoice;
             });
 
             if (hasViolatedItem != null)

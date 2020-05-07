@@ -34812,6 +34812,120 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var DetectMaxHeightDirective = (function () {
+        function DetectMaxHeightDirective($window, $timeout) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var container = angular.element(element.parent());
+                var debounceResize = CustomerSetting.debounce(function () {
+                    if (!element.hasClass("ng-hide")) {
+                        _this.calculateHeight(element, container);
+                    }
+                }, 100);
+                _this.calculateHeight(element, container);
+                container.css({ "height": "auto" });
+                angular.element(_this.$window).on("resize", debounceResize);
+            };
+            this.$window = $window;
+            this.$timeout = $timeout;
+        }
+        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
+            var _this = this;
+            this.$timeout(function () {
+                var outerHeight = _this.$window.innerHeight;
+                var maxHeigth = outerHeight * 0.6;
+                var marginTop = outerHeight * 0.2 - 35;
+                element.css({
+                    "max-height": maxHeigth + "px"
+                });
+                container.css({ "margin-top": marginTop + "px" });
+            });
+        };
+        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
+        return DetectMaxHeightDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DraggableDirective = (function () {
+        function DraggableDirective($document) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
+                var container = angular.element(element.parent())[0];
+                var width;
+                var height;
+                var startX;
+                var startY;
+                var currentX;
+                var currentY;
+                draggableBanner.css({
+                    cursor: "move"
+                });
+                draggableBanner.on("mousedown", function (event) {
+                    startX = event.clientX - element[0].offsetLeft;
+                    startY = event.clientY - element[0].offsetTop;
+                    width = element[0].offsetWidth;
+                    height = element[0].offsetHeight;
+                    _this.$document.on("mousemove", mouseMove);
+                    _this.$document.on("mouseup", mouseUp);
+                });
+                var mouseMove = function (event) {
+                    currentX = event.clientX - startX;
+                    currentY = event.clientY - startY;
+                    updatePosition();
+                };
+                var mouseUp = function (event) {
+                    _this.$document.off("mousemove", mouseMove);
+                    _this.$document.off("mouseup", mouseUp);
+                };
+                function updatePosition() {
+                    if (container) {
+                        var containerClientRect = container.getBoundingClientRect();
+                        if (currentX < containerClientRect.left) {
+                            currentX = containerClientRect.left;
+                        }
+                        else if (currentX > containerClientRect.right - width) {
+                            currentX = containerClientRect.right - width;
+                        }
+                        if (currentY < containerClientRect.top) {
+                            currentY = containerClientRect.top;
+                        }
+                        else if (currentY > containerClientRect.bottom - height) {
+                            currentY = containerClientRect.bottom - height;
+                        }
+                    }
+                    element.css({
+                        "margin-top": currentY + "px",
+                        "margin-left": currentX + "px"
+                    });
+                }
+            };
+            this.$document = $document;
+        }
+        Object.defineProperty(DraggableDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    draggableBanner: "=draggable"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        DraggableDirective.$inject = ["$document"];
+        return DraggableDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var FieldHighlightingDirective = (function () {
         function FieldHighlightingDirective($window, $compile, $timeout, $templateCache, $rootScope) {
             var _this = this;
@@ -34976,120 +35090,6 @@ var CustomerSetting;
     }
     TooltipMessage.$inject = ["$injector", "$filter"];
     CustomerSetting.ModuleRegister.filter("tooltipMessage", TooltipMessage);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DetectMaxHeightDirective = (function () {
-        function DetectMaxHeightDirective($window, $timeout) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var container = angular.element(element.parent());
-                var debounceResize = CustomerSetting.debounce(function () {
-                    if (!element.hasClass("ng-hide")) {
-                        _this.calculateHeight(element, container);
-                    }
-                }, 100);
-                _this.calculateHeight(element, container);
-                container.css({ "height": "auto" });
-                angular.element(_this.$window).on("resize", debounceResize);
-            };
-            this.$window = $window;
-            this.$timeout = $timeout;
-        }
-        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
-            var _this = this;
-            this.$timeout(function () {
-                var outerHeight = _this.$window.innerHeight;
-                var maxHeigth = outerHeight * 0.6;
-                var marginTop = outerHeight * 0.2 - 35;
-                element.css({
-                    "max-height": maxHeigth + "px"
-                });
-                container.css({ "margin-top": marginTop + "px" });
-            });
-        };
-        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
-        return DetectMaxHeightDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DraggableDirective = (function () {
-        function DraggableDirective($document) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
-                var container = angular.element(element.parent())[0];
-                var width;
-                var height;
-                var startX;
-                var startY;
-                var currentX;
-                var currentY;
-                draggableBanner.css({
-                    cursor: "move"
-                });
-                draggableBanner.on("mousedown", function (event) {
-                    startX = event.clientX - element[0].offsetLeft;
-                    startY = event.clientY - element[0].offsetTop;
-                    width = element[0].offsetWidth;
-                    height = element[0].offsetHeight;
-                    _this.$document.on("mousemove", mouseMove);
-                    _this.$document.on("mouseup", mouseUp);
-                });
-                var mouseMove = function (event) {
-                    currentX = event.clientX - startX;
-                    currentY = event.clientY - startY;
-                    updatePosition();
-                };
-                var mouseUp = function (event) {
-                    _this.$document.off("mousemove", mouseMove);
-                    _this.$document.off("mouseup", mouseUp);
-                };
-                function updatePosition() {
-                    if (container) {
-                        var containerClientRect = container.getBoundingClientRect();
-                        if (currentX < containerClientRect.left) {
-                            currentX = containerClientRect.left;
-                        }
-                        else if (currentX > containerClientRect.right - width) {
-                            currentX = containerClientRect.right - width;
-                        }
-                        if (currentY < containerClientRect.top) {
-                            currentY = containerClientRect.top;
-                        }
-                        else if (currentY > containerClientRect.bottom - height) {
-                            currentY = containerClientRect.bottom - height;
-                        }
-                    }
-                    element.css({
-                        "margin-top": currentY + "px",
-                        "margin-left": currentX + "px"
-                    });
-                }
-            };
-            this.$document = $document;
-        }
-        Object.defineProperty(DraggableDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    draggableBanner: "=draggable"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        DraggableDirective.$inject = ["$document"];
-        return DraggableDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -37912,7 +37912,7 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
 $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtype12\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\">{{group[0].sportTypeName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\">{{group[0].betTypeName}}</div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType12Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype12-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-field-highlighting data-field-name=\"lossLimit\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType12ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype12-unlimited-checkbox data-ng-model=\"isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType12Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentLossAmount\' | settingType12Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentLoss(item)\">{{::(\'ClickToViewCurrentLossAmount\' | settingType12Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentLossAmount\"><span>{{\'Losing\' | settingType12Label}}%:</span> <span data-ng-if=\"item.currentLossAmount.lossPercent === -1\">{{\'Unlimited\' | settingType12Label}}</span> <span data-ng-if=\"item.currentLossAmount.lossPercent === 0\">{{item.currentLossAmount.lossPercent}}%</span> <span data-ng-if=\"item.currentLossAmount.lossPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentLossAmount.lossPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentLossAmount.lossPercent >= highestPercentageRange }\">{{-item.currentLossAmount.currentAmount | formatNumber}}</span>/{{item.currentLossAmount.maxLossAmount | formatNumber}})</span></span></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-highlight-state=\"item.highlightState\" data-field-name=\"isAutoReset\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType12ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType12Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
 $templateCache.put("settingtype17-checkbox-group.htm","<label class=\"check-all-field\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-name=\"checkAll\" data-field-highlighting data-tooltip-message=\"{{tooltipMessage}}\" data-highlight-state=\"highlightState\" data-ng-model=\"checked\" data-ng-click=\"checkAll()\"></label>");
 $templateCache.put("settingtype17-stake-icon-tooltip.htm","<parent><div class=\"icon icon--warning icon--warning--pointer--margintop setting-field--checkfield__check-ctrl\" data-tooltip-message=\"{{tooltipMessage}}\" data-tooltip-type=\"{{tooltipType}}\" data-field-highlighting data-ng-mouseenter=\"showTooltip()\" data-ng-mouseleave=\"removeMessage()\"></div></parent>");
-$templateCache.put("settingtype17.htm","<div class=\"block full-width settingtype17\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel !== avaiSettingLevels.product\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': !(settingType | editableSettingType) }\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType\">{{productName}}</label><setting-type17-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></setting-type17-checkbox-group></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type17-checkbox-group data-ng-if=\"(settingType | editableSettingType) && customerLevel !== avaiCustomerLevels.member\" data-items=\"item.stakeRanges\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"></setting-type17-checkbox-group></div><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type17-stake-icon-tooltip data-ng-if=\"(settingType | editableSettingType) && customerLevel === avaiCustomerLevels.member && item.showIconTooltipMessage\" data-items=\"item.stakeRanges\" data-max-choice=\"item.maxChoice\" data-tooltip-message data-tooltip-message-backup=\"{{item.tooltipMessage}}\" data-tooltip-type></setting-type17-stake-icon-tooltip></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\"><div class=\"block__cell setting-field-wrapper\" data-ng-class=\"{ \'block__cell--no-border\': $last }\" data-ng-repeat=\"stakeRange in stakeRangeGroup\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input id=\"{{stakeRange.stakeLevelId}}\" data-ng-if=\"$first && customerLevel === avaiCustomerLevels.member\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-field-highlighting data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType17ResourceService\'}}\" data-highlight-state=\"highlightState\" data-field-name=\"{{stakeRange.stakeLevelId}}\" data-ng-disabled=\"!(settingType | editableSettingType) || stakeRange.disabled\"> <input id=\"{{stakeRange.stakeLevelId}}\" data-ng-if=\"!$first || customerLevel !== avaiCustomerLevels.member\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-ng-disabled=\"!(settingType | editableSettingType) || stakeRange.disabled\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
+$templateCache.put("settingtype17.htm","<div class=\"block full-width settingtype17\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel !== avaiSettingLevels.product\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': !(settingType | editableSettingType) }\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType\">{{productName}}</label><setting-type17-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></setting-type17-checkbox-group></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type17-checkbox-group data-ng-if=\"(settingType | editableSettingType) && customerLevel !== avaiCustomerLevels.member\" data-items=\"item.stakeRanges\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"></setting-type17-checkbox-group></div><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type17-stake-icon-tooltip data-ng-if=\"(settingType | editableSettingType) && customerLevel === avaiCustomerLevels.member && item.showIconTooltipMessage && item.maxChoice > 0\" data-items=\"item.stakeRanges\" data-max-choice=\"item.maxChoice\" data-tooltip-message data-tooltip-message-backup=\"{{item.tooltipMessage}}\" data-tooltip-type></setting-type17-stake-icon-tooltip></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\"><div class=\"block__cell setting-field-wrapper\" data-ng-class=\"{ \'block__cell--no-border\': $last }\" data-ng-repeat=\"stakeRange in stakeRangeGroup\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input id=\"{{stakeRange.stakeLevelId}}\" data-ng-if=\"$first && $parent.$parent.$first && customerLevel === avaiCustomerLevels.member\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-field-highlighting data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType17ResourceService\'}}\" data-highlight-state=\"highlightState\" data-field-name=\"{{stakeRange.stakeLevelId}}\" data-ng-disabled=\"!(settingType | editableSettingType) || stakeRange.disabled\"> <input id=\"{{stakeRange.stakeLevelId}}\" data-ng-if=\"!$first || !$parent.$parent.$first || customerLevel !== avaiCustomerLevels.member\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-ng-disabled=\"!(settingType | editableSettingType) || stakeRange.disabled\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
 
 (function () {
