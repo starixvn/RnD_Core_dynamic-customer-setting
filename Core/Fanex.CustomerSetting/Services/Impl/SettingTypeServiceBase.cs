@@ -159,6 +159,12 @@
                         productId,
                         settingType);
                 }
+                catch (CustomerSettingException customerSettingException)
+                {
+                    WriteLog(settingContext, customerId, customerLevel, uplineLevel, productId, settingType, customerSettingException);
+
+                    settingTypeResult = new SettingResult(Result.AccessDenied.Code, customerSettingException.OriginalMessage, 0, customerId, settingType.Id, settingType.Name);
+                }
                 catch (Exception ex)
                 {
                     settingTypeResult = new SettingResult(Result.SystemError, customerId, settingType.Id, settingType.Name);
