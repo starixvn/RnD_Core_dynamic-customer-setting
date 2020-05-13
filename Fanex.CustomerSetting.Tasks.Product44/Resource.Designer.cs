@@ -61,6 +61,15 @@ namespace Fanex.CustomerSetting.Tasks.Product41 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please note that your Agents will be able to assign all given bet limits to their members..
+        /// </summary>
+        internal static string AgentStakeLevelWarning {
+            get {
+                return ResourceManager.GetString("AgentStakeLevelWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Note that: [BBIN] when you edit member&apos;s settings, these new settings will take effect on member&apos;s next transfer..
         /// </summary>
         internal static string BBinSettingNote {

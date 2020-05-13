@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AgentStakeLevelWarning" xml:space="preserve">
+    <value>请注意，您的代理将可以把所有的投注限额分配给其会员。</value>
+  </data>
   <data name="BBinSettingNote" xml:space="preserve">
     <value>请知悉: [BBIN 产品] 当您更改会员的设置时，此新更改只会在会员转额进游戏后才会生效。</value>
   </data>
