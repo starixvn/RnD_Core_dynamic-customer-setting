@@ -27,7 +27,7 @@
             }
         }
 
-        private MessageContent TranslateViolationMessage(
+        internal MessageContent TranslateViolationMessage(
             ResourceManager resouceManager,
             string rawMessage,
             string language)
