@@ -1,0 +1,12 @@
+﻿<div class="right-btn-area">
+    <div title="{{'CopyTooltip' | label}}"
+         data-field-highlighting
+         data-tooltip-type="{{copyingState.type}}"
+         data-tooltip-message="{{copyingState.messageKey | message}}"
+         data-tooltip-position-model="{{copyingState.positionModel}}"
+         data-tooltip-displaying-seconds="{{copyingState.displayingSeconds}}"
+         data-displaying-timeout-callback="hideTooltip();"
+         data-ng-click="copy()">
+        <span class="icon icon--copy" data-ng-class="{ 'icon--copy--active' : isIconActive }"></span>
+    </div>
+</div>

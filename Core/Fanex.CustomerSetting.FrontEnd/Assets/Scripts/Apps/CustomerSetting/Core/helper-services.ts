@@ -97,6 +97,10 @@ module CustomerSetting {
             return this.isForcingMode;
         }
 
+        public get multipleUpdates(): boolean {
+            return this.isMultipleUpdates;
+        }
+
         private query: SettingQuery | MultipleSettingQuery;
         private lang: string;
         private isMultipleUpdates: boolean;
@@ -256,12 +260,14 @@ module CustomerSetting {
         public productId: number;
         public productName: string;
         public normalMode: boolean;
+        public multipleUpdates: boolean;
 
         private parametersService: ParametersService;
 
         constructor(parametersService: ParametersService) {
             this.parametersService = parametersService;
             this.systemId = parametersService.systemId;
+            this.multipleUpdates = parametersService.multipleUpdates;
         }
 
         public register(setting: Setting, uplineLevel: Level): void {

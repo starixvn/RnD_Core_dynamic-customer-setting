@@ -13,6 +13,7 @@ module CustomerSetting {
         sportGroups: DefaultSettingItem[][];
         togglableSettingBlocks: boolean;
         togglableSharedStates: TogglableSettingBlockSharedStates;
+        isMultiple: boolean;
     }
 
     export class DefaultSettingTypeGroupingDirective implements ng.IDirective {

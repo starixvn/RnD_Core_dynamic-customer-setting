@@ -1,0 +1,8 @@
+﻿<div>
+    <input type="checkbox"
+           ng-checked="isMinPt ? settingItem.isCheckedUpdateMinPtOnly : settingItem.isCheckedUpdateRow"
+           data-is-min-pt="{{isMinPt}}"
+           data-is-first="{{isFirst}}"
+           data-ng-disabled="isMinPt ? (settingItem.isCheckedUpdateRow || settingItem.isRowCopied) : settingItem.isRowCopied"
+           data-ng-click="click();" />
+</div>

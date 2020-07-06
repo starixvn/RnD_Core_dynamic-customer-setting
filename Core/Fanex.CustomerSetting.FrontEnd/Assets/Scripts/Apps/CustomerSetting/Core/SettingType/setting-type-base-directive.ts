@@ -6,7 +6,7 @@ module CustomerSetting {
     "use strict";
 
     interface INewSettingItem {
-        (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level, extraData?: Array<KeyValuePair<string, any>>): ISettingItem;
+        (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level, extraData?: Array<KeyValuePair<string, any>>, multipleUpdate?: boolean): ISettingItem;
     }
 
     export interface ISettingTypeDirectiveSharedScope extends ng.IScope {
@@ -47,7 +47,6 @@ module CustomerSetting {
 
                 $scope.$watch("settingType", (settingType: SettingType) => {
                     $scope.normalMode = settingTypesSharedValuesService.normalMode;
-
                     if (settingType && angular.isArray(settingType.settingItems)) {
                         if (settingType.isError) {
                             if (settingType.settingItems.length > 0) {
@@ -61,7 +60,8 @@ module CustomerSetting {
                                         true,
                                         $scope.customerLevel,
                                         $scope.uplineLevel,
-                                        settingType.extraData);
+                                        settingType.extraData,
+                                        settingTypesSharedValuesService.multipleUpdates);
                                 }
                             });
                         }
