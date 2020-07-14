@@ -1,0 +1,16 @@
+﻿<comm-rate-select data-ng-if="settingType | editableSettingType" data-setting-item="item"></comm-rate-select>
+<div class="setting-field-wrapper"
+     data-ng-if="!(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
+    {{item.commRate}}
+</div>
+<div class="align-center"
+     data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
+    <div class="block__cell w33-percent">{{item.upline.upline.commRate}}</div>
+    <div class="block__cell w33-percent">{{item.upline.commRate}}</div>
+    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.commRate}}</div>
+</div>
+<div class="align-center"
+     data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
+    <div class="block__cell w50-percent">{{item.upline.commRate}}</div>
+    <div class="block__cell block__cell--no-border w50-percent">{{item.commRate}}</div>
+</div>

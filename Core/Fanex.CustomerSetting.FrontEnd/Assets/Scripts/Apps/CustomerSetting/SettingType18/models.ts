@@ -128,7 +128,7 @@ module CustomerSetting {
                 this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return isSuccessful;
+            return this.isRowCopied;
         }
 
         public validate(): boolean {
@@ -245,12 +245,12 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) && this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
                 var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
                 this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return isSuccessful;
+            return this.isRowCopied;
         }
 
         public copyPtOnMembersFrom(source: MasterPositionTakingPartialMinPT): boolean {
@@ -469,12 +469,12 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) && this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
                 var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
                 this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return isSuccessful;
+            return this.isRowCopied;
         }
 
         public copyPtOnMembersFrom(source: AgentPositionTakingPartialMinPT): boolean {
@@ -687,12 +687,12 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) && this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
                 var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
                 this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return isSuccessful;
+            return this.isRowCopied;
         }
 
         public validate(): boolean {
@@ -836,12 +836,12 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) && this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
                 var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
                 this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return isSuccessful;
+            return this.isRowCopied;
         }
 
         public validate(): boolean {
@@ -942,12 +942,12 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) && this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
                 var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
                 this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return isSuccessful;
+            return this.isRowCopied;
         }
 
         public validate(): boolean {

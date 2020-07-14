@@ -1,0 +1,13 @@
+﻿<div data-ng-if="uplineLevel === avaiCustomerLevels.super">
+    <div class="block__lbl"></div>
+    <div class="w80-percent">
+        <div class="block__lbl w33-percent">{{::('CommissionForMaster' | commissionLabel)}}</div>
+        <div class="block__lbl w33-percent">{{::('CommissionForAgent' | commissionLabel)}}</div>
+        <div class="block__lbl block__lbl--no-border w33-percent w33-percent--last">{{::('CommissionForMember' | commissionLabel)}}</div>
+    </div>
+</div>
+<div data-ng-if="uplineLevel === avaiCustomerLevels.master">
+    <div class="block__lbl"></div>
+    <div class="block__lbl w40-percent">{{::('CommissionForAgent' | commissionLabel)}}</div>
+    <div class="block__lbl block__lbl--no-border w40-percent">{{::('CommissionForMember' | commissionLabel)}}</div>
+</div>

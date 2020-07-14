@@ -197,6 +197,28 @@ module CustomerSetting {
             });
         }
 
+        public copySettingTo(targets: Array<PositionTalkingPartialMinPt>): { numberOfCopiedItems: number, status: boolean } {
+            var numberOfCopiedItems: number = 0;
+            var status: boolean = true;
+
+            if (targets) {
+                numberOfCopiedItems = targets.filter((item: PositionTalkingPartialMinPt) => {
+                    var validItem: boolean = true;
+
+                    if (this.sportTypeId !== item.sportTypeId || this.betTypeId !== item.betTypeId || this.isLive !== item.isLive) {
+                        validItem = item.copySettingFrom(this);
+                        status = status ? validItem : status;
+
+                        return validItem ? (item.hasHighlightField(NotificationType.success) || item.hasHighlightField(NotificationType.error)) : validItem;
+                    }
+
+                    return false;
+                }).length;
+            }
+
+            return { numberOfCopiedItems: numberOfCopiedItems, status: status };
+        }
+
         public toJson(): {} {
             if (!this.isCheckedUpdateRow && !this.isCheckedUpdateMinPtOnly)
                 return null;
@@ -317,7 +339,7 @@ module CustomerSetting {
 
             this.settingItems.forEach((settingItem: ISettingItem) => {
                 var settingItemJson = settingItem.toJson();
-                if(settingItemJson != null)
+                if (settingItemJson != null)
                     settingType.settingItems.push(settingItem.toJson());
             });
 

@@ -1,0 +1,4 @@
+﻿<div data-ng-class="{ 'full-width': customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent }">
+    <default-setting-type-grouping data-ng-if="!isMultiple || customerLevel === avaiCustomerLevels.member"></default-setting-type-grouping>
+    <partial-min-pt-setting-type data-ng-if="isMultiple && customerLevel !== avaiCustomerLevels.member" data-ng-is-multiple="isMultiple"></partial-min-pt-setting-type>
+</div>
