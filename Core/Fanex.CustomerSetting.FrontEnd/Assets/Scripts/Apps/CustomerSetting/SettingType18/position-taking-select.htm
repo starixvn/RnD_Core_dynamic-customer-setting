@@ -1,7 +1,7 @@
 ﻿<div>
     <div class="setting-field-wrapper">
         <select class="setting-field"
-                ng-disabled="disabled || (isPartialMinPt && (isMinPt ? (!settingItem.isCheckedUpdateMinPtOnly || (settingItem.isRowCopied && !isFirst)) : (!settingItem.isCheckedUpdateRow || (settingItem.isRowCopied && !isFirst))))"
+                ng-disabled="disabled === 'true' || (isPartialMinPt && (isMinPt ? (!settingItem.isCheckedUpdateMinPtOnly || (settingItem.isRowCopied && !isFirst)) : (!settingItem.isCheckedUpdateRow || (settingItem.isRowCopied && !isFirst))))"
                 data-field-name="{{fieldName}}"
                 data-highlight-state="settingItem.highlightState"
                 data-tooltip-message="{{settingItem.validationState | tooltipMessage:'positionTakingResourceService':fieldName}}">

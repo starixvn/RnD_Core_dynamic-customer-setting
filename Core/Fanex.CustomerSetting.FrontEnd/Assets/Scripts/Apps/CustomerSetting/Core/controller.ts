@@ -76,7 +76,6 @@ module CustomerSetting {
 
         public update(settingTypeId?: number): void {
             var isMultiple: boolean = !!this.customerNames;
-            var isPartialUpdate: boolean = !!settingTypeId;
             var path: string = isMultiple ? this.appConfigService.getUpdateMultiplePath() : this.appConfigService.getUpdatePath();
             var editableSettings: Setting = this.setting.getEditableSettingTypes(settingTypeId);
             var setting: Setting = isMultiple || !this.settingTypesSharedValuesService.normalMode ? editableSettings : this.setting.getChanges(settingTypeId);
@@ -86,7 +85,7 @@ module CustomerSetting {
             this.$rootScope.$emit("updateSetting", settingTypeId);
             this.requestMsgResult = undefined;
 
-            if (isMultiple && !isPartialUpdate && this.hasCheckChangedInMultipleModeSettingTypes()) {
+            if (isMultiple && this.hasCheckChangedInMultipleModeSettingTypes()) {
                 setting.settingTypes = setting.settingTypes.filter((settingType: SettingType) => {
                     if (this.checkChangedInMultipleModeSettingTypes.indexOf(settingType.id) > -1) {
                         return !!this.setting.getChanges(settingType.id);
@@ -96,7 +95,7 @@ module CustomerSetting {
                 });
             }
 
-            if (setting) {
+            if (setting && setting.settingTypes.length > 0) {
                 if (editableSettings.validate()) {
                     command = this.parametersService.createSettingCommand(setting);
                     validationResult = command.validate();

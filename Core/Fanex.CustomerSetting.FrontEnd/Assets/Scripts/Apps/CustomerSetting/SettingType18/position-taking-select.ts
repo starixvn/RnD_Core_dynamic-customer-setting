@@ -41,9 +41,9 @@ module CustomerSetting {
         public templateUrl: string = "position-taking-select.htm";
 
         public controller: any = ["$scope", "valueRangeService", ($scope: IPositionTakingSelectScope, valueRangeService: ValueRangeService) => {
-            $scope.isMinPt = $scope.isMinPt == null ? false : $scope.isMinPt;
-            $scope.isPartialMinPt = $scope.isPartialMinPt == null ? false : $scope.isPartialMinPt;
-            $scope.isFirst = $scope.isFirst == null ? false : $scope.isFirst;
+            $scope.isMinPt = !!$scope.isMinPt;
+            $scope.isPartialMinPt = !!$scope.isPartialMinPt;
+            $scope.isFirst = !!$scope.isFirst;
             $scope.divisor = SettingType18Config.roundingFactor;
 
             $scope.$watchGroup(["min", "max"], (newData: number[], oldData: number[]) => {

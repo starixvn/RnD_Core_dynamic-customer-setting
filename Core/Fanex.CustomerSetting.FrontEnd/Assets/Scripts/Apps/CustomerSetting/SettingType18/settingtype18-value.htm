@@ -28,7 +28,7 @@
             </position-taking-select>
         </div>
         <div class="block__cell block__cell--no-border w4-percent align-center" ng-if="isMultiple" 
-             data-ng-class="{'disabled': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateMinPtOnly)}">
+             data-ng-class="{'disabled': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied)}">
         </div>
         <div class="block__cell w3-percent align-center" ng-if="isMultiple" data-ng-class="{'disabled': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied)}">
             <update-data-checkbox data-setting-item="item" data-is-min-pt="true" data-is-first="$first && $parent.$parent.$parent.$parent.$first"></update-data-checkbox>
@@ -87,7 +87,7 @@
             </position-taking-select>
         </div>
         <div class="block__cell block__cell--no-border w4-percent align-center" ng-if="isMultiple" 
-             data-ng-class="{'disabled': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateMinPtOnly)}">
+             data-ng-class="{'disabled': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied)}">
         </div>
         <div class="block__cell w3-percent align-center" ng-if="isMultiple" data-ng-class="{'disabled': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied)}">
             <update-data-checkbox data-setting-item="item" data-is-min-pt="true" data-is-first="$first && $parent.$parent.$parent.$parent.$first"></update-data-checkbox>
@@ -159,7 +159,7 @@
         </div>
         <div class="block__cell block__cell--no-border w21-percent align-center"
              data-ng-class="{   'w33-percent--last': (settingType | hideIsAutoColumn),
-                                'disabled': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first)  && item.isCheckedUpdateMinPtOnly)}">
+                                'disabled': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first)  && item.isRowCopied)}">
             <position-taking-select data-setting-item="item"
                                     data-field-name="n2"
                                     data-min="{{0}}"
