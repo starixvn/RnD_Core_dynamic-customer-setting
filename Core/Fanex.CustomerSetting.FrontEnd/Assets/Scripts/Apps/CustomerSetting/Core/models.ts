@@ -203,13 +203,13 @@ module CustomerSetting {
 
             if (targets) {
                 numberOfCopiedItems = targets.filter((item: PositionTalkingPartialMinPt) => {
-                    var validItem: boolean = true;
+                    var isCopiedSuccess: boolean = false;
 
                     if (this.sportTypeId !== item.sportTypeId || this.betTypeId !== item.betTypeId || this.isLive !== item.isLive) {
-                        validItem = item.copySettingFrom(this);
-                        status = status ? validItem : status;
+                        isCopiedSuccess = item.copySettingFrom(this);
+                        status = status ? isCopiedSuccess : status;
 
-                        return validItem ? (item.hasHighlightField(NotificationType.success) || item.hasHighlightField(NotificationType.error)) : validItem;
+                        return item.isRowCopied;
                     }
 
                     return false;

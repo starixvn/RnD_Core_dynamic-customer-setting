@@ -72,7 +72,7 @@
                        data-field-highlighting
                        data-field-name="iS3"
                        data-highlight-state="item.highlightState"
-                       data-ng-change="item.resetFieldHighlightState('iS3');"
+                       data-ng-change="isAutoChanged(item, 'iS3', $first && $parent.$parent.$parent.$parent.$parent.$first);"
                        data-ng-model="item.iS3" 
                        ng-disabled="!item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)"/>
             </label>
@@ -134,7 +134,7 @@
                        data-field-highlighting
                        data-field-name="iM2"
                        data-highlight-state="item.highlightState"
-                       data-ng-change="item.resetFieldHighlightState('iM2');"
+                       data-ng-change="isAutoChanged(item, 'iM2', $first && $parent.$parent.$parent.$parent.$parent.$first);"
                        data-ng-model="item.iM2"
                        ng-disabled="!item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)"/>
             </label>
@@ -197,7 +197,7 @@
                        data-field-highlighting
                        data-field-name="iS1"
                        data-highlight-state="item.highlightState"
-                       data-ng-change="item.resetFieldHighlightState('iS1');"
+                       data-ng-change="isAutoChanged(item, 'iS1', $first && $parent.$parent.$parent.$parent.$parent.$first);"
                        data-ng-model="item.iS1" 
                        ng-disabled="!item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)"/>
             </label>
@@ -235,7 +235,7 @@
                        data-field-highlighting
                        data-field-name="iM1"
                        data-highlight-state="item.highlightState"
-                       data-ng-change="item.resetFieldHighlightState('iM1');"
+                       data-ng-change="isAutoChanged(item, 'iM1', $first && $parent.$parent.$parent.$parent.$parent.$first);"
                        data-ng-model="item.iM1"  
                        ng-disabled="!item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)"/>
             </label>

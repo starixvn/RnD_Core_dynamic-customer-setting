@@ -14,13 +14,14 @@ module CustomerSetting {
         togglableSettingBlocks: boolean;
         togglableSharedStates: TogglableSettingBlockSharedStates;
         isMultiple: boolean;
+        isAutoChanged: (item: PositionTalkingPartialMinPt, fieldName: string, isFirst: boolean) => void;
     }
 
     export class PartialMinPtSettingTypeDirective implements ng.IDirective {
         public replace: boolean = true;
         public templateUrl: string = "partial-min-pt-block.htm";
 
-        public controller: any = ["$scope", ($scope: IPartialMinPTSettingTypeDirectiveScope) => {
+        public controller: any = ["$scope", "$timeout", ($scope: IPartialMinPTSettingTypeDirectiveScope, $timeout: ng.ITimeoutService) => {
             $scope.avaiSettingLevels = SettingLevel;
 
             $scope.$watch("settingType", (settingType: SettingType) => {
@@ -35,6 +36,16 @@ module CustomerSetting {
                         $scope.sportGroups = <PositionTalkingPartialMinPt[][]>[settingType.settingItems];
                     }
                 }
+            });
+
+            $scope.isAutoChanged = ((item: PositionTalkingPartialMinPt, fieldName: string, isFirst: boolean) => {
+                item.resetFieldHighlightState(fieldName);
+
+                $timeout(() => {
+                    if (isFirst && item.isCheckedUpdateRow) {
+                        $scope.$emit("copySettingType18");
+                    }
+                }, 100);
             });
         }];
 

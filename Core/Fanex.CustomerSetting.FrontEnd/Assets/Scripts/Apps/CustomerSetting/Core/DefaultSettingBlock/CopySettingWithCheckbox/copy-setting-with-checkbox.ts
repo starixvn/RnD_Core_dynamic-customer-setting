@@ -86,12 +86,10 @@ module CustomerSetting {
                             if (copyingResult.numberOfCopiedItems > 0) {
                                 source.isRowCopied = true;
                                 $scope.isIconActive = true;
-                            }
-
-                            if (!copyingResult.status) {
-                                $scope.copyingState.fail();
-                            } else if (copyingResult.numberOfCopiedItems > 0) {
-                                $scope.copyingState.succeed();
+                                if (copyingResult.status)
+                                    $scope.copyingState.succeed();
+                                else
+                                    $scope.copyingState.fail();
                             } else {
                                 $scope.copyingState.none();
                                 return;

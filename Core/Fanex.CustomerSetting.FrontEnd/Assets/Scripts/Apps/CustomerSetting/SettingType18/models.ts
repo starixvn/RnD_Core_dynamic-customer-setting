@@ -89,6 +89,7 @@ module CustomerSetting {
 
         public copySettingFrom(source: SuperPositionTakingPartialMinPT): boolean {
             var isSuccessful: boolean = true;
+            var isCopySuccess: boolean = false;
             var backupS4: number;
             var backupM4: number;
             var backupA4: number;
@@ -124,11 +125,12 @@ module CustomerSetting {
                 }
 
                 this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
-                this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
+                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return this.isRowCopied;
+            return isCopySuccess;
         }
 
         public validate(): boolean {
@@ -199,6 +201,7 @@ module CustomerSetting {
 
         public copySettingFrom(source: MasterPositionTakingPartialMinPT): boolean {
             var isSuccessful: boolean = true;
+            var isCopySuccess: boolean = false;
             var backupIs3: boolean;
             var backupN3: number;
             var backupM3: number;
@@ -219,7 +222,6 @@ module CustomerSetting {
                 this.s3 = source.s3;
 
                 isSuccessful = this.validate();
-
                 if (!isSuccessful) {
                     // Cheating: force the validationState to point to [SuperPT] field when restoring the old data
                     // in the case that the new [SuperAutoPT] violates the constraints.
@@ -246,11 +248,12 @@ module CustomerSetting {
                 }
 
                 this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
-                this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
+                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return this.isRowCopied;
+            return isCopySuccess;
         }
 
         public copyPtOnMembersFrom(source: MasterPositionTakingPartialMinPT): boolean {
@@ -423,6 +426,7 @@ module CustomerSetting {
 
         public copySettingFrom(source: AgentPositionTakingPartialMinPT): boolean {
             var isSuccessful: boolean = true;
+            var isCopySuccess: boolean = false;
             var backupIm2: boolean;
             var backupN2: number;
             var backupA2: number;
@@ -470,11 +474,12 @@ module CustomerSetting {
                 }
 
                 this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
-                this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
+                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return this.isRowCopied;
+            return isCopySuccess;
         }
 
         public copyPtOnMembersFrom(source: AgentPositionTakingPartialMinPT): boolean {
@@ -646,6 +651,7 @@ module CustomerSetting {
 
         public copySettingFrom(source: SuperPositionTakingOnMemberPartialMinPT): boolean {
             var isSuccessful: boolean = true;
+            var isCopySuccess: boolean = false;
             var backupIs1: boolean;
             var backupUs1: number;
             var backups1: number;
@@ -688,11 +694,12 @@ module CustomerSetting {
                 }
 
                 this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
-                this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
+                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return this.isRowCopied;
+            return isCopySuccess;
         }
 
         public validate(): boolean {
@@ -796,6 +803,7 @@ module CustomerSetting {
 
         public copySettingFrom(source: MasterPositionTakingOnMemberPartialMinPT): boolean {
             var isSuccessful: boolean = true;
+            var isCopySuccess: boolean = false;
             var backupIm1: boolean;
             var backupUm1: number;
             var backupM1: number;
@@ -837,11 +845,12 @@ module CustomerSetting {
                 }
 
                 this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
-                this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
+                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return this.isRowCopied;
+            return isCopySuccess;
         }
 
         public validate(): boolean {
@@ -925,6 +934,7 @@ module CustomerSetting {
 
         public copySettingFrom(source: AgentPositionTakingOnMemberPartialMinPT): boolean {
             var isSuccessful: boolean = true;
+            var isCopySuccess: boolean = false;
             var backupA1: number;
 
             if (source) {
@@ -943,11 +953,12 @@ module CustomerSetting {
                 }
 
                 this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                var isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
-                this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
+                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return this.isRowCopied;
+            return isCopySuccess;
         }
 
         public validate(): boolean {
