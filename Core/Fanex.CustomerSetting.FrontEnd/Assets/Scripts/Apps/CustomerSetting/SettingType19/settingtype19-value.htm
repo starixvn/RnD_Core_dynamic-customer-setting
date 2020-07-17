@@ -1,4 +1,6 @@
-﻿<comm-rate-select data-ng-if="settingType | editableSettingType" data-setting-item="item"></comm-rate-select>
+﻿<comm-rate-select data-ng-if="settingType | editableSettingType" data-setting-item="item"
+                  data-is-copy-with-checkBox="true"
+                  data-disabled="!item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)"></comm-rate-select>
 <div class="setting-field-wrapper"
      data-ng-if="!(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
     {{item.commRate}}

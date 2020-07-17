@@ -8,11 +8,14 @@ module CustomerSetting {
     "use strict";
 
     class SettingType19Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["commissionResourceService"];
+        public static $inject: string[] = ["$window", "commissionResourceService"];
 
         public templateUrl: string = "settingtype19.htm";
 
-        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
+        public link: ng.IDirectiveLinkFn = (scope: IDefaultSettingTypeDirectiveScope) => {
+            /* tslint:disable:no-string-literal */
+            scope.isMultiple = this.$window["params"].isMultiple === undefined ? false : this.$window["params"].isMultiple;
+            /* tslint:enable:no-string-literal */
             if (scope.customerLevel === Level.member && scope.uplineLevel !== Level.agent) {
                 scope.headerTemplateUrl = "settingtype19-header.htm";
             }
@@ -22,11 +25,18 @@ module CustomerSetting {
         };
 
         private commissionResourceService: CommissionResourceService;
+        private $window: ng.IWindowService;
 
-        constructor(commissionResourceService: CommissionResourceService) {
-            super((settingItem: any, backup?: boolean) => new SettingType19Item(settingItem, backup));
+        constructor($window: ng.IWindowService, commissionResourceService: CommissionResourceService) {
+            super((settingItem: any,
+                backup?: boolean,
+                customerLevel?: Level,
+                uplineLevel?: Level,
+                extraData?: Array<KeyValuePair<string, any>>,
+                multipleUpdates?: boolean) => new SettingType19Item(settingItem, backup, multipleUpdates));
 
             this.commissionResourceService = commissionResourceService;
+            this.$window = $window;
         }
     }
 

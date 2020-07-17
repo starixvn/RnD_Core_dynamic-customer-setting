@@ -48,26 +48,26 @@
             1,
             'block__item--odd': $odd,
             'block__item--full-width': group.length === 1 }">
-            <div class="block__lbl block__lbl--no-border w4-percent">
-                <copy-setting-with-checkbox data-ng-if="(settingType | editableSettingType) && group.length > 1 && $first && $parent.$parent.$first"
-                                            data-setting-type-id="settingType.id"
-                                            data-setting-items="group"
-                                            data-is-multiple="isMultiple">
-                </copy-setting-with-checkbox>
-            </div>
-            <div class="block__lbl w3-percent">
-                <update-data-checkbox data-setting-item="item"
-                                      data-is-min-pt="false"
-                                      data-is-first="$first && $parent.$parent.$first">
-                </update-data-checkbox>
-            </div>
-
-            <div class="block__lbl w13-percent"
+            <div class="block__lbl"
                  data-product="{{productId}}"
                  data-sport-type="{{item.sportTypeId}}"
                  data-bet-type="{{item.betTypeId}}">
-                <span class="showing-name">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? '(' + ('Live' | label) + ')' : ''}}</span>
-
+                <div class="w15-percent block__lbl--no-border">
+                    <copy-setting-with-checkbox data-ng-if="(settingType | editableSettingType) && group.length > 1 && $first && $parent.$parent.$first"
+                                                data-setting-type-id="settingType.id"
+                                                data-setting-items="group"
+                                                data-is-multiple="isMultiple">
+                    </copy-setting-with-checkbox>
+                </div>
+                <div class="w15-percent block__lbl">
+                    <update-data-checkbox data-setting-item="item"
+                                          data-is-min-pt="false"
+                                          data-is-first="$first && $parent.$parent.$first">
+                    </update-data-checkbox>
+                </div>
+                <div class="w70-percent block__lbl block__lbl--no-border">
+                    <span class="showing-name">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? '(' + ('Live' | label) + ')' : ''}}</span>
+                </div>
             </div>
             <div class="block__value" data-ng-include="valueTemplateUrl"></div>
         </div>

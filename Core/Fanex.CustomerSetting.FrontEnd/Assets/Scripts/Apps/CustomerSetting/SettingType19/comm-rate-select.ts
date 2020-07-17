@@ -13,6 +13,8 @@ module CustomerSetting {
         settingItem: SettingType19Item;
         range: Array<KeyValuePair<number, number>>;
         resetValidationState: () => void;
+        disabled: boolean;
+        isCopyWithCheckBox: boolean;
     }
 
     class CommRateSelectDirective implements ng.IDirective {
@@ -22,13 +24,17 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
-                settingItem: "="
+                settingItem: "=",
+                disabled: "=?",
+                isCopyWithCheckBox: "=?"
             };
         }
 
         public templateUrl: string = "comm-rate-select.htm";
 
-        public controller: any = ["$scope", ($scope: ISettingType19ItemScope) => {
+        public controller: any = ["$scope", "$timeout", ($scope: ISettingType19ItemScope, $timeout: ng.ITimeoutService) => {
+            $scope.isCopyWithCheckBox = !!$scope.isCopyWithCheckBox;
+            $scope.disabled = !!$scope.disabled;
             $scope.$watch("settingItem", () => {
                 $scope.range = this.valueRangeService.generateRanges(
                     $scope.settingItem.commRate,
@@ -40,13 +46,19 @@ module CustomerSetting {
 
             $scope.resetValidationState = () => {
                 $scope.settingItem.resetValidationState();
+                if ($scope.isCopyWithCheckBox && !$scope.disabled) {
+                    $scope.$emit("copySettingTypeWithCheckbox");
+                }
             }
         }];
 
         private valueRangeService: ValueRangeService;
 
-        constructor(valueRangeService: ValueRangeService) {
+        private $timeout: ng.ITimeoutService;
+
+        constructor(valueRangeService: ValueRangeService, $timeout: ng.ITimeoutService) {
             this.valueRangeService = valueRangeService;
+            this.$timeout = $timeout;
         }
     }
 

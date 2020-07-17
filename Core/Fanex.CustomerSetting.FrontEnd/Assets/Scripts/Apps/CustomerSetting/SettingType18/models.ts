@@ -63,7 +63,7 @@ module CustomerSetting {
         }
     }
 
-    export class SuperPositionTakingPartialMinPT extends PositionTalkingPartialMinPt {
+    export class SuperPositionTakingPartialMinPT extends CopyWithCheckboxSettingItem {
         public s4: number;
         public m4: number;
         public a4: number;
@@ -164,7 +164,7 @@ module CustomerSetting {
         }
     }
 
-    export class MasterPositionTakingPartialMinPT extends PositionTalkingPartialMinPt {
+    export class MasterPositionTakingPartialMinPT extends CopyWithCheckboxSettingItem {
         public s3: number;
         public uS3: number;
         public iS3: boolean;
@@ -389,7 +389,7 @@ module CustomerSetting {
         }
     }
 
-    export class AgentPositionTakingPartialMinPT extends PositionTalkingPartialMinPt {
+    export class AgentPositionTakingPartialMinPT extends CopyWithCheckboxSettingItem {
         public m2: number;
         public uM2: number;
         public iM2: boolean;
@@ -615,7 +615,7 @@ module CustomerSetting {
         }
     }
 
-    export class SuperPositionTakingOnMemberPartialMinPT extends PositionTalkingPartialMinPt {
+    export class SuperPositionTakingOnMemberPartialMinPT extends CopyWithCheckboxSettingItem {
         public a1: number;
         public m1: number;
         public s1: number;
@@ -759,7 +759,7 @@ module CustomerSetting {
         }
     }
 
-    export class MasterPositionTakingOnMemberPartialMinPT extends PositionTalkingPartialMinPt {
+    export class MasterPositionTakingOnMemberPartialMinPT extends CopyWithCheckboxSettingItem {
         public a1: number;
         public m1: number;
         public iM1: boolean;
@@ -910,7 +910,7 @@ module CustomerSetting {
         }
     }
 
-    export class AgentPositionTakingOnMemberPartialMinPT extends PositionTalkingPartialMinPt {
+    export class AgentPositionTakingOnMemberPartialMinPT extends CopyWithCheckboxSettingItem {
         public a1: number;
         public a2: number;
         public n2: number;

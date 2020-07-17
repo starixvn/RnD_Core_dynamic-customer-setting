@@ -47,7 +47,7 @@ module CustomerSetting {
         hideTooltip: () => void;
         copyingState: CopyingWithCheckboxState;
         settingTypeId: number;
-        settingItems: Array<Array<PositionTalkingPartialMinPt>>;
+        settingItems: Array<Array<CopyWithCheckboxSettingItem>>;
         isIconActive: boolean;
     }
 
@@ -55,7 +55,7 @@ module CustomerSetting {
         public static $inject: string[] = ["$rootScope", "copyingSettingWithCheckboxService"];
 
         public replace: boolean = true;
-        public templateUrl: string = "DefaultSettingBlock/CopySettingWithCheckbox/copy-setting-with-checkbox.htm";
+        public templateUrl: string = "CopyWithCheckBoxSettingBlock/CopySettingWithCheckbox/copy-setting-with-checkbox.htm";
 
         public get scope(): any {
             return {
@@ -68,7 +68,7 @@ module CustomerSetting {
             $scope.copyingState = new CopyingWithCheckboxState();
             this.copyingSettingWithCheckboxService.register($scope);
             $scope.isIconActive = false;
-            this.$rootScope.$on("copySettingType18", () => {
+            this.$rootScope.$on("copySettingTypeWithCheckbox", () => {
                 $scope.copy(true);
             });
 
@@ -136,11 +136,11 @@ module CustomerSetting {
             this.$rootScope.$on("updateSetting", () => {
                 this.scopes.forEach((registeredScope: ICopySettingWithCheckboxScope) => {
                     if (registeredScope.copyingState.isShowingMessage()) {
-                        var items: Array<PositionTalkingPartialMinPt> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
+                        var items: Array<CopyWithCheckboxSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
                         registeredScope.copyingState.none();
 
-                        items.forEach((item: PositionTalkingPartialMinPt) => {
+                        items.forEach((item: CopyWithCheckboxSettingItem) => {
                             item.resetHighlightState();
                         });
                     }
@@ -166,10 +166,10 @@ module CustomerSetting {
                     var registeredSettingTypeId: number = registeredScope.settingTypeId;
 
                     if (registeredSettingTypeId === settingTypeId) {
-                        var items: Array<PositionTalkingPartialMinPt> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
+                        var items: Array<CopyWithCheckboxSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
                         registeredScope.copyingState.none();
-                        items.forEach((item: PositionTalkingPartialMinPt) => {
+                        items.forEach((item: CopyWithCheckboxSettingItem) => {
                             item.resetHighlightState();
                         });
                     }

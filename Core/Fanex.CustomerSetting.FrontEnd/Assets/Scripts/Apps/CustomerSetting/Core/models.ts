@@ -176,7 +176,7 @@ module CustomerSetting {
         }
     }
 
-    export class PositionTalkingPartialMinPt extends DefaultSettingItem {
+    export class CopyWithCheckboxSettingItem extends DefaultSettingItem {
         public isRowCopied: boolean;
         public isCheckedUpdateRow: boolean;
         public isCheckedUpdateMinPtOnly: boolean;
@@ -191,18 +191,18 @@ module CustomerSetting {
             this.isCheckedUpdateMinPtOnly = !multipleUpdates;
         }
 
-        public removeCopyDisabled(targets: Array<PositionTalkingPartialMinPt>): void {
-            targets.forEach((item: PositionTalkingPartialMinPt) => {
+        public removeCopyDisabled(targets: Array<CopyWithCheckboxSettingItem>): void {
+            targets.forEach((item: CopyWithCheckboxSettingItem) => {
                 item.isRowCopied = false;
             });
         }
 
-        public copySettingTo(targets: Array<PositionTalkingPartialMinPt>): { numberOfCopiedItems: number, status: boolean } {
+        public copySettingTo(targets: Array<CopyWithCheckboxSettingItem>): { numberOfCopiedItems: number, status: boolean } {
             var numberOfCopiedItems: number = 0;
             var status: boolean = true;
 
             if (targets) {
-                numberOfCopiedItems = targets.filter((item: PositionTalkingPartialMinPt) => {
+                numberOfCopiedItems = targets.filter((item: CopyWithCheckboxSettingItem) => {
                     var isCopiedSuccess: boolean = false;
 
                     if (this.sportTypeId !== item.sportTypeId || this.betTypeId !== item.betTypeId || this.isLive !== item.isLive) {

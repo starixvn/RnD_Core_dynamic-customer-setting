@@ -1,27 +1,23 @@
-﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/common.ts" />
-/// <reference path="models.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
-/// <reference path="../core/defaultsettingblock/togglesettingblock/togglable-setting-block-shared-states.ts" />
+﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../common.ts" />
+/// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
     "use strict";
 
-    export interface IPartialMinPTSettingTypeDirectiveScope extends ISettingTypeDirectiveSharedScope {
+    export interface ICopyWithCheckboxSettingTypeDirectiveScope extends ISettingTypeDirectiveSharedScope {
         avaiSettingLevels: Object;
-        sportGroups: PositionTalkingPartialMinPt[][];
+        sportGroups: CopyWithCheckboxSettingItem[][];
         togglableSettingBlocks: boolean;
         togglableSharedStates: TogglableSettingBlockSharedStates;
-        isMultiple: boolean;
-        isAutoChanged: (item: PositionTalkingPartialMinPt, fieldName: string, isFirst: boolean) => void;
+        isAutoChanged: (item: CopyWithCheckboxSettingItem, fieldName: string, isFirst: boolean) => void;
     }
 
-    export class PartialMinPtSettingTypeDirective implements ng.IDirective {
+    export class CopyWithCheckboxSettingTypeDirective implements ng.IDirective {
         public replace: boolean = true;
-        public templateUrl: string = "partial-min-pt-block.htm";
+        public templateUrl: string = "CopyWithCheckBoxSettingBlock/copy-with-checkbox-setting-block.htm";
 
-        public controller: any = ["$scope", "$timeout", ($scope: IPartialMinPTSettingTypeDirectiveScope, $timeout: ng.ITimeoutService) => {
+        public controller: any = ["$scope", "$timeout", ($scope: ICopyWithCheckboxSettingTypeDirectiveScope, $timeout: ng.ITimeoutService) => {
             $scope.avaiSettingLevels = SettingLevel;
 
             $scope.$watch("settingType", (settingType: SettingType) => {
@@ -33,29 +29,29 @@ module CustomerSetting {
                             $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length);
                         }
                     } else {
-                        $scope.sportGroups = <PositionTalkingPartialMinPt[][]>[settingType.settingItems];
+                        $scope.sportGroups = <CopyWithCheckboxSettingItem[][]>[settingType.settingItems];
                     }
                 }
             });
 
-            $scope.isAutoChanged = ((item: PositionTalkingPartialMinPt, fieldName: string, isFirst: boolean) => {
+            $scope.isAutoChanged = ((item: CopyWithCheckboxSettingItem, fieldName: string, isFirst: boolean) => {
                 item.resetFieldHighlightState(fieldName);
 
                 $timeout(() => {
                     if (isFirst && item.isCheckedUpdateRow) {
-                        $scope.$emit("copySettingType18");
+                        $scope.$emit("copySettingTypeWithCheckbox");
                     }
                 }, 100);
             });
         }];
 
-        protected groupSettingItemsBySportType(settingItems: ISettingItem[]): PositionTalkingPartialMinPt[][] {
+        protected groupSettingItemsBySportType(settingItems: ISettingItem[]): CopyWithCheckboxSettingItem[][] {
             var currentSportTypeId: number = -1;
-            var result: Array<Array<PositionTalkingPartialMinPt>> = new Array<Array<PositionTalkingPartialMinPt>>();
-            var group: Array<PositionTalkingPartialMinPt>;
+            var result: Array<Array<CopyWithCheckboxSettingItem>> = new Array<Array<CopyWithCheckboxSettingItem>>();
+            var group: Array<CopyWithCheckboxSettingItem>;
 
             settingItems.forEach((item: ISettingItem) => {
-                var settingItem = <PositionTalkingPartialMinPt>item;
+                var settingItem = <CopyWithCheckboxSettingItem>item;
 
                 if (currentSportTypeId !== settingItem.sportTypeId) {
                     if (group) {
@@ -63,7 +59,7 @@ module CustomerSetting {
                     }
 
                     currentSportTypeId = settingItem.sportTypeId;
-                    group = new Array<PositionTalkingPartialMinPt>();
+                    group = new Array<CopyWithCheckboxSettingItem>();
                 }
 
                 group.push(settingItem);
@@ -77,10 +73,10 @@ module CustomerSetting {
         }
     }
 
-    ModuleRegister.directive("partialMinPtSettingType", PartialMinPtSettingTypeDirective);
+    ModuleRegister.directive("copyWithCheckboxSettingType", CopyWithCheckboxSettingTypeDirective);
 
     function ShowingName(): Function {
-        return (settingItem: PositionTalkingPartialMinPt, settingLevel: SettingLevel, productName: string) => {
+        return (settingItem: CopyWithCheckboxSettingItem, settingLevel: SettingLevel, productName: string) => {
             return settingLevel === SettingLevel.product
                 ? productName
                 : (settingLevel === SettingLevel.sportType

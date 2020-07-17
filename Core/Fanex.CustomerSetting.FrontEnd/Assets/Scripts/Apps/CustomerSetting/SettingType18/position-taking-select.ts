@@ -7,7 +7,7 @@ module CustomerSetting {
     "use strict";
 
     interface IPositionTakingSelectScope extends ng.IScope {
-        settingItem: PositionTalkingPartialMinPt;
+        settingItem: CopyWithCheckboxSettingItem;
         fieldName: string;
         min: number;
         max: number;
@@ -64,7 +64,7 @@ module CustomerSetting {
             $scope.resetState = (fieldName: string) => {
                 this.$timeout(() => {
                     if ($scope.isPartialMinPt && $scope.isFirst && $scope.settingItem.isCheckedUpdateRow) {
-                        $scope.$emit("copySettingType18");
+                        $scope.$emit("copySettingTypeWithCheckbox");
                     }
                 }, 100);
 

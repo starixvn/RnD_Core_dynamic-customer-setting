@@ -3,16 +3,17 @@
 module CustomerSetting {
     "use strict";
 
-    export class SettingType19Item extends PositionTalkingPartialMinPt {
+    export class SettingType19Item extends CopyWithCheckboxSettingItem {
         public commRate: number;
         public intervalStep: number;
         public upline: SettingType19Item;
-
+        
         constructor();
         constructor(settingItem: any);
         constructor(settingItem: any, backup: boolean);
-        constructor(settingItem?: any, backup: boolean = false) {
-            super(settingItem);
+        constructor(settingItem: any, backup: boolean, multipleUpdates: boolean);
+        constructor(settingItem?: any, backup: boolean = false, multipleUpdates?: boolean) {
+            super(settingItem, multipleUpdates);
 
             if (settingItem) {
                 this.commRate = settingItem.commRate;
@@ -38,6 +39,7 @@ module CustomerSetting {
 
         public copySettingFrom(source: SettingType19Item): boolean {
             var isSuccessful: boolean = true;
+            var isCopySuccess: boolean = false;
             var backupCommRate: number;
 
             if (source) {
@@ -54,9 +56,14 @@ module CustomerSetting {
                         commRate: backupCommRate
                     });
                 }
+
+                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
+                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
 
-            return isSuccessful;
+            return isCopySuccess;
         }
 
         public validate(): boolean {

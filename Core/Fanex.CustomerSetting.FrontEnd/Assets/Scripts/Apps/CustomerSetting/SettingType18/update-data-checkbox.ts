@@ -3,7 +3,7 @@ module CustomerSetting {
     "use strict";
     export interface IUpdateDataCheckboxScope extends ng.IScope {
         click: () => void;
-        settingItem: PositionTalkingPartialMinPt,
+        settingItem: CopyWithCheckboxSettingItem,
         isMinPt: boolean;
         isFirst: boolean;
     }

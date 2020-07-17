@@ -43,6 +43,10 @@
     @include col(4%, true);
 }
 
+.w15-percent {
+    @include col(15%, true);
+}
+
 .w13-percent {
     @include col(13%, true);
 }
@@ -97,6 +101,10 @@
 
 .w60-percent {
     @include col(60%, true);
+}
+
+.w70-percent {
+    @include col(70%, true);
 }
 
 .w80-percent {

@@ -210,7 +210,7 @@ th {
 .x-ng-cloak {
   display: none !important; }
 
-.w3-percent, .w4-percent, .w13-percent, .w16-percent, .w18-percent, .w20-percent, .w21-percent, .w25-percent, .w28-percent, .w30-percent, .w33-percent, .w40-percent, .w42-percent, .w50-percent, .w60-percent, .w80-percent, .w100-percent, .block__item, .block__item--full-width, .block__item--full-width .block__lbl,
+.w3-percent, .w4-percent, .w15-percent, .w13-percent, .w16-percent, .w18-percent, .w20-percent, .w21-percent, .w25-percent, .w28-percent, .w30-percent, .w33-percent, .w40-percent, .w42-percent, .w50-percent, .w60-percent, .w70-percent, .w80-percent, .w100-percent, .block__item, .block__item--full-width, .block__item--full-width .block__lbl,
 .block__item--full-width .block__lbl--white, .block__item--full-width .block__value, .block__lbl, .block__value, .full-width .block__item, .full-width .block__lbl,
 .full-width .block__lbl--white, .full-width .block__value {
   float: left; }
@@ -220,6 +220,9 @@ th {
 
 .w4-percent {
   width: 4% !important; }
+
+.w15-percent {
+  width: 15% !important; }
 
 .w13-percent {
   width: 13% !important; }
@@ -261,6 +264,9 @@ th {
 
 .w60-percent {
   width: 60% !important; }
+
+.w70-percent {
+  width: 70% !important; }
 
 .w80-percent {
   width: 80% !important; }
@@ -607,7 +613,8 @@ th {
     width: 40%;
     background-color: #b5c4d0;
     line-height: 1.5;
-    padding: 0 3px; }
+    padding: 0 3px;
+    height: 100%; }
     .block__lbl--white {
       background-color: #fff; }
     .block__lbl--transparent {
