@@ -7,7 +7,7 @@ module CustomerSetting {
         public commRate: number;
         public intervalStep: number;
         public upline: SettingType19Item;
-        
+
         constructor();
         constructor(settingItem: any);
         constructor(settingItem: any, backup: boolean);
@@ -20,12 +20,12 @@ module CustomerSetting {
                 this.intervalStep = settingItem.intervalStep;
 
                 if (settingItem.upline) {
-                    this.upline = new SettingType19Item(settingItem.upline);
+                    this.upline = new SettingType19Item(settingItem.upline, false, multipleUpdates);
                 }
             }
 
             if (backup) {
-                this.oldSetting = new SettingType19Item(this);
+                this.oldSetting = new SettingType19Item(this, false, multipleUpdates);
             }
         }
 
@@ -33,8 +33,7 @@ module CustomerSetting {
             var isChanged: boolean = super.isChanged();
             var oldSetting: SettingType19Item = <SettingType19Item>this.oldSetting;
 
-            return isChanged
-                || this.commRate !== oldSetting.commRate;
+            return isChanged || this.isCheckedUpdateRow != oldSetting.isCheckedUpdateRow || this.commRate !== oldSetting.commRate;
         }
 
         public copySettingFrom(source: SettingType19Item): boolean {

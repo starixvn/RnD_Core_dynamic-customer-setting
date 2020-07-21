@@ -37,7 +37,7 @@ module CustomerSetting {
         }
 
         public static fetch(rawData: any, settingItem: any): void {
-            var addedProperties: string[] = ["sportTypeId", "sportTypeName", "betTypeId", "betTypeName", "typeName", "isLive"];
+            var addedProperties: string[] = ["sportTypeId", "sportTypeName", "betTypeId", "betTypeName", "typeName", "isLive", "isRowCopied", "isCheckedUpdateRow", "isCheckedUpdateMinPtOnly"];
 
             if (rawData && settingItem) {
                 Object.keys(rawData).filter((propName: string) => {
@@ -79,7 +79,7 @@ module CustomerSetting {
             SettingType18Item.fetch(settingItem, <SuperPositionTakingPartialMinPT>this);
 
             if (backup) {
-                this.oldSetting = new SuperPositionTakingPartialMinPT(this);
+                this.oldSetting = new SuperPositionTakingPartialMinPT(this, false, multipleUpdates);
             }
         }
 
@@ -185,7 +185,7 @@ module CustomerSetting {
             SettingType18Item.fetch(settingItem, this);
 
             if (backup) {
-                this.oldSetting = new MasterPositionTakingPartialMinPT(this);
+                this.oldSetting = new MasterPositionTakingPartialMinPT(this, false, multipleUpdates);
             }
         }
 
@@ -410,7 +410,7 @@ module CustomerSetting {
             SettingType18Item.fetch(settingItem, this);
 
             if (backup) {
-                this.oldSetting = new AgentPositionTakingPartialMinPT(this);
+                this.oldSetting = new AgentPositionTakingPartialMinPT(this, false, multipleUpdates);
             }
         }
 
@@ -635,7 +635,7 @@ module CustomerSetting {
             SettingType18Item.fetch(settingItem, this);
 
             if (backup) {
-                this.oldSetting = new SuperPositionTakingOnMemberPartialMinPT(this);
+                this.oldSetting = new SuperPositionTakingOnMemberPartialMinPT(this, false, multipleUpdates);
             }
         }
 
@@ -777,7 +777,7 @@ module CustomerSetting {
             SettingType18Item.fetch(settingItem, this);
 
             if (backup) {
-                this.oldSetting = new MasterPositionTakingOnMemberPartialMinPT(this);
+                this.oldSetting = new MasterPositionTakingOnMemberPartialMinPT(this, false, extraData, multipleUpdates);
             }
 
             if (extraData) {
@@ -924,7 +924,7 @@ module CustomerSetting {
             SettingType18Item.fetch(settingItem, this);
 
             if (backup) {
-                this.oldSetting = new AgentPositionTakingOnMemberPartialMinPT(this);
+                this.oldSetting = new AgentPositionTakingOnMemberPartialMinPT(this, false, multipleUpdates);
             }
         }
 

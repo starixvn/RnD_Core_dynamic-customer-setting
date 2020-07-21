@@ -39,7 +39,7 @@ module CustomerSetting {
 
                 $timeout(() => {
                     if (isFirst && item.isCheckedUpdateRow) {
-                        $scope.$emit("copySettingTypeWithCheckbox");
+                        $scope.$emit("copySettingTypeWithCheckbox" + $scope.settingType.id);
                     }
                 }, 100);
             });

@@ -68,7 +68,7 @@ module CustomerSetting {
             $scope.copyingState = new CopyingWithCheckboxState();
             this.copyingSettingWithCheckboxService.register($scope);
             $scope.isIconActive = false;
-            this.$rootScope.$on("copySettingTypeWithCheckbox", () => {
+            this.$rootScope.$on("copySettingTypeWithCheckbox" + $scope.settingTypeId, () => {
                 $scope.copy(true);
             });
 
