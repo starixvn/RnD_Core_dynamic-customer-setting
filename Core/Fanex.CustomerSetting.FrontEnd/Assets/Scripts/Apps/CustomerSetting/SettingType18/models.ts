@@ -124,8 +124,8 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(NotificationType.error);
                 if (this.isRowCopied)
                     this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
@@ -247,8 +247,8 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(NotificationType.error);
                 if (this.isRowCopied)
                     this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
@@ -473,8 +473,8 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(NotificationType.error);
                 if (this.isRowCopied)
                     this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
@@ -693,8 +693,8 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(NotificationType.error);
                 if (this.isRowCopied)
                     this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
@@ -844,8 +844,8 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(NotificationType.error);
                 if (this.isRowCopied)
                     this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
@@ -952,8 +952,8 @@ module CustomerSetting {
                     });
                 }
 
-                this.isRowCopied = this.hasHighlightField(NotificationType.success) || this.hasHighlightField(NotificationType.error);
-                isCopySuccess = this.hasHighlightField(NotificationType.success) && !this.hasHighlightField(NotificationType.error);
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(NotificationType.error);
                 if (this.isRowCopied)
                     this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }

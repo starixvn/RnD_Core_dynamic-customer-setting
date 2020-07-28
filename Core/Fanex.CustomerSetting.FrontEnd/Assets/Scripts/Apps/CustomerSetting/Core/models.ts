@@ -228,6 +228,14 @@ module CustomerSetting {
             settingItem.isUpdateMinPtOnly = this.isCheckedUpdateMinPtOnly && !this.isCheckedUpdateRow;
             return settingItem;
         }
+
+        public highlightCopiedFields(state: {}): void {
+            if (state) {
+                for (var key in state) {
+                    this.changeFieldHighlightState(key, NotificationType.success);
+                }
+            }
+        }
     }
 
     export class ErrorSettingItem implements ISettingItem {
