@@ -180,6 +180,7 @@ module CustomerSetting {
         public isRowCopied: boolean;
         public isCheckedUpdateRow: boolean;
         public isCheckedUpdateMinPtOnly: boolean;
+        public isMultiple: boolean;
 
         constructor();
         constructor(settingItem: any);
@@ -187,6 +188,7 @@ module CustomerSetting {
         constructor(settingItem?: any, multipleUpdates: boolean = false) {
             super(settingItem);
             this.isRowCopied = false;
+            this.isMultiple = !!multipleUpdates;
             this.isCheckedUpdateRow = !multipleUpdates;
             this.isCheckedUpdateMinPtOnly = !multipleUpdates;
         }
@@ -220,21 +222,13 @@ module CustomerSetting {
         }
 
         public toJson(): {} {
-            if (!this.isCheckedUpdateRow && !this.isCheckedUpdateMinPtOnly)
+            if (this.isMultiple && !this.isCheckedUpdateRow && !this.isCheckedUpdateMinPtOnly)
                 return null;
 
             var settingItem: any = {};
             settingItem = super.toJson();
             settingItem.isUpdateMinPtOnly = this.isCheckedUpdateMinPtOnly && !this.isCheckedUpdateRow;
             return settingItem;
-        }
-
-        public highlightCopiedFields(state: {}): void {
-            if (state) {
-                for (var key in state) {
-                    this.changeFieldHighlightState(key, NotificationType.success);
-                }
-            }
         }
     }
 

@@ -20,7 +20,7 @@ module CustomerSetting {
                 scope.headerTemplateUrl = "settingtype19-header.htm";
             }
 
-            scope.valueTemplateUrl = "settingtype19-value.htm";
+            scope.valueTemplateUrl = "settingtype19" + (scope.isMultiple ? "" : "-default") + "-value.htm";
             scope.settingTypeName = this.commissionResourceService.getLabel("Commission");
         };
 
