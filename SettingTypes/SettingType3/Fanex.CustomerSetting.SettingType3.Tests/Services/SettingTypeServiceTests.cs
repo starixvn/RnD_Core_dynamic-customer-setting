@@ -93,6 +93,7 @@
             var customerLevel = Level.Member;
             var uplineLevel = Level.Agent;
             byte productId = 1;
+            var settingTypeId = 1;
             var customerCommission = InstanceFactory.CreateCustomerSettingType(1);
 
             //// Act
@@ -104,7 +105,8 @@
                 Arg.Is(customerId),
                 Arg.Is(customerLevel),
                 Arg.Is(uplineLevel),
-                Arg.Is(customerCommission.ToXml()));
+                Arg.Is(customerCommission.ToXml()),
+                Arg.Is(settingTypeId));
         }
 
         [Test]
@@ -124,7 +126,8 @@
                 Arg.Any<int>(),
                 Arg.Any<Level>(),
                 Arg.Any<Level>(),
-                Arg.Any<string>()).Returns(successResult);
+                Arg.Any<string>(),
+                Arg.Any<int>()).Returns(successResult);
 
             //// Act
             var actualResult = _settingType3Service.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, customerCommission);

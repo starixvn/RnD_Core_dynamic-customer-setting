@@ -46,7 +46,8 @@
             int customerId,
             Level customerLevel,
             Level uplineLevel,
-            string commissionXml)
+            string commissionXml,
+            int settingTypeId)
         {
             var parameters = new Hashtable
             {
@@ -55,6 +56,7 @@
                 { "custid", customerId },
                 { "ip", settingContext.IP },
                 { "discount", commissionXml },
+                { "settingType", settingTypeId },
                 { "msgtype", 0 },
                 { "errcode", 0 },
                 { "errmsg", string.Empty }

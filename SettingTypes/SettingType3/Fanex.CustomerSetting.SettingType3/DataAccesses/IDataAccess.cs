@@ -16,6 +16,7 @@
             int customerId,
             Level customerLevel,
             Level uplineLevel,
-            string commissionXml);
+            string commissionXml,
+            int settingTypeId);
     }
 }

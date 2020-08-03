@@ -2,6 +2,5 @@
 {
     internal class DataAccess : Fanex.CustomerSetting.SettingType3.DataAccesses.DataAccess
     {
-
     }
 }
