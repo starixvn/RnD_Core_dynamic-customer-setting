@@ -48,8 +48,10 @@ module CustomerSetting {
             }
         }
 
-        public static detechChanges(settingItem: any): boolean {
+        public static detechChanges(settingItem: CopyWithCheckboxSettingItem): boolean {
             var reservedProperties: string[] = ["oldSetting", "validationState", "highlightState"];
+            if (!settingItem.isMultiple)
+                reservedProperties.push("isRowCopied", "isCheckedUpdateRow", "isCheckedUpdateMinPtOnly","isMultiple");
 
             if (settingItem) {
                 return Object.keys(settingItem).some((prop: string) => {

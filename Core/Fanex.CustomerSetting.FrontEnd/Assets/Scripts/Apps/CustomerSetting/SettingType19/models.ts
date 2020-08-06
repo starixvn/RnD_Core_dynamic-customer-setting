@@ -33,7 +33,7 @@ module CustomerSetting {
             var isChanged: boolean = super.isChanged();
             var oldSetting: SettingType19Item = <SettingType19Item>this.oldSetting;
 
-            return isChanged || this.isCheckedUpdateRow != oldSetting.isCheckedUpdateRow || this.commRate !== oldSetting.commRate;
+            return isChanged || this.commRate !== oldSetting.commRate || (this.isMultiple && this.isCheckedUpdateRow != oldSetting.isCheckedUpdateRow);
         }
 
         public copySettingFrom(source: SettingType19Item): boolean {
