@@ -150,4 +150,16 @@
   <data name="CopiedSuccessfully" xml:space="preserve">
     <value>绿色的所有字段已被复制。</value>
   </data>
+  <data name="AllProducts" xml:space="preserve">
+    <value>所有产品</value>
+  </data>
+  <data name="CustomerSettings" xml:space="preserve">
+    <value>客户设定</value>
+  </data>
+  <data name="UMMainMsg" xml:space="preserve">
+    <value>由於以下設定正在維護中，因此無法更新 (GMT+8):</value>
+  </data>
+  <data name="UMSubMsg" xml:space="preserve">
+    <value>{0}: {1} ({2} 至 {3})</value>
+  </data>
 </root>

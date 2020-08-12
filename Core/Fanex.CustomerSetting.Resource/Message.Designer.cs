@@ -19,7 +19,7 @@ namespace Fanex.CustomerSetting.Resource {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Message {
@@ -79,6 +79,15 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Products.
+        /// </summary>
+        public static string AllProducts {
+            get {
+                return ResourceManager.GetString("AllProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All fields in green are copied..
         /// </summary>
         public static string CopiedSuccessfully {
@@ -102,6 +111,15 @@ namespace Fanex.CustomerSetting.Resource {
         public static string CustomersAreNotSameLine {
             get {
                 return ResourceManager.GetString("CustomersAreNotSameLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Settings.
+        /// </summary>
+        public static string CustomerSettings {
+            get {
+                return ResourceManager.GetString("CustomerSettings", resourceCulture);
             }
         }
         
@@ -192,6 +210,33 @@ namespace Fanex.CustomerSetting.Resource {
         public static string SystemError {
             get {
                 return ResourceManager.GetString("SystemError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to Update because of the maintenance of the settings below (GMT+8):.
+        /// </summary>
+        public static string UMMainMsg {
+            get {
+                return ResourceManager.GetString("UMMainMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: {1} ({2} to {3}).
+        /// </summary>
+        public static string UMSubMsg {
+            get {
+                return ResourceManager.GetString("UMSubMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here is the maintenance schedule (GMT +8). During the maintenance period, these settings cannot be changed. We are sorry for any inconvenience caused..
+        /// </summary>
+        public static string UnderMaintainanceMainMsg {
+            get {
+                return ResourceManager.GetString("UnderMaintainanceMainMsg", resourceCulture);
             }
         }
         

@@ -183,4 +183,58 @@
   <data name="Member" xml:space="preserve">
     <value>会员</value>
   </data>
+  <data name="SettingType_1" xml:space="preserve">
+    <value>占成数</value>
+  </data>
+  <data name="SettingType_11" xml:space="preserve">
+    <value>产品状态</value>
+  </data>
+  <data name="SettingType_12" xml:space="preserve">
+    <value>输的限额</value>
+  </data>
+  <data name="SettingType_13" xml:space="preserve">
+    <value>产品状态</value>
+  </data>
+  <data name="SettingType_14" xml:space="preserve">
+    <value>注单佣金</value>
+  </data>
+  <data name="SettingType_15" xml:space="preserve">
+    <value>获奖赢额佣金</value>
+  </data>
+  <data name="SettingType_16" xml:space="preserve">
+    <value>投注设定</value>
+  </data>
+  <data name="SettingType_17" xml:space="preserve">
+    <value>投注限额</value>
+  </data>
+  <data name="SettingType_18" xml:space="preserve">
+    <value>占成数</value>
+  </data>
+  <data name="SettingType_19" xml:space="preserve">
+    <value>佣金</value>
+  </data>
+  <data name="SettingType_2" xml:space="preserve">
+    <value>投注设定</value>
+  </data>
+  <data name="SettingType_3" xml:space="preserve">
+    <value>佣金</value>
+  </data>
+  <data name="SettingType_4" xml:space="preserve">
+    <value>产品状态</value>
+  </data>
+  <data name="SettingType_5" xml:space="preserve">
+    <value>抽取佣金</value>
+  </data>
+  <data name="SettingType_6" xml:space="preserve">
+    <value>输赢限额</value>
+  </data>
+  <data name="SettingType_7" xml:space="preserve">
+    <value>投注限额</value>
+  </data>
+  <data name="SettingType_8" xml:space="preserve">
+    <value>投注限额</value>
+  </data>
+  <data name="SettingType_9" xml:space="preserve">
+    <value>投注设定</value>
+  </data>
 </root>

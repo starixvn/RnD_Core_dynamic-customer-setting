@@ -123,6 +123,9 @@
   <data name="AccountWasDisabled" xml:space="preserve">
     <value>This account was disabled.</value>
   </data>
+  <data name="AllProducts" xml:space="preserve">
+    <value>All Products</value>
+  </data>
   <data name="CopiedSuccessfully" xml:space="preserve">
     <value>All fields in green are copied.</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="CustomersAreNotSameLine" xml:space="preserve">
     <value>Customers are not in the same line!</value>
+  </data>
+  <data name="CustomerSettings" xml:space="preserve">
+    <value>Customer Settings</value>
   </data>
   <data name="DataIsNotValid" xml:space="preserve">
     <value>Data is not valid.</value>
@@ -161,6 +167,15 @@
   </data>
   <data name="SystemError" xml:space="preserve">
     <value>Oops... you are here because of a system error, please notify system administrator.</value>
+  </data>
+  <data name="UMMainMsg" xml:space="preserve">
+    <value>Unable to Update because of the maintenance of the settings below (GMT+8):</value>
+  </data>
+  <data name="UMSubMsg" xml:space="preserve">
+    <value>{0}: {1} ({2} to {3})</value>
+  </data>
+  <data name="UnderMaintainanceMainMsg" xml:space="preserve">
+    <value>Here is the maintenance schedule (GMT +8). During the maintenance period, these settings cannot be changed. We are sorry for any inconvenience caused.</value>
   </data>
   <data name="UplineLevelCannotBeNullIncaseOfEdittingMember" xml:space="preserve">
     <value>Upline Level cannot be null incase of editting member.</value>

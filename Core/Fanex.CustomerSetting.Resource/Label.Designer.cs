@@ -214,6 +214,168 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Position Taking.
+        /// </summary>
+        public static string SettingType_1 {
+            get {
+                return ResourceManager.GetString("SettingType_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Status.
+        /// </summary>
+        public static string SettingType_11 {
+            get {
+                return ResourceManager.GetString("SettingType_11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loss Limit.
+        /// </summary>
+        public static string SettingType_12 {
+            get {
+                return ResourceManager.GetString("SettingType_12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Status.
+        /// </summary>
+        public static string SettingType_13 {
+            get {
+                return ResourceManager.GetString("SettingType_13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ticket Commission.
+        /// </summary>
+        public static string SettingType_14 {
+            get {
+                return ResourceManager.GetString("SettingType_14", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Winning Share Commission.
+        /// </summary>
+        public static string SettingType_15 {
+            get {
+                return ResourceManager.GetString("SettingType_15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Setting.
+        /// </summary>
+        public static string SettingType_16 {
+            get {
+                return ResourceManager.GetString("SettingType_16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Limit.
+        /// </summary>
+        public static string SettingType_17 {
+            get {
+                return ResourceManager.GetString("SettingType_17", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position Taking.
+        /// </summary>
+        public static string SettingType_18 {
+            get {
+                return ResourceManager.GetString("SettingType_18", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission.
+        /// </summary>
+        public static string SettingType_19 {
+            get {
+                return ResourceManager.GetString("SettingType_19", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Setting.
+        /// </summary>
+        public static string SettingType_2 {
+            get {
+                return ResourceManager.GetString("SettingType_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission.
+        /// </summary>
+        public static string SettingType_3 {
+            get {
+                return ResourceManager.GetString("SettingType_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Status.
+        /// </summary>
+        public static string SettingType_4 {
+            get {
+                return ResourceManager.GetString("SettingType_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Charge Commission.
+        /// </summary>
+        public static string SettingType_5 {
+            get {
+                return ResourceManager.GetString("SettingType_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win Loss Limit.
+        /// </summary>
+        public static string SettingType_6 {
+            get {
+                return ResourceManager.GetString("SettingType_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Limit.
+        /// </summary>
+        public static string SettingType_7 {
+            get {
+                return ResourceManager.GetString("SettingType_7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Limit.
+        /// </summary>
+        public static string SettingType_8 {
+            get {
+                return ResourceManager.GetString("SettingType_8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Setting.
+        /// </summary>
+        public static string SettingType_9 {
+            get {
+                return ResourceManager.GetString("SettingType_9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Super.
         /// </summary>
         public static string Super {

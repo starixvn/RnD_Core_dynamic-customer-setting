@@ -8,11 +8,15 @@
     using System.Web.Hosting;
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
+    using Fanex.CustomerSetting.Models.Results;
     using Filters;
     using Helpers;
     using Models.Request;
     using Services;
     using Services.Impl;
+    using System.Linq;
+    using Fanex.CustomerSetting.Models;
+    using System.Collections.Generic;
 
     [SetLanguageFilter]
     public class CustomerSettingController : ApiController
@@ -20,14 +24,17 @@
         private const string CustomerSettingTemplateCachingKey = "CustomerSettingTemplate";
         private const string CustomerSettingTemplateFilePath = "~/App_Data/Templates/customer-setting.htm";
         private const byte CachingHours = 4;
+        private const int NoChangeByUMErrorCode = 90017;
         private readonly ISettingServiceFactory settingServiceFactory;
+        private readonly IUMService umService;
 
-        public CustomerSettingController(ISettingServiceFactory settingServiceFactory)
+        public CustomerSettingController(ISettingServiceFactory settingServiceFactory, IUMService umService)
         {
             this.settingServiceFactory = settingServiceFactory ?? new SettingServiceFactory();
+            this.umService = umService ?? new UMService();
         }
 
-        public CustomerSettingController() : this(null)
+        public CustomerSettingController() : this(null, null)
         {
         }
 
@@ -75,8 +82,10 @@
                 request.Setting.ProductId,
                 request.GetSettingContext());
 
-            var result = updateSettingService.Update(request.GetUpdateCustomerSettingCommand());
-
+            var result = (UpdateSettingResult)updateSettingService.Update(request.GetUpdateCustomerSettingCommand());
+            var umResult = this.umService.GetUMResult(request.Setting.CustomerId, request.Setting.ProductId, IsPartialUpdate(request.Setting.SettingTypes) ? request.Setting.SettingTypes.FirstOrDefault()?.Id : null, request.Language);
+            if (umResult != null) result.AddSubResult(umResult);
+            result.RemoveSubResultByCode(NoChangeByUMErrorCode);
             return Request.CreateResponse(result);
         }
 
@@ -98,8 +107,10 @@
                request.Setting.ProductId,
                request.GetSettingContext());
 
-            var result = updateSettingService.Update(request.GetMultipleUpdateCustomerSettingCommand());
-
+            UpdateSettingResult result = (UpdateSettingResult)updateSettingService.Update(request.GetMultipleUpdateCustomerSettingCommand());
+            var umResult = this.umService.GetUMResult(request.Setting.CustomerId, request.Setting.ProductId, IsPartialUpdate(request.Setting.SettingTypes) ? request.Setting.SettingTypes.FirstOrDefault()?.Id : null, request.Language);
+            if (umResult != null) result.AddSubResult(umResult);
+            result.RemoveSubResultByCode(NoChangeByUMErrorCode);
             return Request.CreateResponse(result);
         }
 
@@ -120,5 +131,7 @@
 
             return Request.CreateResponse(HttpStatusCode.OK, template);
         }
+
+        private bool IsPartialUpdate(IEnumerable<SettingType> settingTypes) => settingTypes.Count() == 1;
     }
 }

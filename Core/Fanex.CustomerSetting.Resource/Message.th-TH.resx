@@ -150,4 +150,16 @@
   <data name="CopiedSuccessfully" xml:space="preserve">
     <value>ช่องสีเขียวทั้งหมดจะถูกคัดลอก</value>
   </data>
+  <data name="AllProducts" xml:space="preserve">
+    <value>โปรดักส์ทั้งหมด</value>
+  </data>
+  <data name="CustomerSettings" xml:space="preserve">
+    <value>การตั้งค่าของลูกค้า</value>
+  </data>
+  <data name="UMMainMsg" xml:space="preserve">
+    <value>เนื่องจากอยู่ในระหว่างการปรับปรุง ดังนั้นในช่วงเวลาดังกล่าวจึงไม่สามารถอัพเดทได้ (GMT+8):</value>
+  </data>
+  <data name="UMSubMsg" xml:space="preserve">
+    <value>{0}: {1} ({2} ถึง {3})</value>
+  </data>
 </root>

@@ -26,10 +26,8 @@
 
             // Run plugged tasks before updating settings of mutiple customers.
             TaskService.Run(command.Setting.ProductId, command);
-
             var updateSettingTypeResults = UpdateSettingTypesForMultipleCustomers(command);
             var result = MapUpdateSettingResultWithCustomerName(updateSettingTypeResults, command.CustomerIds, command.CustomerNames);
-
             // Run plugged tasks after updating settings of mutiple customers.
             TaskService.Run(command.Setting.ProductId, command, result);
 

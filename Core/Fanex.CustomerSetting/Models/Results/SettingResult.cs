@@ -96,6 +96,16 @@
             SubMessages = subMessages;
         }
 
+        public SettingResult(
+            int code,
+            string mainMessage,
+            int msgType,
+            IEnumerable<string> subMessages)
+            : base(code, mainMessage, msgType)
+        {
+            SubMessages = subMessages;
+        }
+
         public SettingResult(int code, string mainMessage)
             : base(code, mainMessage)
         {

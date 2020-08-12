@@ -67,6 +67,11 @@
             }
         }
 
+        public void RemoveSubResultByCode(int code)
+        {
+            SubResults = SubResults.Where(m => m.Code != code).ToList();
+        }
+
         public override bool IsSuccessful
         {
             get

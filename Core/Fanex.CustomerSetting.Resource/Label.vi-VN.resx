@@ -168,4 +168,55 @@
   <data name="Member" xml:space="preserve">
     <value>Người chơi</value>
   </data>
+  <data name="SettingType_1" xml:space="preserve">
+    <value>PT</value>
+  </data>
+  <data name="SettingType_11" xml:space="preserve">
+    <value>Trạng thái trò chơi</value>
+  </data>
+  <data name="SettingType_12" xml:space="preserve">
+    <value>Giới Hạn Tiền Thua</value>
+  </data>
+  <data name="SettingType_13" xml:space="preserve">
+    <value>Trạng thái trò chơi</value>
+  </data>
+  <data name="SettingType_14" xml:space="preserve">
+    <value>Hoa hồng trên vé cược</value>
+  </data>
+  <data name="SettingType_15" xml:space="preserve">
+    <value>Phần chia thắng cược</value>
+  </data>
+  <data name="SettingType_16" xml:space="preserve">
+    <value>Tiền Cược</value>
+  </data>
+  <data name="SettingType_17" xml:space="preserve">
+    <value>Giới hạn cược</value>
+  </data>
+  <data name="SettingType_18" xml:space="preserve">
+    <value>PT</value>
+  </data>
+  <data name="SettingType_19" xml:space="preserve">
+    <value>Hoa hồng</value>
+  </data>
+  <data name="SettingType_2" xml:space="preserve">
+    <value>Tiền Cược</value>
+  </data>
+  <data name="SettingType_3" xml:space="preserve">
+    <value>Hoa hồng</value>
+  </data>
+  <data name="SettingType_4" xml:space="preserve">
+    <value>Trạng thái trò chơi</value>
+  </data>
+  <data name="SettingType_6" xml:space="preserve">
+    <value>Giới hạn thắng thua</value>
+  </data>
+  <data name="SettingType_7" xml:space="preserve">
+    <value>Giới hạn cược</value>
+  </data>
+  <data name="SettingType_8" xml:space="preserve">
+    <value>Giới hạn cược</value>
+  </data>
+  <data name="SettingType_9" xml:space="preserve">
+    <value>Tiền Cược</value>
+  </data>
 </root>
