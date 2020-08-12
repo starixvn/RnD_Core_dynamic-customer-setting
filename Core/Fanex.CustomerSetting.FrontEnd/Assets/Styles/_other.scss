@@ -77,6 +77,10 @@
 
 .w30-percent {
     @include col(30%, true);
+
+    &--last {
+        width: 31% !important;
+    }
 }
 
 .w33-percent {

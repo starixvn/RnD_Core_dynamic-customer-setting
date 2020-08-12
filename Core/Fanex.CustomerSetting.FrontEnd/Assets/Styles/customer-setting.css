@@ -247,6 +247,8 @@ th {
 
 .w30-percent {
   width: 30% !important; }
+  .w30-percent--last {
+    width: 31% !important; }
 
 .w33-percent {
   width: 33% !important; }
