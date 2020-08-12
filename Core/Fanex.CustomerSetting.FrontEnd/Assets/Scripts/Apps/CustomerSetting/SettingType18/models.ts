@@ -51,7 +51,7 @@ module CustomerSetting {
         public static detechChanges(settingItem: CopyWithCheckboxSettingItem): boolean {
             var reservedProperties: string[] = ["oldSetting", "validationState", "highlightState"];
             if (!settingItem.isMultiple)
-                reservedProperties.push("isRowCopied", "isCheckedUpdateRow", "isCheckedUpdateMinPtOnly","isMultiple");
+                reservedProperties.push("isRowCopied", "isCheckedUpdateRow", "isCheckedUpdateMinPtOnly", "isMultiple");
 
             if (settingItem) {
                 return Object.keys(settingItem).some((prop: string) => {
@@ -96,6 +96,7 @@ module CustomerSetting {
             var backupM4: number;
             var backupA4: number;
             var backupN4: number;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
 
             if (source) {
                 backupS4 = this.s4;
@@ -108,7 +109,9 @@ module CustomerSetting {
                 this.a4 = source.a4;
                 this.n4 = source.n4;
 
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
 
                 if (!isSuccessful) {
                     this.s4 = backupS4;
@@ -136,28 +139,30 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (this.s4 > this.defaultMaxPT) {
-                this.validationState = new ValidationResult("SuperMaxPTCannotBeGreaterThan", "s4", [this.defaultMaxPT / SettingType18Config.roundingFactor]);
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.s4 > this.defaultMaxPT) {
+                    this.validationState = new ValidationResult("SuperMaxPTCannotBeGreaterThan", "s4", [this.defaultMaxPT / SettingType18Config.roundingFactor]);
 
-                return false;
-            }
+                    return false;
+                }
 
-            if (this.m4 > this.s4) {
-                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThanSuperMaxPT", "m4");
+                if (this.m4 > this.s4) {
+                    this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThanSuperMaxPT", "m4");
 
-                return false;
-            }
+                    return false;
+                }
 
-            if (this.a4 > this.m4) {
-                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThanMasterMaxPT", "a4");
+                if (this.a4 > this.m4) {
+                    this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThanMasterMaxPT", "a4");
 
-                return false;
-            }
+                    return false;
+                }
 
-            if (this.n4 > this.s4) {
-                this.validationState = new ValidationResult("SuperMinPTCannotBeGreaterThanSuperMaxPT", "n4");
+                if (this.n4 > this.s4) {
+                    this.validationState = new ValidationResult("SuperMinPTCannotBeGreaterThanSuperMaxPT", "n4");
 
-                return false;
+                    return false;
+                }
             }
 
             this.resetValidationState();
@@ -209,6 +214,7 @@ module CustomerSetting {
             var backupM3: number;
             var backupUs3: number;
             var backupS3: number;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
 
             if (source) {
                 backupIs3 = this.iS3;
@@ -223,7 +229,9 @@ module CustomerSetting {
                 this.uS3 = source.uS3;
                 this.s3 = source.s3;
 
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     // Cheating: force the validationState to point to [SuperPT] field when restoring the old data
                     // in the case that the new [SuperAutoPT] violates the constraints.
@@ -281,20 +289,22 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (this.iS3) {
-                if (!this.validateAutoPt()) {
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iS3) {
+                    if (!this.validateAutoPt()) {
+                        return false;
+                    }
+                } else {
+                    if (!this.validateManualPt()) {
+                        return false;
+                    }
+                }
+
+                if (this.n3 > this.m3) {
+                    this.validationState = new ValidationResult("MasterMinPTCannotBeGreaterThanMasterMaxPT", "n3");
+
                     return false;
                 }
-            } else {
-                if (!this.validateManualPt()) {
-                    return false;
-                }
-            }
-
-            if (this.n3 > this.m3) {
-                this.validationState = new ValidationResult("MasterMinPTCannotBeGreaterThanMasterMaxPT", "n3");
-
-                return false;
             }
 
             this.resetValidationState();
@@ -434,6 +444,7 @@ module CustomerSetting {
             var backupA2: number;
             var backupUm2: number;
             var backupM2: number;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
 
             if (source) {
                 backupIm2 = this.iM2;
@@ -448,7 +459,9 @@ module CustomerSetting {
                 this.uM2 = source.uM2;
                 this.m2 = source.m2;
 
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
 
                 if (!isSuccessful) {
                     // Cheating: force the validationState to point to [MasterPT] field when restoring the old data
@@ -507,20 +520,22 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (this.iM2) {
-                if (!this.validateAutoPt()) {
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iM2) {
+                    if (!this.validateAutoPt()) {
+                        return false;
+                    }
+                } else {
+                    if (!this.validateManualPt()) {
+                        return false;
+                    }
+                }
+
+                if (this.n2 > this.a2) {
+                    this.validationState = new ValidationResult("AgentMinPTCannotBeGreaterThanAgentMaxPT", "n2");
+
                     return false;
                 }
-            } else {
-                if (!this.validateManualPt()) {
-                    return false;
-                }
-            }
-
-            if (this.n2 > this.a2) {
-                this.validationState = new ValidationResult("AgentMinPTCannotBeGreaterThanAgentMaxPT", "n2");
-
-                return false;
             }
 
             this.resetValidationState();
@@ -658,6 +673,7 @@ module CustomerSetting {
             var backupUs1: number;
             var backups1: number;
             var isS1Disabled;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
 
             if (source) {
                 backupIs1 = this.iS1;
@@ -672,7 +688,9 @@ module CustomerSetting {
                     this.s1 = source.s1;
                 }
 
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
 
                 if (!isSuccessful) {
                     // Cheating: force the validationState to point to [SuperPTOnMember] field when restoring the old data
@@ -705,43 +723,45 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (this.iS1) {
-                var minOfSuperAutoPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iS1) {
+                    var minOfSuperAutoPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
 
-                if (this.uS1 < minOfSuperAutoPtOnMember) {
-                    this.validationState = new ValidationResult(
-                        "SuperAutoPTOnMemberCannotBeLessThan",
-                        "uS1",
-                        [minOfSuperAutoPtOnMember / SettingType18Config.roundingFactor]);
+                    if (this.uS1 < minOfSuperAutoPtOnMember) {
+                        this.validationState = new ValidationResult(
+                            "SuperAutoPTOnMemberCannotBeLessThan",
+                            "uS1",
+                            [minOfSuperAutoPtOnMember / SettingType18Config.roundingFactor]);
 
-                    return false;
-                }
+                        return false;
+                    }
 
-                if (this.uS1 > this.s4) {
-                    this.validationState = new ValidationResult("SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT", "uS1");
+                    if (this.uS1 > this.s4) {
+                        this.validationState = new ValidationResult("SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT", "uS1");
 
-                    return false;
-                }
-            } else if (!this.iS3) {
-                var minOfSuperPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
-                var maxOfSuperPtOnMember: number = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
+                        return false;
+                    }
+                } else if (!this.iS3) {
+                    var minOfSuperPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
+                    var maxOfSuperPtOnMember: number = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
 
-                if (this.s1 < minOfSuperPtOnMember) {
-                    this.validationState = new ValidationResult(
-                        "SuperPTOnMemberCannotBeLessThan",
-                        "s1",
-                        [minOfSuperPtOnMember / SettingType18Config.roundingFactor]);
+                    if (this.s1 < minOfSuperPtOnMember) {
+                        this.validationState = new ValidationResult(
+                            "SuperPTOnMemberCannotBeLessThan",
+                            "s1",
+                            [minOfSuperPtOnMember / SettingType18Config.roundingFactor]);
 
-                    return false;
-                }
+                        return false;
+                    }
 
-                if (this.s1 > maxOfSuperPtOnMember) {
-                    this.validationState = new ValidationResult(
-                        "SuperPTOnMemberCannotBeGreaterThan",
-                        "s1",
-                        [maxOfSuperPtOnMember / SettingType18Config.roundingFactor]);
+                    if (this.s1 > maxOfSuperPtOnMember) {
+                        this.validationState = new ValidationResult(
+                            "SuperPTOnMemberCannotBeGreaterThan",
+                            "s1",
+                            [maxOfSuperPtOnMember / SettingType18Config.roundingFactor]);
 
-                    return false;
+                        return false;
+                    }
                 }
             }
 
@@ -809,6 +829,7 @@ module CustomerSetting {
             var backupIm1: boolean;
             var backupUm1: number;
             var backupM1: number;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
 
             if (source) {
                 backupIm1 = this.iM1;
@@ -823,7 +844,9 @@ module CustomerSetting {
                     this.m1 = source.m1;
                 }
 
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
 
                 if (!isSuccessful) {
                     // Cheating: force the validationState to point to [MasterPTOnMember] field when restoring the old data
@@ -856,43 +879,45 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (this.iM1) {
-                var minOfMasterAutoPtOnMember: number = Math.max(0, this.n3 - this.a1);
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iM1) {
+                    var minOfMasterAutoPtOnMember: number = Math.max(0, this.n3 - this.a1);
 
-                if (this.uM1 < minOfMasterAutoPtOnMember) {
-                    this.validationState = new ValidationResult(
-                        "MasterAutoPTOnMemberCannotBeLessThan",
-                        "uM1",
-                        [minOfMasterAutoPtOnMember / SettingType18Config.roundingFactor]);
+                    if (this.uM1 < minOfMasterAutoPtOnMember) {
+                        this.validationState = new ValidationResult(
+                            "MasterAutoPTOnMemberCannotBeLessThan",
+                            "uM1",
+                            [minOfMasterAutoPtOnMember / SettingType18Config.roundingFactor]);
 
-                    return false;
-                }
+                        return false;
+                    }
 
-                if (this.uM1 > this.m3) {
-                    this.validationState = new ValidationResult("MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT", "uM1");
+                    if (this.uM1 > this.m3) {
+                        this.validationState = new ValidationResult("MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT", "uM1");
 
-                    return false;
-                }
-            } else if (!this.iM2 || this.isDisableMasterAutoPT) {
-                var minOfMasterPtOnMember: number = Math.max(0, this.n3 - this.a1);
-                var maxOfMasterPtOnMember: number = this.m3 - this.a1;
+                        return false;
+                    }
+                } else if (!this.iM2 || this.isDisableMasterAutoPT) {
+                    var minOfMasterPtOnMember: number = Math.max(0, this.n3 - this.a1);
+                    var maxOfMasterPtOnMember: number = this.m3 - this.a1;
 
-                if (this.m1 < minOfMasterPtOnMember) {
-                    this.validationState = new ValidationResult(
-                        "MasterPTOnMemberCannotBeLessThan",
-                        "m1",
-                        [minOfMasterPtOnMember / SettingType18Config.roundingFactor]);
+                    if (this.m1 < minOfMasterPtOnMember) {
+                        this.validationState = new ValidationResult(
+                            "MasterPTOnMemberCannotBeLessThan",
+                            "m1",
+                            [minOfMasterPtOnMember / SettingType18Config.roundingFactor]);
 
-                    return false;
-                }
+                        return false;
+                    }
 
-                if (this.m1 > maxOfMasterPtOnMember) {
-                    this.validationState = new ValidationResult(
-                        "MasterPTOnMemberCannotBeGreaterThan",
-                        "m1",
-                        [maxOfMasterPtOnMember / SettingType18Config.roundingFactor]);
+                    if (this.m1 > maxOfMasterPtOnMember) {
+                        this.validationState = new ValidationResult(
+                            "MasterPTOnMemberCannotBeGreaterThan",
+                            "m1",
+                            [maxOfMasterPtOnMember / SettingType18Config.roundingFactor]);
 
-                    return false;
+                        return false;
+                    }
                 }
             }
 
@@ -938,13 +963,15 @@ module CustomerSetting {
             var isSuccessful: boolean = true;
             var isCopySuccess: boolean = false;
             var backupA1: number;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
 
             if (source) {
                 backupA1 = this.a1;
 
                 this.a1 = source.a1;
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
-
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     this.a1 = backupA1;
                     this.highlightUnablyCopiedField();
@@ -963,17 +990,19 @@ module CustomerSetting {
             return isCopySuccess;
         }
 
-        public validate(): boolean {
-            if (this.a1 < this.n2) {
-                this.validationState = new ValidationResult("AgentPTCannotBeLessThanAgentMinPT", "a1");
+        public validate(isForceValidate: boolean = false): boolean {
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.a1 < this.n2) {
+                    this.validationState = new ValidationResult("AgentPTCannotBeLessThanAgentMinPT", "a1");
 
-                return false;
-            }
+                    return false;
+                }
 
-            if (this.a1 > this.a2) {
-                this.validationState = new ValidationResult("AgentPTCannotBeGreaterThanAgentMaxPT", "a1");
+                if (this.a1 > this.a2) {
+                    this.validationState = new ValidationResult("AgentPTCannotBeGreaterThanAgentMaxPT", "a1");
 
-                return false;
+                    return false;
+                }
             }
 
             this.resetValidationState();

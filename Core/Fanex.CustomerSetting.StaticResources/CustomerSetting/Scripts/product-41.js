@@ -35271,6 +35271,96 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var ToggleSettingBlockDirective = (function () {
+        function ToggleSettingBlockDirective($rootScope, $timeout) {
+            var _this = this;
+            this.initializing = true;
+            this.link = function (scope, element) {
+                var container = angular.element(element.parent());
+                container.addClass("togglable-bar");
+                container.on("click", function (event) {
+                    var target = angular.element(event.target);
+                    if (target.hasClass("togglable-bar")) {
+                        _this.toggle(scope);
+                        return false;
+                    }
+                });
+                if (!_this.isToggleAllDirective(scope)) {
+                    scope.$watch("settingData", function () {
+                        if (_this.initializing) {
+                            _this.$timeout(function () { return _this.initializing = false; });
+                        }
+                        else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
+                            scope.sharedStates.expandBlock(scope.blockIndex);
+                            _this.triggerPageHeightChangedEvent();
+                        }
+                    }, true);
+                    _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
+                        if ((!settingTypeId || settingTypeId === scope.settingTypeId)
+                            && scope.settingData
+                            && scope.settingData.some(function (item) { return !item.validationState.isSuccessful; })
+                            && !scope.sharedStates.isExpanded(scope.blockIndex)) {
+                            scope.sharedStates.expandBlock(scope.blockIndex);
+                            _this.triggerPageHeightChangedEvent();
+                        }
+                    });
+                    _this.$rootScope.$on("queriedSetting", function () {
+                        _this.initializing = true;
+                    });
+                }
+            };
+            this.$rootScope = $rootScope;
+            this.$timeout = $timeout;
+        }
+        Object.defineProperty(ToggleSettingBlockDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    blockIndex: "=",
+                    sharedStates: "=",
+                    settingData: "=",
+                    settingTypeId: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        ToggleSettingBlockDirective.prototype.toggle = function (scope) {
+            if (this.isToggleAllDirective(scope)) {
+                if (scope.sharedStates.isExpandedAll()) {
+                    scope.sharedStates.collapseAllBlocks();
+                }
+                else {
+                    scope.sharedStates.expandAllBlocks();
+                }
+            }
+            else {
+                if (scope.sharedStates.isExpanded(scope.blockIndex)) {
+                    scope.sharedStates.collapseBlock(scope.blockIndex);
+                }
+                else {
+                    scope.sharedStates.expandBlock(scope.blockIndex);
+                }
+            }
+            scope.$apply();
+            this.triggerPageHeightChangedEvent();
+        };
+        ;
+        ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
+            return scope.blockIndex === null || scope.blockIndex === undefined;
+        };
+        ToggleSettingBlockDirective.prototype.triggerPageHeightChangedEvent = function () {
+            this.$rootScope.$emit("page-height-changed");
+        };
+        ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
+        return ToggleSettingBlockDirective;
+    }());
+    CustomerSetting.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
+    CustomerSetting.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var DetectMaxHeightDirective = (function () {
         function DetectMaxHeightDirective($window, $timeout) {
             var _this = this;
@@ -35382,96 +35472,6 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var ToggleSettingBlockDirective = (function () {
-        function ToggleSettingBlockDirective($rootScope, $timeout) {
-            var _this = this;
-            this.initializing = true;
-            this.link = function (scope, element) {
-                var container = angular.element(element.parent());
-                container.addClass("togglable-bar");
-                container.on("click", function (event) {
-                    var target = angular.element(event.target);
-                    if (target.hasClass("togglable-bar")) {
-                        _this.toggle(scope);
-                        return false;
-                    }
-                });
-                if (!_this.isToggleAllDirective(scope)) {
-                    scope.$watch("settingData", function () {
-                        if (_this.initializing) {
-                            _this.$timeout(function () { return _this.initializing = false; });
-                        }
-                        else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
-                            scope.sharedStates.expandBlock(scope.blockIndex);
-                            _this.triggerPageHeightChangedEvent();
-                        }
-                    }, true);
-                    _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
-                        if ((!settingTypeId || settingTypeId === scope.settingTypeId)
-                            && scope.settingData
-                            && scope.settingData.some(function (item) { return !item.validationState.isSuccessful; })
-                            && !scope.sharedStates.isExpanded(scope.blockIndex)) {
-                            scope.sharedStates.expandBlock(scope.blockIndex);
-                            _this.triggerPageHeightChangedEvent();
-                        }
-                    });
-                    _this.$rootScope.$on("queriedSetting", function () {
-                        _this.initializing = true;
-                    });
-                }
-            };
-            this.$rootScope = $rootScope;
-            this.$timeout = $timeout;
-        }
-        Object.defineProperty(ToggleSettingBlockDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    blockIndex: "=",
-                    sharedStates: "=",
-                    settingData: "=",
-                    settingTypeId: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        ToggleSettingBlockDirective.prototype.toggle = function (scope) {
-            if (this.isToggleAllDirective(scope)) {
-                if (scope.sharedStates.isExpandedAll()) {
-                    scope.sharedStates.collapseAllBlocks();
-                }
-                else {
-                    scope.sharedStates.expandAllBlocks();
-                }
-            }
-            else {
-                if (scope.sharedStates.isExpanded(scope.blockIndex)) {
-                    scope.sharedStates.collapseBlock(scope.blockIndex);
-                }
-                else {
-                    scope.sharedStates.expandBlock(scope.blockIndex);
-                }
-            }
-            scope.$apply();
-            this.triggerPageHeightChangedEvent();
-        };
-        ;
-        ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
-            return scope.blockIndex === null || scope.blockIndex === undefined;
-        };
-        ToggleSettingBlockDirective.prototype.triggerPageHeightChangedEvent = function () {
-            this.$rootScope.$emit("page-height-changed");
-        };
-        ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
-        return ToggleSettingBlockDirective;
-    }());
-    CustomerSetting.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
-    CustomerSetting.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -35569,6 +35569,7 @@ var CustomerSetting;
             var backupM4;
             var backupA4;
             var backupN4;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupS4 = this.s4;
                 backupM4 = this.m4;
@@ -35578,7 +35579,9 @@ var CustomerSetting;
                 this.m4 = source.m4;
                 this.a4 = source.a4;
                 this.n4 = source.n4;
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     this.s4 = backupS4;
                     this.m4 = backupM4;
@@ -35602,21 +35605,23 @@ var CustomerSetting;
             return isCopySuccess;
         };
         SuperPositionTakingPartialMinPT.prototype.validate = function () {
-            if (this.s4 > this.defaultMaxPT) {
-                this.validationState = new CustomerSetting.ValidationResult("SuperMaxPTCannotBeGreaterThan", "s4", [this.defaultMaxPT / SettingType18Config.roundingFactor]);
-                return false;
-            }
-            if (this.m4 > this.s4) {
-                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThanSuperMaxPT", "m4");
-                return false;
-            }
-            if (this.a4 > this.m4) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThanMasterMaxPT", "a4");
-                return false;
-            }
-            if (this.n4 > this.s4) {
-                this.validationState = new CustomerSetting.ValidationResult("SuperMinPTCannotBeGreaterThanSuperMaxPT", "n4");
-                return false;
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.s4 > this.defaultMaxPT) {
+                    this.validationState = new CustomerSetting.ValidationResult("SuperMaxPTCannotBeGreaterThan", "s4", [this.defaultMaxPT / SettingType18Config.roundingFactor]);
+                    return false;
+                }
+                if (this.m4 > this.s4) {
+                    this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThanSuperMaxPT", "m4");
+                    return false;
+                }
+                if (this.a4 > this.m4) {
+                    this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThanMasterMaxPT", "a4");
+                    return false;
+                }
+                if (this.n4 > this.s4) {
+                    this.validationState = new CustomerSetting.ValidationResult("SuperMinPTCannotBeGreaterThanSuperMaxPT", "n4");
+                    return false;
+                }
             }
             this.resetValidationState();
             return true;
@@ -35649,6 +35654,7 @@ var CustomerSetting;
             var backupM3;
             var backupUs3;
             var backupS3;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupIs3 = this.iS3;
                 backupN3 = this.n3;
@@ -35660,7 +35666,9 @@ var CustomerSetting;
                 this.m3 = source.m3;
                 this.uS3 = source.uS3;
                 this.s3 = source.s3;
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     if (this.iS3 && !backupIs3 && this.validationState.fieldName === "uS3") {
                         this.validationState.fieldName = "s3";
@@ -35711,19 +35719,21 @@ var CustomerSetting;
             return isSuccessful;
         };
         MasterPositionTakingPartialMinPT.prototype.validate = function () {
-            if (this.iS3) {
-                if (!this.validateAutoPt()) {
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iS3) {
+                    if (!this.validateAutoPt()) {
+                        return false;
+                    }
+                }
+                else {
+                    if (!this.validateManualPt()) {
+                        return false;
+                    }
+                }
+                if (this.n3 > this.m3) {
+                    this.validationState = new CustomerSetting.ValidationResult("MasterMinPTCannotBeGreaterThanMasterMaxPT", "n3");
                     return false;
                 }
-            }
-            else {
-                if (!this.validateManualPt()) {
-                    return false;
-                }
-            }
-            if (this.n3 > this.m3) {
-                this.validationState = new CustomerSetting.ValidationResult("MasterMinPTCannotBeGreaterThanMasterMaxPT", "n3");
-                return false;
             }
             this.resetValidationState();
             return true;
@@ -35815,6 +35825,7 @@ var CustomerSetting;
             var backupA2;
             var backupUm2;
             var backupM2;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupIm2 = this.iM2;
                 backupN2 = this.n2;
@@ -35826,7 +35837,9 @@ var CustomerSetting;
                 this.a2 = source.a2;
                 this.uM2 = source.uM2;
                 this.m2 = source.m2;
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     if (this.iM2 && !backupIm2 && this.validationState.fieldName === "uM2") {
                         this.validationState.fieldName = "m2";
@@ -35877,19 +35890,21 @@ var CustomerSetting;
             return isSuccessful;
         };
         AgentPositionTakingPartialMinPT.prototype.validate = function () {
-            if (this.iM2) {
-                if (!this.validateAutoPt()) {
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iM2) {
+                    if (!this.validateAutoPt()) {
+                        return false;
+                    }
+                }
+                else {
+                    if (!this.validateManualPt()) {
+                        return false;
+                    }
+                }
+                if (this.n2 > this.a2) {
+                    this.validationState = new CustomerSetting.ValidationResult("AgentMinPTCannotBeGreaterThanAgentMaxPT", "n2");
                     return false;
                 }
-            }
-            else {
-                if (!this.validateManualPt()) {
-                    return false;
-                }
-            }
-            if (this.n2 > this.a2) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentMinPTCannotBeGreaterThanAgentMaxPT", "n2");
-                return false;
             }
             this.resetValidationState();
             return true;
@@ -35980,6 +35995,7 @@ var CustomerSetting;
             var backupUs1;
             var backups1;
             var isS1Disabled;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupIs1 = this.iS1;
                 backupUs1 = this.uS1;
@@ -35991,7 +36007,9 @@ var CustomerSetting;
                 else if (!this.iS3) {
                     this.s1 = source.s1;
                 }
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     if (this.iS1 && !backupIs1 && this.validationState.fieldName === "uS1") {
                         this.validationState.fieldName = "s1";
@@ -36019,27 +36037,29 @@ var CustomerSetting;
             return isCopySuccess;
         };
         SuperPositionTakingOnMemberPartialMinPT.prototype.validate = function () {
-            if (this.iS1) {
-                var minOfSuperAutoPtOnMember = Math.max(0, this.n4 - this.m1 - this.a1);
-                if (this.uS1 < minOfSuperAutoPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTOnMemberCannotBeLessThan", "uS1", [minOfSuperAutoPtOnMember / SettingType18Config.roundingFactor]);
-                    return false;
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iS1) {
+                    var minOfSuperAutoPtOnMember = Math.max(0, this.n4 - this.m1 - this.a1);
+                    if (this.uS1 < minOfSuperAutoPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTOnMemberCannotBeLessThan", "uS1", [minOfSuperAutoPtOnMember / SettingType18Config.roundingFactor]);
+                        return false;
+                    }
+                    if (this.uS1 > this.s4) {
+                        this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT", "uS1");
+                        return false;
+                    }
                 }
-                if (this.uS1 > this.s4) {
-                    this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT", "uS1");
-                    return false;
-                }
-            }
-            else if (!this.iS3) {
-                var minOfSuperPtOnMember = Math.max(0, this.n4 - this.m1 - this.a1);
-                var maxOfSuperPtOnMember = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
-                if (this.s1 < minOfSuperPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeLessThan", "s1", [minOfSuperPtOnMember / SettingType18Config.roundingFactor]);
-                    return false;
-                }
-                if (this.s1 > maxOfSuperPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "s1", [maxOfSuperPtOnMember / SettingType18Config.roundingFactor]);
-                    return false;
+                else if (!this.iS3) {
+                    var minOfSuperPtOnMember = Math.max(0, this.n4 - this.m1 - this.a1);
+                    var maxOfSuperPtOnMember = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
+                    if (this.s1 < minOfSuperPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeLessThan", "s1", [minOfSuperPtOnMember / SettingType18Config.roundingFactor]);
+                        return false;
+                    }
+                    if (this.s1 > maxOfSuperPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "s1", [maxOfSuperPtOnMember / SettingType18Config.roundingFactor]);
+                        return false;
+                    }
                 }
             }
             this.resetValidationState();
@@ -36087,6 +36107,7 @@ var CustomerSetting;
             var backupIm1;
             var backupUm1;
             var backupM1;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupIm1 = this.iM1;
                 backupUm1 = this.uM1;
@@ -36098,7 +36119,9 @@ var CustomerSetting;
                 else if (!this.iM2) {
                     this.m1 = source.m1;
                 }
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     if (this.iM1 && !backupIm1 && this.validationState.fieldName === "uM1") {
                         this.validationState.fieldName = "m1";
@@ -36126,27 +36149,29 @@ var CustomerSetting;
             return isCopySuccess;
         };
         MasterPositionTakingOnMemberPartialMinPT.prototype.validate = function () {
-            if (this.iM1) {
-                var minOfMasterAutoPtOnMember = Math.max(0, this.n3 - this.a1);
-                if (this.uM1 < minOfMasterAutoPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTOnMemberCannotBeLessThan", "uM1", [minOfMasterAutoPtOnMember / SettingType18Config.roundingFactor]);
-                    return false;
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iM1) {
+                    var minOfMasterAutoPtOnMember = Math.max(0, this.n3 - this.a1);
+                    if (this.uM1 < minOfMasterAutoPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTOnMemberCannotBeLessThan", "uM1", [minOfMasterAutoPtOnMember / SettingType18Config.roundingFactor]);
+                        return false;
+                    }
+                    if (this.uM1 > this.m3) {
+                        this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT", "uM1");
+                        return false;
+                    }
                 }
-                if (this.uM1 > this.m3) {
-                    this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT", "uM1");
-                    return false;
-                }
-            }
-            else if (!this.iM2 || this.isDisableMasterAutoPT) {
-                var minOfMasterPtOnMember = Math.max(0, this.n3 - this.a1);
-                var maxOfMasterPtOnMember = this.m3 - this.a1;
-                if (this.m1 < minOfMasterPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeLessThan", "m1", [minOfMasterPtOnMember / SettingType18Config.roundingFactor]);
-                    return false;
-                }
-                if (this.m1 > maxOfMasterPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "m1", [maxOfMasterPtOnMember / SettingType18Config.roundingFactor]);
-                    return false;
+                else if (!this.iM2 || this.isDisableMasterAutoPT) {
+                    var minOfMasterPtOnMember = Math.max(0, this.n3 - this.a1);
+                    var maxOfMasterPtOnMember = this.m3 - this.a1;
+                    if (this.m1 < minOfMasterPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeLessThan", "m1", [minOfMasterPtOnMember / SettingType18Config.roundingFactor]);
+                        return false;
+                    }
+                    if (this.m1 > maxOfMasterPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "m1", [maxOfMasterPtOnMember / SettingType18Config.roundingFactor]);
+                        return false;
+                    }
                 }
             }
             this.resetValidationState();
@@ -36180,10 +36205,13 @@ var CustomerSetting;
             var isSuccessful = true;
             var isCopySuccess = false;
             var backupA1;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupA1 = this.a1;
                 this.a1 = source.a1;
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     this.a1 = backupA1;
                     this.highlightUnablyCopiedField();
@@ -36200,14 +36228,17 @@ var CustomerSetting;
             }
             return isCopySuccess;
         };
-        AgentPositionTakingOnMemberPartialMinPT.prototype.validate = function () {
-            if (this.a1 < this.n2) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentPTCannotBeLessThanAgentMinPT", "a1");
-                return false;
-            }
-            if (this.a1 > this.a2) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentPTCannotBeGreaterThanAgentMaxPT", "a1");
-                return false;
+        AgentPositionTakingOnMemberPartialMinPT.prototype.validate = function (isForceValidate) {
+            if (isForceValidate === void 0) { isForceValidate = false; }
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.a1 < this.n2) {
+                    this.validationState = new CustomerSetting.ValidationResult("AgentPTCannotBeLessThanAgentMinPT", "a1");
+                    return false;
+                }
+                if (this.a1 > this.a2) {
+                    this.validationState = new CustomerSetting.ValidationResult("AgentPTCannotBeGreaterThanAgentMaxPT", "a1");
+                    return false;
+                }
             }
             this.resetValidationState();
             return true;
