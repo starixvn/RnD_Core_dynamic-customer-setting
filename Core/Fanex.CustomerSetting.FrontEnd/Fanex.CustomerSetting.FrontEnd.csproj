@@ -198,6 +198,7 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CustomerInfo\customer-info.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CopyWithCheckBoxSettingBlock\CopySettingWithCheckbox\copy-setting-with-checkbox.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\HighlightField\tooltip.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\CopySetting\copy-setting.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\default-setting-block.htm" />
@@ -212,6 +213,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>customer-setting-resource.tt</DependentUpon>
     </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\adjust-member-pt-modal.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CopyWithCheckBoxSettingBlock\copy-with-checkbox-setting-block.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\position-taking-resources.js">
+      <DependentUpon>position-taking-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\position-taking-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>position-taking-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\position-taking-select.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\settingtype18-default-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\settingtype18-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\settingtype18-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\settingtype18.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -286,6 +303,20 @@
       <DependentUpon>settingtype17-resources.tt</DependentUpon>
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType17\settingtype17-checkbox-group.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\update-data-checkbox.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\comm-rate-select.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\commission-resources.js">
+      <DependentUpon>commission-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\commission-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>commission-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\settingtype19-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\settingtype19-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\settingtype19.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\adjust-member-pt-modal.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -532,12 +563,24 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CopyWithCheckBoxSettingBlock\CopySettingWithCheckbox\copy-setting-with-checkbox.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\NumericInput\numeric-input.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType17\models.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType17\settingtype17-stake-icon-tooltip.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType17\settingtype17-resource.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType17\settingtype17.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType17\settingtype17-checkbox-group.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\adjust-member-pt-modal.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\models.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\position-taking-select.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\settingtype18.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\position-taking-resources.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CopyWithCheckBoxSettingBlock\copy-with-checkbox-setting-block.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\update-data-checkbox.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\comm-rate-select.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\commission-resources.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\models.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\settingtype19.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-mocks.d.ts" />

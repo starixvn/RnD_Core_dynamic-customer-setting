@@ -89,7 +89,9 @@
     <Content Include="CustomerSetting\Scripts\product-28.js" />
     <Content Include="CustomerSetting\Scripts\product-28.min.js" />
     <Content Include="CustomerSetting\Styles\customer-setting.css" />
-    <Content Include="CustomerSetting\Styles\customer-setting.min.css" />
+    <Content Include="CustomerSetting\Styles\customer-setting.min.css">
+      <DependentUpon>customer-setting.css</DependentUpon>
+    </Content>
     <Content Include="CustomerSetting\Styles\flexbox-patch.css" />
     <Content Include="CustomerSetting\Styles\flexbox-patch.min.css" />
     <Content Include="CustomerSetting\Styles\Images\auto-pt.gif" />

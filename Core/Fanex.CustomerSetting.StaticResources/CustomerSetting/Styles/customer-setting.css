@@ -210,16 +210,34 @@ th {
 .x-ng-cloak {
   display: none !important; }
 
-.w16-percent, .w20-percent, .w25-percent, .w28-percent, .w30-percent, .w33-percent, .w40-percent, .w42-percent, .w50-percent, .w60-percent, .w80-percent, .w100-percent, .block__item, .block__item--full-width, .block__item--full-width .block__lbl,
+.w3-percent, .w4-percent, .w15-percent, .w13-percent, .w16-percent, .w18-percent, .w20-percent, .w21-percent, .w25-percent, .w28-percent, .w30-percent, .w33-percent, .w40-percent, .w42-percent, .w50-percent, .w60-percent, .w70-percent, .w80-percent, .w100-percent, .block__item, .block__item--full-width, .block__item--full-width .block__lbl,
 .block__item--full-width .block__lbl--white, .block__item--full-width .block__value, .block__lbl, .block__value, .full-width .block__item, .full-width .block__lbl,
 .full-width .block__lbl--white, .full-width .block__value {
   float: left; }
 
+.w3-percent {
+  width: 3% !important; }
+
+.w4-percent {
+  width: 4% !important; }
+
+.w15-percent {
+  width: 15% !important; }
+
+.w13-percent {
+  width: 13% !important; }
+
 .w16-percent {
   width: 16% !important; }
 
+.w18-percent {
+  width: 18% !important; }
+
 .w20-percent {
   width: 20% !important; }
+
+.w21-percent {
+  width: 21% !important; }
 
 .w25-percent {
   width: 25% !important; }
@@ -229,6 +247,8 @@ th {
 
 .w30-percent {
   width: 30% !important; }
+  .w30-percent--last {
+    width: 31% !important; }
 
 .w33-percent {
   width: 33% !important; }
@@ -246,6 +266,9 @@ th {
 
 .w60-percent {
   width: 60% !important; }
+
+.w70-percent {
+  width: 70% !important; }
 
 .w80-percent {
   width: 80% !important; }
@@ -329,6 +352,8 @@ th {
     background-position: -15px 0;
     height: 20px;
     width: 20px; }
+    .icon--copy--active {
+      background-position: -48px -23px; }
   .icon--close {
     background-position: -35px 0;
     height: 14px;
@@ -590,7 +615,8 @@ th {
     width: 40%;
     background-color: #b5c4d0;
     line-height: 1.5;
-    padding: 0 3px; }
+    padding: 0 3px;
+    height: 100%; }
     .block__lbl--white {
       background-color: #fff; }
     .block__lbl--transparent {
@@ -635,6 +661,9 @@ th {
 
 .togglable-bar {
   cursor: pointer; }
+
+.disabled {
+  background-color: lightgray; }
 
 /*
  * A partial implementation of the Ruby list functions from Compass:

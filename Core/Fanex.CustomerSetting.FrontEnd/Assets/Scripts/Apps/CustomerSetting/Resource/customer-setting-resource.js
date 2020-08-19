@@ -255,6 +255,7 @@
         "AccountWasDisabled": "Tài khoản bị vô hiệu hóa",
         "CopiedSuccessfully": "Tất cả những ô được gán giá trị sao chép sẽ được đánh dấu xanh.",
         "CopyingFailed": "Không thể gán giá trị được sao chép vào những ô được đánh dấu đỏ.",
+        "NoChangeToUpdate": "Không có thay đổi mới được cập nhật.",
         "SystemError": "Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý",
         "YouAreNotAuthorized": "Bạn không được cho phép sử dụng chức năng này"
     };

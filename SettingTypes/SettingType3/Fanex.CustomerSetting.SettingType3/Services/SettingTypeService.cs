@@ -66,7 +66,8 @@
                 customerId,
                 customerLevel,
                 uplineLevel,
-                settingType.ToXml());
+                settingType.ToXml(),
+                settingType.Id);
 
             var settingResult = CreateSettingResult(result, customerId, settingType);
 

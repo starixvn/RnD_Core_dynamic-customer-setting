@@ -98,6 +98,10 @@
         background-position: -15px 0;
         height: 20px;
         width: 20px;
+
+        &--active {
+            background-position: -48px -23px;
+        }
     }
 
     &--close {
@@ -110,9 +114,11 @@
         background-position: -51px 0;
         height: 13px;
         width: 14px;
-        &--pointer{
+
+        &--pointer {
             cursor: pointer;
-            &--margintop{
+
+            &--margintop {
                 margin-top: 5px;
             }
         }
@@ -497,6 +503,7 @@
         background-color: $block-item-lbl-bg;
         line-height: $line-height;
         padding: 0 3px;
+        height: 100%;
 
         &--white {
             background-color: $default-bg;
@@ -568,4 +575,8 @@
 
 .togglable-bar {
     cursor: pointer;
+}
+
+.disabled{
+    background-color: $disabled-bg-color;
 }

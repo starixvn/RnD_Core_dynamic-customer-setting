@@ -193,6 +193,7 @@
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType14.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType15.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType16.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType18.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.xml" />
@@ -292,10 +293,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\Fanex.CustomerSetting.Tasks.Product44\Fanex.CustomerSetting.Tasks.Product41.csproj">
-      <Project>{c2a70d3e-3d35-46eb-bff3-af224090bacb}</Project>
-      <Name>Fanex.CustomerSetting.Tasks.Product41</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SettingTypes\SettingType11\Fanex.CustomerSetting.SettingType11\Fanex.CustomerSetting.SettingType11.csproj">
       <Project>{24fd214c-e151-4f97-95c7-924680d84c74}</Project>
       <Name>Fanex.CustomerSetting.SettingType11</Name>
@@ -324,6 +321,14 @@
       <Project>{00b884ba-ade0-4033-ac60-c8d1c0edaf99}</Project>
       <Name>Fanex.CustomerSetting.SettingType17</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SettingTypes\SettingType18\Fanex.CustomerSetting.SettingType18\Fanex.CustomerSetting.SettingType18.csproj">
+      <Project>{e230b47d-9500-465e-8296-50a904247c48}</Project>
+      <Name>Fanex.CustomerSetting.SettingType18</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SettingTypes\SettingType19\Fanex.CustomerSetting.SettingType19\Fanex.CustomerSetting.SettingType19\Fanex.CustomerSetting.SettingType19.csproj">
+      <Project>{46474bb2-e60c-48d8-9214-af484207a29f}</Project>
+      <Name>Fanex.CustomerSetting.SettingType19</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SettingTypes\SettingType5\Fanex.CustomerSetting.SettingType5\Fanex.CustomerSetting.SettingType5.csproj">
       <Project>{f800a03e-8229-4ad2-93a5-cd10a6b9916d}</Project>
       <Name>Fanex.CustomerSetting.SettingType5</Name>
@@ -343,6 +348,10 @@
     <ProjectReference Include="..\..\SettingTypes\SettingType9\Fanex.CustomerSetting.SettingType9\Fanex.CustomerSetting.SettingType9.csproj">
       <Project>{3fcf65fb-a2e7-4b82-b0d1-665d73468c3a}</Project>
       <Name>Fanex.CustomerSetting.SettingType9</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tasks\Product41\Fanex.CustomerSetting.Tasks.Product41\Fanex.CustomerSetting.Tasks.Product41.csproj">
+      <Project>{c2a70d3e-3d35-46eb-bff3-af224090bacb}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.Product41</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tasks\SettingType13\Fanex.CustomerSetting.Tasks.SettingType13\Fanex.CustomerSetting.Tasks.SettingType13.csproj">
       <Project>{6d79d74e-f7e8-4963-813a-7b3bf21c8fe9}</Project>

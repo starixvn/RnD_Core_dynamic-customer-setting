@@ -9,8 +9,9 @@
     [Serializable]
     public class SettingType
     {
-        private const string SettingTypeXmlFormat = "<ROOT>{0}</ROOT>";
         private IEnumerable<ISettingItem> _settingItems;
+
+        protected const string SettingTypeXmlFormat = "<ROOT>{0}</ROOT>";
 
         public short Id { get; set; }
 

@@ -42,6 +42,7 @@ module CustomerSetting {
         private updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain;
         private settingTypesSharedValuesService: SettingTypesSharedValuesService;
         private successfulUpdatingCallback: ISuccessfulUpdatingCallback;
+        private checkChangedInMultipleModeSettingTypes: Array<number>;
 
         constructor(
             $window: ng.IWindowService,
@@ -67,7 +68,7 @@ module CustomerSetting {
             this.systemId = this.parametersService.systemId;
             this.customerNames = this.parametersService.customerNames;
             this.requestService.registerSharedScope(this);
-
+            this.checkChangedInMultipleModeSettingTypes = [18, 19];
             angular.element(this.$window.document).ready(() => {
                 this.querySetting();
             });
@@ -84,7 +85,17 @@ module CustomerSetting {
             this.$rootScope.$emit("updateSetting", settingTypeId);
             this.requestMsgResult = undefined;
 
-            if (setting) {
+            if (isMultiple && this.hasCheckChangedInMultipleModeSettingTypes()) {
+                setting.settingTypes = setting.settingTypes.filter((settingType: SettingType) => {
+                    if (this.checkChangedInMultipleModeSettingTypes.indexOf(settingType.id) > -1) {
+                        return !!this.setting.getChanges(settingType.id);
+                    }
+
+                    return true;
+                });
+            }
+
+            if (setting && setting.settingTypes.length > 0) {
                 if (editableSettings.validate()) {
                     command = this.parametersService.createSettingCommand(setting);
                     validationResult = command.validate();
@@ -103,6 +114,16 @@ module CustomerSetting {
                 error.message = this.resourceService.getMessage(error.message);
                 this.requestMsgResult = error;
             }
+        }
+
+        private hasCheckChangedInMultipleModeSettingTypes(): boolean {
+            return this.setting.settingTypes.filter((settingType: SettingType) => {
+                if (this.checkChangedInMultipleModeSettingTypes.indexOf(settingType.id) > -1) {
+                    return true;
+                }
+
+                return false;
+            }).length > 0;
         }
 
         private updateSetting(path: string, command: SettingCommand, isPartialUpdate?: boolean, isMultipleUpdate?: boolean): void {

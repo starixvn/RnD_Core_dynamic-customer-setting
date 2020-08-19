@@ -135,4 +135,7 @@
   <data name="CopiedSuccessfully" xml:space="preserve">
     <value>Tất cả những ô được gán giá trị sao chép sẽ được đánh dấu xanh.</value>
   </data>
+  <data name="NoChangeToUpdate" xml:space="preserve">
+    <value>Không có thay đổi mới được cập nhật.</value>
+  </data>
 </root>

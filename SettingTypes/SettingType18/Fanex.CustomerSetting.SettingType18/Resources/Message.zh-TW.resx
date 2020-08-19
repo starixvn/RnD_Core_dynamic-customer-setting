@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="UpdatePositionTakingSuccessfully" xml:space="preserve">
+    <value>佔成數設定已更新成功.</value>
+  </data>
+  <data name="AgentMaxPTCannotBeGreaterThan" xml:space="preserve">
+    <value>代理最高占成必須少於或相等於{0}</value>
+  </data>
+  <data name="AgentMaxPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>代理最高占成必須少於或相等於總代理最高占成</value>
+  </data>
+  <data name="AgentMaxPTCannotBeLessThan" xml:space="preserve">
+    <value>代理最高占成必須大於或相等於{0}</value>
+  </data>
+  <data name="AgentMinPTCannotBeGreaterThanAgentMaxPT" xml:space="preserve">
+    <value>代理最低占成必須少於或相等於代理最高占成</value>
+  </data>
+  <data name="AgentPTCannotBeGreaterThanAgentMaxPT" xml:space="preserve">
+    <value>代理占成必須少於或相等於代理最高占成</value>
+  </data>
+  <data name="AgentPTCannotBeLessThanAgentMinPT" xml:space="preserve">
+    <value>代理占成必須大於或相等於代理最低占成</value>
+  </data>
+  <data name="MasterAutoPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>總代理自動占成必須少於或相等於總代理最高占成</value>
+  </data>
+  <data name="MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>總代理自動占成在會員必須少於或相等於總代理最高占成</value>
+  </data>
+  <data name="MasterAutoPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>總代理自動占成在會員必須大於或相等於{0}</value>
+  </data>
+  <data name="MasterMaxPTCannotBeGreaterThan" xml:space="preserve">
+    <value>總代理最高占成必須少於或相等於{0}</value>
+  </data>
+  <data name="MasterMaxPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>總代理最高占成必須少於或相等於超級總代理最高占成</value>
+  </data>
+  <data name="MasterMaxPTCannotBeLessThan" xml:space="preserve">
+    <value>總代理最高占成必須大於或相等於{0}</value>
+  </data>
+  <data name="MasterMinPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>總代理最低占成必須少於或相等於總代理最高占成</value>
+  </data>
+  <data name="MasterPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>總代理占成必須低於或相等於總代理最高占成。</value>
+  </data>
+  <data name="MasterPTCannotBeLessThan" xml:space="preserve">
+    <value>總代理占成必須大於或相等於 {0}。</value>
+  </data>
+  <data name="MasterPTOnMemberCannotBeGreaterThan" xml:space="preserve">
+    <value>總代理於會員的占成必須小於或相等於 {0}。</value>
+  </data>
+  <data name="MasterPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>總代理於會員的占成必須大於或相等於 {0}。</value>
+  </data>
+  <data name="Msg_20001" xml:space="preserve">
+    <value>占成無效</value>
+  </data>
+  <data name="Msg_20019" xml:space="preserve">
+    <value>現有總代理超過新增超級總代理的最高占成</value>
+  </data>
+  <data name="Msg_20020" xml:space="preserve">
+    <value>現有會員超過新增超級總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20021" xml:space="preserve">
+    <value>現有總代理超過新增總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20022" xml:space="preserve">
+    <value>現有會員超過新增總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20023" xml:space="preserve">
+    <value>現有代理超過新增代理的最高占成。</value>
+  </data>
+  <data name="Msg_20024" xml:space="preserve">
+    <value>現有會員超過新增代理的最高占成。</value>
+  </data>
+  <data name="Msg_20025" xml:space="preserve">
+    <value>此占成違反上線的最低/最高占成.</value>
+  </data>
+  <data name="Msg_20026" xml:space="preserve">
+    <value>現有代理超過新增總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20027" xml:space="preserve">
+    <value>此占成違反公司設置於總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20028" xml:space="preserve">
+    <value>此占成違反超級總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20029" xml:space="preserve">
+    <value>此占成違反超級總代理的最低占成。</value>
+  </data>
+  <data name="Msg_20030" xml:space="preserve">
+    <value>此代理最低占成違反總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20031" xml:space="preserve">
+    <value>此占成違反總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20032" xml:space="preserve">
+    <value>此占成違反總代理的最低占成。</value>
+  </data>
+  <data name="Msg_20033" xml:space="preserve">
+    <value>此占成違反代理的最低/最高占成。</value>
+  </data>
+  <data name="Msg_20034" xml:space="preserve">
+    <value>此占成違反代理的最高占成。</value>
+  </data>
+  <data name="SuperAutoPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>超級總代理的自動占成必須少於或相等於超級總代理的最高占成。</value>
+  </data>
+  <data name="SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>超級總代理於會員的自動占成必須少於或相等於超級總代理的最高占成。</value>
+  </data>
+  <data name="SuperAutoPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>超級總代理於會員的自動占成必須大於或相等於 {0}。</value>
+  </data>
+  <data name="SuperMaxPTCannotBeGreaterThan" xml:space="preserve">
+    <value>超級總代理的最高占成必須少於或相等於 {0}。</value>
+  </data>
+  <data name="SuperMinPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>超級總代理的最低占成必須少於或相等於超級總代理的最高占成。</value>
+  </data>
+  <data name="SuperPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>超級總代理的占成必須少於或相等於超級總代理的最高占成。</value>
+  </data>
+  <data name="SuperPTOnMemberCannotBeGreaterThan" xml:space="preserve">
+    <value>超級總代理於會員的占成必須少於或相等於{0}。</value>
+  </data>
+  <data name="SuperPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>超級總代理於會員的占成必須大於或相等於 {0}。</value>
+  </data>
+</root>

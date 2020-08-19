@@ -106,6 +106,10 @@ module CustomerSetting {
             throw Exceptions.notImplemented("copyFrom");
         }
 
+        public removeCopyDisabled(targets: Array<DefaultSettingItem>): void {
+            throw Exceptions.notImplemented("removeCopyDisabled");
+        }
+
         public validate(): boolean {
             return true;
         }
@@ -169,6 +173,62 @@ module CustomerSetting {
 
         public resetFieldHighlightState(fieldName: string): void {
             this.changeFieldHighlightState(fieldName);
+        }
+    }
+
+    export class CopyWithCheckboxSettingItem extends DefaultSettingItem {
+        public isRowCopied: boolean;
+        public isCheckedUpdateRow: boolean;
+        public isCheckedUpdateMinPtOnly: boolean;
+        public isMultiple: boolean;
+
+        constructor();
+        constructor(settingItem: any);
+        constructor(settingItem: any, multipleUpdates: boolean);
+        constructor(settingItem?: any, multipleUpdates: boolean = false) {
+            super(settingItem);
+            this.isRowCopied = false;
+            this.isMultiple = !!multipleUpdates;
+            this.isCheckedUpdateRow = !multipleUpdates;
+            this.isCheckedUpdateMinPtOnly = !multipleUpdates;
+        }
+
+        public removeCopyDisabled(targets: Array<CopyWithCheckboxSettingItem>): void {
+            targets.forEach((item: CopyWithCheckboxSettingItem) => {
+                item.isRowCopied = false;
+            });
+        }
+
+        public copySettingTo(targets: Array<CopyWithCheckboxSettingItem>): { numberOfCopiedItems: number, status: boolean } {
+            var numberOfCopiedItems: number = 0;
+            var status: boolean = true;
+
+            if (targets) {
+                numberOfCopiedItems = targets.filter((item: CopyWithCheckboxSettingItem) => {
+                    var isCopiedSuccess: boolean = false;
+
+                    if (this.sportTypeId !== item.sportTypeId || this.betTypeId !== item.betTypeId || this.isLive !== item.isLive) {
+                        isCopiedSuccess = item.copySettingFrom(this);
+                        status = status ? isCopiedSuccess : status;
+
+                        return item.isRowCopied;
+                    }
+
+                    return false;
+                }).length;
+            }
+
+            return { numberOfCopiedItems: numberOfCopiedItems, status: status };
+        }
+
+        public toJson(): {} {
+            if (this.isMultiple && !this.isCheckedUpdateRow && !this.isCheckedUpdateMinPtOnly)
+                return null;
+
+            var settingItem: any = {};
+            settingItem = super.toJson();
+            settingItem.isUpdateMinPtOnly = this.isCheckedUpdateMinPtOnly && !this.isCheckedUpdateRow;
+            return settingItem;
         }
     }
 
@@ -280,7 +340,9 @@ module CustomerSetting {
             };
 
             this.settingItems.forEach((settingItem: ISettingItem) => {
-                settingType.settingItems.push(settingItem.toJson());
+                var settingItemJson = settingItem.toJson();
+                if (settingItemJson != null)
+                    settingType.settingItems.push(settingItem.toJson());
             });
 
             if (this.extraData && this.extraData.length > 0) {

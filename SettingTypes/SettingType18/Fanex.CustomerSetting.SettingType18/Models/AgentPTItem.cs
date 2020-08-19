@@ -1,0 +1,82 @@
+﻿namespace Fanex.CustomerSetting.SettingType18.Models
+{
+    using Constants;
+    using CustomerSetting.Models.Results;
+    using Resources;
+
+    public class AgentPTItem : PTItem
+    {
+        private const string PTXmlFormat
+            = "<PT {0} MasterPT=\"{1}\" IsAutoMasterPT=\"{2}\" AutoMasterPT=\"{3}\" AgentPT=\"{4}\" MinPT=\"{5}\" IsUpdAllMems=\"{6}\" UpdAllMems_Value=\"{7}\"/>";
+
+        /// <summary>
+        /// Master PT
+        /// </summary>
+        public byte M2 { get; set; }
+
+        /// <summary>
+        /// Master Auto PT
+        /// </summary>
+        public byte UM2 { get; set; }
+
+        /// <summary>
+        /// Is Auto
+        /// </summary>
+        public bool IM2 { get; set; }
+
+        /// <summary>
+        /// Agent Max PT
+        /// </summary>
+        public byte A2 { get; set; }
+
+        /// <summary>
+        /// Agent Min PT
+        /// </summary>
+        public byte N2 { get; set; }
+
+        /// <summary>
+        /// Master Max PT
+        /// </summary>
+        public byte M3 { get; set; }
+
+        /// <summary>
+        /// Master Min PT
+        /// </summary>
+        public byte N3 { get; set; }
+
+        /// <summary>
+        /// Agent Max PT
+        /// </summary>
+        public byte A4 { get; set; }
+
+        public bool IsUpdateMasterPTOnMembers { get; set; }
+
+        public byte MasterPTOnMembers { get; set; }
+
+        public override IResult Validate()
+        {
+            if (N2 > A2)
+            {
+                return new Result(
+                    ErrorCodes.AgentMinPTIsGreaterThanAgentMaxPT,
+                    Message.AgentMinPTCannotBeGreaterThanAgentMaxPT);
+            }
+
+            return base.Validate();
+        }
+
+        public override string ToXml()
+        {
+            return string.Format(
+                PTXmlFormat,
+                base.ToXml(),
+                IM2 ? 0 : M2,
+                IM2 ? 1 : 0,
+                IM2 ? UM2 : 0,
+                A2,
+                N2,
+                IsUpdateMasterPTOnMembers ? 1 : 0,
+                MasterPTOnMembers);
+        }
+    }
+}

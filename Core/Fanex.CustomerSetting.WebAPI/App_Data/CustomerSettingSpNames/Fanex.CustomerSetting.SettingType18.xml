@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Position_Taking_Partial_Update_Multiple">
+    <Setting Key="CustSetting_SuperPTSelect_SettingType18" SpName="Acc_CustSetting_SuperPTSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+
+    <Setting Key="CustSetting_MasterPTSelect_SettingType18" SpName="Acc_CustSetting_MasterPTSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+
+    <Setting Key="CustSetting_AgentPTSelect_SettingType18" SpName="Acc_CustSetting_AgentPTSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+
+    <Setting Key="CustSetting_MemberPTSelect_SettingType18" SpName="Acc_CustSetting_MemberPTSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+  </Function>
+</Functions>
