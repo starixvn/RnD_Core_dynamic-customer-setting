@@ -1,10 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Models.Enumerations
 {
-    internal enum SettingType
+    internal enum ViewMode
     {
         PositionTaking = 1,
-        Commission = 3,
-        ChargeCommission = 5,
-        TicketCommission = 14
+        Commission = 3
     }
 }

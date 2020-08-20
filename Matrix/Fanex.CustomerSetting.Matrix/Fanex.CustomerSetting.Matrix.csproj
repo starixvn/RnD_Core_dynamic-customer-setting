@@ -99,6 +99,7 @@
   <ItemGroup>
     <Compile Include="Criteria\CommissionMatrixQueryCriteria.cs" />
     <Compile Include="Criteria\CustomerLineQueryCriteria.cs" />
+    <Compile Include="Criteria\GetSettingTypeIdCriteria.cs" />
     <Compile Include="Criteria\GetSettingTypeLevelCriteria.cs" />
     <Compile Include="Criteria\IsDisableMasterAutoPTQueryCriteria.cs" />
     <Compile Include="Criteria\PTMatrixQueryCriteria.cs" />
