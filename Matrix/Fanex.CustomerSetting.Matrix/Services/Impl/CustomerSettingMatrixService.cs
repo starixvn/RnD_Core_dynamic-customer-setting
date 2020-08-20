@@ -8,6 +8,7 @@
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Data.Repository;
+    using Fanex.Data;
     using Models;
     using Models.Enumerations;
     using Resources;
@@ -48,13 +49,11 @@
         public CustomerSettingMatrix GetCustomerSettingMatrix(SettingMatrixQuery settingMatrixQuery)
         {
             Check.Argument.IsNotNull(settingMatrixQuery, nameof(settingMatrixQuery));
-            Check.Argument.IsNotNegativeOrZero(settingMatrixQuery.SettingTypeId, nameof(settingMatrixQuery.SettingTypeId));
             Check.Argument.IsNotEmpty(settingMatrixQuery.CustomerName, nameof(settingMatrixQuery.CustomerName));
-
+            Check.Argument.IsNotOutOfRange(settingMatrixQuery.ViewMode, 1, 3, nameof(settingMatrixQuery.ViewMode));
             var customerLine = _customerService.GetCustomerLine(settingMatrixQuery.CustomerName);
             var settingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery, customerLine);
-
-            settingTypeMatrix.SettingLevel = GetSettingTypeLevel(settingMatrixQuery);
+            settingTypeMatrix.SettingLevel = GetSettingTypeLevel(settingMatrixQuery, GetSettingTypeId(settingMatrixQuery));
 
             if (settingMatrixQuery.ProductId > 0)
             {
@@ -71,16 +70,12 @@
 
         private SettingTypeMatrix GetCustomerSettingTypeMatrix(SettingMatrixQuery settingMatrixQuery, IEnumerable<Customer> customerLine)
         {
-            switch ((SettingType)settingMatrixQuery.SettingTypeId)
+            switch ((ViewMode)settingMatrixQuery.ViewMode)
             {
-                case SettingType.PositionTaking:
+                case ViewMode.PositionTaking:
                     return _pTMatrixService.GetPTMatrix(settingMatrixQuery, GetMasterName(customerLine));
-
-                case SettingType.Commission:
-                case SettingType.ChargeCommission:
-                case SettingType.TicketCommission:
+                case ViewMode.Commission:
                     return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName);
-
                 default:
                     throw new InvalidOperationException(Message.InvalidSettingTypeId);
             }
@@ -99,23 +94,39 @@
             return string.Empty;
         }
 
-        private byte GetSettingTypeLevel(SettingMatrixQuery settingMatrixQuery)
+        private byte GetSettingTypeLevel(SettingMatrixQuery settingMatrixQuery, short settingTypeId)
         {
             var settingTypeLevel = _cachingService.GetOrAdd(
-                   string.Format(SettingTypeLevelCacheKey, settingMatrixQuery.ProductId, settingMatrixQuery.SportTypeId, settingMatrixQuery.SettingTypeId),
+                   string.Format(SettingTypeLevelCacheKey, settingMatrixQuery.ProductId, settingMatrixQuery.SportTypeId, settingTypeId),
                    () =>
                    {
                        return _dynamicRepository.Get<byte>(
                             new GetSettingTypeLevelCriteria
                             {
                                 ProductId = settingMatrixQuery.ProductId,
-                                SettingTypeId = settingMatrixQuery.SettingTypeId,
+                                SettingTypeId = settingTypeId,
                                 SportTypeId = settingMatrixQuery.SportTypeId
                             });
                    },
                    new TimeSpan(CacheDuration, 0, 0));
 
             return settingTypeLevel;
+        }
+
+        private short GetSettingTypeId(SettingMatrixQuery settingMatrixQuery)
+        {
+            var criteria = new GetSettingTypeIdCriteria()
+            {
+                ProductId = settingMatrixQuery.ProductId == 0 ? (byte?)null : settingMatrixQuery.ProductId,
+                SportTypeId = settingMatrixQuery.SportTypeId == 0 ? (short?)null : settingMatrixQuery.SportTypeId,
+                Mode = settingMatrixQuery.ViewMode
+            };
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.ExecuteNonQuery(criteria.GetSpParams());
+                var output = objDb.GetOuputParams();
+                return (short)output["settingtype"];
+            }
         }
     }
 }

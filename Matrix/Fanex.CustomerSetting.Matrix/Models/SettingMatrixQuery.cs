@@ -4,6 +4,10 @@
     {
         public byte SettingTypeId { get; set; }
 
+        // Cheat code to use settingTypeId replace for ViewMode as parameter
+        // Due to cannot build Matrix Js file issue.
+        public byte ViewMode => SettingTypeId;
+
         public byte ProductId { get; set; }
 
         public string CustomerName { get; set; }

@@ -14,5 +14,6 @@
     <Setting Key="CustSetting_DisableMasterAutoPTSelect" SpName="Acc_CustSetting_DisableMasterAutoPTSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_SettingLevel" SpName="Acc_CustSetting_SettingLevel" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_ViewMatrixInfo" SpName="Acc_CustSetting_ViewMatrixInfo" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>
