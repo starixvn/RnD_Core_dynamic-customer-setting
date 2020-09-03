@@ -24,7 +24,6 @@
         private const string CustomerSettingTemplateCachingKey = "CustomerSettingTemplate";
         private const string CustomerSettingTemplateFilePath = "~/App_Data/Templates/customer-setting.htm";
         private const byte CachingHours = 4;
-        private const int NoChangeByUMErrorCode = 90017;
         private readonly ISettingServiceFactory settingServiceFactory;
         private readonly IUMService umService;
 
@@ -82,10 +81,12 @@
                 request.Setting.ProductId,
                 request.GetSettingContext());
 
-            var result = (UpdateSettingResult)updateSettingService.Update(request.GetUpdateCustomerSettingCommand());
-            var umResult = this.umService.GetUMResult(request.Setting.CustomerId, request.Setting.ProductId, IsPartialUpdate(request.Setting.SettingTypes) ? request.Setting.SettingTypes.FirstOrDefault()?.Id : null, request.Language);
-            if (umResult != null) result.AddSubResult(umResult);
-            result.RemoveSubResultByCode(NoChangeByUMErrorCode);
+            var result = updateSettingService.Update(request.GetUpdateCustomerSettingCommand());
+            if (result.GetType().Equals(typeof(UpdateSettingResult)))
+            {
+                result = AddUMMessage(result, request);
+            }
+
             return Request.CreateResponse(result);
         }
 
@@ -107,10 +108,12 @@
                request.Setting.ProductId,
                request.GetSettingContext());
 
-            UpdateSettingResult result = (UpdateSettingResult)updateSettingService.Update(request.GetMultipleUpdateCustomerSettingCommand());
-            var umResult = this.umService.GetUMResult(request.Setting.CustomerId, request.Setting.ProductId, IsPartialUpdate(request.Setting.SettingTypes) ? request.Setting.SettingTypes.FirstOrDefault()?.Id : null, request.Language);
-            if (umResult != null) result.AddSubResult(umResult);
-            result.RemoveSubResultByCode(NoChangeByUMErrorCode);
+            var result = updateSettingService.Update(request.GetMultipleUpdateCustomerSettingCommand());
+            if (result.GetType().Equals(typeof(UpdateSettingResult)))
+            {
+                result = AddUMMessage(result, request);
+            }
+
             return Request.CreateResponse(result);
         }
 
@@ -133,5 +136,14 @@
         }
 
         private bool IsPartialUpdate(IEnumerable<SettingType> settingTypes) => settingTypes.Count() == 1;
+
+        private IResult AddUMMessage(IResult result, UpdateSettingRequest request)
+        {
+            var updateSettingResult = (UpdateSettingResult)result;
+            var umResult = this.umService.GetUMResult(request.Setting.CustomerId, request.Setting.ProductId, IsPartialUpdate(request.Setting.SettingTypes) ? request.Setting.SettingTypes.FirstOrDefault()?.Id : null, request.Language);
+            if (umResult != null) updateSettingResult.AddSubResult(umResult);
+            updateSettingResult.RemoveNoChangeByUMSubResults();
+            return updateSettingResult;
+        }
     }
 }

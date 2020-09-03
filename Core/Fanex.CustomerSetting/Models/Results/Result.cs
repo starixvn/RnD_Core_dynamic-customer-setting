@@ -36,7 +36,7 @@
 
         public virtual bool IsSuccessful
         {
-            get { return Code == ResultValues.Success; }
+            get { return Code == ResultValues.Success || Code == ResultValues.SuccessButDoNothingBecauseUM; }
         }
 
         public virtual bool IsFailed

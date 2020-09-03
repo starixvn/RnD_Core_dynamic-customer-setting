@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models.Results
 {
+    using Fanex.CustomerSetting.Models.Constants;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -67,10 +68,8 @@
             }
         }
 
-        public void RemoveSubResultByCode(int code)
-        {
-            SubResults = SubResults.Where(m => m.Code != code).ToList();
-        }
+        public void RemoveNoChangeByUMSubResults() => RemoveSubResultByCode(ResultValues.SuccessButDoNothingBecauseUM);
+
 
         public override bool IsSuccessful
         {
@@ -84,5 +83,6 @@
                 return base.IsSuccessful;
             }
         }
+        private void RemoveSubResultByCode(int code) => SubResults = SubResults.Where(m => m.Code != code).ToList();
     }
 }

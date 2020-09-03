@@ -12,7 +12,6 @@
     {
         private readonly IDynamicRepository _dynamicRepository;
         private readonly IResourceService _resourceService;
-        private const int UMErrorCode = 999;
 
         public UMService() : this(null, null) { }
 
@@ -34,7 +33,7 @@
         {
             Check.Argument.IsNotNull(UMInfos, "UMInfos");
             var UMSubMessages = new List<string>();
-            var dateTimeFormat = "dd/MM/yyyy HH:mm:ss tt";
+            var dateTimeFormat = "dd/MM/yyyy HH:mm:ss";
             foreach (var UMInfo in UMInfos)
             {
                 if (UMInfo.ProductId == 0)
@@ -49,7 +48,7 @@
                 }
             }
 
-            return UMSubMessages.Count == 0 ? null : new SettingResult(UMErrorCode, Resource.Message.UMMainMsg, MessageTypes.Exception, UMSubMessages);
+            return UMSubMessages.Count == 0 ? null : new SettingResult(ResultValues.UMError, Resource.Message.UMMainMsg, MessageTypes.Exception, UMSubMessages);
         }
     }
 }

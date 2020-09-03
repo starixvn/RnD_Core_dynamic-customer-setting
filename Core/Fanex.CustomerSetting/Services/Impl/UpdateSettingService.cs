@@ -30,7 +30,7 @@
         private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
 
         public UpdateSettingService(ISettingContext settingContext)
-            : this(settingContext, null, null, null)
+            : this(settingContext, null, null, null, null)
         {
         }
 
@@ -133,7 +133,6 @@
             try
             {
                 CheckSettingTypeIsValid(settingType);
-
                 TaskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
 
                 var settingTypeService = SettingTypeServiceFactory.GetInstance(settingType);
@@ -186,52 +185,5 @@
 
             Logger.Error(ex.Message, ex);
         }
-
-        //protected SettingResult CheckUM(int custId, byte productId, int? settingTypeId = null)
-        //{
-        //    var UMinfos = _dynamicRepository.Fetch<UnderMaintainanceInfo>(new UnderMaintainanceQueryCriteria()
-        //    {
-        //        CustId = custId,
-        //        ProductId = productId,
-        //        SettingTypeId = settingTypeId
-        //    }).ToList();
-
-        //    return ComposeUMMessage(UMinfos);
-        //}
-
-
-        //internal SettingResult ComposeUMMessage(IEnumerable<UnderMaintainanceInfo> UMInfos)
-        //{
-        //    Check.Argument.IsNotNull(UMInfos, "UMInfos");
-        //    var UMSubMessages = new List<string>();
-        //    var dateTimeFormat = "dd/MM/yyyy HH:mm:ss tt";
-        //    foreach (var UMInfo in UMInfos)
-        //    {
-        //        if (UMInfo.ProductId == 0)
-        //        {
-        //            UMSubMessages.Add(string.Format(Resource.Message.UMSubMsg, Resource.Message.AllProducts, Resource.Message.CustomerSettings, UMInfo.BeginTime?.ToString(dateTimeFormat), UMInfo.EndTime?.ToString(dateTimeFormat)));
-        //        }
-        //        else
-        //        {
-        //            var productSportTypeNamePart = UMInfo.SportType == 0 ? _resourceService.GetProductName(UMInfo.ProductId, SettingContext.Language) : _resourceService.GetSportTypeName(UMInfo.SportType, SettingContext.Language);
-        //            var settingTypePart = UMInfo.SettingType == 0 ? Resource.Message.CustomerSettings : Resource.Label.ResourceManager.GetString($"SettingType_{UMInfo.SettingType}");
-        //            UMSubMessages.Add(string.Format(Resource.Message.UMSubMsg, productSportTypeNamePart, settingTypePart, UMInfo.BeginTime?.ToString(dateTimeFormat), UMInfo.EndTime?.ToString(dateTimeFormat)));
-        //        }
-
-
-        //    }
-
-        //    return UMSubMessages.Count == 0 ? null : new SettingResult(999, Resource.Message.UMMainMsg, MessageTypes.Exception, UMSubMessages);
-        //}
-
-
-
-        //private List<UnderMaintainanceInfo> FakeUMInfo()
-        //    => new List<UnderMaintainanceInfo>
-        //    {
-        //        new UnderMaintainanceInfo(0,0,0, DateTime.Now, DateTime.Now.AddHours(1)),
-        //        //new UnderMaintainanceInfo(41,13,241, DateTime.Now, DateTime.Now.AddHours(1)),
-        //        //new UnderMaintainanceInfo(41,17,0, DateTime.Now, DateTime.Now.AddHours(1))
-        //    };
     }
 }

@@ -12,6 +12,6 @@
     <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_CustomerInfoSelect" SpName="Acc_CustSetting_CustomerInfoSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="EAS_CustSetting_CustomerInfoSelect" SpName="EAS_CustSetting_CustomerInfoSelect" DbName="DBCUST.CUSTDB.bodbExtAccNet" TimeOut="600" />
-    <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM_UAT4" DbName="DBCUST.CUSTDB.bodbExtAccNet" TimeOut="600" />
+    <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCUST.CUSTDB.bodbExtAccNet" TimeOut="600" />
   </Function>
 </Functions>
