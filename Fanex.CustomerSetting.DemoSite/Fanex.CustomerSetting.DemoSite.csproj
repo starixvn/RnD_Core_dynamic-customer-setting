@@ -32,6 +32,8 @@
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
     <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
+    <CodeAnalysisRuleSet>..\.sonarlint\rome.dcscsharp.ruleset</CodeAnalysisRuleSet>
+    <SonarQubeExclude>True</SonarQubeExclude>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,7 +43,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\.sonarlint\rome.dcscsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,6 +52,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\.sonarlint\rome.dcscsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
@@ -185,6 +188,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\rome.dcs\CSharp\SonarLint.xml">
+      <Link>SonarLint.xml</Link>
+    </AdditionalFiles>
     <Content Include="Content\alpha.css" />
     <Content Include="Content\alpha.min.css">
       <DependentUpon>alpha.css</DependentUpon>
@@ -201,6 +207,9 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="..\.sonarlint\rome.dcscsharp.ruleset">
+      <Link>rome.dcscsharp.ruleset</Link>
+    </Content>
     <None Include="bundleconfig.json" />
     <Content Include="Content\Compass\animation\animate\bouncing\_bouncing-entrances.scss" />
     <Content Include="Content\Compass\animation\animate\bouncing\_bouncing-exits.scss" />
@@ -308,6 +317,7 @@
     <Content Include="Content\Compass\_animate.scss" />
     <Content Include="Content\Compass\_compass.scss" />
     <Content Include="Content\Compass\_lemonade.scss" />
+    <Content Include="Fanex.CustomerSetting.DemoSite.Debug.ruleset" />
     <None Include="Gulpfile.js" />
     <Content Include="Scripts\DemoForm\demo-form.js">
       <DependentUpon>demo-form.ts</DependentUpon>

@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Fanex.CustomerSetting.SettingType7.Debug.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\.sonarlint\rome.dcscsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -98,9 +99,16 @@
     <Compile Include="Services\SettingTypeService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\.sonarlint\rome.dcscsharp.ruleset">
+      <Link>rome.dcscsharp.ruleset</Link>
+    </None>
+    <None Include="Fanex.CustomerSetting.SettingType7.Debug.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Include="..\..\..\.sonarlint\rome.dcs\CSharp\SonarLint.xml">
+      <Link>SonarLint.xml</Link>
+    </AdditionalFiles>
     <Content Include="Fanex.CustomerSetting.SettingType7.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

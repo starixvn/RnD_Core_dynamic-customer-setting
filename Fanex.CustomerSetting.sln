@@ -48,8 +48,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Setti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix", "Matrix\Fanex.CustomerSetting.Matrix\Fanex.CustomerSetting.Matrix.csproj", "{3E059FA6-3822-475F-9694-F3DBB15ACF98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.DemoSite", "Fanex.CustomerSetting.DemoSite\Fanex.CustomerSetting.DemoSite.csproj", "{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix.Tests", "Matrix\Fanex.CustomerSetting.Matrix.Tests\Fanex.CustomerSetting.Matrix.Tests.csproj", "{183E8744-85E2-4F7C-902F-1DFEC955323E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.WebAPI", "Core\Fanex.CustomerSetting.WebAPI\Fanex.CustomerSetting.WebAPI.csproj", "{9B52485B-6CAC-4B70-994B-5D8CF74B3380}"
@@ -185,6 +183,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType20", "SettingTypes\SettingType20\Fanex.CustomerSetting.SettingType20\Fanex.CustomerSetting.SettingType20.csproj", "{6F28AE6D-3D2F-4276-8687-9322EBC0FB51}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType20.Tests", "Fanex.CustomerSetting.SettingType20.Tests\Fanex.CustomerSetting.SettingType20.Tests.csproj", "{C64F3698-306D-490C-976B-F06E64A4C335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.DemoSite", "Fanex.CustomerSetting.DemoSite\Fanex.CustomerSetting.DemoSite.csproj", "{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -432,6 +432,10 @@ Global
 		{6F28AE6D-3D2F-4276-8687-9322EBC0FB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F28AE6D-3D2F-4276-8687-9322EBC0FB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F28AE6D-3D2F-4276-8687-9322EBC0FB51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C64F3698-306D-490C-976B-F06E64A4C335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C64F3698-306D-490C-976B-F06E64A4C335}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C64F3698-306D-490C-976B-F06E64A4C335}.Release|Any CPU.ActiveCfg = Release|Any CPU

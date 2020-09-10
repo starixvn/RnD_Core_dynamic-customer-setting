@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <IsCompassProject>True</IsCompassProject>
     <TargetFrameworkProfile />
+    <CodeAnalysisRuleSet>..\..\.sonarlint\rome.dcscsharp.ruleset</CodeAnalysisRuleSet>
+    <SonarQubeExclude>True</SonarQubeExclude>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\.sonarlint\rome.dcscsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\.sonarlint\rome.dcscsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
@@ -44,6 +48,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\.sonarlint\rome.dcscsharp.ruleset">
+      <Link>rome.dcscsharp.ruleset</Link>
+    </None>
     <None Include="Assets\Styles\Compass\animation\animate\bouncing\_bouncing-entrances.scss" />
     <None Include="Assets\Styles\Compass\animation\animate\bouncing\_bouncing-exits.scss" />
     <None Include="Assets\Styles\Compass\animation\animate\fading\_fading-entrances.scss" />
@@ -182,6 +189,9 @@
     <None Include="package.json" />
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Include="..\..\.sonarlint\rome.dcs\CSharp\SonarLint.xml">
+      <Link>SonarLint.xml</Link>
+    </AdditionalFiles>
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\customer-setting-matrix.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.htm" />
