@@ -110,10 +110,7 @@
         {
             get
             {
-                if (_settingType == null)
-                {
-                    _settingType = new List<SettingType>();
-                }
+                _settingType = _settingType ?? new List<SettingType>();
 
                 return _settingType;
             }

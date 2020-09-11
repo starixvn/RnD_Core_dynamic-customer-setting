@@ -151,7 +151,9 @@
                         SettingContext.IP);
                 }
             }
+#pragma warning disable S126 // "if ... else if" constructs should end with "else" clauses
             else if (command.Setting.CustomerLevel.IsNotMemberLevel() || command.UplineLevel?.IsAgentLevel() == true)
+#pragma warning restore S126 // "if ... else if" constructs should end with "else" clauses
             {
                 throw new CustomerSettingException($"Missing Product Status of customer {command.Setting.CustomerId}.");
             }

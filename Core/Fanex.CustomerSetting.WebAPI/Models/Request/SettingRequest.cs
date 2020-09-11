@@ -4,10 +4,13 @@
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
 
+#pragma warning disable S1694 // An abstract class should have both abstract and concrete methods
     public abstract class SettingRequest
+#pragma warning restore S1694 // An abstract class should have both abstract and concrete methods
     {
         private SettingContext _settingContext;
 
+#pragma warning disable S109 // Magic numbers should not be used
         [Range(2, 4)]
         public byte? UplineLevel { get; set; }
 
@@ -25,6 +28,7 @@
 
         [Range(1, 9)]
         public byte System { get; set; }
+#pragma warning restore S109 // Magic numbers should not be used
 
         public string Domain { get; set; }
 

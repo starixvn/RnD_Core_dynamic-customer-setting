@@ -1,10 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Models.Requests
 {
+    using Enumerations;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Enumerations;
-    using Models;
 
     public class MultipleUpdateCustomerSettingCommand : UpdateCustomerSettingCommand
     {

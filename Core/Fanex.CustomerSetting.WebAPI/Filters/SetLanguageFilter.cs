@@ -8,7 +8,7 @@
     using Models.Request;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public sealed class SetLanguageFilter : ActionFilterAttribute
+    public sealed class SetLanguageFilterAttribute : ActionFilterAttribute
     {
         private const string ActionArgumentName = "request";
         private const string DefaultLanguage = "en-US";

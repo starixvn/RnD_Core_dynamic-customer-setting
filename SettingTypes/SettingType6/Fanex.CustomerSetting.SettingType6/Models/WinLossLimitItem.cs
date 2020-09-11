@@ -68,18 +68,18 @@
             {
                 return false;
             }
-            else
-            {
-                return Equals(SportTypeId, otherObj.SportTypeId)
-                    && Equals(BetTypeId, otherObj.BetTypeId)
-                    && Equals(WinLimit, otherObj.WinLimit)
-                    && Equals(MaxWinRange, otherObj.MaxWinRange)
-                    && Equals(LossLimit, otherObj.LossLimit)
-                    && Equals(MaxLossRange, otherObj.MaxLossRange)
-                    && Equals(MinLossRange, otherObj.MinLossRange)
-                    && Equals(IsAutoReset, otherObj.IsAutoReset)
-                    && Equals(IsAutoReset, otherObj.IsAutoResetUpline);
-            }
+
+#pragma warning disable S1067 // Expressions should not be too complex
+            return Equals(SportTypeId, otherObj.SportTypeId)
+                && Equals(BetTypeId, otherObj.BetTypeId)
+                && Equals(WinLimit, otherObj.WinLimit)
+                && Equals(MaxWinRange, otherObj.MaxWinRange)
+                && Equals(LossLimit, otherObj.LossLimit)
+                && Equals(MaxLossRange, otherObj.MaxLossRange)
+                && Equals(MinLossRange, otherObj.MinLossRange)
+                && Equals(IsAutoReset, otherObj.IsAutoReset)
+                && Equals(IsAutoReset, otherObj.IsAutoResetUpline);
+#pragma warning restore S1067 // Expressions should not be too complex
         }
 
         public override int GetHashCode()

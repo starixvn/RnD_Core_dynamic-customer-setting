@@ -18,10 +18,7 @@
 
             var settingTypeService = GetInstanceFromCache(settingType);
 
-            if (settingTypeService == null)
-            {
-                settingTypeService = CreateInstanceAndCache(settingType);
-            }
+            settingTypeService = settingTypeService ?? CreateInstanceAndCache(settingType);
 
             return settingTypeService;
         }

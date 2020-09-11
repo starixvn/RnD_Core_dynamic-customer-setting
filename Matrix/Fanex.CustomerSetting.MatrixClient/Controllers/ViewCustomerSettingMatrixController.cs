@@ -32,7 +32,7 @@
         {
         }
 
-        [CustomerSettingMatrixAuth]
+        [CustomerSettingMatrixAuthAttribute]
         public ContentResult Index(QuerySettingMatrixRequest querySettingMatrix)
         {
             ObjectCache cache = MemoryCache.Default;
@@ -53,8 +53,10 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgery, CustomerSettingMatrixAuth]
+        [ValidateAntiForgeryAttribute, CustomerSettingMatrixAuthAttribute]
+#pragma warning disable S3872 // Parameter names should not duplicate the names of their methods
         public ContentResult QuerySettingMatrix(QuerySettingMatrixRequest querySettingMatrix)
+#pragma warning restore S3872 // Parameter names should not duplicate the names of their methods
         {
             var customerSettingResponse = _customerSettingMatrixService.QueryCustomerSettingMatrix(querySettingMatrix);
 
@@ -62,7 +64,7 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgery, CustomerSettingMatrixAuth]
+        [ValidateAntiForgeryAttribute, CustomerSettingMatrixAuthAttribute]
         public ContentResult QueryAllProducts()
         {
             var productNamesReponse = _customerSettingMatrixService.QueryAllProducts();

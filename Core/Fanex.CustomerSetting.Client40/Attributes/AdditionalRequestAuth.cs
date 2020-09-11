@@ -10,7 +10,7 @@
     using static System.Net.WebRequestMethods;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    internal sealed class AdditionalRequestAuth : AuthorizeAttribute
+    internal sealed class AdditionalRequestAuthAttribute : AuthorizeAttribute
     {
         private const string ActionTypeName = "actionType";
 
@@ -34,7 +34,9 @@
                 permissionContext.AuthorizationContext = filterContext;
                 permissionContext.AllowUpdate = (actualActionType == ActionTypes.Update) || (actualActionType == ActionTypes.MultipleUpdate);
 
+#pragma warning disable S131 // "switch/Select" statements should contain a "default/Case Else" clauses
                 switch (actualActionType)
+#pragma warning restore S131 // "switch/Select" statements should contain a "default/Case Else" clauses
                 {
                     case ActionTypes.Query:
                         isAuthorized = CustomerSettingRegistration.CheckQueryPermission(permissionContext);

@@ -11,7 +11,7 @@
     using Logging;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    internal sealed class LogInfoFilter : ActionFilterAttribute
+    internal sealed class LogInfoFilterAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

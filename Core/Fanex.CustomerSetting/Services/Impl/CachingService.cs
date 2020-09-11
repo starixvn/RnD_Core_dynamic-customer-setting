@@ -20,13 +20,12 @@
             }
 
             _cache = cache;
-            DefaultCacheDuration = 60 * 20;
         }
 
         /// <summary>
         ///     Seconds to cache objects for by default
         /// </summary>
-        public int DefaultCacheDuration { get; set; }
+        private const int DefaultCacheDuration = 60 * 20;
 
         private DateTimeOffset DefaultExpiryDateTime
         {
@@ -53,7 +52,9 @@
 
         public void Add<T>(string key, T item, CacheItemPolicy policy)
         {
+#pragma warning disable S2955 // Generic parameters not constrained to reference types should not be compared to "null"
             if (item == null)
+#pragma warning restore S2955 // Generic parameters not constrained to reference types should not be compared to "null"
             {
                 throw new ArgumentNullException(nameof(item));
             }
@@ -144,11 +145,6 @@
 
         private void ValidateKey(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentOutOfRangeException(nameof(key), "Cache keys cannot be empty or whitespace");

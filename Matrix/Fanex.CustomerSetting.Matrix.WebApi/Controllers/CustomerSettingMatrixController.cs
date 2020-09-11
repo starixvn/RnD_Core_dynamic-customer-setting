@@ -18,7 +18,7 @@
         private const string CustomerSettingMatrixTemplateFilePath = "~/App_Data/Templates/customer-setting-matrix.htm";
         private const byte CachingHours = 4;
 
-        private ICustomerSettingMatrixService _customerSettingMatrixService;
+        private readonly ICustomerSettingMatrixService _customerSettingMatrixService;
 
         public CustomerSettingMatrixController()
             : this(null)

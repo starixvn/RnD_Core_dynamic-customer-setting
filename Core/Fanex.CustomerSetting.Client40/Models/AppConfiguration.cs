@@ -17,11 +17,12 @@
 
         public string ToJson()
         {
-            string objTpl = "{{\"applicationPath\": \"{0}\", \"antiForgeryToken\": \"{1}\", \"editable\": {2}}}";
 
             AntiForgeryToken = AntiForgeryExtension.GetTokenHeaderValue();
 
-            return string.Format(objTpl, ApplicationPath, AntiForgeryToken, Editable.ToString().ToLower());
+#pragma warning disable S1449 // Culture should be specified for "string" operations
+            return string.Format("{{\"applicationPath\": \"{0}\", \"antiForgeryToken\": \"{1}\", \"editable\": {2}}}", ApplicationPath, AntiForgeryToken, Editable.ToString().ToLower());
+#pragma warning restore S1449 // Culture should be specified for "string" operations
         }
     }
 }

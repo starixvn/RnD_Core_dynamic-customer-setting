@@ -31,7 +31,9 @@
             int customerId,
             short sportTypeId,
             out int numberOfDetailedItems,
+#pragma warning disable S1006 // Method overrides should not change parameter defaults
             bool showAll = false)
+#pragma warning restore S1006 // Method overrides should not change parameter defaults
         {
             using (var objectDb = new ObjectDb("CustSetting_StakeLevelGroupDetailSelect"))
             {
@@ -44,14 +46,7 @@
                 };
                 var stakeLevelGroups = objectDb.Query<StakeLevelDetailDto>(parameterValues);
 
-                if (parameterValues.ContainsKey("noofrows"))
-                {
-                    numberOfDetailedItems = Convert.ToInt32(parameterValues["noofrows"]);
-                }
-                else
-                {
-                    numberOfDetailedItems = 0;
-                }
+                numberOfDetailedItems = parameterValues.ContainsKey("noofrows") ? Convert.ToInt32(parameterValues["noofrows"]) : 0;
 
                 return stakeLevelGroups;
             }

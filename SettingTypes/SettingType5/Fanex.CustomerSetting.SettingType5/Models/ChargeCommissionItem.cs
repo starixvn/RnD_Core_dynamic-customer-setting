@@ -82,12 +82,10 @@
             {
                 return false;
             }
-            else
-            {
-                return Equals(SportTypeId, otherObj.SportTypeId)
-                    && Equals(BetTypeId, otherObj.BetTypeId)
-                    && Equals(ChargeCommission, otherObj.ChargeCommission);
-            }
+
+            return Equals(SportTypeId, otherObj.SportTypeId)
+                && Equals(BetTypeId, otherObj.BetTypeId)
+                && Equals(ChargeCommission, otherObj.ChargeCommission);
         }
 
         public override int GetHashCode()

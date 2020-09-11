@@ -32,7 +32,7 @@
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
         }
 
-        [CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false)]
+        [CustomerSettingAuthAttribute(IsUpdate = false, IsMultipleUpdate = false)]
         public ContentResult Index(SettingFormQuery query)
         {
             if (query == null)
@@ -63,7 +63,7 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false), LogInfoFilter]
+        [ValidateAntiForgeryAttribute, CustomerSettingAuthAttribute(IsUpdate = false, IsMultipleUpdate = false), LogInfoFilterAttribute]
         public ContentResult QuerySetting(QuerySettingRequest querySettingRequest)
         {
             if (querySettingRequest == null)
@@ -134,14 +134,12 @@
 
             bool isDebug = HttpContext.IsDebuggingEnabled;
             string cdn = RandomHelper.GetRandomUri(CustomerSettingConfiguration.Settings.CdnUris);
-            string flexboxStyleSheetTag = "<link rel=\"stylesheet\" type=\"text/css\" href=\"{{cdnUri}}/customerSetting/styles/flexbox-patch.min.css?v={{version}}\" />";
-
             if (!cdn.Contains("http"))
             {
                 cdn = Url.Content(cdn);
             }
 
-            finalTemplate = finalTemplate.Replace("{{flexboxPatch}}", flexboxStyleSheetTag);
+            finalTemplate = finalTemplate.Replace("{{flexboxPatch}}", "<link rel=\"stylesheet\" type=\"text/css\" href=\"{{cdnUri}}/customerSetting/styles/flexbox-patch.min.css?v={{version}}\" />");
             finalTemplate = finalTemplate.Replace("{{cdnUri}}", cdn);
             finalTemplate = finalTemplate.Replace("{{version}}", isDebug ? "0.0.1" : Guid.NewGuid().ToString("N"));
             finalTemplate = finalTemplate.Replace("{{min}}", isDebug ? string.Empty : ".min");

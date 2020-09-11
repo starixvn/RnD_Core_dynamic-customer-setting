@@ -19,7 +19,7 @@
                 SportType = group.Key.SportType,
                 BetType = group.Key.BetType,
                 IsLive = group.Key.IsLive,
-                UserName = string.Join(", ", group.ToList().Select(row => row.UserName))
+                UserName = string.Join(", ", group.Select(row => row.UserName))
             }).ToArray();
         }
     }

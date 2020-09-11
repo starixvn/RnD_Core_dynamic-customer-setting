@@ -1,6 +1,4 @@
-﻿using Fanex.CustomerSetting.SettingType17.Resources;
-
-namespace Fanex.CustomerSetting.SettingType17.Dtos
+﻿namespace Fanex.CustomerSetting.SettingType17.Dtos
 {
     internal class StakeLevelDto
     {

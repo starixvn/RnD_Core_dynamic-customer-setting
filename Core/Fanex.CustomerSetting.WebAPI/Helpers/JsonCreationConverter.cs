@@ -4,7 +4,9 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
+#pragma warning disable S1694 // An abstract class should have both abstract and concrete methods
     public abstract class JsonCreationConverter<T> : JsonConverter
+#pragma warning restore S1694 // An abstract class should have both abstract and concrete methods
     {
         protected virtual T Create(Type type, JObject obj)
         {
@@ -65,7 +67,9 @@
 
             if (serializer == null)
             {
+#pragma warning disable S2302 // "nameof" should be used
                 throw new ArgumentNullException(nameof(serializer), "serializer cannot be null");
+#pragma warning restore S2302 // "nameof" should be used
             }
         }
     }

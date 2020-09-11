@@ -24,10 +24,8 @@
             {
                 return false;
             }
-            else
-            {
-                return Equals(Id, otherObj.Id);
-            }
+
+            return Equals(Id, otherObj.Id);
         }
 
         public override int GetHashCode()

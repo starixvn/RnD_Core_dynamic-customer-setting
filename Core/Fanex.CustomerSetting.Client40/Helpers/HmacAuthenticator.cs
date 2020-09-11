@@ -38,7 +38,9 @@
                 throw new ArgumentNullException(nameof(request), "Rest Request cannot be null");
             }
 
+#pragma warning disable S1449 // Culture should be specified for "string" operations
             string requestUri = HttpUtility.UrlEncode(client.BuildUri(request).ToString().ToLower());
+#pragma warning restore S1449 // Culture should be specified for "string" operations
             string requestHttpMethod = request.Method.ToString();
 
             // Calculate UNIX time

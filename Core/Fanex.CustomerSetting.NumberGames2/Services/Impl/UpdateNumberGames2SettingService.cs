@@ -29,11 +29,6 @@
         private readonly IThirdPartyServices _apiService;
         private readonly IDynamicRepository _dynamicRepository;
 
-        public UpdateNumberGames2SettingService(ISettingContext settingContext)
-            : this(settingContext, null, null, null, null, null, null, null)
-        {
-        }
-
         public UpdateNumberGames2SettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
@@ -134,7 +129,9 @@
                     settingTypeResults.Add(updateProductStatusResult);
                 }
             }
+#pragma warning disable S126 // "if ... else if" constructs should end with "else" clauses
             else if (productStatusSettingType != null)
+#pragma warning restore S126 // "if ... else if" constructs should end with "else" clauses
             {
                 var updateProductStatusResult = new SettingResult(
                     ErrorCode.UnableToUpdateProductStatus,

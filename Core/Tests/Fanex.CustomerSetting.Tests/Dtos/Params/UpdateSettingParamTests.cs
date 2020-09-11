@@ -10,7 +10,9 @@
     [TestFixture]
     public class UpdateSettingParamTests
     {
+#pragma warning disable S1144 // Unused private types or members should be removed
         private static readonly object[] dataSourceSMALevels = { Level.Super, Level.Master, Level.Agent };
+#pragma warning restore S1144 // Unused private types or members should be removed
 
         [Test, TestCaseSource("dataSourceSMALevels")]
         public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(Level customerLevel)

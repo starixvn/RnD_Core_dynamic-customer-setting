@@ -8,7 +8,9 @@
     using Models.Messages;
     using Resource;
 
+#pragma warning disable S1694 // An abstract class should have both abstract and concrete methods
     public abstract class MessageServiceBase : IMessageService
+#pragma warning restore S1694 // An abstract class should have both abstract and concrete methods
     {
         private const string NotFoundMessageFormat = "Undefined error message {0}";
         private const string MessageFormat = "Msg_{0}";
@@ -22,7 +24,9 @@
 
         public virtual MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
+#pragma warning disable S1301 // "switch" statements should have at least 3 "case" clauses
             switch (msgType)
+#pragma warning restore S1301 // "switch" statements should have at least 3 "case" clauses
             {
                 case MessageTypes.Exception:
                     return TranslateSimpleMessage(rawMessage);

@@ -7,7 +7,7 @@
     using RestSharp;
     using Services;
 
-    [ExceptionHandling, ValidateAntiForgery, LogInfoFilter]
+    [ExceptionHandling, ValidateAntiForgeryAttribute, LogInfoFilterAttribute]
     public class UpdateCustomerSettingController : Controller
     {
         private readonly ICustomerSettingService _customerSettingService;
@@ -23,7 +23,7 @@
         }
 
         [HttpPost]
-        [CustomerSettingAuth(IsUpdate = true, IsMultipleUpdate = false)]
+        [CustomerSettingAuthAttribute(IsUpdate = true, IsMultipleUpdate = false)]
         public ContentResult UpdateSetting(UpdateSettingRequest updateSettingRequest)
         {
             SetActorInformation(updateSettingRequest);
@@ -35,7 +35,7 @@
         }
 
         [HttpPost]
-        [CustomerSettingAuth(IsUpdate = true, IsMultipleUpdate = true)]
+        [CustomerSettingAuthAttribute(IsUpdate = true, IsMultipleUpdate = true)]
         public ContentResult UpdateMultipleSetting(MultipleUpdateSettingRequest multipleUpdateSetting)
         {
             IRestResponse updateResult;

@@ -72,10 +72,14 @@
             set { this["EnableRequestLogging"] = value; }
         }
 
+#pragma warning disable S109 // Magic numbers should not be used
         [ConfigurationProperty("UpdateSettingTimeout", IsRequired = false, DefaultValue = 600)]
+#pragma warning restore S109 // Magic numbers should not be used
         public int UpdateSettingTimeout
         {
+#pragma warning disable S109 // Magic numbers should not be used
             get { return (int)this["UpdateSettingTimeout"] * 1000; }
+#pragma warning restore S109 // Magic numbers should not be used
             set { this["UpdateSettingTimeout"] = value; }
         }
     }

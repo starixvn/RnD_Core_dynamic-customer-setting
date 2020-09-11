@@ -1,9 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType18.DataAccesses
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using Constants;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
@@ -13,6 +9,9 @@
     using Data;
     using Models;
     using Resources;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {

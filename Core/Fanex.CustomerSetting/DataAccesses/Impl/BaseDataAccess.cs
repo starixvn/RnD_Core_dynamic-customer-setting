@@ -44,7 +44,9 @@
         {
             if (querySettingParam == null)
             {
+#pragma warning disable S2302 // "nameof" should be used
                 throw new ArgumentNullException(nameof(querySettingParam), "querySettingParam cannot be null.");
+#pragma warning restore S2302 // "nameof" should be used
             }
 
             var param = new Hashtable

@@ -78,7 +78,7 @@
         {
             var sut = new CachingService();
 
-            Assert.Throws<ArgumentNullException>(() => sut.Add(null, new object()));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Add(null, new object()));
         }
 
         [Test]
@@ -86,7 +86,7 @@
         {
             var sut = new CachingService();
 
-            Assert.Throws<ArgumentNullException>(() => sut.Add(null, new object(), DateTimeOffset.Now.AddHours(1)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Add(null, new object(), DateTimeOffset.Now.AddHours(1)));
         }
 
         [Test]
@@ -94,7 +94,7 @@
         {
             var sut = new CachingService();
 
-            Assert.Throws<ArgumentNullException>(() => sut.Add(null, new object(), new CacheItemPolicy()));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Add(null, new object(), new CacheItemPolicy()));
         }
 
         [Test]
@@ -102,7 +102,7 @@
         {
             var sut = new CachingService();
 
-            Assert.Throws<ArgumentNullException>(() => sut.Add(null, new object(), new TimeSpan(1000)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Add(null, new object(), new TimeSpan(1000)));
         }
 
         [Test]
@@ -217,7 +217,7 @@
         {
             var sut = new CachingService();
 
-            Assert.Throws<ArgumentNullException>(() => sut.Get<object>(null));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Get<object>(null));
         }
 
         [Test]

@@ -49,7 +49,7 @@
                 BetTypeName = _resourceService.GetBetTypeName(groupedDto.Key.BetType, DefaultLanguage),
                 SportTypeId = groupedDto.Key.SportType,
                 SportTypeName = _resourceService.GetSportTypeName(groupedDto.Key.SportType, DefaultLanguage),
-                CommissionItemMatrixRows = groupedDto.ToList().Select(commissionItemMatrixDto => new CommissionItemMatrixRow(commissionItemMatrixDto))
+                CommissionItemMatrixRows = groupedDto.Select(commissionItemMatrixDto => new CommissionItemMatrixRow(commissionItemMatrixDto))
             });
 
             return commissionItemMatrices;

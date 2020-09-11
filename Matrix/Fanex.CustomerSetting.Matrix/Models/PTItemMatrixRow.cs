@@ -73,16 +73,13 @@
                 IsAutoSuperPT = pTMatrixDto.IsAutoSuperPT;
                 AutoSuperPT = IsAutoSuperPT.Value ? pTMatrixDto.AutoSuperPT : 0;
 
-                if (CustomerLevel.IsMasterLevel())
-                {
-                    SuperPT = IsAutoSuperPT.Value ? 0 : pTMatrixDto.SuperPT;
-                }
-                else
-                {
-                    SuperPT = pTMatrixDto.SuperPT;
-                }
+#pragma warning disable S3358 // Ternary operators should not be nested
+                SuperPT = CustomerLevel.IsMasterLevel() ? IsAutoSuperPT.Value ? 0 : pTMatrixDto.SuperPT : pTMatrixDto.SuperPT;
+#pragma warning restore S3358 // Ternary operators should not be nested
             }
+#pragma warning disable S126 // "if ... else if" constructs should end with "else" clauses
             else if (CustomerLevel.IsSuperLevel())
+#pragma warning restore S126 // "if ... else if" constructs should end with "else" clauses
             {
                 SuperPT = pTMatrixDto.SuperPT;
             }

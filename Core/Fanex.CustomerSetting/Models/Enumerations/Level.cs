@@ -75,11 +75,6 @@
             return GapBetweenTwoLevels(Value, downlineLevelValue) == 1;
         }
 
-        public bool IsNotDirectUplineOf(byte downlineLevelValue)
-        {
-            return !IsDirectUplineOf(downlineLevelValue);
-        }
-
         public bool IsDirectUplineOf(Enumeration customerLevel)
         {
             if (customerLevel == null)
@@ -93,6 +88,11 @@
         public bool IsNotDirectUplineOf(Enumeration customerLevel)
         {
             return !IsDirectUplineOf(customerLevel);
+        }
+
+        public bool IsNotDirectUplineOf(byte downlineLevelValue)
+        {
+            return !IsDirectUplineOf(downlineLevelValue);
         }
 
         public bool IsDirectDownlineOf(Enumeration uplineLevel)

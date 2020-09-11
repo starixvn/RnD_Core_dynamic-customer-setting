@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType17.Tests.Services
 {
-    using System.Linq;
     using Constants;
     using CustomerSetting.Services;
     using NSubstitute;

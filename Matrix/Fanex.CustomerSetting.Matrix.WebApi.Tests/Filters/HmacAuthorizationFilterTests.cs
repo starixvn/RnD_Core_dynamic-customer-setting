@@ -20,7 +20,7 @@
         private HttpActionContext _actionContext;
         private HttpControllerContext _controllerContext;
         private HttpActionDescriptor _actionDescriptor;
-        private HmacAuthorizationFilter _filter;
+        private HmacAuthorizationFilterAttribute _filter;
         private string _secretKey;
 
         [SetUp]
@@ -32,7 +32,7 @@
             _actionContext = new HttpActionContext(_controllerContext, _actionDescriptor);
             _actionContext.ControllerContext.Request = _request;
             _request.RequestUri = new Uri("http://localhost:7878/customersetting/getcustomersetting");
-            _filter = new HmacAuthorizationFilter();
+            _filter = new HmacAuthorizationFilterAttribute();
             _secretKey = SettingMatrixApiConfiguration.Settings.SecretKey;
         }
 

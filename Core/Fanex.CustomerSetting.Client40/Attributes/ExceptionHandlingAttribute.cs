@@ -26,7 +26,7 @@
             base.OnException(filterContext);
         }
 
-        private void Log(Exception ex)
+        private static void Log(Exception ex)
         {
             var request = HttpContext.Current.Request;
             var messageBuilder = new StringBuilder();
@@ -41,7 +41,7 @@
                 .AppendLine($"DETAIL: {ex}")
                 .AppendLine($"STACK TRACE: {ex.StackTrace}")
                 .AppendLine($"CULTURE: {Thread.CurrentThread.CurrentUICulture}")
-                .AppendLine($"BROWSER CAPABILITIES: {LogInfoFilter.GetClientBrowserInformation(request)}");
+                .AppendLine($"BROWSER CAPABILITIES: {LogInfoFilterAttribute.GetClientBrowserInformation(request)}");
 
             LogService.Error(messageBuilder.ToString(), CustomerSettingConfiguration.Settings.ClientLogCategory);
         }

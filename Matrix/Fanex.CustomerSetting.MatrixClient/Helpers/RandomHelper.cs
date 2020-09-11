@@ -8,7 +8,9 @@
     {
         private static Random _randomHandler = new Random();
 
+#pragma warning disable S3995 // URI return values should not be strings
         internal static string GetRandomUri(string sourceUris)
+#pragma warning restore S3995 // URI return values should not be strings
         {
             if (string.IsNullOrWhiteSpace(sourceUris))
             {

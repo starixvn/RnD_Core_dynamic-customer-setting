@@ -82,7 +82,7 @@
                 name: "DCS_Setting",
                 url: "DCS/ViewCustomerSetting/{action}/{id}",
                 defaults: new { controller = "ViewCustomerSetting", action = "Index", id = UrlParameter.Optional },
-                namespaces: new string[] { "Fanex.CustomerSetting.Client40.Controllers" });
+                namespaces: new [] { "Fanex.CustomerSetting.Client40.Controllers" });
         }
 
         private static bool IsCustomerSettingClient(Type type)

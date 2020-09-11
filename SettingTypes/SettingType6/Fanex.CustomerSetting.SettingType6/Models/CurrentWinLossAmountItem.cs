@@ -21,11 +21,13 @@
                 return false;
             }
 
+#pragma warning disable S1067 // Expressions should not be too complex
             return Equals(CurrentAmount, otherObj.CurrentAmount)
                 && Equals(WinPercent, otherObj.WinPercent)
                 && Equals(MaxWinAmount, otherObj.MaxWinAmount)
                 && Equals(LossPercent, otherObj.LossPercent)
                 && Equals(MaxLossAmount, otherObj.MaxLossAmount);
+#pragma warning restore S1067 // Expressions should not be too complex
         }
 
         public override int GetHashCode()

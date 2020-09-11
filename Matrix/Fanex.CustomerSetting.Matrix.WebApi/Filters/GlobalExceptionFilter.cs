@@ -5,7 +5,7 @@
     using Logging.Extensions.Web;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public sealed class GlobalExceptionFilter : ExceptionFilterAttribute
+    public sealed class GlobalExceptionFilterAttribute : ExceptionFilterAttribute
     {
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {

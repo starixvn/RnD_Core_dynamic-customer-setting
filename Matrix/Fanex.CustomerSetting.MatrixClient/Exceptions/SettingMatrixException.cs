@@ -7,7 +7,6 @@
     public class SettingMatrixException : Exception
     {
         public SettingMatrixException()
-            : base()
         {
         }
 

@@ -30,12 +30,10 @@
             {
                 return false;
             }
-            else
-            {
-                return Equals(LevelId, otherObj.LevelId)
-                    && Equals(LevelGroupId, otherObj.LevelGroupId)
-                    && Equals(Selected, otherObj.Selected);
-            }
+
+            return Equals(LevelId, otherObj.LevelId)
+                && Equals(LevelGroupId, otherObj.LevelGroupId)
+                && Equals(Selected, otherObj.Selected);
         }
 
         public override int GetHashCode()

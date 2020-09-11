@@ -6,7 +6,7 @@
     using Configurations;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public sealed class CustomerSettingMatrixAuth : AuthorizeAttribute
+    public sealed class CustomerSettingMatrixAuthAttribute : AuthorizeAttribute
     {
         public override void OnAuthorization(AuthorizationContext filterContext)
         {

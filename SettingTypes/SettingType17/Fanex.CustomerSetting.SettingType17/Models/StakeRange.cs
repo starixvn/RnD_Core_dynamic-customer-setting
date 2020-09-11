@@ -27,11 +27,9 @@
             {
                 return false;
             }
-            else
-            {
-                return Equals(StakeLevelId, otherObj.StakeLevelId)
+
+            return Equals(StakeLevelId, otherObj.StakeLevelId)
                     && Equals(Selected, otherObj.Selected);
-            }
         }
 
         public override int GetHashCode()

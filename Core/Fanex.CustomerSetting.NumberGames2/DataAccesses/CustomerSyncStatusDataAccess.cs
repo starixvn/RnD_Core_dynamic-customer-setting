@@ -7,7 +7,9 @@
     {
         public CustomerSyncStatus GetCustomserSyncStatus(int customerId, byte productId)
         {
+#pragma warning disable S1854 // Unused assignments should be removed
             var customerSyncStatus = new CustomerSyncStatus
+#pragma warning restore S1854 // Unused assignments should be removed
             {
                 IsSynced = false,
                 IsSyncedUpline = false

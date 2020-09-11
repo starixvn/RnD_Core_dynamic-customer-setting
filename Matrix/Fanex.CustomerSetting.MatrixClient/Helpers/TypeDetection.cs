@@ -12,7 +12,7 @@
         public static IEnumerable<Type> FilterTypesInAssemblies(Predicate<Type> predicate)
         {
             IEnumerable<Type> types = Type.EmptyTypes;
-            IEnumerable<Type> matchingTypes = Type.EmptyTypes;
+            IEnumerable<Type> matchingTypes;
             ICollection assemblies = BuildManager.GetReferencedAssemblies();
 
             foreach (Assembly assembly in assemblies)

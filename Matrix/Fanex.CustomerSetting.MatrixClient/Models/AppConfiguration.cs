@@ -15,11 +15,10 @@
 
         public string ToJson()
         {
-            string objTpl = "{{\"applicationPath\": \"{0}\", \"antiForgeryToken\": \"{1}\"}}";
 
             AntiForgeryToken = AntiForgeryExtension.GetTokenHeaderValue();
 
-            return string.Format(objTpl, ApplicationPath, AntiForgeryToken);
+            return string.Format("{{\"applicationPath\": \"{0}\", \"antiForgeryToken\": \"{1}\"}}", ApplicationPath, AntiForgeryToken);
         }
     }
 }

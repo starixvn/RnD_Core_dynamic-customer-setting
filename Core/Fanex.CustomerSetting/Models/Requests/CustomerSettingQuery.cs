@@ -134,7 +134,9 @@
                         throw new ArgumentOutOfRangeException(nameof(value), "Upline should be null when getting customer setting is not member");
                     }
                 }
+#pragma warning disable S126 // "if ... else if" constructs should end with "else" clauses
                 else if (_customerLevel.IsMemberLevel())
+#pragma warning restore S126 // "if ... else if" constructs should end with "else" clauses
                 {
                     // When editting member, upline level should have value
                     throw new ArgumentNullException(nameof(value), "Upline cannot be null when getting member setting.");

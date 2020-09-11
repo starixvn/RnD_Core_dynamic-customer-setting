@@ -19,7 +19,7 @@
         private HttpControllerContext _controllerContext;
         private HttpActionDescriptor _actionDescriptor;
         private SettingRequest _settingRequest;
-        private SetLanguageFilter _filter;
+        private SetLanguageFilterAttribute _filter;
 
         [SetUp]
         public void SetUp()
@@ -31,7 +31,7 @@
             _actionContext = new HttpActionContext(_controllerContext, _actionDescriptor);
             _actionContext.ControllerContext.Request = _request;
             _actionContext.ActionArguments[ActionArgumentName] = _settingRequest;
-            _filter = new SetLanguageFilter();
+            _filter = new SetLanguageFilterAttribute();
         }
 
         [Test]

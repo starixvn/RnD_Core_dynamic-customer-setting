@@ -101,11 +101,13 @@
                 return true;
             }
 
+#pragma warning disable S1067 // Expressions should not be too complex
             if (SportTypeId == otherObj.SportTypeId
                 && BetTypeId == otherObj.BetTypeId
                 && MinBet == otherObj.MinBet
                 && MaxBet == otherObj.MaxBet
                 && MaxPerNumber == otherObj.MaxPerNumber)
+#pragma warning restore S1067 // Expressions should not be too complex
             {
                 return Equals(Upline, otherObj.Upline);
             }

@@ -31,13 +31,11 @@
             {
                 return false;
             }
-            else
-            {
-                return Equals(SportTypeId, otherObj.SportTypeId)
-                    && Equals(BetTypeId, otherObj.BetTypeId)
-                    && Groups.SequenceEqual(otherObj.Groups)
-                    && Equals(HasMoreDetails, otherObj.HasMoreDetails);
-            }
+
+            return Equals(SportTypeId, otherObj.SportTypeId)
+                && Equals(BetTypeId, otherObj.BetTypeId)
+                && Groups.SequenceEqual(otherObj.Groups)
+                && Equals(HasMoreDetails, otherObj.HasMoreDetails);
         }
 
         public override int GetHashCode()

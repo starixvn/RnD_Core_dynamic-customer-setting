@@ -50,7 +50,9 @@
         {
             Check.Argument.IsNotNull(settingMatrixQuery, nameof(settingMatrixQuery));
             Check.Argument.IsNotEmpty(settingMatrixQuery.CustomerName, nameof(settingMatrixQuery.CustomerName));
+#pragma warning disable S109 // Magic numbers should not be used
             Check.Argument.IsNotOutOfRange(settingMatrixQuery.ViewMode, 1, 3, nameof(settingMatrixQuery.ViewMode));
+#pragma warning restore S109 // Magic numbers should not be used
             var customerLine = _customerService.GetCustomerLine(settingMatrixQuery.CustomerName);
             var settingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery, customerLine);
             settingTypeMatrix.SettingLevel = GetSettingTypeLevel(settingMatrixQuery, GetSettingTypeId(settingMatrixQuery));
@@ -115,7 +117,7 @@
 
         private short GetSettingTypeId(SettingMatrixQuery settingMatrixQuery)
         {
-            var criteria = new GetSettingTypeIdCriteria()
+            var criteria = new GetSettingTypeIdCriteria
             {
                 ProductId = settingMatrixQuery.ProductId == 0 ? (byte?)null : settingMatrixQuery.ProductId,
                 SportTypeId = settingMatrixQuery.SportTypeId == 0 ? (short?)null : settingMatrixQuery.SportTypeId,

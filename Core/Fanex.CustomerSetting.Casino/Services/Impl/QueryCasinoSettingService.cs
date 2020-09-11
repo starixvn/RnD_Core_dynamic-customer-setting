@@ -18,7 +18,7 @@
             ISettingContext settingContext,
             ITaskService pluggableTaskService,
             ICustomerProductSyncedStatusService customerProductStatusService)
-            : base(settingContext, pluggableTaskService: pluggableTaskService)
+            : base(settingContext, null, null, null, pluggableTaskService, null, null, null)
         {
             _customerProductSyncedStatusService = customerProductStatusService ?? new CustomerProductSyncedStatusService();
         }

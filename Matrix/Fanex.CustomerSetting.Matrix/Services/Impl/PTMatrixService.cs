@@ -69,7 +69,7 @@
                 SportTypeId = group.Key.SportType,
                 SportTypeName = _resourceService.GetSportTypeName(group.Key.SportType, DefaultLanguage),
                 IsLive = group.Key.IsLive,
-                PTItemMatrixRows = group.ToList().Select(ptItemMatrixRowDto => new PTItemMatrixRow(ptItemMatrixRowDto))
+                PTItemMatrixRows = group.Select(ptItemMatrixRowDto => new PTItemMatrixRow(ptItemMatrixRowDto))
             });
 
             return pTItemMatrices;

@@ -15,7 +15,7 @@
         }
 
         public QueryNumberGames2SettingService(ISettingContext settingContext, IResourceService resourceService, ITaskService pluggableTaskService)
-            : base(settingContext, resourceService: resourceService, pluggableTaskService: pluggableTaskService)
+            : base(settingContext, null, null, resourceService, pluggableTaskService, null, null, null)
         {
         }
 

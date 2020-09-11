@@ -4,10 +4,9 @@
     using System.Runtime.Serialization;
 
     [Serializable]
-    public class CustomerSettingException : Exception, ISerializable
+    public class CustomerSettingException : Exception
     {
         public CustomerSettingException()
-            : base()
         {
         }
 
