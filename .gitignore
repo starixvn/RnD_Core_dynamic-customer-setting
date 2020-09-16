@@ -10,6 +10,8 @@ packages
 
 # CodeCoverage
 CodeCoverage/output
+HtmlReportData/
+TestOutput/
 
 # PublishProfiles
 PublishProfiles/
@@ -92,3 +94,6 @@ Fanex.CustomerSetting.DemoSite/App/
 
 # Git scripts
 *.sh
+
+# Test tools
+*.ncrunchsolution

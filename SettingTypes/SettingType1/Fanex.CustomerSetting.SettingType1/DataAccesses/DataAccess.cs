@@ -10,6 +10,7 @@
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using Data;
+    using Fanex.CustomerSetting.DataAccesses;
     using Models;
     using Resources;
 
@@ -37,16 +38,16 @@
             { Level.Member.Value, "CustSetting_MemberPTSelect" }
         };
 
-        private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
-            SmaQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
+        private static readonly Dictionary<byte, Func<IObjectDb, Hashtable, IEnumerable<PTItem>>>
+            SmaQueryPTSettingItemFuncs = new Dictionary<byte, Func<IObjectDb, Hashtable, IEnumerable<PTItem>>>
             {
                 { Level.Super.Value, GetPTSettingItem<SuperPTItem> },
                 { Level.Master.Value,  GetPTSettingItem<MasterPTItem> },
                 { Level.Agent.Value,  GetPTSettingItem<AgentPTItem> }
             };
 
-        private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
-           MemberQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
+        private static readonly Dictionary<byte, Func<IObjectDb, Hashtable, IEnumerable<PTItem>>>
+           MemberQueryPTSettingItemFuncs = new Dictionary<byte, Func<IObjectDb, Hashtable, IEnumerable<PTItem>>>
             {
                 { Level.Super.Value, GetPTSettingItem<SuperPTOnMemberItem> },
                 { Level.Master.Value,  GetPTSettingItem<MasterPTOnMemberItem> },
@@ -60,7 +61,7 @@
             { Level.Agent.Value, "CustSetting_AgentPTOnMemberMultiUpd" }
         };
 
-        private static IEnumerable<T> GetPTSettingItem<T>(ObjectDb objectDb, Hashtable parameters)
+        private static IEnumerable<T> GetPTSettingItem<T>(IObjectDb objectDb, Hashtable parameters)
         {
             return objectDb.Query<T>(parameters);
         }
@@ -74,7 +75,7 @@
 
             var settingKey = QueryPTSpKeys[query.CustomerLevel.Value];
 
-            using (ObjectDb objectDb = new ObjectDb(settingKey))
+            using (var objectDb = ObjectDbFactory.ObjectDb(settingKey))
             {
                 var parameters = CreateQueryPTSettingSpParam(query);
 

@@ -1,4 +1,5 @@
-﻿namespace Fanex.CustomerSetting.Services.Impl
+﻿
+namespace Fanex.CustomerSetting.Services.Impl
 {
     using System.Collections.Generic;
     using System.Linq;

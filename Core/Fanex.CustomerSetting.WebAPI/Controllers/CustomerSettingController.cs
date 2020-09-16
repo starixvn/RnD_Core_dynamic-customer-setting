@@ -138,8 +138,16 @@
         private IResult AddUMMessage(IResult result, UpdateSettingRequest request)
         {
             var updateSettingResult = (UpdateSettingResult)result;
-            var umResult = this.umService.GetUMResult(request.Setting.CustomerId, request.Setting.ProductId, IsPartialUpdate(request.Setting.SettingTypes) ? request.Setting.SettingTypes.FirstOrDefault()?.Id : null, request.Language);
-            if (umResult != null) updateSettingResult.AddSubResult(umResult);
+            var umResult = this.umService.GetUMResult(
+                request.Setting.CustomerId,
+                request.Setting.ProductId,
+                IsPartialUpdate(request.Setting.SettingTypes) ? request.Setting.SettingTypes.FirstOrDefault()?.Id : null,
+                request.Language);
+            if (umResult != null)
+            {
+                updateSettingResult.AddSubResult(umResult);
+            }
+
             updateSettingResult.RemoveNoChangeByUMSubResults();
             return updateSettingResult;
         }

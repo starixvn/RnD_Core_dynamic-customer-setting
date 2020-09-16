@@ -111,6 +111,7 @@
     <Compile Include="Configurations\AppSettings.cs" />
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
     <Compile Include="Criteria\UnderMaintainanceQueryCriteria.cs" />
+    <Compile Include="DataAccesses\ObjectDbFactory.cs" />
     <Compile Include="Models\UnderMaintainanceInfo.cs" />
     <Compile Include="Services\Impl\SettingServiceFactory.cs" />
     <Compile Include="Services\Impl\UMService.cs" />

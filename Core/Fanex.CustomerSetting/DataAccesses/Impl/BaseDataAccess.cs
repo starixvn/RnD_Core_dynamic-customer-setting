@@ -11,7 +11,7 @@
     {
         protected IResult ExecuteNonQuery(string settingKey, Hashtable storedProcedureParam)
         {
-            using (var objectDb = new ObjectDb(settingKey))
+            using (var objectDb = ObjectDbFactory.ObjectDb(settingKey))
             {
                 objectDb.ExecuteNonQuery(storedProcedureParam);
 

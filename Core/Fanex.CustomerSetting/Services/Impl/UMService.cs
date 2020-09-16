@@ -12,17 +12,18 @@
     {
         private readonly IDynamicRepository _dynamicRepository;
         private readonly IResourceService _resourceService;
+        private const string UMDateTimeFormat = "dd/MM/yyyy HH:mm:ss";
 
         public UMService() : this(null, null) { }
 
-        public UMService(IDynamicRepository dynamicRepository = null, IResourceService resourceService = null)
+        public UMService(IDynamicRepository dynamicRepository, IResourceService resourceService)
         {
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
             _resourceService = resourceService ?? new ResourceService();
         }
 
         public SettingResult GetUMResult(int custId, byte productId, int? settingTypeId = null, string language = "en-US")
-            => ComposeUMMessage(_dynamicRepository.Fetch<UnderMaintainanceInfo>(new UnderMaintainanceQueryCriteria()
+            => ComposeUMMessage(_dynamicRepository.Fetch<UnderMaintainanceInfo>(new UnderMaintainanceQueryCriteria
             {
                 CustId = custId,
                 ProductId = productId,
@@ -33,18 +34,27 @@
         {
             Check.Argument.IsNotNull(UMInfos, "UMInfos");
             var UMSubMessages = new List<string>();
-            var dateTimeFormat = "dd/MM/yyyy HH:mm:ss";
             foreach (var UMInfo in UMInfos)
             {
                 if (UMInfo.ProductId == 0)
                 {
-                    UMSubMessages.Add(string.Format(Resource.Message.UMSubMsg, Resource.Message.AllProducts, Resource.Message.CustomerSettings, UMInfo.BeginTime?.ToString(dateTimeFormat), UMInfo.EndTime?.ToString(dateTimeFormat)));
+                    UMSubMessages.Add(string.Format(
+                        Resource.Message.UMSubMsg, 
+                        Resource.Message.AllProducts, 
+                        Resource.Message.CustomerSettings, 
+                        UMInfo.BeginTime?.ToString(UMDateTimeFormat), 
+                        UMInfo.EndTime?.ToString(UMDateTimeFormat)));
                 }
                 else
                 {
                     var productSportTypeNamePart = UMInfo.SportType == 0 ? _resourceService.GetProductName(UMInfo.ProductId, language) : _resourceService.GetSportTypeName(UMInfo.SportType, language);
                     var settingTypePart = UMInfo.SettingType == 0 ? Resource.Message.CustomerSettings : Resource.Label.ResourceManager.GetString($"SettingType_{UMInfo.SettingType}");
-                    UMSubMessages.Add(string.Format(Resource.Message.UMSubMsg, productSportTypeNamePart, settingTypePart, UMInfo.BeginTime?.ToString(dateTimeFormat), UMInfo.EndTime?.ToString(dateTimeFormat)));
+                    UMSubMessages.Add(string.Format(
+                        Resource.Message.UMSubMsg, 
+                        productSportTypeNamePart, 
+                        settingTypePart, 
+                        UMInfo.BeginTime?.ToString(UMDateTimeFormat),
+                        UMInfo.EndTime?.ToString(UMDateTimeFormat)));
                 }
             }
 
