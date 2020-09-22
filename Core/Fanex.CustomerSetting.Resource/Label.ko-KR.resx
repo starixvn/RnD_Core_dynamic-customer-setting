@@ -165,4 +165,25 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="SettingType_1" xml:space="preserve">
+    <value>거래 조건</value>
+  </data>
+  <data name="SettingType_16" xml:space="preserve">
+    <value>배팅 설정</value>
+  </data>
+  <data name="SettingType_18" xml:space="preserve">
+    <value>거래 조건</value>
+  </data>
+  <data name="SettingType_19" xml:space="preserve">
+    <value>수수료</value>
+  </data>
+  <data name="SettingType_2" xml:space="preserve">
+    <value>배팅 설정</value>
+  </data>
+  <data name="SettingType_3" xml:space="preserve">
+    <value>수수료</value>
+  </data>
+  <data name="SettingType_9" xml:space="preserve">
+    <value>배팅 설정</value>
+  </data>
 </root>

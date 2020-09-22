@@ -55,7 +55,7 @@
 
             if (result.IsSuccessful)
             {
-                return new SettingResult(ResultValues.Success, updateSuccessfulMessage, result);
+                return new SettingResult(result.Code, updateSuccessfulMessage, result);
             }
             else
             {

@@ -30,6 +30,7 @@
         private bool disposedValue;
 
         private ISettingServiceFactory _serviceFactory;
+        private IUMService _umService;
         private IContainer _container;
         private HttpConfiguration _httpConfiguration;
         private HttpServer _httpServer;
@@ -86,9 +87,9 @@
             var builder = new ContainerBuilder();
 
             _serviceFactory = Substitute.For<ISettingServiceFactory>();
-
+            _umService = Substitute.For<IUMService>();
             builder
-                .Register(context => new CustomerSettingController(_serviceFactory))
+                .Register(context => new CustomerSettingController(_serviceFactory, _umService))
                 .As<CustomerSettingController>()
                 .InstancePerRequest();
             _container = builder.Build();

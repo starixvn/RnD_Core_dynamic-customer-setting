@@ -107,7 +107,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
+    <Compile Include="Criteria\UnderMaintainanceQueryCriteria.cs" />
+    <Compile Include="Models\UnderMaintainanceInfo.cs" />
     <Compile Include="Services\Impl\SettingServiceFactory.cs" />
+    <Compile Include="Services\Impl\UMService.cs" />
     <Compile Include="Services\ISettingServiceFactory.cs" />
     <Compile Include="Configurations\SettingServiceConfigItem.cs" />
     <Compile Include="Configurations\SettingServiceConfigurator.cs" />
@@ -132,6 +135,7 @@
     <Compile Include="Services\Impl\RouteService.cs" />
     <Compile Include="Services\IRouteService.cs" />
     <Compile Include="Services\ISettingService.cs" />
+    <Compile Include="Services\IUMService.cs" />
     <Compile Include="Tasks\IPostRedirectTask.cs" />
     <Compile Include="Tasks\IPostUpdateMultipleCustomersSettingTask.cs" />
     <Compile Include="Tasks\IPostUpdateMultipleCustomersSettingTypeTask.cs" />

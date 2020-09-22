@@ -5,6 +5,10 @@
     using System.Linq;
     using Common.Helper;
     using Exceptions;
+    using Fanex.CustomerSetting.Criteria;
+    using Fanex.CustomerSetting.Models.Constants;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
     using Logging;
     using Models;
     using Models.Enumerations;
@@ -80,9 +84,7 @@
 
             // Run plugged tasks before updating settings of customer.
             TaskService.Run(command.Setting.ProductId, command);
-
             IResult result = new UpdateSettingResult(UpdateCustomerSettingTypes(command));
-
             // Run plugged tasks after updating settings of customer.
             TaskService.Run(command.Setting.ProductId, command, result);
 
@@ -131,7 +133,6 @@
             try
             {
                 CheckSettingTypeIsValid(settingType);
-
                 TaskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
 
                 var settingTypeService = SettingTypeServiceFactory.GetInstance(settingType);
