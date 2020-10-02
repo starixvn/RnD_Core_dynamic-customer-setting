@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Runtime.Caching;
     using System.Web.Mvc;
@@ -18,8 +19,10 @@
     {
         private const string SettingTemplateCachingKey = "CustomerSettingTemplate";
         private const byte CachingHours = 4;
-
+        public static readonly List<int> DefaultBetCounts = new List<int> { 2, 3, 4, 5, 8, 10, 15, 20, 30, 50, 100 };
         private readonly ICustomerSettingService _customerSettingService;
+
+        internal bool FlexboxInapplicable { get; set; }
 
         public ViewCustomerSettingController()
             : this(null)
@@ -125,7 +128,7 @@
         private string AddFlexboxPatchToTemplate(string template)
         {
             string finalTemplate = template;
-            bool flexboxInapplicable = Request.Browser.Browser == "IE" && Request.Browser.MajorVersion < 11;
+            bool flexboxInapplicable = this.FlexboxInapplicable ? this.FlexboxInapplicable : Request.Browser.Browser == "IE" && Request.Browser.MajorVersion < 11;
 
             if (flexboxInapplicable)
             {

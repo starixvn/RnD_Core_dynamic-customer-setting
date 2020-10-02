@@ -5,7 +5,7 @@
 
     public class CustomerSettingConfiguration : ConfigurationSection
     {
-        private static readonly CustomerSettingConfiguration settings
+        private static CustomerSettingConfiguration settings
             = ConfigurationManager.GetSection("CustomerSettingConfiguration") as CustomerSettingConfiguration;
 
         public static CustomerSettingConfiguration Settings

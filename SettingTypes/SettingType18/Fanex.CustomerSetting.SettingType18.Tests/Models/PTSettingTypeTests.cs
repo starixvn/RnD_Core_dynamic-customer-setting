@@ -261,5 +261,24 @@
             // Assert.
             Assert.IsTrue(actualResult);
         }
+
+        [Test]
+        public void SatisfyCustomerLevelConstraint_InvalidActor_ReturnFalse()
+        {
+            // Arrange.
+            var actorLevel = Level.Company;
+            var customerLevel = Level.Member;
+
+            _settingType.SettingItems = new List<AgentPTOnMemberItem>
+            {
+                new AgentPTOnMemberItem()
+            };
+
+            // Act.
+            var actualResult = _settingType.SatisfyCustomerLevelConstraint(actorLevel, customerLevel);
+
+            // Assert.
+            Assert.IsTrue(actualResult);
+        }
     }
 }

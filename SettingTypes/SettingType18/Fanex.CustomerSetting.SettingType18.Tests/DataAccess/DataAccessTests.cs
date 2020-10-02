@@ -210,11 +210,30 @@
             Assert.AreEqual(expectedResult, actualResult.ToList());
         }
 
+        static object[] UpdateGroupedMembersSettingValidTestCases = new object[]
+        {
+            new object[] { 0, 0, string.Empty, Level.Super, string.Empty, string.Empty },
+            new object[] { 0, 0, string.Empty, Level.Master, string.Empty, string.Empty },
+            new object[] { 0, 0, string.Empty, Level.Agent, string.Empty, string.Empty }
+        };
+
         [Test]
-        public void UpdateGroupedMembersSetting_ValidInput_ReturnExpectedResult()
+        [TestCaseSource("UpdateGroupedMembersSettingValidTestCases")]
+        public void UpdateGroupedMembersSetting_ValidInput_ReturnExpectedResult(int actorId,
+            int subAccountId,
+            string groupedMemberIds,
+            Level uplineLevel,
+            string positionTakingXml,
+            string ip)
         {
             var expectedResult = new Result(0, string.Empty, 0);
-            var actualResult = dataAccessService.UpdateGroupedMembersSetting(0,0,string.Empty,Level.Super, string.Empty, string.Empty);
+            var actualResult = dataAccessService.UpdateGroupedMembersSetting(
+                actorId,
+                subAccountId,
+                groupedMemberIds,
+                uplineLevel,
+                positionTakingXml,
+                ip);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
