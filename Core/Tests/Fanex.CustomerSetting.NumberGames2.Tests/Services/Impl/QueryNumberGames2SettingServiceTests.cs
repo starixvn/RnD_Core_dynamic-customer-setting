@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.NumberGames2.Tests.Services.Impl
 {
-    using System.Linq;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
@@ -8,9 +7,11 @@
     using CustomerSetting.NumberGames2.Resources;
     using CustomerSetting.Services;
     using CustomerSetting.Tests.Models;
+    using Fanex.CustomerSetting.NumberGames2.Services.Impl;
     using Models;
     using NSubstitute;
     using NUnit.Framework;
+    using System.Linq;
 
     public class QueryNumberGames2SettingServiceTests
     {
@@ -27,6 +28,12 @@
             _resourceService = Substitute.For<IResourceService>();
             _pluggableTaskService = Substitute.For<ITaskService>();
             _query = new CustomerSettingQuery(123, Level.Super, 23, 0, null);
+        }
+
+        [Test]
+        public void QueryNumberGames2SettingService_WithSettingContextOnly_NotThrowException()
+        {
+            Assert.DoesNotThrow(() => new QueryNumberGames2SettingService(_settingContext));
         }
 
         [Test]
