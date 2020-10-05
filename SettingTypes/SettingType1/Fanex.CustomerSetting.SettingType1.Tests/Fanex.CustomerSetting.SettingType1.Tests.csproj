@@ -43,6 +43,10 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Data, Version=0.5.404.63, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SettingType17\Fanex.CustomerSetting.SettingType17\bin\Debug\Fanex.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
     </Reference>
@@ -78,6 +82,7 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,6 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccesses\DataAccessTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AgentPTOnMemberItemTests.cs" />
     <Compile Include="Models\AgentPTItemTests.cs" />
@@ -107,6 +113,10 @@
     <ProjectReference Include="..\..\..\Core\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
       <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
       <Name>Fanex.CustomerSetting.Resource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\Fanex.CustomerSetting.WebAPI\Fanex.CustomerSetting.WebAPI.csproj">
+      <Project>{9B52485B-6CAC-4B70-994B-5D8CF74B3380}</Project>
+      <Name>Fanex.CustomerSetting.WebAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Core\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>

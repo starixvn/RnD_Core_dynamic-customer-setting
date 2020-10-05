@@ -61,7 +61,7 @@
             { Level.Agent.Value, "CustSetting_AgentPTOnMemberMultiUpd" }
         };
 
-        private static IEnumerable<T> GetPTSettingItem<T>(IObjectDb objectDb, Hashtable parameters)
+        internal static IEnumerable<T> GetPTSettingItem<T>(IObjectDb objectDb, Hashtable parameters)
         {
             return objectDb.Query<T>(parameters);
         }
@@ -143,7 +143,7 @@
 
         public IEnumerable<int> GetGroupedMemberIds(string memberIds)
         {
-            using (ObjectDb objectDb = new ObjectDb("CustSetting_GroupedPTMemberLstSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_GroupedPTMemberLstSelect"))
             {
                 return objectDb.Query<int>(new
                 {
