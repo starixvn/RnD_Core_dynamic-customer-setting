@@ -253,6 +253,7 @@
             Assert.IsEmpty(actualResourceData);
         }
 
+        [Test]
         public void GetDataResource_RefIdAndResourceIdAreNotEmpty_CallRemotingRefApi()
         {
             // Arrange.
@@ -272,6 +273,7 @@
                     Arg.Any<string>());
         }
 
+        [Test]
         public void GetDataResource_RefIdAndResourceIdAreNotEmpty_ReturnDataFromRemotingRefApi()
         {
             // Arrange.
@@ -294,6 +296,7 @@
             Assert.AreEqual(resourceData, actualData);
         }
 
+        [Test]
         public void GetDataResource_RemotingRefApiReturnsEmpty_ReturnDefaultResourceData()
         {
             // Arrange.

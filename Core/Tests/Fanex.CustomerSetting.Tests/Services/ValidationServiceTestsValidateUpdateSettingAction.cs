@@ -1,7 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Constants;
     using CustomerSetting.Models.Enumerations;
@@ -10,11 +8,13 @@
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Data.Repository;
-    using DataAccesses;
+    using Fanex.CustomerSetting.DataAccesses;
     using Logging;
     using Models;
     using NSubstitute;
     using NUnit.Framework;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [TestFixture]
     public class ValidationServiceTestsValidateUpdateSettingAction

@@ -57,6 +57,13 @@
         }
 
         [Test]
+        public void QuerySettingService_Parameterless_Success()
+        {
+            var query = new QuerySettingService();
+            Assert.That(query != null);
+        }
+
+        [Test]
         public void GetCustomerSetting_QuerySettingParamIsNull_ThrowArgumentNullException()
         {
             //// Arrange

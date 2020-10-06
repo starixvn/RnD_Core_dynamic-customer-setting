@@ -51,7 +51,7 @@
         {
         }
 
-        protected QuerySettingService()
+        internal QuerySettingService()
         {
         }
 

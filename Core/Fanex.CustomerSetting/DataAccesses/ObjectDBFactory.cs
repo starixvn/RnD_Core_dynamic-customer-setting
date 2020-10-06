@@ -11,12 +11,14 @@
         {
             get
             {
-                return _objectDb?? ((settingKey) => new ObjectDb(settingKey));
+                return _objectDb ?? ((settingKey) => CreateObjectDb(settingKey));
             }
             set
             {
                 _objectDb = value;
             }
         }
+
+        internal static IObjectDb CreateObjectDb(string settingKey) => new ObjectDb(settingKey);
     }
 }

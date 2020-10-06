@@ -20,6 +20,12 @@
         }
 
         [Test]
+        public void CachingService_Null_ThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(()=> new CachingService(null));
+        }
+
+        [Test]
         public void AddComplexObjectThenGetGenericReturnsCachedObject()
         {
             var sut = new CachingService();

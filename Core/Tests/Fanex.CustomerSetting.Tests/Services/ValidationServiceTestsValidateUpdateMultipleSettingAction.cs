@@ -7,11 +7,12 @@
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Data.Repository;
-    using DataAccesses;
+    using Fanex.CustomerSetting.DataAccesses;
     using Logging;
     using Models;
     using NSubstitute;
     using NUnit.Framework;
+    using System;
 
     [TestFixture]
     public class ValidationServiceTestsValidateUpdateMultipleSettingAction
@@ -99,6 +100,12 @@
 
             //// Assert
             Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
+        }
+
+        [Test]
+        public void ValidateUpdateMultipleSetting_CommandIsNull_ThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => _validationService.ValidateUpdateMultipleSettingAction(null));
         }
     }
 }

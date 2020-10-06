@@ -6,7 +6,6 @@
     public class RedirectCommand : CustomerSettingQuery
     {
         private short _settingTypeId;
-        private byte _actionId;
 
         public RedirectCommand(
             int customerId,
@@ -62,23 +61,7 @@
             }
         }
 
-        public byte ActionId
-        {
-            get
-            {
-                return _actionId;
-            }
-
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ActionId)} cannot be negative.");
-                }
-
-                _actionId = value;
-            }
-        }
+        public byte ActionId { get; set; }
 
         public ActionType ActionType { get; set; }
 

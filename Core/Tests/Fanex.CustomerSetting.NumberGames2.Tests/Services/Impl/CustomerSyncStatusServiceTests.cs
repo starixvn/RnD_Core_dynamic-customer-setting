@@ -32,10 +32,7 @@
         [TestCase(0, 0)]
         [TestCase(0, 1)]
         [TestCase(1, 0)]
-        [TestCase(1, -1)]
-        [TestCase(-1, -1)]
         [TestCase(-1, 1)]
-        [TestCase(0, -1)]
         [TestCase(-1, 0)]
         public void GetCustomerSyncStatus_InvalidCustIdAndProductId_ThrowArgumentOutOfRangeException(int customerId, byte productId)
         {
