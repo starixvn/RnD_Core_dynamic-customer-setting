@@ -16,8 +16,9 @@
             short settingTypeId,
             byte actionId,
             ActionType actionType,
+            byte settingStatus,
             string jsonParameters)
-            : base(customerId, customerLevel, productId, uplineLevel)
+            : base(customerId, customerLevel, productId, settingStatus, uplineLevel)
         {
             SettingTypeId = settingTypeId;
             ActionId = actionId;
@@ -33,8 +34,9 @@
             short settingTypeId,
             byte actionId,
             ActionType actionType,
+            byte settingStatus,
             string jsonParameters)
-            : base(customerId, customerLevel, productId, uplineLevel)
+            : base(customerId, customerLevel, productId, settingStatus, uplineLevel)
         {
             SettingTypeId = settingTypeId;
             ActionId = actionId;

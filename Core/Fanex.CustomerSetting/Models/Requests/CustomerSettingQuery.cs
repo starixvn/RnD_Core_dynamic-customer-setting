@@ -9,28 +9,33 @@
         private Level _customerLevel;
         private byte _productId;
         private Level _uplineLevel;
+        private byte _settingStatus;
 
         public CustomerSettingQuery(
-          int customerId,
-          Level customerLevel,
-          byte productId,
-          Level uplineLevel = null)
+            int customerId,
+            Level customerLevel,
+            byte productId,
+            byte settingStatus = 0,
+            Level uplineLevel = null)
         {
             CustomerId = customerId;
             CustomerLevel = customerLevel;
             ProductId = productId;
             UplineLevel = uplineLevel;
+            SettingStatus = settingStatus;
         }
 
         public CustomerSettingQuery(
-           int customerId,
-           byte customerLevel,
-           byte productId,
-           byte? uplineLevel)
+            int customerId,
+            byte customerLevel,
+            byte productId,
+            byte settingStatus,
+            byte? uplineLevel)
         {
             CustomerId = customerId;
             CustomerLevel = Enumeration.FromValue<Level>(customerLevel);
             ProductId = productId;
+            SettingStatus = settingStatus;
             UplineLevel = uplineLevel.HasValue ? Enumeration.FromValue<Level>(uplineLevel.Value) : null;
         }
 
@@ -85,6 +90,24 @@
                 }
 
                 _productId = value;
+            }
+        }
+
+        public byte SettingStatus
+        {
+            get
+            {
+                return _settingStatus;
+            }
+
+            set
+            {
+                if (value < 0 || value > 1)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "Invalid Setting Status.");
+                }
+
+                _settingStatus = value;
             }
         }
 

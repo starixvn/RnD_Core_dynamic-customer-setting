@@ -199,7 +199,7 @@
 
         private void CheckQueryPermission(int customerId, Level customerLevel, byte productId, Level uplineLevel)
         {
-            var querySettingParam = new CustomerSettingQuery(customerId, customerLevel, productId, uplineLevel);
+            var querySettingParam = new CustomerSettingQuery(customerId, customerLevel, productId, uplineLevel: uplineLevel);
             var result = ValidateQuerySettingAction(querySettingParam);
 
             if (result.IsNotOk)

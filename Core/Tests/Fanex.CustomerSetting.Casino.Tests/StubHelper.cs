@@ -104,6 +104,7 @@
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
+            byte settingStatus = 0,
             Level uplineLevel = null)
         {
             customerLevel = customerLevel ?? Level.Member;
@@ -113,7 +114,7 @@
                 uplineLevel = uplineLevel ?? Level.Master;
             }
 
-            return new CustomerSettingQuery(customerId, customerLevel, productId, uplineLevel);
+            return new CustomerSettingQuery(customerId, customerLevel, productId, settingStatus, uplineLevel);
         }
 
         public static Product CreateProduct(byte productId = 1)

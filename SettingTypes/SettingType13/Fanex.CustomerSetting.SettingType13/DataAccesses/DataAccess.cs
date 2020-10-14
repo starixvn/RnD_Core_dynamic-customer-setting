@@ -19,7 +19,8 @@
                 return objectDb.Query<ProductStatusDto>(new
                 {
                     CustId = query.CustomerId,
-                    ProductId = query.ProductId
+                    ProductId = query.ProductId,
+                    SettingStatus= query.SettingStatus
                 });
             }
         }

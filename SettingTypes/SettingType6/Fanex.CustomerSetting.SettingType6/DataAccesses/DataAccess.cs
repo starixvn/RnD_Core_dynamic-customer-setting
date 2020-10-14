@@ -20,7 +20,8 @@
                 var parameterValues = new Hashtable
                 {
                     { "custid", query.CustomerId },
-                    { "productid", query.ProductId }
+                    { "productid", query.ProductId },
+                    { "settingstatus", query.SettingStatus }
                 };
 
                 return objectDb.Query<WinLossLimitItem>(parameterValues);

@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.WebApi.Configurations;
 
     public class QuerySettingRequest : SettingRequest
     {
@@ -20,6 +21,7 @@
              CustomerId,
              CustomerLevel,
              ProductId,
+             CustomerSettingApiConfiguration.Settings.SettingStatus,
              UplineLevel);
 
             return query;

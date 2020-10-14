@@ -51,7 +51,8 @@
             {
                 { "custid", querySettingParam.CustomerId },
                 { "productid", querySettingParam.ProductId },
-                { "settingtype", settingType }
+                { "settingtype", settingType },
+                { "settingstatus", querySettingParam.SettingStatus }
             };
 
             if (querySettingParam.CustomerLevel == Level.Member)

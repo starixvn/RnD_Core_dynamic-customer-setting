@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.WebApi.Configurations;
 
     public class RedirectRequest : QuerySettingRequest
     {
@@ -27,6 +28,7 @@
                 SettingTypeId,
                 ActionId,
                 (ActionType)ActionType,
+                CustomerSettingApiConfiguration.Settings.SettingStatus,
                 JsonParameters);
         }
     }

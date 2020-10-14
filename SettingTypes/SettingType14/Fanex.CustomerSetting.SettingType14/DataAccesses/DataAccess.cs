@@ -18,7 +18,8 @@
                 var parameters = new Hashtable
                 {
                     { "custid", query.CustomerId },
-                    { "productid", query.ProductId }
+                    { "productid", query.ProductId },
+                    { "settingstatus", query.SettingStatus }
                 };
 
                 if (query.CustomerLevel.IsMemberLevel())

@@ -12,14 +12,15 @@
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
-        public IEnumerable<StakeLevelGroupDto> GetCustomerStakeLevelGroups(int customerId, byte productId)
+        public IEnumerable<StakeLevelGroupDto> GetCustomerStakeLevelGroups(int customerId, byte productId, byte settingStatus)
         {
             using (var objectDb = new ObjectDb("CustSetting_StakeLevelGroupSelect"))
             {
                 var parameterValues = new Hashtable
                 {
                     { "custid", customerId },
-                    { "productid", productId }
+                    { "productid", productId },
+                    { "settingstatus", settingStatus }
                 };
 
                 return objectDb.Query<StakeLevelGroupDto>(parameterValues);

@@ -22,7 +22,8 @@
                 {
                     { "custid", query.CustomerId },
                     { "productid", query.ProductId },
-                    { "settingType", Constants.SettingTypeId }
+                    { "settingType", Constants.SettingTypeId },
+                    { "settingstatus", query.SettingStatus }
                 };
 
                 return objectDb.Query<LossLimitItem>(parameterValues);

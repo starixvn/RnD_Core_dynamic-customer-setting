@@ -19,7 +19,8 @@
                 return objectDb.Query<BetLimitDto>(new
                 {
                     CustId = query.CustomerId,
-                    ProductId = query.ProductId
+                    ProductId = query.ProductId,
+                    SettingStatus = query.SettingStatus
                 });
             }
         }

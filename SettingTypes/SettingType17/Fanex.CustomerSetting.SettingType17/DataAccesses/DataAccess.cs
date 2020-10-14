@@ -20,7 +20,8 @@
                 {
                     { "custid", query.CustomerId },
                     { "productid", query.ProductId },
-                    { "settingType", Constants.Constants.SettingTypeId }
+                    { "settingType", Constants.Constants.SettingTypeId },
+                    { "settingStatus", query.SettingStatus }
                 };
 
                 return objectDb.Query<StakeLevelDto>(parameterValues);

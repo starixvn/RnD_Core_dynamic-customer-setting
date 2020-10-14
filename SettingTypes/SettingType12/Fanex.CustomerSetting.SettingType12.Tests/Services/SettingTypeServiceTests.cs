@@ -196,6 +196,7 @@
                 settingTypeId: SettingTypeId,
                 actionId: 0,
                 actionType: ActionType.Query,
+                settingStatus: 0,
                 jsonParameters: "{\"sportTypeId\":1,\"betTypeId\":1}");
 
             // Act
@@ -223,6 +224,7 @@
                 settingTypeId: SettingTypeId,
                 actionId: 0,
                 actionType: ActionType.Query,
+                settingStatus: 0,
                 jsonParameters: "{\"sportTypeId\":1,\"betTypeId\":1}");
             var currentLossAmount = new CurrentLossAmountItem
             {

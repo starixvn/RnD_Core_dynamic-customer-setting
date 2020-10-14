@@ -26,7 +26,7 @@
             _settingContext = new SettingContextStub();
             _resourceService = Substitute.For<IResourceService>();
             _pluggableTaskService = Substitute.For<ITaskService>();
-            _query = new CustomerSettingQuery(123, Level.Super, 23, null);
+            _query = new CustomerSettingQuery(123, Level.Super, 23, 0, null);
         }
 
         [Test]
