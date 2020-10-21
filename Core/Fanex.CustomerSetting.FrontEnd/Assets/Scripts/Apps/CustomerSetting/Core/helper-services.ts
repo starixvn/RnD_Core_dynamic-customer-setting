@@ -261,6 +261,7 @@ module CustomerSetting {
         public productName: string;
         public normalMode: boolean;
         public multipleUpdates: boolean;
+        public isSupportPT3DecimalSites: boolean;
 
         private parametersService: ParametersService;
 
@@ -279,6 +280,7 @@ module CustomerSetting {
                 this.productId = setting.productId;
                 this.productName = setting.productName;
                 this.normalMode = setting.isNormalMode;
+                this.isSupportPT3DecimalSites = this.systemId == System.nap || setting.customerInfo.isSupportPT3DecimalSites;
 
                 if (this.parametersService.forcingMode) {
                     this.normalMode = false;

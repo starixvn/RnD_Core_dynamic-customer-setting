@@ -10,20 +10,20 @@
 
         public byte LevelValue { get; set; }
 
-        public byte? SuperPT { get; set; }
+        public decimal? SuperPT { get; set; }
 
-        public byte? MasterPT { get; set; }
+        public decimal? MasterPT { get; set; }
 
-        public byte? AgentPT { get; set; }
+        public decimal? AgentPT { get; set; }
 
-        public byte? AutoSuperPT { get; set; }
+        public decimal? AutoSuperPT { get; set; }
 
         public bool? IsAutoSuperPT { get; set; }
 
-        public byte? AutoMasterPT { get; set; }
+        public decimal? AutoMasterPT { get; set; }
 
         public bool? IsAutoMasterPT { get; set; }
 
-        public byte? MinPT { get; set; }
+        public decimal? MinPT { get; set; }
     }
 }

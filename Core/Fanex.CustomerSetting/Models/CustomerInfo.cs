@@ -1,4 +1,7 @@
-﻿namespace Fanex.CustomerSetting.Models
+﻿using Fanex.CustomerSetting.Configurations;
+using System.Linq;
+
+namespace Fanex.CustomerSetting.Models
 {
     public class CustomerInfo
     {
@@ -17,5 +20,10 @@
         public string Email { get; set; }
 
         public byte Currency { get; set; }
+
+        public string Site { get; set; }
+
+        public bool IsSupportPT3DecimalSites 
+            => AppSettings.SupportPT3DecimalSites.Any(site => site.Equals(this.Site, System.StringComparison.CurrentCultureIgnoreCase));
     }
 }

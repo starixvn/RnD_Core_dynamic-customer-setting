@@ -21,7 +21,7 @@ module CustomerSetting {
     }
 
     class PositionTakingSelectDirective implements ng.IDirective {
-        public static $inject: string[] = ["$compile", "$timeout"];
+        public static $inject: string[] = ["$compile", "$timeout", "settingTypesSharedValuesService"];
 
         public replace: boolean = true;
 
@@ -41,10 +41,11 @@ module CustomerSetting {
         public templateUrl: string = "position-taking-select.htm";
 
         public controller: any = ["$scope", "valueRangeService", ($scope: IPositionTakingSelectScope, valueRangeService: ValueRangeService) => {
+            var isSupportPT3DecimalSites = this.settingTypesSharedValuesService.isSupportPT3DecimalSites;
             $scope.isMinPt = !!$scope.isMinPt;
             $scope.isPartialMinPt = !!$scope.isPartialMinPt;
             $scope.isFirst = !!$scope.isFirst;
-            $scope.divisor = SettingType18Config.roundingFactor;
+            $scope.divisor = SettingType18Config.roundingFactor(isSupportPT3DecimalSites);
 
             $scope.$watchGroup(["min", "max"], (newData: number[], oldData: number[]) => {
                 if ($scope.settingItem) {
@@ -56,8 +57,8 @@ module CustomerSetting {
                         $scope.settingItem[$scope.fieldName],
                         $scope.min,
                         $scope.max,
-                        SettingType18Config.step,
-                        SettingType18Config.roundingFactor);
+                        SettingType18Config.step(isSupportPT3DecimalSites),
+                        SettingType18Config.roundingFactor(isSupportPT3DecimalSites));
                 }
             });
 
@@ -81,10 +82,11 @@ module CustomerSetting {
         }];
 
         public link: ng.IDirectiveLinkFn = (scope: IPositionTakingSelectScope, element: ng.IAugmentedJQuery) => {
+            var isSupportPT3DecimalSites = this.settingTypesSharedValuesService.isSupportPT3DecimalSites;
             var select: ng.IAugmentedJQuery = element.find("select");
             select.attr("data-ng-change", "resetState(fieldName)");
             select.attr("data-ng-model", "settingItem." + scope.fieldName);
-            select.attr("data-ng-options", "item.key as (item.value | ptFormat) for item in range");
+            select.attr("data-ng-options", "item.key as (item.value | ptFormat:" + isSupportPT3DecimalSites + ") for item in range");
             select.attr("data-field-highlighting", "");
 
             if (scope.disabled === "true") {
@@ -98,17 +100,20 @@ module CustomerSetting {
 
         private $timeout: ng.ITimeoutService;
 
-        constructor($compile: ng.ICompileService, $timeout: ng.ITimeoutService) {
+        private settingTypesSharedValuesService: SettingTypesSharedValuesService;
+
+        constructor($compile: ng.ICompileService, $timeout: ng.ITimeoutService, settingTypesSharedValuesService: SettingTypesSharedValuesService) {
             this.$compile = $compile;
             this.$timeout = $timeout;
+            this.settingTypesSharedValuesService = settingTypesSharedValuesService;
         }
     }
 
     ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
 
     function PositionTakingFormatFilter() {
-        return (ptValue: number) => {
-            return ptValue / SettingType18Config.roundingFactor;
+        return (ptValue: number, isSupportPT3DecimalSites: boolean) => {
+            return ptValue / SettingType18Config.roundingFactor(isSupportPT3DecimalSites);
         };
     }
 

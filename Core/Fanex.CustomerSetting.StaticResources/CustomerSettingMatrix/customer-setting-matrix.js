@@ -30668,7 +30668,7 @@ var CustomerSettingMatrix;
     function PTValue() {
         return function (numberValue) {
             if (numberValue != null) {
-                return (numberValue / 100).toFixed(2);
+                return (numberValue / 100).toString();
             }
             return "";
         };

@@ -28,6 +28,7 @@ module CustomerSetting {
         public fax: string;
         public email: string;
         public currency: number;
+        public isSupportPT3DecimalSites: boolean;
 
         constructor(info: any) {
             if (info) {
@@ -39,6 +40,7 @@ module CustomerSetting {
                 this.fax = info.fax;
                 this.email = info.email;
                 this.currency = info.currency;
+                this.isSupportPT3DecimalSites = info.isSupportPT3DecimalSites;
             }
         }
     }

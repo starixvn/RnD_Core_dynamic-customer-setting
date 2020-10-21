@@ -106,6 +106,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\AppSettings.cs" />
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
     <Compile Include="Criteria\UnderMaintainanceQueryCriteria.cs" />
     <Compile Include="Models\UnderMaintainanceInfo.cs" />
