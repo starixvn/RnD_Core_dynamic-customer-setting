@@ -8,10 +8,10 @@
     public class MinMaxPTViolationSubMessage : WrongPTSubMessage
     {
         [XmlAttribute]
-        public byte MinPT { get; set; }
+        public decimal MinPT { get; set; }
 
         [XmlAttribute]
-        public byte MaxPT { get; set; }
+        public decimal MaxPT { get; set; }
 
         public override string ToString(IResourceService resourceService, string language, byte settingLevel)
         {

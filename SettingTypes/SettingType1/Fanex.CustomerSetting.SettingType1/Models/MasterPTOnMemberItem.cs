@@ -7,12 +7,12 @@
         /// <summary>
         /// Agent PT on Member
         /// </summary>
-        public byte A1 { get; set; }
+        public decimal A1 { get; set; }
 
         /// <summary>
         /// Master PT On member
         /// </summary>
-        public byte M1 { get; set; }
+        public decimal M1 { get; set; }
 
         /// <summary>
         /// Is Master auto on Member
@@ -22,7 +22,7 @@
         /// <summary>
         /// Super Auto PT on Member
         /// </summary>
-        public byte UM1 { get; set; }
+        public decimal UM1 { get; set; }
 
         /// <summary>
         /// Is master auto on Agent
@@ -32,12 +32,12 @@
         /// <summary>
         /// Master Max PT
         /// </summary>
-        public byte M3 { get; set; }
+        public decimal M3 { get; set; }
 
         /// <summary>
         /// Master Min PT
         /// </summary>
-        public byte N3 { get; set; }
+        public decimal N3 { get; set; }
 
         public override string ToXml()
         {
