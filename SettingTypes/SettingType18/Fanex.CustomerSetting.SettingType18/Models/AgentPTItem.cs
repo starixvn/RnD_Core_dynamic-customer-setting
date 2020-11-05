@@ -12,12 +12,12 @@
         /// <summary>
         /// Master PT
         /// </summary>
-        public byte M2 { get; set; }
+        public decimal M2 { get; set; }
 
         /// <summary>
         /// Master Auto PT
         /// </summary>
-        public byte UM2 { get; set; }
+        public decimal UM2 { get; set; }
 
         /// <summary>
         /// Is Auto
@@ -27,31 +27,31 @@
         /// <summary>
         /// Agent Max PT
         /// </summary>
-        public byte A2 { get; set; }
+        public decimal A2 { get; set; }
 
         /// <summary>
         /// Agent Min PT
         /// </summary>
-        public byte N2 { get; set; }
+        public decimal N2 { get; set; }
 
         /// <summary>
         /// Master Max PT
         /// </summary>
-        public byte M3 { get; set; }
+        public decimal M3 { get; set; }
 
         /// <summary>
         /// Master Min PT
         /// </summary>
-        public byte N3 { get; set; }
+        public decimal N3 { get; set; }
 
         /// <summary>
         /// Agent Max PT
         /// </summary>
-        public byte A4 { get; set; }
+        public decimal A4 { get; set; }
 
         public bool IsUpdateMasterPTOnMembers { get; set; }
 
-        public byte MasterPTOnMembers { get; set; }
+        public decimal MasterPTOnMembers { get; set; }
 
         public override IResult Validate()
         {

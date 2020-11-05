@@ -11,24 +11,24 @@
         /// <summary>
         /// Super Max PT
         /// </summary>
-        public byte S4 { get; set; }
+        public decimal S4 { get; set; }
 
         /// <summary>
         /// Master Max PT
         /// </summary>
-        public byte M4 { get; set; }
+        public decimal M4 { get; set; }
 
         /// <summary>
         /// Agent Max PT
         /// </summary>
-        public byte A4 { get; set; }
+        public decimal A4 { get; set; }
 
         /// <summary>
         /// Super Min PT
         /// </summary>
-        public byte N4 { get; set; }
+        public decimal N4 { get; set; }
 
-        public byte DefaultMaxPT { get; set; }
+        public decimal DefaultMaxPT { get; set; }
 
         public override IResult Validate()
         {

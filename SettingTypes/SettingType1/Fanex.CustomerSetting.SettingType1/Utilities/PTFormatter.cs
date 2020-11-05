@@ -12,9 +12,9 @@
             return string.Format(EnglishCultureInfo.NumberFormat, "{0:#,##0.00}", value);
         }
 
-        public static string FormatPT(byte value)
+        public static string FormatPT(decimal value)
         {
-            var positionTakingValue = (float)value / PTDivider;
+            var positionTakingValue = value / PTDivider;
             return FormatDecimal(positionTakingValue);
         }
     }

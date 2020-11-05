@@ -12,12 +12,12 @@
         /// <summary>
         /// Super PT
         /// </summary>
-        public byte S3 { get; set; }
+        public decimal S3 { get; set; }
 
         /// <summary>
         /// Super Auto PT
         /// </summary>
-        public byte US3 { get; set; }
+        public decimal US3 { get; set; }
 
         /// <summary>
         /// Is Auto
@@ -27,31 +27,31 @@
         /// <summary>
         /// Master Max PT
         /// </summary>
-        public byte M3 { get; set; }
+        public decimal M3 { get; set; }
 
         /// <summary>
         /// Master Min PT
         /// </summary>
-        public byte N3 { get; set; }
+        public decimal N3 { get; set; }
 
         /// <summary>
         /// Super Max PT
         /// </summary>
-        public byte S4 { get; set; }
+        public decimal S4 { get; set; }
 
         /// <summary>
         /// Master Max PT
         /// </summary>
-        public byte M4 { get; set; }
+        public decimal M4 { get; set; }
 
         /// <summary>
         /// Super Min PT
         /// </summary>
-        public byte N4 { get; set; }
+        public decimal N4 { get; set; }
 
         public bool IsUpdateSuperPTOnMembers { get; set; }
 
-        public byte SuperPTOnMembers { get; set; }
+        public decimal SuperPTOnMembers { get; set; }
 
         public override IResult Validate()
         {
