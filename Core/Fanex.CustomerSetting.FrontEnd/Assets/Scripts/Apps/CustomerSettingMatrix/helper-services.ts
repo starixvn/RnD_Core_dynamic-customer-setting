@@ -43,7 +43,7 @@ module CustomerSettingMatrix {
     function PTValue(): Function {
         return (numberValue: number) => {
             if (numberValue != null) {
-                return (numberValue / 100).toFixed(2);
+                return (numberValue / 100).toString();
             }
 
             return "";

@@ -6,7 +6,7 @@ module CustomerSetting {
     "use strict";
 
     interface INewSettingItem {
-        (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level, extraData?: Array<KeyValuePair<string, any>>, multipleUpdate?: boolean): ISettingItem;
+        (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level, extraData?: Array<KeyValuePair<string, any>>, multipleUpdate?: boolean, isSupportPT3DecimalSites?: boolean): ISettingItem;
     }
 
     export interface ISettingTypeDirectiveSharedScope extends ng.IScope {
@@ -61,7 +61,9 @@ module CustomerSetting {
                                         $scope.customerLevel,
                                         $scope.uplineLevel,
                                         settingType.extraData,
-                                        settingTypesSharedValuesService.multipleUpdates);
+                                        settingTypesSharedValuesService.multipleUpdates,
+                                        settingTypesSharedValuesService.isSupportPT3DecimalSites
+                                    );
                                 }
                             });
                         }

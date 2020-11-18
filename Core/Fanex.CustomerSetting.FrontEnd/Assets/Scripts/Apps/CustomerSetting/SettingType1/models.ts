@@ -4,12 +4,12 @@ module CustomerSetting {
     "use strict";
 
     export class SettingType1Config {
-        public static get step(): number {
-            return 1;
+        public static step(isSupportPT3DecimalSites: boolean): number {
+            return isSupportPT3DecimalSites ? 0.5 : 1;
         }
 
-        public static get roundingFactor(): number {
-            return 100;
+        public static roundingFactor(isSupportPT3DecimalSites: boolean): number {
+            return isSupportPT3DecimalSites ? 100 : 100;
         }
     }
 
@@ -19,17 +19,18 @@ module CustomerSetting {
             backup?: boolean,
             customerLevel?: Level,
             uplineLevel?: Level,
-            extraData?: Array<KeyValuePair<string, any>>): ISettingItem {
+            extraData?: Array<KeyValuePair<string, any>>,
+            isSupportPT3DecimalSites?: boolean): ISettingItem {
             if (customerLevel === Level.super) {
                 return new SuperPositionTaking(settingItem, backup);
             } else if (customerLevel === Level.master) {
-                return new MasterPositionTaking(settingItem, backup);
+                return new MasterPositionTaking(settingItem, backup, isSupportPT3DecimalSites);
             } else if (customerLevel === Level.agent) {
-                return new AgentPositionTaking(settingItem, backup);
+                return new AgentPositionTaking(settingItem, backup, isSupportPT3DecimalSites);
             } else if (customerLevel === Level.member && uplineLevel === Level.super) {
-                return new SuperPositionTakingOnMember(settingItem, backup);
+                return new SuperPositionTakingOnMember(settingItem, backup, isSupportPT3DecimalSites);
             } else if (customerLevel === Level.member && uplineLevel === Level.master) {
-                return new MasterPositionTakingOnMember(settingItem, backup, extraData);
+                return new MasterPositionTakingOnMember(settingItem, backup, extraData, isSupportPT3DecimalSites);
             } else if (customerLevel === Level.member && uplineLevel === Level.agent) {
                 return new AgentPositionTakingOnMember(settingItem, backup);
             }
@@ -68,16 +69,18 @@ module CustomerSetting {
         public a4: number;
         public n4: number;
         public defaultMaxPT: number;
+        public isSupportPT3DecimalSites: boolean;
 
         constructor();
         constructor(settingItem: any);
         constructor(settingItem: any, backup: boolean);
-        constructor(settingItem?: any, backup: boolean = false) {
+        constructor(settingItem: any, backup: boolean, isSupportPT3DecimalSites: boolean);
+        constructor(settingItem?: any, backup: boolean = false, isSupportPT3DecimalSites: boolean = false) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, <SuperPositionTaking>this);
-
+            this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
             if (backup) {
-                this.oldSetting = new SuperPositionTaking(this);
+                this.oldSetting = new SuperPositionTaking(this, false, isSupportPT3DecimalSites);
             }
         }
 
@@ -126,7 +129,7 @@ module CustomerSetting {
 
         public validate(): boolean {
             if (this.s4 > this.defaultMaxPT) {
-                this.validationState = new ValidationResult("SuperMaxPTCannotBeGreaterThan", "s4", [this.defaultMaxPT / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("SuperMaxPTCannotBeGreaterThan", "s4", [this.defaultMaxPT / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
@@ -166,16 +169,17 @@ module CustomerSetting {
         public n4: number;
         public superPTOnMembers: number;
         public isUpdateSuperPTOnMembers: boolean;
+        public isSupportPT3DecimalSites: boolean;
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean);
-        constructor(settingItem?: any, backup: boolean = false) {
+        constructor(settingItem: any, backup: boolean, isSupportPT3DecimalSites: boolean);
+        constructor(settingItem?: any, backup: boolean = false, isSupportPT3DecimalSites: boolean = false) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, this);
-
+            this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
             if (backup) {
-                this.oldSetting = new MasterPositionTaking(this);
+                this.oldSetting = new MasterPositionTaking(this, false, isSupportPT3DecimalSites);
             }
         }
 
@@ -296,13 +300,13 @@ module CustomerSetting {
             }
 
             if (this.m3 < minOfMasterMaxPt) {
-                this.validationState = new ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
 
             if (this.m3 > maxOfMasterMaxPt) {
-                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
@@ -316,7 +320,7 @@ module CustomerSetting {
             var maxOfMasterMaxPt: number = Math.min(this.s4 - this.s3, this.m4);
 
             if (this.s3 < minOfSuperPt) {
-                this.validationState = new ValidationResult("SuperPTCannotBeLessThan", "s3", [minOfSuperPt / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("SuperPTCannotBeLessThan", "s3", [minOfSuperPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
@@ -328,13 +332,13 @@ module CustomerSetting {
             }
 
             if (this.m3 < minOfMasterMaxPt) {
-                this.validationState = new ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
 
             if (this.m3 > maxOfMasterMaxPt) {
-                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
@@ -355,7 +359,7 @@ module CustomerSetting {
                 this.validationState = new ValidationResult(
                     "SuperPTOnMemberCannotBeGreaterThan",
                     "superPTOnMembers",
-                    [maxOfSuperPtOnMembers / SettingType1Config.roundingFactor]);
+                    [maxOfSuperPtOnMembers / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
@@ -385,16 +389,17 @@ module CustomerSetting {
         public a4: number;
         public masterPTOnMembers: number;
         public isUpdateMasterPTOnMembers: boolean;
+        public isSupportPT3DecimalSites: boolean;
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean);
-        constructor(settingItem?: any, backup: boolean = false) {
+        constructor(settingItem: any, backup: boolean, isSupportPT3DecimalSites: boolean);
+        constructor(settingItem?: any, backup: boolean = false, isSupportPT3DecimalSites: boolean = false) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, this);
-
+            this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
             if (backup) {
-                this.oldSetting = new AgentPositionTaking(this);
+                this.oldSetting = new AgentPositionTaking(this, false, isSupportPT3DecimalSites);
             }
         }
 
@@ -515,13 +520,13 @@ module CustomerSetting {
             }
 
             if (this.a2 < minOfAgentMaxPt) {
-                this.validationState = new ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
 
             if (this.a2 > maxOfAgentMaxPt) {
-                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
@@ -535,7 +540,7 @@ module CustomerSetting {
             var maxOfAgentMaxPt: number = Math.min(this.m3 - this.m2, this.a4);
 
             if (this.m2 < minOfMasterPt) {
-                this.validationState = new ValidationResult("MasterPTCannotBeLessThan", "m2", [minOfMasterPt / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("MasterPTCannotBeLessThan", "m2", [minOfMasterPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
@@ -547,13 +552,13 @@ module CustomerSetting {
             }
 
             if (this.a2 < minOfAgentMaxPt) {
-                this.validationState = new ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
 
             if (this.a2 > maxOfAgentMaxPt) {
-                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType1Config.roundingFactor]);
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
@@ -574,7 +579,7 @@ module CustomerSetting {
                 this.validationState = new ValidationResult(
                     "MasterPTOnMemberCannotBeGreaterThan",
                     "masterPTOnMembers",
-                    [maxOfMasterPtOnMembers / SettingType1Config.roundingFactor]);
+                    [maxOfMasterPtOnMembers / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                 return false;
             }
@@ -603,16 +608,17 @@ module CustomerSetting {
         public s4: number;
         public n4: number;
         public m3: number;
+        public isSupportPT3DecimalSites: boolean;
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean);
-        constructor(settingItem?: any, backup: boolean = false) {
+        constructor(settingItem: any, backup: boolean, isSupportPT3DecimalSites: boolean);
+        constructor(settingItem?: any, backup: boolean = false, isSupportPT3DecimalSites: boolean = false) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, this);
-
+            this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
             if (backup) {
-                this.oldSetting = new SuperPositionTakingOnMember(this);
+                this.oldSetting = new SuperPositionTakingOnMember(this, false, isSupportPT3DecimalSites);
             }
         }
 
@@ -681,7 +687,7 @@ module CustomerSetting {
                     this.validationState = new ValidationResult(
                         "SuperAutoPTOnMemberCannotBeLessThan",
                         "uS1",
-                        [minOfSuperAutoPtOnMember / SettingType1Config.roundingFactor]);
+                        [minOfSuperAutoPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                     return false;
                 }
@@ -699,7 +705,7 @@ module CustomerSetting {
                     this.validationState = new ValidationResult(
                         "SuperPTOnMemberCannotBeLessThan",
                         "s1",
-                        [minOfSuperPtOnMember / SettingType1Config.roundingFactor]);
+                        [minOfSuperPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                     return false;
                 }
@@ -708,7 +714,7 @@ module CustomerSetting {
                     this.validationState = new ValidationResult(
                         "SuperPTOnMemberCannotBeGreaterThan",
                         "s1",
-                        [maxOfSuperPtOnMember / SettingType1Config.roundingFactor]);
+                        [maxOfSuperPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                     return false;
                 }
@@ -739,16 +745,17 @@ module CustomerSetting {
         public m3: number;
         public n3: number;
         public isDisableMasterAutoPT: boolean;
+        public isSupportPT3DecimalSites: boolean;
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean, extraData: Array<KeyValuePair<string, any>>);
-        constructor(settingItem?: any, backup: boolean = false, extraData?: Array<KeyValuePair<string, any>>) {
+        constructor(settingItem: any, backup: boolean, extraData: Array<KeyValuePair<string, any>>, isSupportPT3DecimalSites: boolean);
+        constructor(settingItem?: any, backup: boolean = false, extraData?: Array<KeyValuePair<string, any>>, isSupportPT3DecimalSites: boolean = false) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, this);
-
+            this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
             if (backup) {
-                this.oldSetting = new MasterPositionTakingOnMember(this);
+                this.oldSetting = new MasterPositionTakingOnMember(this, false, null, isSupportPT3DecimalSites);
             }
 
             if (extraData) {
@@ -826,7 +833,7 @@ module CustomerSetting {
                     this.validationState = new ValidationResult(
                         "MasterAutoPTOnMemberCannotBeLessThan",
                         "uM1",
-                        [minOfMasterAutoPtOnMember / SettingType1Config.roundingFactor]);
+                        [minOfMasterAutoPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                     return false;
                 }
@@ -844,7 +851,7 @@ module CustomerSetting {
                     this.validationState = new ValidationResult(
                         "MasterPTOnMemberCannotBeLessThan",
                         "m1",
-                        [minOfMasterPtOnMember / SettingType1Config.roundingFactor]);
+                        [minOfMasterPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                     return false;
                 }
@@ -853,7 +860,7 @@ module CustomerSetting {
                     this.validationState = new ValidationResult(
                         "MasterPTOnMemberCannotBeGreaterThan",
                         "m1",
-                        [maxOfMasterPtOnMember / SettingType1Config.roundingFactor]);
+                        [maxOfMasterPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
 
                     return false;
                 }

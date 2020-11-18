@@ -129,15 +129,17 @@ module CustomerSetting {
     ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
 
     class AdjustMemberPtModalService {
-        public static $inject: string[] = ["$rootScope", "valueRangeService"];
+        public static $inject: string[] = ["$rootScope", "valueRangeService", "settingTypesSharedValuesService"];
 
         private $rootScope: ng.IRootScopeService;
         private modalScope: IAdjustMemberPtModalScope;
         private valueRangeService: ValueRangeService;
+        private settingTypesSharedValuesService: SettingTypesSharedValuesService;
 
-        constructor($rootScope: ng.IRootScopeService, valueRangeService: ValueRangeService) {
+        constructor($rootScope: ng.IRootScopeService, valueRangeService: ValueRangeService, settingTypesSharedValuesService: SettingTypesSharedValuesService) {
             this.$rootScope = $rootScope;
             this.valueRangeService = valueRangeService;
+            this.settingTypesSharedValuesService = settingTypesSharedValuesService;
         }
 
         public setup(scope: IAdjustMemberPtModalScope): void {
@@ -146,7 +148,7 @@ module CustomerSetting {
             }
 
             this.modalScope = scope;
-            this.modalScope.divisor = SettingType18Config.roundingFactor;
+            this.modalScope.divisor = SettingType18Config.roundingFactor(this.settingTypesSharedValuesService.isSupportPT3DecimalSites);
 
             this.modalScope.cancel = () => {
                 this.modalScope.isShown = false;
@@ -195,7 +197,7 @@ module CustomerSetting {
         private convertData(customerLevel: Level, settingItems: Array<ISettingItem>): boolean {
             var hasChanged: boolean = false;
             var changedItems: Array<DefaultSettingItem> = new Array<DefaultSettingItem>();
-
+            var isSupportPT3DecimalSites: boolean = this.settingTypesSharedValuesService.isSupportPT3DecimalSites;
             this.modalScope.ranges = new Array<Array<KeyValuePair<number, number>>>();
 
             if (customerLevel === Level.master) {
@@ -208,8 +210,8 @@ module CustomerSetting {
                             item.superPTOnMembers,
                             0,
                             item.s4 - item.m3,
-                            SettingType18Config.step,
-                            SettingType18Config.roundingFactor));
+                            SettingType18Config.step(isSupportPT3DecimalSites),
+                            SettingType18Config.roundingFactor(isSupportPT3DecimalSites)));
                     }
                 });
             } else if (customerLevel === Level.agent) {
@@ -222,8 +224,8 @@ module CustomerSetting {
                             item.masterPTOnMembers,
                             0,
                             item.m3 - item.a2,
-                            SettingType18Config.step,
-                            SettingType18Config.roundingFactor));
+                            SettingType18Config.step(isSupportPT3DecimalSites),
+                            SettingType18Config.roundingFactor(isSupportPT3DecimalSites)));
                     }
                 });
             }

@@ -8,13 +8,13 @@ module CustomerSetting {
     "use strict";
 
     class SettingType18Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["$window", "positionTakingResourceService"];
+        public static $inject: string[] = ["parametersService", "positionTakingResourceService"];
 
         public templateUrl: string = "settingtype18.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: IDefaultSettingTypeDirectiveScope) => {
             /* tslint:disable:no-string-literal */
-            scope.isMultiple = this.$window["params"].isMultiple === undefined ? false : this.$window["params"].isMultiple;
+            scope.isMultiple = this.parametersService.multipleUpdates;
             /* tslint:enable:no-string-literal */
             scope.headerTemplateUrl = "settingtype18-header.htm";
             scope.valueTemplateUrl = "settingtype18" + (scope.isMultiple ? "" : "-default") + "-value.htm";
@@ -22,13 +22,13 @@ module CustomerSetting {
         };
 
         private positionTakingResourceService: PositionTakingResourceService;
-        private $window: ng.IWindowService;
+        private parametersService: ParametersService;
 
-        constructor($window: ng.IWindowService, positionTakingResourceService: PositionTakingResourceService) {
+        constructor(parametersService: ParametersService, positionTakingResourceService: PositionTakingResourceService) {
             super(SettingType18Item.factory);
 
             this.positionTakingResourceService = positionTakingResourceService;
-            this.$window = $window;
+            this.parametersService = parametersService;
         }
     }
 
