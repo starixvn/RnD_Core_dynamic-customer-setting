@@ -21,12 +21,13 @@
         {
             int customerId = 1;
             byte productId = 33;
+            byte settingStatus = 0;
             Level customerLevel = Level.Agent;
 
             _task = new BetSettingNotesTask();
             _settingContext = Substitute.For<ISettingContext>();
             _setting = new Setting();
-            _query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
+            _query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, settingStatus, null);
 
             _settingContext.System = SystemType.Nap;
         }

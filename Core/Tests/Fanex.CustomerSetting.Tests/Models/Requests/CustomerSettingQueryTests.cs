@@ -13,7 +13,7 @@
         [SetUp]
         public void SetUp()
         {
-            customerSettingQuery = new CustomerSettingQuery(1, 1, 1, 2);
+            customerSettingQuery = new CustomerSettingQuery(1, 1, 1, 0, 2);
         }
 
         [Test]

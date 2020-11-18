@@ -96,4 +96,4 @@ Fanex.CustomerSetting.DemoSite/App/
 *.sh
 
 # Test tools
-*.ncrunchsolution
+*.ncrunch*

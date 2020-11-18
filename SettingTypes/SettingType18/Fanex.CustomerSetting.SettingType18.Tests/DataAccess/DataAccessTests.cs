@@ -78,7 +78,7 @@
             },
             new object[]
             {
-                new CustomerSettingQuery(1, Level.Member, 1,Level.Super),
+                new CustomerSettingQuery(1, Level.Member, 1, 0,Level.Super),
                 new PTSettingType
                 {
                     Name = Label.PositionTaking,
@@ -87,7 +87,7 @@
             },
             new object[]
             {
-                new CustomerSettingQuery(1, Level.Member, 1, Level.Master),
+                new CustomerSettingQuery(1, Level.Member, 1, 0, Level.Master),
                 new PTSettingType
                 {
                     Name = Label.PositionTaking,
@@ -96,7 +96,7 @@
             },
             new object[]
             {
-                new CustomerSettingQuery(1, Level.Member, 1, Level.Agent),
+                new CustomerSettingQuery(1, Level.Member, 1, 0, Level.Agent),
                 new PTSettingType
                 {
                     Name = Label.PositionTaking,
@@ -144,7 +144,7 @@
             },
             new object[]
             {
-                new CustomerSettingQuery(1, Level.Member, 1,Level.Super),
+                new CustomerSettingQuery(1, Level.Member, 1, 0, Level.Super),
                 new PTSettingType
                 {
                     Name = Label.PositionTaking,
@@ -153,7 +153,7 @@
             },
             new object[]
             {
-                new CustomerSettingQuery(1, Level.Member, 1, Level.Master),
+                new CustomerSettingQuery(1, Level.Member, 1, 0, Level.Master),
                 new PTSettingType
                 {
                     Name = Label.PositionTaking,
@@ -162,7 +162,7 @@
             },
             new object[]
             {
-                new CustomerSettingQuery(1, Level.Member, 1, Level.Agent),
+                new CustomerSettingQuery(1, Level.Member, 1, 0, Level.Agent),
                 new PTSettingType
                 {
                     Name = Label.PositionTaking,

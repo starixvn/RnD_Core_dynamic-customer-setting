@@ -21,6 +21,7 @@
                 settingTypeId: 1,
                 actionId: 0,
                 actionType: ActionType.Query,
+                settingStatus: 0,
                 jsonParameters: "{\"sportTypeId\":1,\"betTypeId\":1}");
         }
 

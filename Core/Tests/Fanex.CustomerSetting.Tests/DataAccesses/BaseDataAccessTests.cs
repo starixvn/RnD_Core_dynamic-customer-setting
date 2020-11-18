@@ -83,10 +83,11 @@
                 { "custid", 1 },
                 { "productid", 1 },
                 { "settingtype", 0 },
+                { "settingstatus", 0 },
                 { "roleid", 3}
             };
 
-            var actual = mockBaseDataAccess.GetSPParamsForGettingSettingType(new CustomerSettingQuery(1, 1, 1, 3), 0);
+            var actual = mockBaseDataAccess.GetSPParamsForGettingSettingType(new CustomerSettingQuery(1, 1, 1, 0, 3), 0);
             Assert.AreEqual(serializer.Serialize(expected), serializer.Serialize(actual));
         }
 
