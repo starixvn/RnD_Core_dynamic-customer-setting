@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="BetLimit - Without Max per Match">
+    <Setting Key="Acc_CustSetting_GameBetSettingSelect" SpName="Acc_CustSetting_GameBetSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+    <Setting Key="Acc_CustSetting_GameBetSettingUpd" SpName="Acc_CustSetting_GameBetSettingUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+  </Function>
+</Functions>

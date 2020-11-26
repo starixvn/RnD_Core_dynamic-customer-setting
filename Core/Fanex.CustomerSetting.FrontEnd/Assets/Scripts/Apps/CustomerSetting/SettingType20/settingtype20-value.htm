@@ -1,0 +1,19 @@
+﻿<div data-ng-if="settingType | editableSettingType">
+    <settingtype20-input class="block__cell w50-percent setting-field-wrapper"
+                        data-setting-item="item"
+                        data-upline-level="uplineLevel"
+                        data-customer-level="customerLevel"
+                        data-field-name="minBet">
+    </settingtype20-input>
+    <settingtype20-input class="block__cell w50-percent setting-field-wrapper"
+                        data-setting-item="item"
+                        data-upline-level="uplineLevel"
+                        data-customer-level="customerLevel"
+                        data-field-name="maxBet">
+    </settingtype20-input>
+</div>
+<div class="align-center"
+     data-ng-if="!(settingType | editableSettingType)">
+    <div class="block__cell w50-percent">{{item.minBet | formatNumber}}</div>
+    <div class="block__cell w50-percent">{{item.maxBet | formatNumber}}</div>
+</div>

@@ -331,6 +331,19 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-select.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20-input.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20-resources.js">
+      <DependentUpon>settingtype20-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype20-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-input.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -581,6 +594,10 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\commission-resources.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\models.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\settingtype19.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\models.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20-input.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20-resources.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-mocks.d.ts" />
