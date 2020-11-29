@@ -10,7 +10,7 @@ module CustomerSetting {
     "use strict";
 
     class SettingType20Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["settingType20ResourceService", "parametersService"];
+        public static $inject: string[] = ["settingType20ResourceService", "settingTypesSharedValuesService"];
 
         public templateUrl: string = "settingtype20.htm";
 
@@ -23,8 +23,8 @@ module CustomerSetting {
 
         private settingType20ResourceService: SettingType20ResourceService;
 
-        constructor(settingType20ResourceService: SettingType20ResourceService, parametersService: ParametersService) {
-            super((settingItem: any, backup?: boolean) => new SettingType20Item(settingItem, backup, parametersService.systemId));
+        constructor(settingType20ResourceService: SettingType20ResourceService, settingTypesSharedValuesService: SettingTypesSharedValuesService) {
+            super((settingItem: any, backup?: boolean) => new SettingType20Item(settingItem, backup, settingTypesSharedValuesService.systemId, settingTypesSharedValuesService.isY7Sites));
 
             this.settingType20ResourceService = settingType20ResourceService;
         }

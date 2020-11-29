@@ -14,8 +14,8 @@ module CustomerSetting {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean, systemId: number);
-        constructor(settingItem?: any, backup: boolean = false, systemId: number = 0) {
+        constructor(settingItem: any, backup: boolean, systemId: number, isY7Sites: boolean);
+        constructor(settingItem?: any, backup: boolean = false, systemId: number = 0, isY7Sites: boolean = false) {
             super(settingItem);
 
             if (settingItem) {
@@ -23,12 +23,12 @@ module CustomerSetting {
                 this.maxBet = settingItem.maxBet;
 
                 if (settingItem.upline) {
-                    this.upline = new SettingType20Item(settingItem.upline);
+                    this.upline = new SettingType20Item(settingItem.upline, false, systemId, isY7Sites);
                 }
             }
 
             if (backup) {
-                this.oldSetting = new SettingType20Item(this);
+                this.oldSetting = new SettingType20Item(this, false, systemId, isY7Sites);
             }
 
             var minConstraintBySystem = System.isY7(systemId) ? 1 : 0;
@@ -115,7 +115,7 @@ module CustomerSetting {
                 && this.minBet === 0
                 && this.maxBet >= 0
                 && this.maxBet < 1) {
-                    return true;
+                return true;
             }
 
             return false;
@@ -131,7 +131,7 @@ module CustomerSetting {
                     return false;
                 }
 
-                if (this.maxBet > 0 && this.minBet > this.maxBet) {
+                if (this.minBet > this.maxBet) {
                     this.validationState = new ValidationResult("MinBetLessThanOrEqualMaxBet", "minBet");
 
                     return false;
@@ -151,7 +151,7 @@ module CustomerSetting {
                     return false;
                 }
 
-                if (this.maxBet > 0 && this.maxBet < this.minBet) {
+                if (this.maxBet < this.minBet) {
                     this.validationState = new ValidationResult("MaxBetMoreThanOrEqualMinBet", "maxBet");
 
                     return false;

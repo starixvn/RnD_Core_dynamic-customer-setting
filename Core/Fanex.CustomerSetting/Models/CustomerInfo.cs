@@ -25,5 +25,8 @@ namespace Fanex.CustomerSetting.Models
 
         public bool IsSupportPT3DecimalSites 
             => AppSettings.SupportPT3DecimalSites.Any(site => site.Equals(this.Site, System.StringComparison.CurrentCultureIgnoreCase));
+
+        public bool IsY7Sites
+            => AppSettings.Y7Sites.Any(site => site.Equals(this.Site, System.StringComparison.CurrentCultureIgnoreCase));
     }
 }
