@@ -46,7 +46,7 @@
             _commissionMatrixService = commissionMatrixService ?? new CommissionMatrixService(_resourceService, _dynamicRepository);
         }
 
-        public CustomerSettingMatrix GetCustomerSettingMatrix(SettingMatrixQuery settingMatrixQuery)
+        public CustomerSettingMatrix GetCustomerSettingMatrix(SettingMatrixQuery settingMatrixQuery, byte SettingStatus)
         {
             Check.Argument.IsNotNull(settingMatrixQuery, nameof(settingMatrixQuery));
             Check.Argument.IsNotEmpty(settingMatrixQuery.CustomerName, nameof(settingMatrixQuery.CustomerName));
@@ -54,7 +54,7 @@
             Check.Argument.IsNotOutOfRange(settingMatrixQuery.ViewMode, 1, 3, nameof(settingMatrixQuery.ViewMode));
 #pragma warning restore S109 // Magic numbers should not be used
             var customerLine = _customerService.GetCustomerLine(settingMatrixQuery.CustomerName);
-            var settingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery, customerLine);
+            var settingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery, customerLine, SettingStatus);
             settingTypeMatrix.SettingLevel = GetSettingTypeLevel(settingMatrixQuery, GetSettingTypeId(settingMatrixQuery));
 
             if (settingMatrixQuery.ProductId > 0)
@@ -70,14 +70,14 @@
             };
         }
 
-        private SettingTypeMatrix GetCustomerSettingTypeMatrix(SettingMatrixQuery settingMatrixQuery, IEnumerable<Customer> customerLine)
+        private SettingTypeMatrix GetCustomerSettingTypeMatrix(SettingMatrixQuery settingMatrixQuery, IEnumerable<Customer> customerLine, byte SettingStatus)
         {
             switch ((ViewMode)settingMatrixQuery.ViewMode)
             {
                 case ViewMode.PositionTaking:
                     return _pTMatrixService.GetPTMatrix(settingMatrixQuery, GetMasterName(customerLine));
                 case ViewMode.Commission:
-                    return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName);
+                    return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName, SettingStatus);
                 default:
                     throw new InvalidOperationException(Message.InvalidSettingTypeId);
             }

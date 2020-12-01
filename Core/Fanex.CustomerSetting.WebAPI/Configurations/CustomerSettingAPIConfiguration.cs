@@ -27,12 +27,5 @@
             get { return this["InstanceName"] as string; }
             set { this["InstanceName"] = value; }
         }
-
-        [ConfigurationProperty("SettingStatus", IsRequired = false, DefaultValue = (byte)0)]
-        public byte SettingStatus
-        {
-            get { return (byte)this["SettingStatus"]; }
-            set { this["SettingStatus"] = value; }
-        }
     }
 }

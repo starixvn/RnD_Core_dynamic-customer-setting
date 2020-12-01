@@ -36,7 +36,7 @@
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _productService.GetProductSettingTypes(productId, Arg.Any<byte>())));
+                    () => _productService.GetProductSettingTypes(productId, Arg.Any<byte>(), Arg.Any<byte>())));
         }
 
         [Test]
@@ -52,7 +52,7 @@
               .Returns(settingTypes);
 
             //// Act
-            var actualSettingTypes = _productService.GetProductSettingTypes(productId, SystemType.Nap);
+            var actualSettingTypes = _productService.GetProductSettingTypes(productId, SystemType.Nap, 0);
 
             //// Assert
             Assert.AreSame(settingTypes, actualSettingTypes);
@@ -69,7 +69,7 @@
             var productService = new ProductService(_dynamicRepository, cachingServiceStub);
 
             //// Act
-            productService.GetProductSettingTypes(productId, SystemType.Nap);
+            productService.GetProductSettingTypes(productId, SystemType.Nap, 0);
 
             //// Assert
             _dynamicRepository.Received().Fetch<SettingType>(Arg.Is<ProductSettingTypesQueryCriteria>(
@@ -90,7 +90,7 @@
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
-            var actualSettingTypes = productService.GetProductSettingTypes(productId, SystemType.Nap);
+            var actualSettingTypes = productService.GetProductSettingTypes(productId, SystemType.Nap, 0);
 
             //// Assert
             Assert.AreSame(settingTypesFromDatabase, actualSettingTypes);
@@ -113,7 +113,7 @@
                 .Returns(settingTypes);
 
             //// Act
-            var actualSettingType = _productService.GetProductSettingType(productId, settingType, SystemType.Nap);
+            var actualSettingType = _productService.GetProductSettingType(productId, settingType, SystemType.Nap, 0);
 
             //// Assert
             Assert.AreSame(settingTypes.First(), actualSettingType);
@@ -134,7 +134,7 @@
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
-            var actualSettingType = _productService.GetProductSettingType(productId, settingType, SystemType.Nap);
+            var actualSettingType = _productService.GetProductSettingType(productId, settingType, SystemType.Nap, 0);
 
             //// Assert
             Assert.IsNull(actualSettingType);

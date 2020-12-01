@@ -8,6 +8,8 @@
 
         public byte SystemId { get; set; }
 
+        public byte SettingStatus { get; set; }
+
         public override string GetSettingKey()
         {
             return "CustSetting_ProductProfileSelect";

@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Models.Request
 {
-    using System.ComponentModel.DataAnnotations;
     using CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.WebApi.Configurations;
+    using Fanex.CustomerSetting.Configurations;
+    using System.ComponentModel.DataAnnotations;
 
     public class QuerySettingRequest : SettingRequest
     {
@@ -23,7 +23,7 @@
              CustomerId,
              CustomerLevel,
              ProductId,
-             CustomerSettingApiConfiguration.Settings.SettingStatus,
+             AppSettings.SettingStatus,
              UplineLevel);
 
             return query;

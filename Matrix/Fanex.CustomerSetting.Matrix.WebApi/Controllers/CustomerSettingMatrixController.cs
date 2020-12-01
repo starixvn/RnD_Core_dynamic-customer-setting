@@ -8,6 +8,7 @@
     using System.Web.Hosting;
     using System.Web.Http;
     using CustomerSetting.Models.Results;
+    using Fanex.CustomerSetting.Configurations;
     using Models;
     using Services;
     using Services.Impl;
@@ -39,7 +40,7 @@
 
             try
             {
-                var customerSettingMatrix = _customerSettingMatrixService.GetCustomerSettingMatrix(request);
+                var customerSettingMatrix = _customerSettingMatrixService.GetCustomerSettingMatrix(request, AppSettings.SettingStatus);
 
                 return Request.CreateResponse(HttpStatusCode.OK, customerSettingMatrix);
             }

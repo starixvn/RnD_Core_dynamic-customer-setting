@@ -79,7 +79,7 @@
             TaskService.Run(query.ProductId, query);
 
             var customerInfo = GetCustomerInfo(query.CustomerId);
-            var product = GetProductInfo(query.ProductId, SettingContext.System);
+            var product = GetProductInfo(query.ProductId, SettingContext.System, query.SettingStatus);
             var customerSettingTypes = GetCustomerSettingTypes(query, product.SettingTypes);
 
             var setting = new Setting(
@@ -116,9 +116,9 @@
         /// </summary>
         /// <param name="productId">The product identifier.</param>
         /// <returns></returns>
-        protected virtual Product GetProductInfo(byte productId, byte systemId)
+        protected virtual Product GetProductInfo(byte productId, byte systemId, byte settingStatus)
         {
-            var productSettingTypes = ProductService.GetProductSettingTypes(productId, systemId)
+            var productSettingTypes = ProductService.GetProductSettingTypes(productId, systemId, settingStatus)
                 .Where(product => product.DisplayMode != DisplayModes.Hidden);
             var productName = ResourceService.GetProductName(productId, SettingContext.Language);
 

@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Models.Request
 {
-    using System.ComponentModel.DataAnnotations;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.WebApi.Configurations;
+    using Fanex.CustomerSetting.Configurations;
+    using System.ComponentModel.DataAnnotations;
 
     public class RedirectRequest : QuerySettingRequest
     {
@@ -30,7 +30,7 @@
                 SettingTypeId,
                 ActionId,
                 (ActionType)ActionType,
-                CustomerSettingApiConfiguration.Settings.SettingStatus,
+                AppSettings.SettingStatus,
                 JsonParameters);
         }
     }

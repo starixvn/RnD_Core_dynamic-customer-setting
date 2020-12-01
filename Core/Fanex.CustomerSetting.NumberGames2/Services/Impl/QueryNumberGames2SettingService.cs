@@ -29,7 +29,7 @@
             const short betSettingSettingTypeId = 9;
 
             var customerInfo = GetCustomerInfo(query.CustomerId);
-            var product = GetProductInfo(query.ProductId, SettingContext.System);
+            var product = GetProductInfo(query.ProductId, SettingContext.System, query.SettingStatus);
             var customerSettingTypes = GetCustomerSettingTypes(query, product.SettingTypes);
 
             var setting = new Setting(

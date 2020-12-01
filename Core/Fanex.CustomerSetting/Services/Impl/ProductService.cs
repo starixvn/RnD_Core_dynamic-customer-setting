@@ -23,7 +23,7 @@
             _cachingService = cachingService ?? new CachingService();
         }
 
-        public IEnumerable<SettingType> GetProductSettingTypes(byte productId, byte systemId)
+        public IEnumerable<SettingType> GetProductSettingTypes(byte productId, byte systemId, byte settingStatus)
         {
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
             Check.Argument.IsNotNegative(systemId, "systemId");
@@ -36,7 +36,8 @@
                            new ProductSettingTypesQueryCriteria
                            {
                                ProductId = productId,
-                               SystemId = systemId
+                               SystemId = systemId,
+                               SettingStatus = settingStatus
                            });
                    },
                    new TimeSpan(CacheDuration, 0, 0));
@@ -44,9 +45,9 @@
             return settingTypes;
         }
 
-        public SettingType GetProductSettingType(byte productId, short settingTypeId, byte systemId)
+        public SettingType GetProductSettingType(byte productId, short settingTypeId, byte systemId, byte settingStatus)
         {
-            var productSettingTypes = GetProductSettingTypes(productId, systemId);
+            var productSettingTypes = GetProductSettingTypes(productId, systemId, settingStatus);
 
             if (productSettingTypes == null)
             {

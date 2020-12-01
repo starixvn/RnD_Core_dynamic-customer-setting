@@ -189,6 +189,7 @@
     <Content Include="..\..\.sonarlint\rome.dcscsharp.ruleset">
       <Link>rome.dcscsharp.ruleset</Link>
     </Content>
+    <Content Include="AppSettings.config" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <Content Include="Web.ConnectionStrings.backupMNL.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>

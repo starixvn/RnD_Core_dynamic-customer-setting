@@ -4,6 +4,6 @@
 
     public interface ICommissionMatrixService
     {
-        CommissionMatrix GetCommissionMatrix(byte productId, string customerName);
+        CommissionMatrix GetCommissionMatrix(byte productId, string customerName, byte settingStatus);
     }
 }

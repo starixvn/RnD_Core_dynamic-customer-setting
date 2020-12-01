@@ -289,6 +289,9 @@
     <Content Include="..\..\.sonarlint\rome.dcscsharp.ruleset">
       <Link>rome.dcscsharp.ruleset</Link>
     </Content>
+    <Content Include="AppSettings.pro.config" />
+    <Content Include="AppSettings.uat.config" />
+    <Content Include="AppSettings.sit.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -25,9 +25,9 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public CommissionMatrix GetCommissionMatrix(byte productId, string customerName)
+        public CommissionMatrix GetCommissionMatrix(byte productId, string customerName, byte settingStatus)
         {
-            var commissionItemMaxtrixDtos = GetCommissionItemMaxtrixDtos(productId, customerName);
+            var commissionItemMaxtrixDtos = GetCommissionItemMaxtrixDtos(productId, customerName, settingStatus);
             var commissionItemMatrices = GetCommissionItemMatricesFromDto(commissionItemMaxtrixDtos);
 
             return new CommissionMatrix
@@ -57,13 +57,15 @@
 
         private IEnumerable<CommissionItemMatrixDto> GetCommissionItemMaxtrixDtos(
             byte productId,
-            string customerName)
+            string customerName,
+            byte settingStatus)
         {
             var commissionItemMaxtrixDtos = _dynamicRepository.Fetch<CommissionItemMatrixDto>(
                 new CommissionMatrixQueryCriteria
                 {
                     ProductId = productId,
-                    UserName = customerName
+                    UserName = customerName,
+                    SettingStatus = settingStatus
                 });
 
             if (!commissionItemMaxtrixDtos.Any())

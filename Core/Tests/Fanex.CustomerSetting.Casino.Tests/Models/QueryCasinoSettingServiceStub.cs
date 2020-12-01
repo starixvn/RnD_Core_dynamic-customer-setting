@@ -18,7 +18,7 @@
         protected override CustomerInfo GetCustomerInfo(int customerId)
             => new CustomerInfo();
 
-        protected override Product GetProductInfo(byte productId, byte systemId)
+        protected override Product GetProductInfo(byte productId, byte systemId, byte settingStatus)
             => new Product
             {
                 Id = productId
