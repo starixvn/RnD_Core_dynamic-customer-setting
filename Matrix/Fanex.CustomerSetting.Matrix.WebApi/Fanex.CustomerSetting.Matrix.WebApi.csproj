@@ -190,6 +190,9 @@
       <Link>rome.dcscsharp.ruleset</Link>
     </Content>
     <Content Include="AppSettings.config" />
+    <Content Include="AppSettings.pro.config" />
+    <Content Include="AppSettings.sit.config" />
+    <Content Include="AppSettings.uat.config" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <Content Include="Web.ConnectionStrings.backupMNL.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
