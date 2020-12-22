@@ -29,6 +29,7 @@ module CustomerSetting {
         public email: string;
         public currency: number;
         public isSupportPT3DecimalSites: boolean;
+        public isY7Sites: boolean;
 
         constructor(info: any) {
             if (info) {
@@ -41,6 +42,7 @@ module CustomerSetting {
                 this.email = info.email;
                 this.currency = info.currency;
                 this.isSupportPT3DecimalSites = info.isSupportPT3DecimalSites;
+                this.isY7Sites = info.isY7Sites;
             }
         }
     }
