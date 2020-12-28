@@ -8,7 +8,7 @@
     {
         public static IEnumerable<string> SupportPT3DecimalSites => (ConfigurationManager.AppSettings["SupportPT3DecimalSites"] ?? "789y").Split(',').Select(site => site.Trim());
 
-        public static IEnumerable<string> Y7Sites => ConfigurationManager.AppSettings["Y7Sites"].Split(',').Select(site => site.Trim());
+        public static IEnumerable<string> Y7Sites => (ConfigurationManager.AppSettings["Y7Sites"] ?? string.Empty).Split(',').Select(site => site.Trim());
 
         public static byte SettingStatus => ConfigurationManager.AppSettings["SettingStatus"] == null ? (byte)0 : byte.Parse(ConfigurationManager.AppSettings["SettingStatus"]);
     }
