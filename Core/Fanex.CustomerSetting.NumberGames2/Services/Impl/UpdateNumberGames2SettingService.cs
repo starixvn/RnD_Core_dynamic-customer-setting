@@ -29,6 +29,12 @@
         private readonly IThirdPartyServices _apiService;
         private readonly IDynamicRepository _dynamicRepository;
 
+        public UpdateNumberGames2SettingService(ISettingContext settingContext)
+            : this(settingContext, null, null, null, null, null, null, null)
+        {
+        }
+
+#pragma warning disable S3427 // Method overloads with default parameter values should not overlap 
         public UpdateNumberGames2SettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
@@ -39,6 +45,7 @@
             IThirdPartyServices apiService = null,
             IDynamicRepository dynamicRepository = null)
             : base(settingContext, validationService, pluggableTaskService, logger, settingTypeServiceFactory)
+#pragma warning restore S3427 // Method overloads with default parameter values should not overlap 
         {
             _customerSyncStatusService = customerSyncStatusService ?? new CustomerSyncStatusService();
             _apiService = apiService ?? new ApiServices.Services();
