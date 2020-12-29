@@ -1,20 +1,20 @@
 ﻿namespace Fanex.CustomerSetting.SettingType7.DataAccesses
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
-    using Data;
     using Dtos;
+    using Fanex.CustomerSetting.DataAccesses;
+    using System.Collections;
+    using System.Collections.Generic;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
         public IEnumerable<StakeLevelDto> GetCustomerStakeLevelRawData(CustomerSettingQuery query)
         {
-            using (var objectDb = new ObjectDb("CustSetting_StakeLevelSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_StakeLevelSelect"))
             {
                 var parameterValues = new Hashtable
                 {

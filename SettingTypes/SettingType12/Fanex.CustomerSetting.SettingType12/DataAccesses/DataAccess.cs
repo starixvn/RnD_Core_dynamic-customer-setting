@@ -1,7 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType12.DataAccesses
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using Constants;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
@@ -9,14 +7,17 @@
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using Data;
+    using Fanex.CustomerSetting.DataAccesses;
     using Models;
     using Models.Requests;
+    using System.Collections;
+    using System.Collections.Generic;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
         public IEnumerable<LossLimitItem> GetCustomerLossLimit(CustomerSettingQuery query)
         {
-            using (var objectDb = new ObjectDb("CustSetting_LossLimitSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_LossLimitSelect"))
             {
                 var parameterValues = new Hashtable
                 {
@@ -55,7 +56,7 @@
 
         public CurrentLossAmountItem GetCustomerCurrentLossAmount(CurrentLossAmountQuery query)
         {
-            using (var objectDb = new ObjectDb("CustSetting_LossPercentSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_LossPercentSelect"))
             {
                 var parameterValues = new Hashtable
                 {

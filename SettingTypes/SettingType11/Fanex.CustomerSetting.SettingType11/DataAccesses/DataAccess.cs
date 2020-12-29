@@ -1,20 +1,20 @@
 ﻿namespace Fanex.CustomerSetting.SettingType11.DataAccesses
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
-    using Data;
     using Dtos;
+    using Fanex.CustomerSetting.DataAccesses;
+    using System.Collections;
+    using System.Collections.Generic;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
         public IEnumerable<ProductStatusDto> GetCustomerProductStatus(CustomerSettingQuery query)
         {
-            using (var objectDb = new ObjectDb("Acc_CustSetting_DisableGameStatusSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("Acc_CustSetting_DisableGameStatusSelect"))
             {
                 return objectDb.Query<ProductStatusDto>(new
                 {

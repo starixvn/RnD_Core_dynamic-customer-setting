@@ -1,7 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType3.DataAccesses
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
@@ -9,6 +7,9 @@
     using CustomerSetting.Models.Results;
     using Data;
     using Dtos;
+    using Fanex.CustomerSetting.DataAccesses;
+    using System.Collections;
+    using System.Collections.Generic;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
@@ -24,7 +25,7 @@
         {
             var settingKey = QueryCommissionSpKeys[query.CustomerLevel.Value];
 
-            using (ObjectDb objectDb = new ObjectDb(settingKey))
+            using (var objectDb = ObjectDbFactory.ObjectDb(settingKey))
             {
                 var parameters = new Hashtable
                 {

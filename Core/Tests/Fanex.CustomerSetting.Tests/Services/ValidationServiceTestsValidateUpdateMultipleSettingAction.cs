@@ -23,6 +23,7 @@
         private IDynamicRepository _dynamicRepository;
         private IProductService _productService;
         private ILogger _logger;
+        private byte _settingStatus;
 
         [SetUp]
         public void Setup()
@@ -32,13 +33,15 @@
             _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
             _logger = Substitute.For<ILogger>();
+            _settingStatus = 0;
 
             _validationService = Substitute.ForPartsOf<ValidationService>(
                 _settingContext,
                 _productService,
                 _validationDataAccess,
                 _dynamicRepository,
-                _logger);
+                _logger,
+                _settingStatus);
         }
 
         private void AssumeValidatingPermissionMultipleExecutedOnDatabaseIsSuccessful()

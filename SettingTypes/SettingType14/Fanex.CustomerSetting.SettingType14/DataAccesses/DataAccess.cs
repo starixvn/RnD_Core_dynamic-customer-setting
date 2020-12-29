@@ -1,19 +1,19 @@
 ﻿namespace Fanex.CustomerSetting.SettingType14.DataAccesses
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
-    using Data;
     using Dtos;
+    using Fanex.CustomerSetting.DataAccesses;
+    using System.Collections;
+    using System.Collections.Generic;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
         public IEnumerable<TicketCommissionDto> GetCustomerTicketCommissionRawData(CustomerSettingQuery query)
         {
-            using (var objectDb = new ObjectDb("Acc_CustSetting_TicketCommissionSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("Acc_CustSetting_TicketCommissionSelect"))
             {
                 var parameters = new Hashtable
                 {

@@ -83,6 +83,7 @@
       <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -93,6 +94,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CasinoSettingTest.cs" />
     <Compile Include="Models\QueryCasinoSettingServiceStub.cs" />
+    <Compile Include="Services\Impl\CustomerProductSyncedStatusServiceTests.cs" />
     <Compile Include="StubHelper.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
     <Compile Include="Models\SettingItemStub.cs" />

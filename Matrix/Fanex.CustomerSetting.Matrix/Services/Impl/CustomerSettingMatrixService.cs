@@ -1,17 +1,17 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Services.Impl
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using Common.Helper;
     using Criteria;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Data.Repository;
-    using Fanex.Data;
+    using Fanex.CustomerSetting.DataAccesses;
     using Models;
     using Models.Enumerations;
     using Resources;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     [SuppressMessage(
         "Microsoft.StyleCop.CSharp.NamingRules",
@@ -123,7 +123,7 @@
                 SportTypeId = settingMatrixQuery.SportTypeId == 0 ? (short?)null : settingMatrixQuery.SportTypeId,
                 Mode = settingMatrixQuery.ViewMode
             };
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.ExecuteNonQuery(criteria.GetSpParams());
                 var output = objDb.GetOuputParams();

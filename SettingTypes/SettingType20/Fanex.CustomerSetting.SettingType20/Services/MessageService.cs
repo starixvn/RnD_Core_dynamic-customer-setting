@@ -15,14 +15,13 @@
 
         public override MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
-            switch (msgType)
+            if (msgType == MessageTypes.BetLimitViolation)
             {
-                case MessageTypes.BetLimitViolation:
-                    return TranslateDefaultSettingTypeViolationMessage(Message.ResourceManager, rawMessage, settingLevel, language);
-
-                default:
-                    return base.TranslateMessage(msgType, rawMessage, settingLevel, language);
+                return TranslateDefaultSettingTypeViolationMessage(Message.ResourceManager, rawMessage, settingLevel, language);
             }
+
+            return base.TranslateMessage(msgType, rawMessage, settingLevel, language);
+
         }
     }
 }

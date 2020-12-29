@@ -1,20 +1,21 @@
 ﻿namespace Fanex.CustomerSetting.SettingType8.DataAccesses
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Results;
     using Data;
     using Dtos;
+    using Fanex.CustomerSetting.DataAccesses;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
         public IEnumerable<StakeLevelGroupDto> GetCustomerStakeLevelGroups(int customerId, byte productId, byte settingStatus)
         {
-            using (var objectDb = new ObjectDb("CustSetting_StakeLevelGroupSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_StakeLevelGroupSelect"))
             {
                 var parameterValues = new Hashtable
                 {
@@ -35,7 +36,7 @@
             bool showAll = false)
 #pragma warning restore S1006 // Method overrides should not change parameter defaults
         {
-            using (var objectDb = new ObjectDb("CustSetting_StakeLevelGroupDetailSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_StakeLevelGroupDetailSelect"))
             {
                 var parameterValues = new Hashtable
                 {
