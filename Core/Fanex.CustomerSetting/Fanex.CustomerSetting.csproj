@@ -23,8 +23,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Fanex.CustomerSetting.Debug.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>..\..\.sonarlint\rome.dcscsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -109,6 +111,7 @@
     <Compile Include="Configurations\AppSettings.cs" />
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
     <Compile Include="Criteria\UnderMaintainanceQueryCriteria.cs" />
+    <Compile Include="DataAccesses\ObjectDbFactory.cs" />
     <Compile Include="Models\UnderMaintainanceInfo.cs" />
     <Compile Include="Services\Impl\SettingServiceFactory.cs" />
     <Compile Include="Services\Impl\UMService.cs" />
@@ -207,9 +210,16 @@
     <Compile Include="Tasks\SiteProductTasks.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\.sonarlint\rome.dcscsharp.ruleset">
+      <Link>rome.dcscsharp.ruleset</Link>
+    </None>
+    <None Include="Fanex.CustomerSetting.Debug.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Include="..\..\.sonarlint\rome.dcs\CSharp\SonarLint.xml">
+      <Link>SonarLint.xml</Link>
+    </AdditionalFiles>
     <Content Include="Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

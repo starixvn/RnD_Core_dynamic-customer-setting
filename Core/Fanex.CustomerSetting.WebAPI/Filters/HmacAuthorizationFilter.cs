@@ -17,7 +17,7 @@
     /// http://bitoftech.net/2014/12/15/secure-asp-net-web-api-using-api-key-authentication-hmac-authentication/
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public sealed class HmacAuthorizationFilter : AuthorizationFilterAttribute
+    public sealed class HmacAuthorizationFilterAttribute : AuthorizationFilterAttribute
     {
         private const long RequestMaxAgeInSeconds = 300;
         private const string TokenAuthenticationScheme = "amx";
@@ -75,14 +75,16 @@
         {
             var credArray = rawAuthzHeader.Split(':');
 
+#pragma warning disable S109 // Magic numbers should not be used
             if (credArray.Length == 4)
+#pragma warning restore S109 // Magic numbers should not be used
             {
                 return credArray;
             }
-            else
-            {
-                return null;
-            }
+
+#pragma warning disable S1168 // Empty arrays and collections should be returned instead of null
+            return null;
+#pragma warning restore S1168 // Empty arrays and collections should be returned instead of null
         }
 
         private bool IsValidRequest(HttpRequestMessage req, string siteId, string incomingBase64Signature, string nonce, string requestTimeStamp)

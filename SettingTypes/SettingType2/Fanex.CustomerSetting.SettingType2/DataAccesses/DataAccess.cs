@@ -1,7 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.DataAccesses
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using Constants;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
@@ -10,6 +8,9 @@
     using CustomerSetting.Models.Results;
     using Data;
     using Dtos;
+    using Fanex.CustomerSetting.DataAccesses;
+    using System.Collections;
+    using System.Collections.Generic;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
@@ -25,7 +26,7 @@
         {
             var settingKey = QueryBetLimitSpKeys[query.CustomerLevel.Value];
 
-            using (ObjectDb objectDb = new ObjectDb(settingKey))
+            using (var objectDb = ObjectDbFactory.ObjectDb(settingKey))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
                 return objectDb.Query<BetLimitItemDto>(parameterValues);

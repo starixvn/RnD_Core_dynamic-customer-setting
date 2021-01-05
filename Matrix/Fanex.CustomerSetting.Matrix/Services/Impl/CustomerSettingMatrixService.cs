@@ -1,17 +1,17 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Services.Impl
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using Common.Helper;
     using Criteria;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Data.Repository;
-    using Fanex.Data;
+    using Fanex.CustomerSetting.DataAccesses;
     using Models;
     using Models.Enumerations;
     using Resources;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     [SuppressMessage(
         "Microsoft.StyleCop.CSharp.NamingRules",
@@ -46,13 +46,15 @@
             _commissionMatrixService = commissionMatrixService ?? new CommissionMatrixService(_resourceService, _dynamicRepository);
         }
 
-        public CustomerSettingMatrix GetCustomerSettingMatrix(SettingMatrixQuery settingMatrixQuery)
+        public CustomerSettingMatrix GetCustomerSettingMatrix(SettingMatrixQuery settingMatrixQuery, byte SettingStatus)
         {
             Check.Argument.IsNotNull(settingMatrixQuery, nameof(settingMatrixQuery));
             Check.Argument.IsNotEmpty(settingMatrixQuery.CustomerName, nameof(settingMatrixQuery.CustomerName));
+#pragma warning disable S109 // Magic numbers should not be used
             Check.Argument.IsNotOutOfRange(settingMatrixQuery.ViewMode, 1, 3, nameof(settingMatrixQuery.ViewMode));
+#pragma warning restore S109 // Magic numbers should not be used
             var customerLine = _customerService.GetCustomerLine(settingMatrixQuery.CustomerName);
-            var settingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery, customerLine);
+            var settingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery, customerLine, SettingStatus);
             settingTypeMatrix.SettingLevel = GetSettingTypeLevel(settingMatrixQuery, GetSettingTypeId(settingMatrixQuery));
 
             if (settingMatrixQuery.ProductId > 0)
@@ -68,14 +70,14 @@
             };
         }
 
-        private SettingTypeMatrix GetCustomerSettingTypeMatrix(SettingMatrixQuery settingMatrixQuery, IEnumerable<Customer> customerLine)
+        private SettingTypeMatrix GetCustomerSettingTypeMatrix(SettingMatrixQuery settingMatrixQuery, IEnumerable<Customer> customerLine, byte SettingStatus)
         {
             switch ((ViewMode)settingMatrixQuery.ViewMode)
             {
                 case ViewMode.PositionTaking:
                     return _pTMatrixService.GetPTMatrix(settingMatrixQuery, GetMasterName(customerLine));
                 case ViewMode.Commission:
-                    return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName);
+                    return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName, SettingStatus);
                 default:
                     throw new InvalidOperationException(Message.InvalidSettingTypeId);
             }
@@ -115,13 +117,13 @@
 
         private short GetSettingTypeId(SettingMatrixQuery settingMatrixQuery)
         {
-            var criteria = new GetSettingTypeIdCriteria()
+            var criteria = new GetSettingTypeIdCriteria
             {
                 ProductId = settingMatrixQuery.ProductId == 0 ? (byte?)null : settingMatrixQuery.ProductId,
                 SportTypeId = settingMatrixQuery.SportTypeId == 0 ? (short?)null : settingMatrixQuery.SportTypeId,
                 Mode = settingMatrixQuery.ViewMode
             };
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.ExecuteNonQuery(criteria.GetSpParams());
                 var output = objDb.GetOuputParams();

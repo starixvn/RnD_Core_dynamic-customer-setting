@@ -1,26 +1,28 @@
 ﻿namespace Fanex.CustomerSetting.SettingType6.DataAccesses
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using Data;
+    using Fanex.CustomerSetting.DataAccesses;
     using Models;
     using Models.Requests;
+    using System.Collections;
+    using System.Collections.Generic;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
         public IEnumerable<WinLossLimitItem> GetCustomerWinLossLimit(CustomerSettingQuery query)
         {
-            using (var objectDb = new ObjectDb("CustSetting_WinLossLimitSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_WinLossLimitSelect"))
             {
                 var parameterValues = new Hashtable
                 {
                     { "custid", query.CustomerId },
-                    { "productid", query.ProductId }
+                    { "productid", query.ProductId },
+                    { "settingstatus", query.SettingStatus }
                 };
 
                 return objectDb.Query<WinLossLimitItem>(parameterValues);
@@ -51,7 +53,7 @@
 
         public CurrentWinLossAmountItem GetCustomerCurrentWinLossAmount(CurrentWinLossAmountQuery query)
         {
-            using (var objectDb = new ObjectDb("CustSetting_WinLossPercentSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_WinLossPercentSelect"))
             {
                 var parameterValues = new Hashtable
                 {

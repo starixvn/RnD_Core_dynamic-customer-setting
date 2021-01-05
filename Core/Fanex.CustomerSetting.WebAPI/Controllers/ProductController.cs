@@ -8,7 +8,7 @@
 
     public class ProductController : ApiController
     {
-        private IProductService _productService;
+        private readonly IProductService _productService;
 
         public ProductController()
             : this(null)

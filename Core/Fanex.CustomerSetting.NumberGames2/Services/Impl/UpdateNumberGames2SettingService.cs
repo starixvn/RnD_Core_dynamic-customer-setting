@@ -34,6 +34,7 @@
         {
         }
 
+#pragma warning disable S3427 // Method overloads with default parameter values should not overlap 
         public UpdateNumberGames2SettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
@@ -44,6 +45,7 @@
             IThirdPartyServices apiService = null,
             IDynamicRepository dynamicRepository = null)
             : base(settingContext, validationService, pluggableTaskService, logger, settingTypeServiceFactory)
+#pragma warning restore S3427 // Method overloads with default parameter values should not overlap 
         {
             _customerSyncStatusService = customerSyncStatusService ?? new CustomerSyncStatusService();
             _apiService = apiService ?? new ApiServices.Services();
@@ -134,7 +136,9 @@
                     settingTypeResults.Add(updateProductStatusResult);
                 }
             }
+#pragma warning disable S126 // "if ... else if" constructs should end with "else" clauses
             else if (productStatusSettingType != null)
+#pragma warning restore S126 // "if ... else if" constructs should end with "else" clauses
             {
                 var updateProductStatusResult = new SettingResult(
                     ErrorCode.UnableToUpdateProductStatus,

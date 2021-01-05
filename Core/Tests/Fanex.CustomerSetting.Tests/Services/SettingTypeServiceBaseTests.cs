@@ -105,6 +105,7 @@
             Assert.AreEqual(successMessage, actualSettingResult.Message);
         }
 
+        [Test]
         public void TranslateUpdateResultMessage_SettingResultIsFailed_AlwaysCallTranslateMessage()
         {
             //// Arrange
@@ -142,6 +143,19 @@
 
             //// Assert
             Assert.AreEqual(messageContent.MainMessage, actualSettingResult.Message);
+        }
+
+        [Test]
+        public void UpdateMultipleCustomersSettingType_CustomerIdsIsNull_ThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => UpdateMultipleCustomerSettingType(
+                Arg.Any<ISettingContext>(),
+                null,
+                Arg.Any<Level>(),
+                Arg.Any<Level>(),
+                Arg.Any<byte>(),
+                Arg.Any<SettingType>()));
+
         }
 
         [Test]

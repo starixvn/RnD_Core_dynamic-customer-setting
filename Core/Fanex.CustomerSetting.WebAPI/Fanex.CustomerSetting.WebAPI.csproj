@@ -33,7 +33,7 @@
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Fanex.CustomerSetting.WebAPI.Debug.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -43,6 +43,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\.sonarlint\rome.dcscsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -162,6 +163,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Include="..\..\.sonarlint\rome.dcs\CSharp\SonarLint.xml">
+      <Link>SonarLint.xml</Link>
+    </AdditionalFiles>
     <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.backupMNL.config">
       <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
     </Content>
@@ -281,6 +285,13 @@
     <Content Include="App_Data\PluggableTasks\settingtype-2.json" />
     <Content Include="App_Data\PluggableTasks\product-41.json" />
     <Content Include="AppSettings.config" />
+    <Content Include="Fanex.CustomerSetting.WebAPI.Debug.ruleset" />
+    <Content Include="..\..\.sonarlint\rome.dcscsharp.ruleset">
+      <Link>rome.dcscsharp.ruleset</Link>
+    </Content>
+    <Content Include="AppSettings.pro.config" />
+    <Content Include="AppSettings.uat.config" />
+    <Content Include="AppSettings.sit.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

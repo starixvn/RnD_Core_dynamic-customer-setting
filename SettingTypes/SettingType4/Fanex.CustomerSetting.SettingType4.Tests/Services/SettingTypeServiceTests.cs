@@ -58,7 +58,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
+            var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, 0, uplineLevel);
 
             //// Act
             _settingType4Service.GetCustomerSettingType(_settingContext, query);
@@ -73,7 +73,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
+            var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, 0, uplineLevel);
             var productStatusItemsRawData = new List<ProductStatusItemDto>
             {
                 new ProductStatusItemDto

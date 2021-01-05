@@ -8,7 +8,7 @@
 
     internal interface IDataAccess
     {
-        IEnumerable<StakeLevelGroupDto> GetCustomerStakeLevelGroups(int customerId, byte productId);
+        IEnumerable<StakeLevelGroupDto> GetCustomerStakeLevelGroups(int customerId, byte productId, byte settingStatus);
 
         IEnumerable<StakeLevelDetailDto> GetCustomerStakeLevelGroupsDetails(
             int customerId,

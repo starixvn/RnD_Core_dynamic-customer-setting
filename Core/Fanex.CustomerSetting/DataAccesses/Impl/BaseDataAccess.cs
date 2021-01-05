@@ -11,7 +11,7 @@
     {
         protected IResult ExecuteNonQuery(string settingKey, Hashtable storedProcedureParam)
         {
-            using (var objectDb = new ObjectDb(settingKey))
+            using (var objectDb = ObjectDbFactory.ObjectDb(settingKey))
             {
                 objectDb.ExecuteNonQuery(storedProcedureParam);
 
@@ -44,14 +44,17 @@
         {
             if (querySettingParam == null)
             {
+#pragma warning disable S2302 // "nameof" should be used
                 throw new ArgumentNullException(nameof(querySettingParam), "querySettingParam cannot be null.");
+#pragma warning restore S2302 // "nameof" should be used
             }
 
             var param = new Hashtable
             {
                 { "custid", querySettingParam.CustomerId },
                 { "productid", querySettingParam.ProductId },
-                { "settingtype", settingType }
+                { "settingtype", settingType },
+                { "settingstatus", querySettingParam.SettingStatus }
             };
 
             if (querySettingParam.CustomerLevel == Level.Member)

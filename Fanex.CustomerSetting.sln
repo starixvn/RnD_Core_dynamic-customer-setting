@@ -48,8 +48,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Setti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix", "Matrix\Fanex.CustomerSetting.Matrix\Fanex.CustomerSetting.Matrix.csproj", "{3E059FA6-3822-475F-9694-F3DBB15ACF98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.DemoSite", "Fanex.CustomerSetting.DemoSite\Fanex.CustomerSetting.DemoSite.csproj", "{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix.Tests", "Matrix\Fanex.CustomerSetting.Matrix.Tests\Fanex.CustomerSetting.Matrix.Tests.csproj", "{183E8744-85E2-4F7C-902F-1DFEC955323E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.WebAPI", "Core\Fanex.CustomerSetting.WebAPI\Fanex.CustomerSetting.WebAPI.csproj", "{9B52485B-6CAC-4B70-994B-5D8CF74B3380}"
@@ -185,6 +183,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType20", "SettingTypes\SettingType20\Fanex.CustomerSetting.SettingType20\Fanex.CustomerSetting.SettingType20.csproj", "{6F28AE6D-3D2F-4276-8687-9322EBC0FB51}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType20.Tests", "Fanex.CustomerSetting.SettingType20.Tests\Fanex.CustomerSetting.SettingType20.Tests.csproj", "{C64F3698-306D-490C-976B-F06E64A4C335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.DemoSite", "Fanex.CustomerSetting.DemoSite\Fanex.CustomerSetting.DemoSite.csproj", "{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType18.Tests", "SettingTypes\SettingType18\Fanex.CustomerSetting.SettingType18.Tests\Fanex.CustomerSetting.SettingType18.Tests.csproj", "{DC9F685A-F18D-42B5-9604-F2A1741BCE4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Client40.Tests", "Core\Tests\Fanex.CustomerSetting.Client40.Tests\Fanex.CustomerSetting.Client40.Tests.csproj", "{34A6F3B2-8ABE-4EFB-8188-4EB5230C7F48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -432,10 +436,22 @@ Global
 		{6F28AE6D-3D2F-4276-8687-9322EBC0FB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F28AE6D-3D2F-4276-8687-9322EBC0FB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F28AE6D-3D2F-4276-8687-9322EBC0FB51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C64F3698-306D-490C-976B-F06E64A4C335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C64F3698-306D-490C-976B-F06E64A4C335}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C64F3698-306D-490C-976B-F06E64A4C335}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C64F3698-306D-490C-976B-F06E64A4C335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC9F685A-F18D-42B5-9604-F2A1741BCE4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC9F685A-F18D-42B5-9604-F2A1741BCE4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC9F685A-F18D-42B5-9604-F2A1741BCE4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC9F685A-F18D-42B5-9604-F2A1741BCE4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34A6F3B2-8ABE-4EFB-8188-4EB5230C7F48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34A6F3B2-8ABE-4EFB-8188-4EB5230C7F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34A6F3B2-8ABE-4EFB-8188-4EB5230C7F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34A6F3B2-8ABE-4EFB-8188-4EB5230C7F48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -523,7 +539,9 @@ Global
 		{46474BB2-E60C-48D8-9214-AF484207A29F} = {2E12FB12-02AF-4F1B-A629-1A9D1AD24059}
 		{2E12FB12-02AF-4F1B-A629-1A9D1AD24059} = {B306779E-7128-423D-AC57-5963D0629397}
 		{0C875A3A-8C43-4AD2-A528-55E1082D4B4F} = {B306779E-7128-423D-AC57-5963D0629397}
+		{DC9F685A-F18D-42B5-9604-F2A1741BCE4F} = {936E6679-A492-4706-BFA6-9FE456D5C3D8}
 		{6F28AE6D-3D2F-4276-8687-9322EBC0FB51} = {0C875A3A-8C43-4AD2-A528-55E1082D4B4F}
+		{34A6F3B2-8ABE-4EFB-8188-4EB5230C7F48} = {09967616-74BB-44FA-918B-819B7AA63F26}
 		{C64F3698-306D-490C-976B-F06E64A4C335} = {0C875A3A-8C43-4AD2-A528-55E1082D4B4F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

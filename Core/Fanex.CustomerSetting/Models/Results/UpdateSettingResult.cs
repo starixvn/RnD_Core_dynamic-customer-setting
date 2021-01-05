@@ -21,24 +21,15 @@
 
                 foreach (IResult result in results)
                 {
-                    var updateSettingResult = result as UpdateSettingResult;
 
-                    if (updateSettingResult != null)
+                    if (result is UpdateSettingResult updateSettingResult)
                     {
                         subResults.AddRange(updateSettingResult.SubResults);
                     }
                     else
                     {
-                        var settingResult = result as SettingResult;
 
-                        if (settingResult != null)
-                        {
-                            subResults.Add(settingResult);
-                        }
-                        else
-                        {
-                            subResults.Add(new SettingResult(result));
-                        }
+                        subResults.Add(result is SettingResult settingResult ? settingResult : new SettingResult(result));
                     }
                 }
 
@@ -58,14 +49,7 @@
         {
             var settingResult = result as SettingResult;
 
-            if (settingResult == null)
-            {
-                SubResults.Add(new SettingResult(result));
-            }
-            else
-            {
-                SubResults.Add(settingResult);
-            }
+            SubResults.Add(settingResult ?? new SettingResult(result));
         }
 
         public void RemoveNoChangeByUMSubResults() => RemoveSubResultByCode(ResultValues.SuccessButDoNothingBecauseUM);

@@ -8,6 +8,7 @@
     [TestFixture]
     public class UserTests
     {
+#pragma warning disable S1144 // Unused private types or members should be removed
         private static readonly object[] isMethodAlwaysReturnRightValueCases =
         {
             new object[] { Level.Company, Level.Company, true },
@@ -18,6 +19,7 @@
             new object[] { Level.Master, Level.Agent, false },
             new object[] { Level.Agent, Level.Agent, true }
         };
+#pragma warning restore S1144 // Unused private types or members should be removed
 
         [TestCase(0)]
         [TestCase(-1)]

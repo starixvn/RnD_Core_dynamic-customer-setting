@@ -8,6 +8,7 @@
     using System.Web.Hosting;
     using System.Web.Http;
     using CustomerSetting.Models.Results;
+    using Fanex.CustomerSetting.Configurations;
     using Models;
     using Services;
     using Services.Impl;
@@ -18,7 +19,7 @@
         private const string CustomerSettingMatrixTemplateFilePath = "~/App_Data/Templates/customer-setting-matrix.htm";
         private const byte CachingHours = 4;
 
-        private ICustomerSettingMatrixService _customerSettingMatrixService;
+        private readonly ICustomerSettingMatrixService _customerSettingMatrixService;
 
         public CustomerSettingMatrixController()
             : this(null)
@@ -39,7 +40,7 @@
 
             try
             {
-                var customerSettingMatrix = _customerSettingMatrixService.GetCustomerSettingMatrix(request);
+                var customerSettingMatrix = _customerSettingMatrixService.GetCustomerSettingMatrix(request, AppSettings.SettingStatus);
 
                 return Request.CreateResponse(HttpStatusCode.OK, customerSettingMatrix);
             }

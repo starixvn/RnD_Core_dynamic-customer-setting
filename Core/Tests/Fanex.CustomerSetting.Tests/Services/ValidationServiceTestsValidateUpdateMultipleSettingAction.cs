@@ -7,11 +7,12 @@
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Data.Repository;
-    using DataAccesses;
+    using Fanex.CustomerSetting.DataAccesses;
     using Logging;
     using Models;
     using NSubstitute;
     using NUnit.Framework;
+    using System;
 
     [TestFixture]
     public class ValidationServiceTestsValidateUpdateMultipleSettingAction
@@ -22,6 +23,7 @@
         private IDynamicRepository _dynamicRepository;
         private IProductService _productService;
         private ILogger _logger;
+        private byte _settingStatus;
 
         [SetUp]
         public void Setup()
@@ -31,13 +33,15 @@
             _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
             _logger = Substitute.For<ILogger>();
+            _settingStatus = 0;
 
             _validationService = Substitute.ForPartsOf<ValidationService>(
                 _settingContext,
                 _productService,
                 _validationDataAccess,
                 _dynamicRepository,
-                _logger);
+                _logger,
+                _settingStatus);
         }
 
         private void AssumeValidatingPermissionMultipleExecutedOnDatabaseIsSuccessful()
@@ -99,6 +103,12 @@
 
             //// Assert
             Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
+        }
+
+        [Test]
+        public void ValidateUpdateMultipleSetting_CommandIsNull_ThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => _validationService.ValidateUpdateMultipleSettingAction(null));
         }
     }
 }

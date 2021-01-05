@@ -1,7 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Constants;
     using CustomerSetting.Models.Enumerations;
@@ -10,11 +8,13 @@
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Data.Repository;
-    using DataAccesses;
+    using Fanex.CustomerSetting.DataAccesses;
     using Logging;
     using Models;
     using NSubstitute;
     using NUnit.Framework;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [TestFixture]
     public class ValidationServiceTestsValidateUpdateSettingAction
@@ -25,6 +25,7 @@
         private IDynamicRepository _dynamicRepository;
         private IProductService _productService;
         private ILogger _logger;
+        private byte _settingStatus;
 
         [SetUp]
         public void Setup()
@@ -34,13 +35,15 @@
             _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
             _logger = Substitute.For<ILogger>();
+            _settingStatus = 0;
 
             _validationService = Substitute.ForPartsOf<ValidationService>(
                 _settingContext,
                 _productService,
                 _validationDataAccess,
                 _dynamicRepository,
-                _logger);
+                _logger,
+                _settingStatus);
         }
 
         private void AssumeValidateQuerySettingIsSuccessful()
@@ -82,6 +85,7 @@
             //// Assert
             _productService.Received().GetProductSettingTypes(
                 Arg.Is<byte>(productId => productId == updateParam.Setting.ProductId),
+                Arg.Any<byte>(), 
                 Arg.Any<byte>());
         }
 
@@ -97,7 +101,7 @@
             {
                 InstanceFactory.CreateCustomerSettingType(1)
             };
-            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, SystemType.Nap)
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, SystemType.Nap, 0)
                 .Returns(new List<SettingType>
                 {
                     InstanceFactory.CreateCustomerSettingType(2)
@@ -122,7 +126,7 @@
             {
                 InstanceFactory.CreateCustomerSettingType(1)
             };
-            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, SystemType.Nap)
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, SystemType.Nap, 0)
                 .Returns(new List<SettingType>
                 {
                     InstanceFactory.CreateCustomerSettingType(1)

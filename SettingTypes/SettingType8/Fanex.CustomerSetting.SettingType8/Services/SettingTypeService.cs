@@ -45,7 +45,7 @@
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
             Check.Argument.IsNotNull(query, nameof(query));
 
-            IEnumerable<StakeLevelGroupItem> stakeLevelGroups = QueryAndMapStakeLevelGroups(settingContext.Language, query.CustomerId, query.ProductId);
+            IEnumerable<StakeLevelGroupItem> stakeLevelGroups = QueryAndMapStakeLevelGroups(settingContext.Language, query.CustomerId, query.ProductId, query.SettingStatus);
             var customerStakeLevelGroups = new SettingType
             {
                 Name = Label.BetLimit,
@@ -99,7 +99,7 @@
 
             StakeLevelGroupDetailsQuery query = JsonConvert.DeserializeObject<StakeLevelGroupDetailsQuery>(command.JsonParameters);
             IEnumerable<StakeLevelGroupItem> stakeLevelGroupDetails
-                = QueryAndMapStakeLevelGroups(settingContext.Language, command.CustomerId, command.ProductId, query.SportTypeId, true);
+                = QueryAndMapStakeLevelGroups(settingContext.Language, command.CustomerId, command.ProductId, command.SettingStatus, query.SportTypeId, true);
             var stakeLevelGroup = new SettingType
             {
                 Id = command.SettingTypeId,
@@ -115,12 +115,13 @@
             string language,
             int customerId,
             byte productId,
+            byte settingStatus,
             short? sportTypeId = null,
             bool showAll = false)
         {
             var result = Enumerable.Empty<StakeLevelGroupItem>();
             IEnumerable<StakeLevelGroupDto> stakeLevelGroupsRawData
-                = _groupStakeLevelDataAccess.GetCustomerStakeLevelGroups(customerId, productId);
+                = _groupStakeLevelDataAccess.GetCustomerStakeLevelGroups(customerId, productId, settingStatus);
 
             if (stakeLevelGroupsRawData?.Any() == true)
             {

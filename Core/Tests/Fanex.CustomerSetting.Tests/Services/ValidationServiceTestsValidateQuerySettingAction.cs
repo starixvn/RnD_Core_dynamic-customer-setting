@@ -10,7 +10,7 @@
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Data.Repository;
-    using DataAccesses;
+    using Fanex.CustomerSetting.DataAccesses;
     using Logging;
     using Models;
     using NSubstitute;

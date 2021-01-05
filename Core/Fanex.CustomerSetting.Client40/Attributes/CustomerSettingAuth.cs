@@ -7,7 +7,7 @@
     using Models;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    internal sealed class CustomerSettingAuth : AuthorizeAttribute
+    internal sealed class CustomerSettingAuthAttribute : AuthorizeAttribute
     {
         public bool IsUpdate { get; set; }
 
@@ -24,21 +24,11 @@
 
             var isAuthorized = true;
 
-            if (IsMultipleUpdate)
-            {
-                isAuthorized = CustomerSettingRegistration.CheckMultipleUpdatePermission(permissionContext);
-            }
-            else
-            {
-                if (IsUpdate)
-                {
-                    isAuthorized = CustomerSettingRegistration.CheckUpdatePermission(permissionContext);
-                }
-                else
-                {
-                    isAuthorized = CustomerSettingRegistration.CheckQueryPermission(permissionContext);
-                }
-            }
+#pragma warning disable S103 // Lines should not be too long
+#pragma warning disable S3358 // Ternary operators should not be nested
+            isAuthorized = IsMultipleUpdate ? CustomerSettingRegistration.CheckMultipleUpdatePermission(permissionContext) : IsUpdate ? CustomerSettingRegistration.CheckUpdatePermission(permissionContext) : CustomerSettingRegistration.CheckQueryPermission(permissionContext);
+#pragma warning restore S3358 // Ternary operators should not be nested
+#pragma warning restore S103 // Lines should not be too long
 
             if (!isAuthorized)
             {
@@ -46,12 +36,12 @@
             }
         }
 
-        private void UnAuthorizedAction(AuthorizationContext filterContext)
+        private static void UnAuthorizedAction(AuthorizationContext filterContext)
         {
             HttpResponseBase response = filterContext.HttpContext.Response;
 
             if (filterContext.HttpContext.Request.IsAjaxRequest()
-                || filterContext.HttpContext.Request.HttpMethod.ToUpper() == "POST")
+                || filterContext.HttpContext.Request.HttpMethod.Equals("POST", StringComparison.CurrentCultureIgnoreCase))
             {
                 response.Clear();
                 response.Write("{ \"message\": \"You are not authorized on this function!\" }");

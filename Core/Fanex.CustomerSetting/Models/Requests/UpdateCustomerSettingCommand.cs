@@ -1,8 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Models.Requests
 {
-    using System;
     using Enumerations;
-    using Models;
+    using System;
 
     public class UpdateCustomerSettingCommand
     {
@@ -56,7 +55,9 @@
                         throw new ArgumentOutOfRangeException(nameof(value), "Upline should be null when getting customer setting is not member");
                     }
                 }
+#pragma warning disable S126 // "if ... else if" constructs should end with "else" clauses
                 else if (Setting.CustomerLevel.IsMemberLevel())
+#pragma warning restore S126 // "if ... else if" constructs should end with "else" clauses
                 {
                     throw new ArgumentNullException(nameof(value), "Upline cannot be null when update member setting.");
                 }

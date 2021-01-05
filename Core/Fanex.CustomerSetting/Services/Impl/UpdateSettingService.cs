@@ -36,10 +36,10 @@
 
         public UpdateSettingService(
             ISettingContext settingContext,
-            IValidationService validationService = null,
-            ITaskService pluggableTaskService = null,
-            ILogger logger = null,
-            ISettingTypeServiceFactory settingTypeServiceFactory = null)
+            IValidationService validationService,
+            ITaskService pluggableTaskService,
+            ILogger logger,
+            ISettingTypeServiceFactory settingTypeServiceFactory)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");

@@ -1,25 +1,26 @@
 ﻿namespace Fanex.CustomerSetting.SettingType20.DataAccesses
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
-    using Data;
     using Dtos;
+    using Fanex.CustomerSetting.DataAccesses;
+    using System.Collections;
+    using System.Collections.Generic;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
         public IEnumerable<BetLimitDto> GetCustomerBetLimit(CustomerSettingQuery query)
         {
-            using (var objectDb = new ObjectDb("Acc_CustSetting_GameBetSettingSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("Acc_CustSetting_GameBetSettingSelect"))
             {
                 return objectDb.Query<BetLimitDto>(new
                 {
                     CustId = query.CustomerId,
-                    ProductId = query.ProductId
+                    query.ProductId,
+                    query.SettingStatus
                 });
             }
         }

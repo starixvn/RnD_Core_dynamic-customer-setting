@@ -15,7 +15,9 @@
 
         public override MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
+#pragma warning disable S1301 // "switch" statements should have at least 3 "case" clauses
             switch (msgType)
+#pragma warning restore S1301 // "switch" statements should have at least 3 "case" clauses
             {
                 case MessageTypes.ChargeCommissionViolation:
                     return TranslateDefaultSettingTypeViolationMessage(Message.ResourceManager, rawMessage, settingLevel, language);

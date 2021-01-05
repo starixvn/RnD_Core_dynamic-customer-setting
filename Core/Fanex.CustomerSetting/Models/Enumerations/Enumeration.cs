@@ -7,7 +7,9 @@
     using System.Reflection;
 
     [Serializable]
+#pragma warning disable S1694 // An abstract class should have both abstract and concrete methods
     public abstract class Enumeration : IComparable
+#pragma warning restore S1694 // An abstract class should have both abstract and concrete methods
     {
         private readonly string _displayName;
         private readonly byte _value;
@@ -88,28 +90,7 @@
 
         public static bool operator ==(Enumeration left, Enumeration right)
         {
-            if (ReferenceEquals(left, null))
-            {
-                if (ReferenceEquals(right, null))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                if (ReferenceEquals(right, null))
-                {
-                    return false;
-                }
-                else
-                {
-                    return left.Value == right.Value;
-                }
-            }
+            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : !ReferenceEquals(right, null) && left.Value == right.Value;
         }
 
         public static bool operator !=(Enumeration left, Enumeration right)

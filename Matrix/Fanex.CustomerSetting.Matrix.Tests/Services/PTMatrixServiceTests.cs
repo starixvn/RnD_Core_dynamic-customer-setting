@@ -1,18 +1,18 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Tests.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Criteria;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Services;
     using Data.Repository;
     using Dtos;
+    using Fanex.CustomerSetting.Matrix.Criteria;
+    using Fanex.CustomerSetting.Matrix.Models;
     using Matrix.Services;
     using Matrix.Services.Impl;
-    using Models;
     using NSubstitute;
     using NUnit.Framework;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [TestFixture]
     public class PTMatrixServiceTests

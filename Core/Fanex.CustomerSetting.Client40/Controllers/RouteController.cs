@@ -7,7 +7,7 @@
     using RestSharp;
     using Services;
 
-    [ExceptionHandlingAttribute, ValidateAntiForgery, LogInfoFilter]
+    [ExceptionHandlingAttribute, ValidateAntiForgeryAttribute, LogInfoFilterAttribute]
     public class RouteController : Controller
     {
         private readonly IRouteService _routeService;
@@ -22,7 +22,7 @@
             _routeService = customerSettingService ?? new RouteService();
         }
 
-        [HttpPost, AdditionalRequestAuth]
+        [HttpPost, AdditionalRequestAuthAttribute]
         public ContentResult Redirect(RedirectRequest request)
         {
             SetActorInformation(request);

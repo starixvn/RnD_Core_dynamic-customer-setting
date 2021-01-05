@@ -17,7 +17,7 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new CustomerSettingQuery(customerId, Level.Master, 0, null)));
+                    () => new CustomerSettingQuery(customerId, Level.Master, 0, 0, null)));
         }
 
         [Test]
@@ -26,7 +26,7 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new CustomerSettingQuery(1, Level.Master, 0, null)));
+                    () => new CustomerSettingQuery(1, Level.Master, 0, 0, null)));
         }
 
         [Test, TestCaseSource(nameof(dataSourceSMALevels))]
@@ -35,7 +35,7 @@
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new CustomerSettingQuery(1, customerLevel, 1, customerLevel)));
+                    () => new CustomerSettingQuery(1, customerLevel, 1, 0, customerLevel)));
         }
 
         [Test]
@@ -44,7 +44,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => new CustomerSettingQuery(1, Level.Member, 1, null)));
+                    () => new CustomerSettingQuery(1, Level.Member, 1, 0, null)));
         }
     }
 }

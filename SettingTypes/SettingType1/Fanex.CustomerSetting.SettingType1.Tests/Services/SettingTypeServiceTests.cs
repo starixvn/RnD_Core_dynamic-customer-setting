@@ -9,7 +9,7 @@
     using CustomerSetting.Services;
     using CustomerSetting.Tests;
     using CustomerSetting.Tests.Models;
-    using DataAccesses;
+    using Fanex.CustomerSetting.SettingType1.DataAccesses;
     using Logging;
     using NSubstitute;
     using NUnit.Framework;

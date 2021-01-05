@@ -1,9 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType18.DataAccesses
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using Constants;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
@@ -13,6 +9,10 @@
     using Data;
     using Models;
     using Resources;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using Fanex.CustomerSetting.DataAccesses;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
@@ -38,16 +38,16 @@
             { Level.Member.Value, "CustSetting_MemberPTSelect_SettingType18" }
         };
 
-        private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
-            SmaQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
+        private static readonly Dictionary<byte, Func<IObjectDb, Hashtable, IEnumerable<PTItem>>>
+            SmaQueryPTSettingItemFuncs = new Dictionary<byte, Func<IObjectDb, Hashtable, IEnumerable<PTItem>>>
             {
                 { Level.Super.Value, GetPTSettingItem<SuperPTItem> },
                 { Level.Master.Value,  GetPTSettingItem<MasterPTItem> },
                 { Level.Agent.Value,  GetPTSettingItem<AgentPTItem> }
             };
 
-        private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
-           MemberQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
+        private static readonly Dictionary<byte, Func<IObjectDb, Hashtable, IEnumerable<PTItem>>>
+           MemberQueryPTSettingItemFuncs = new Dictionary<byte, Func<IObjectDb, Hashtable, IEnumerable<PTItem>>>
             {
                 { Level.Super.Value, GetPTSettingItem<SuperPTOnMemberItem> },
                 { Level.Master.Value,  GetPTSettingItem<MasterPTOnMemberItem> },
@@ -61,7 +61,7 @@
             { Level.Agent.Value, "CustSetting_AgentPTOnMemberMultiUpd" }
         };
 
-        private static IEnumerable<T> GetPTSettingItem<T>(ObjectDb objectDb, Hashtable parameters)
+        internal static IEnumerable<T> GetPTSettingItem<T>(IObjectDb objectDb, Hashtable parameters)
         {
             return objectDb.Query<T>(parameters);
         }
@@ -75,7 +75,7 @@
 
             var settingKey = QueryPTSpKeys[query.CustomerLevel.Value];
 
-            using (ObjectDb objectDb = new ObjectDb(settingKey))
+            using (var objectDb = ObjectDbFactory.ObjectDb(settingKey))
             {
                 var parameters = CreateQueryPTSettingSpParam(query);
 
@@ -94,7 +94,7 @@
             return settingType;
         }
 
-        private Hashtable CreateQueryPTSettingSpParam(CustomerSettingQuery query)
+        internal Hashtable CreateQueryPTSettingSpParam(CustomerSettingQuery query)
         {
             var parameters = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
             parameters.Remove("settingtype");
@@ -123,7 +123,7 @@
             return ExecuteNonQuery(settingKey, parameters);
         }
 
-        private Hashtable GetSPParamsForUpdatingPT(ISettingContext settingContext, int customerId, Level customerLevel, string positionTakingXml, string minPtXml)
+        internal Hashtable GetSPParamsForUpdatingPT(ISettingContext settingContext, int customerId, Level customerLevel, string positionTakingXml, string minPtXml)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
@@ -149,7 +149,7 @@
 
         public IEnumerable<int> GetGroupedMemberIds(string memberIds)
         {
-            using (ObjectDb objectDb = new ObjectDb("CustSetting_GroupedPTMemberLstSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_GroupedPTMemberLstSelect"))
             {
                 return objectDb.Query<int>(new
                 {

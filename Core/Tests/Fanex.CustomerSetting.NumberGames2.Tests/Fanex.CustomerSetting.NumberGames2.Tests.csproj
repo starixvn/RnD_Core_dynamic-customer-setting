@@ -14,6 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <SonarQubeExclude>True</SonarQubeExclude>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -110,11 +111,15 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Criteria\DirectUplineCriteriaTests.cs" />
+    <Compile Include="DataAccesses\CustomerSyncStatusDataAccessTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\QueryNumberGames2SettingServiceStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Impl\CustomerSyncStatusServiceTests.cs" />
     <Compile Include="Services\Impl\QueryNumberGames2SettingServiceTests.cs" />
     <Compile Include="Services\Impl\UpdateNumberGames2SettingServiceTests.cs" />
     <Compile Include="StubHelpers.cs" />

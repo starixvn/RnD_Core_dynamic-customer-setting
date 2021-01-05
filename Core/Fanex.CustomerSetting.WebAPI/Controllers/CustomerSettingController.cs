@@ -18,7 +18,7 @@
     using Fanex.CustomerSetting.Models;
     using System.Collections.Generic;
 
-    [SetLanguageFilter]
+    [SetLanguageFilterAttribute]
     public class CustomerSettingController : ApiController
     {
         private const string CustomerSettingTemplateCachingKey = "CustomerSettingTemplate";
@@ -121,15 +121,13 @@
         {
             ObjectCache cache = MemoryCache.Default;
             string template = string.Empty;
-            string customerSettingTemplatePath = CustomerSettingTemplateFilePath;
-            string customerSettingTemplateCacheKey = CustomerSettingTemplateCachingKey;
 
-            template = cache.Get(customerSettingTemplateCacheKey) as string;
+            template = cache.Get(CustomerSettingTemplateCachingKey) as string;
 
             if (string.IsNullOrEmpty(template))
             {
-                template = File.ReadAllText(HostingEnvironment.MapPath(customerSettingTemplatePath));
-                cache.Set(customerSettingTemplateCacheKey, template, DateTime.Now.AddHours(CachingHours));
+                template = File.ReadAllText(HostingEnvironment.MapPath(CustomerSettingTemplateFilePath));
+                cache.Set(CustomerSettingTemplateCachingKey, template, DateTime.Now.AddHours(CachingHours));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, template);
@@ -140,8 +138,16 @@
         private IResult AddUMMessage(IResult result, UpdateSettingRequest request)
         {
             var updateSettingResult = (UpdateSettingResult)result;
-            var umResult = this.umService.GetUMResult(request.Setting.CustomerId, request.Setting.ProductId, IsPartialUpdate(request.Setting.SettingTypes) ? request.Setting.SettingTypes.FirstOrDefault()?.Id : null, request.Language);
-            if (umResult != null) updateSettingResult.AddSubResult(umResult);
+            var umResult = this.umService.GetUMResult(
+                request.Setting.CustomerId,
+                request.Setting.ProductId,
+                IsPartialUpdate(request.Setting.SettingTypes) ? request.Setting.SettingTypes.FirstOrDefault()?.Id : null,
+                request.Language);
+            if (umResult != null)
+            {
+                updateSettingResult.AddSubResult(umResult);
+            }
+
             updateSettingResult.RemoveNoChangeByUMSubResults();
             return updateSettingResult;
         }

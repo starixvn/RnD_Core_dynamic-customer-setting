@@ -1,19 +1,22 @@
 ﻿namespace Fanex.CustomerSetting.NumberGames2.DataAccesses
 {
     using Data;
+    using Fanex.CustomerSetting.DataAccesses;
     using Models;
 
     public class CustomerSyncStatusDataAccess : ICustomerSyncStatusDataAccess
     {
         public CustomerSyncStatus GetCustomserSyncStatus(int customerId, byte productId)
         {
+#pragma warning disable S1854 // Unused assignments should be removed
             var customerSyncStatus = new CustomerSyncStatus
+#pragma warning restore S1854 // Unused assignments should be removed
             {
                 IsSynced = false,
                 IsSyncedUpline = false
             };
 
-            using (var objectDb = new ObjectDb("Acc_CustSetting_SyncGameStatusSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("Acc_CustSetting_SyncGameStatusSelect"))
             {
                 customerSyncStatus = objectDb.QueryEntity<CustomerSyncStatus>(new
                 {
@@ -27,7 +30,7 @@
 
         public void UpdateCustomerSynceStatus(int customerId, byte productId, int userId, int subAccountId, string ip)
         {
-            using (var objectDb = new ObjectDb("Acc_CustSetting_SyncGameStatusUpd"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("Acc_CustSetting_SyncGameStatusUpd"))
             {
                 objectDb.ExecuteNonQuery(new
                 {

@@ -1,17 +1,18 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Tests.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Criteria;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Services;
     using Data.Repository;
     using Dtos;
+    using Fanex.CustomerSetting.Configurations;
+    using Fanex.CustomerSetting.Matrix.Criteria;
     using Matrix.Services;
     using Matrix.Services.Impl;
     using NSubstitute;
     using NUnit.Framework;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [TestFixture]
     public class CommissionMatrixServiceTests
@@ -41,7 +42,7 @@
             //// Act
             Assert.Throws<InvalidOperationException>(
                 new TestDelegate(
-                    () => _commissionMatrixService.GetCommissionMatrix(productId, "CustomerName")));
+                    () => _commissionMatrixService.GetCommissionMatrix(productId, "CustomerName", AppSettings.SettingStatus)));
         }
 
         [TestCase("  ")]
@@ -55,7 +56,7 @@
             //// Act
             Assert.Throws<InvalidOperationException>(
                 new TestDelegate(
-                    () => _commissionMatrixService.GetCommissionMatrix(productId, customerName)));
+                    () => _commissionMatrixService.GetCommissionMatrix(productId, customerName, AppSettings.SettingStatus)));
         }
 
         [Test]
@@ -68,7 +69,7 @@
             //// Act
             Assert.Throws<InvalidOperationException>(
                 new TestDelegate(
-                    () => _commissionMatrixService.GetCommissionMatrix(productId, customerName)));
+                    () => _commissionMatrixService.GetCommissionMatrix(productId, customerName, AppSettings.SettingStatus)));
         }
 
         private void AssumeDatabaseReturnValidCommission()
@@ -86,7 +87,7 @@
             AssumeDatabaseReturnValidCommission();
 
             //// Act
-            _commissionMatrixService.GetCommissionMatrix(productId, customerName);
+            _commissionMatrixService.GetCommissionMatrix(productId, customerName, AppSettings.SettingStatus);
 
             //// Assert
             _dynamicRepository.Received().Fetch<CommissionItemMatrixDto>(
@@ -104,7 +105,7 @@
             AssumeDatabaseReturnValidCommission();
 
             //// Act
-            var actualCommissionMatrix = _commissionMatrixService.GetCommissionMatrix(productId, customerName);
+            var actualCommissionMatrix = _commissionMatrixService.GetCommissionMatrix(productId, customerName, AppSettings.SettingStatus);
 
             //// Assert
             var numOfGrouped = 3;
@@ -127,7 +128,7 @@
             _resourceService.GetSportTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(sampleSportName);
 
             //// Act
-            var actualResult = _commissionMatrixService.GetCommissionMatrix(productId, customerName);
+            var actualResult = _commissionMatrixService.GetCommissionMatrix(productId, customerName, AppSettings.SettingStatus);
 
             //// Assert
             Assert.AreEqual(sampleSportName, actualResult.CommissionItemMatrices.First().SportTypeName);
@@ -146,7 +147,7 @@
             _resourceService.GetBetTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(sampleBetTypeName);
 
             //// Act
-            var actualResult = _commissionMatrixService.GetCommissionMatrix(productId, customerName);
+            var actualResult = _commissionMatrixService.GetCommissionMatrix(productId, customerName, AppSettings.SettingStatus);
 
             //// Assert
             Assert.AreEqual(sampleBetTypeName, actualResult.CommissionItemMatrices.First().BetTypeName);

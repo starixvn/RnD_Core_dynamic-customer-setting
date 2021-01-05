@@ -51,7 +51,7 @@
             _settingTypeService.GetCustomerSettingType(_settingContext, query);
 
             // Assert.
-            _dataAccess.Received().GetCustomerStakeLevelGroups(Arg.Is(query.CustomerId), Arg.Is(query.ProductId));
+            _dataAccess.Received().GetCustomerStakeLevelGroups(Arg.Is(query.CustomerId), Arg.Is(query.ProductId), Arg.Is(query.SettingStatus));
         }
 
         [Test]
@@ -64,7 +64,7 @@
             int numberOfDetailedItems = 0;
 
             _resourceService.GetResourceData("StakeLevel_GG", "1", "en-US").Returns("Level 1");
-            _dataAccess.GetCustomerStakeLevelGroups(query.CustomerId, query.ProductId).Returns(levelGroupsRawData);
+            _dataAccess.GetCustomerStakeLevelGroups(query.CustomerId, query.ProductId, query.SettingStatus).Returns(levelGroupsRawData);
             _dataAccess
                 .GetCustomerStakeLevelGroupsDetails(query.CustomerId, 1, out numberOfDetailedItems, false)
                 .Returns(parameters =>
@@ -90,7 +90,7 @@
             var query = InstanceFactory.CreateQuerySettingParam();
             var levelGroupsRawData = CreateSampleDataOfLevelGroups();
 
-            _dataAccess.GetCustomerStakeLevelGroups(query.CustomerId, query.ProductId).Returns(levelGroupsRawData);
+            _dataAccess.GetCustomerStakeLevelGroups(query.CustomerId, query.ProductId, query.SettingStatus).Returns(levelGroupsRawData);
 
             // Act.
             _settingTypeService.GetCustomerSettingType(_settingContext, query);
@@ -108,7 +108,7 @@
             // Arrange.
             var query = InstanceFactory.CreateQuerySettingParam();
 
-            _dataAccess.GetCustomerStakeLevelGroups(query.CustomerId, query.ProductId).Returns(Enumerable.Empty<StakeLevelGroupDto>());
+            _dataAccess.GetCustomerStakeLevelGroups(query.CustomerId, query.ProductId, query.SettingStatus).Returns(Enumerable.Empty<StakeLevelGroupDto>());
 
             // Act.
             _settingTypeService.GetCustomerSettingType(_settingContext, query);
@@ -221,13 +221,14 @@
                 settingTypeId: SettingTypeId,
                 actionId: 0,
                 actionType: ActionType.Query,
+                settingStatus: 0,
                 jsonParameters: "{\"sportTypeId\":1}");
 
             // Act
             routeService.Handle(_settingContext, redirectCommand);
 
             // Assert
-            _dataAccess.Received().GetCustomerStakeLevelGroups(Arg.Is(123), Arg.Is<byte>(1));
+            _dataAccess.Received().GetCustomerStakeLevelGroups(Arg.Is(123), Arg.Is<byte>(1), Arg.Is<byte>(0));
         }
 
         [Test]
@@ -236,6 +237,7 @@
             // Arrange
             int customerId = 123;
             byte productId = 1;
+            byte settingStatus = 0;
             short sportTypeId = 1;
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
             var redirectCommand = new RedirectCommand(
@@ -246,10 +248,11 @@
                 settingTypeId: SettingTypeId,
                 actionId: 0,
                 actionType: ActionType.Query,
+                settingStatus: 0,
                 jsonParameters: $"{{\"sportTypeId\":{sportTypeId}}}");
             var levelGroupsRawData = CreateSampleDataOfLevelGroups();
 
-            _dataAccess.GetCustomerStakeLevelGroups(customerId, productId).Returns(levelGroupsRawData);
+            _dataAccess.GetCustomerStakeLevelGroups(customerId, productId, settingStatus).Returns(levelGroupsRawData);
 
             // Act
             routeService.Handle(_settingContext, redirectCommand);
@@ -267,6 +270,7 @@
             // Arrange.
             int customerId = 123;
             byte productId = 1;
+            byte settingStatus = 0;
             short sportTypeId = 1;
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
             var redirectCommand = new RedirectCommand(
@@ -277,13 +281,14 @@
                 settingTypeId: SettingTypeId,
                 actionId: 0,
                 actionType: ActionType.Query,
+                settingStatus: 0,
                 jsonParameters: $"{{\"sportTypeId\":{sportTypeId}}}");
             var levelGroupsRawData = CreateSampleDataOfLevelGroups();
             var detailsRawData = CreateSampleDataOfDetails();
             int numberOfDetailedItems = 0;
 
             _resourceService.GetResourceData("StakeLevel_GG", "1", "en-US").Returns("Level 1");
-            _dataAccess.GetCustomerStakeLevelGroups(customerId, productId).Returns(levelGroupsRawData);
+            _dataAccess.GetCustomerStakeLevelGroups(customerId, productId, settingStatus).Returns(levelGroupsRawData);
             _dataAccess
                 .GetCustomerStakeLevelGroupsDetails(customerId, sportTypeId, out numberOfDetailedItems, true)
                 .Returns(parameters =>

@@ -74,6 +74,15 @@
             return string.Format(CommissionXmlFormat, base.ToXml(), Commission);
         }
 
+        public override int GetHashCode()
+        {
+            return SportTypeId.GetHashCode()
+                ^ BetTypeId.GetHashCode()
+                ^ (Commission?.GetHashCode() ?? 0)
+                ^ UplineCommission.GetHashCode()
+                ^ (NearestIndirectUplineCommission?.GetHashCode() ?? 0);
+        }
+
         public override bool Equals(object obj)
         {
             var otherObj = obj as TicketCommissionItem;
@@ -86,23 +95,13 @@
             return Equals(otherObj);
         }
 
-        public override int GetHashCode()
-        {
-            return SportTypeId.GetHashCode()
-                ^ BetTypeId.GetHashCode()
-                ^ (Commission?.GetHashCode() ?? 0)
-                ^ UplineCommission.GetHashCode()
-                ^ (NearestIndirectUplineCommission?.GetHashCode() ?? 0);
-        }
-
-        public bool Equals(TicketCommissionItem other)
-        {
-            return Equals(SportTypeId, other.SportTypeId)
+#pragma warning disable S1067 // Expressions should not be too complex
+        public bool Equals(TicketCommissionItem other) => Equals(SportTypeId, other.SportTypeId)
                 && Equals(BetTypeId, other.BetTypeId)
                 && Equals(Commission, other.Commission)
                 && Equals(UplineCommission, other.UplineCommission)
                 && Equals(NearestIndirectUplineCommission, other.NearestIndirectUplineCommission);
-        }
+#pragma warning restore S1067 // Expressions should not be too complex
 
         private void Map(TicketCommissionDto commissionDto, Level customerLevel, Level uplineLevel)
         {
@@ -118,7 +117,9 @@
             {
                 MapAgentCommission(commissionDto);
             }
+#pragma warning disable S126 // "if ... else if" constructs should end with "else" clauses
             else if (customerLevel.IsMemberLevel())
+#pragma warning restore S126 // "if ... else if" constructs should end with "else" clauses
             {
                 MapMemberCommission(commissionDto, uplineLevel);
             }
@@ -150,7 +151,9 @@
             {
                 NearestIndirectUplineCommission = commissionDto.MasterCommission;
             }
+#pragma warning disable S126 // "if ... else if" constructs should end with "else" clauses
             else if (uplineLevel?.IsAgentLevel() == true)
+#pragma warning restore S126 // "if ... else if" constructs should end with "else" clauses
             {
                 Commission = commissionDto.MemberCommission;
             }

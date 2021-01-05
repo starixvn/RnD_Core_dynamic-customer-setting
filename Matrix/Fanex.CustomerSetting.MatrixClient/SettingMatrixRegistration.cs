@@ -51,7 +51,7 @@
                 name: "DCSMatrix_Routing",
                 url: "DCSMatrix/ViewCustomerSettingMatrix/{action}/{id}",
                 defaults: new { controller = "ViewCustomerSettingMatrix", action = "Index", id = UrlParameter.Optional },
-                namespaces: new string[] { "Fanex.CustomerSetting.MatrixClient.Controllers" });
+                namespaces: new[] { "Fanex.CustomerSetting.MatrixClient.Controllers" });
         }
 
         private static bool IsCustomerSettingClient(Type type)

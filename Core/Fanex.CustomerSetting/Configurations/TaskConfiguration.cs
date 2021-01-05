@@ -87,11 +87,7 @@
             if (!string.IsNullOrEmpty(taskName))
             {
                 task = GetTaskFromCache<T>(taskName);
-
-                if (task == null)
-                {
-                    task = CreateAndCacheTask<T>(taskName);
-                }
+                task = task ?? CreateAndCacheTask<T>(taskName);
             }
 
             return task;

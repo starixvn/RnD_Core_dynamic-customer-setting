@@ -16,12 +16,10 @@
             {
                 return false;
             }
-            else
-            {
-                return Equals(CustomerId, otherObj.CustomerId)
-                    && Equals(SportTypeId, otherObj.SportTypeId)
-                    && Equals(BetTypeId, otherObj.BetTypeId);
-            }
+
+            return Equals(CustomerId, otherObj.CustomerId)
+                && Equals(SportTypeId, otherObj.SportTypeId)
+                && Equals(BetTypeId, otherObj.BetTypeId);
         }
 
         public override int GetHashCode()

@@ -21,6 +21,7 @@
         {
             int customerId = 1;
             byte productId = 1;
+            byte settingStatus = 0;
             Level customerLevel = Level.Agent;
 
             _task = new AddSettingType13QueryWarningTask();
@@ -28,7 +29,7 @@
             _settingContext.Actor = Substitute.For<User>();
             _settingContext.Actor.Level = Level.Master;
             _settingContext.System = SystemType.Alpha;
-            _query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
+            _query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, settingStatus, null);
             _setting = new Setting();
         }
 

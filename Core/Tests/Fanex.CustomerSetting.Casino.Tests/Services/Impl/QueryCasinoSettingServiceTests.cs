@@ -70,7 +70,7 @@
         {
             Level level = Enumeration.FromValue<Level>(levelValue);
             Level uplineLevel = level.IsMemberLevel() ? Enumeration.FromValue<Level>(++levelValue) : null;
-            var query = new CustomerSettingQuery(10000, level, 110, uplineLevel);
+            var query = new CustomerSettingQuery(10000, level, 110, 0, uplineLevel);
 
             return query;
         }

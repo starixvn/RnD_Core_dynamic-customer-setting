@@ -17,6 +17,7 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <SonarQubeExclude>True</SonarQubeExclude>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -114,6 +115,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
@@ -121,12 +123,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configurations\SettingServiceConfiguratorTests.cs" />
+    <Compile Include="Criteria\UnderMaintainanceQueryCriteriaTests.cs" />
+    <Compile Include="Criteria\ProductNamesQueryCriteriaTests.cs" />
+    <Compile Include="Criteria\CustomerLevelQueryCriteriaTests.cs" />
+    <Compile Include="Criteria\CheckBelongingCriteriaTests.cs" />
+    <Compile Include="Criteria\ActorStatusQueryCriteriaTests.cs" />
+    <Compile Include="DataAccesses\BaseDataAccessTests.cs" />
+    <Compile Include="DataAccesses\ValidationDataAccessTests.cs" />
+    <Compile Include="Enumeration\EnumerationTests.cs" />
+    <Compile Include="Models\Requests\CustomerSettingQueryTests.cs" />
+    <Compile Include="Models\Requests\MultipleUpdateCustomerSettingCommandTests.cs" />
+    <Compile Include="Models\Requests\RedirectCommandTests.cs" />
+    <Compile Include="Models\Requests\UpdateCustomerSettingCommandTests.cs" />
+    <Compile Include="Models\Results\ResultTests.cs" />
+    <Compile Include="Models\Results\SettingResultTests.cs" />
+    <Compile Include="Models\Results\UpdateSettingResultTests.cs" />
+    <Compile Include="Models\UnderMaintainanceInfoTests.cs" />
+    <Compile Include="Services\LanguageNameConverterTests.cs" />
     <Compile Include="Services\SettingServiceFactoryTests.cs" />
     <Compile Include="Criteria\ProductSettingTypesQueryCriteriaTests.cs" />
     <Compile Include="Dtos\Params\QuerySettingParamTests.cs" />
     <Compile Include="Dtos\Params\UpdateMultipleSettingParamTests.cs" />
     <Compile Include="Dtos\Params\UpdateSettingParamTests.cs" />
-    <Compile Include="Enumeration\UserLevelTests.cs" />
+    <Compile Include="Enumeration\LevelTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InstanceFactory.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
@@ -143,6 +162,7 @@
     <Compile Include="Services\ProductServiceTests.cs" />
     <Compile Include="Services\ResourceServiceTests.cs" />
     <Compile Include="Services\SettingTypeServiceFactoryTests.cs" />
+    <Compile Include="Services\UMServiceTests.cs" />
     <Compile Include="Services\UpdateSettingServiceTests.cs" />
     <Compile Include="Services\UpdateMultipleCustomerSettingTests.cs" />
     <Compile Include="Services\ValidationServiceTestsValidateUpdateMultipleSettingAction.cs" />
@@ -157,6 +177,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SettingTypes\SettingType1\Fanex.CustomerSetting.SettingType1\Fanex.CustomerSetting.SettingType1.csproj">
+      <Project>{1f9436d3-f8aa-48c9-b1a7-7659eaa7bdcc}</Project>
+      <Name>Fanex.CustomerSetting.SettingType1</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Fanex.CustomerSetting.Casino\Fanex.CustomerSetting.Casino.csproj">
       <Project>{6fe2478f-9e93-48d1-95b9-cad78704b67e}</Project>
       <Name>Fanex.CustomerSetting.Casino</Name>
@@ -168,6 +192,10 @@
     <ProjectReference Include="..\..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Casino.Tests\Fanex.CustomerSetting.Casino.Tests.csproj">
+      <Project>{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}</Project>
+      <Name>Fanex.CustomerSetting.Casino.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

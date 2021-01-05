@@ -25,13 +25,13 @@
 
         public QuerySettingService(
             ISettingContext settingContext,
-            IValidationService validationService = null,
-            IProductService productService = null,
-            IResourceService resourceService = null,
-            ITaskService pluggableTaskService = null,
-            ILogger logger = null,
-            ISettingTypeServiceFactory settingTypeServiceFactory = null,
-            IDynamicRepository dynamicRepository = null)
+            IValidationService validationService,
+            IProductService productService,
+            IResourceService resourceService,
+            ITaskService pluggableTaskService,
+            ILogger logger,
+            ISettingTypeServiceFactory settingTypeServiceFactory,
+            IDynamicRepository dynamicRepository)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
             Check.Argument.IsNotNull(settingContext.Actor, nameof(settingContext.Actor));
@@ -51,7 +51,7 @@
         {
         }
 
-        protected QuerySettingService()
+        internal QuerySettingService()
         {
         }
 
@@ -79,7 +79,7 @@
             TaskService.Run(query.ProductId, query);
 
             var customerInfo = GetCustomerInfo(query.CustomerId);
-            var product = GetProductInfo(query.ProductId, SettingContext.System);
+            var product = GetProductInfo(query.ProductId, SettingContext.System, query.SettingStatus);
             var customerSettingTypes = GetCustomerSettingTypes(query, product.SettingTypes);
 
             var setting = new Setting(
@@ -116,9 +116,9 @@
         /// </summary>
         /// <param name="productId">The product identifier.</param>
         /// <returns></returns>
-        protected virtual Product GetProductInfo(byte productId, byte systemId)
+        protected virtual Product GetProductInfo(byte productId, byte systemId, byte settingStatus)
         {
-            var productSettingTypes = ProductService.GetProductSettingTypes(productId, systemId)
+            var productSettingTypes = ProductService.GetProductSettingTypes(productId, systemId, settingStatus)
                 .Where(product => product.DisplayMode != DisplayModes.Hidden);
             var productName = ResourceService.GetProductName(productId, SettingContext.Language);
 
@@ -168,7 +168,9 @@
 
         protected virtual SettingType GetCustomerSettingType(CustomerSettingQuery query, SettingType productSettingType)
         {
+#pragma warning disable S1854 // Unused assignments should be removed
             SettingType customerSettingType = productSettingType;
+#pragma warning restore S1854 // Unused assignments should be removed
 
             try
             {

@@ -78,6 +78,13 @@
             Assert.AreEqual(settingService.GetType(), defaultServiceType, productId.ToString(), null);
         }
 
+        [Test]
+        public void GetUpdateService_ParameterlessConstructor_Success()
+        {
+            var updateSettingService = new UpdateSettingService();
+            Assert.That(updateSettingService != null);
+        }
+
         [TestCase(1, 100)]
         [TestCase(2, 101)]
         public void GetUpdateService_ConfigurationIsEmpty_ReturnDefaultUpdateService(byte system, byte productId)

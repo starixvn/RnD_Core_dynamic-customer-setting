@@ -8,6 +8,8 @@
 
         public string UserName { get; set; }
 
+        public byte SettingStatus { get; set; }
+
         public override string GetSettingKey()
         {
             return "CustSetting_CommMatrix";

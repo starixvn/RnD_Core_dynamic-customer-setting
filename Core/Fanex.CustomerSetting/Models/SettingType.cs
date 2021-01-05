@@ -29,10 +29,7 @@
         {
             get
             {
-                if (_settingItems == null)
-                {
-                    _settingItems = new List<ISettingItem>();
-                }
+                _settingItems = _settingItems ?? new List<ISettingItem>();
 
                 return _settingItems;
             }

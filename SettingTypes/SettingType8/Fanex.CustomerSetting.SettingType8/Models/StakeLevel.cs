@@ -16,12 +16,10 @@
             {
                 return false;
             }
-            else
-            {
-                return Equals(SportTypeId, otherObj.SportTypeId)
-                    && Equals(BetTypeId, otherObj.BetTypeId)
-                    && StakeRanges.SequenceEqual(otherObj.StakeRanges);
-            }
+
+            return Equals(SportTypeId, otherObj.SportTypeId)
+                && Equals(BetTypeId, otherObj.BetTypeId)
+                && StakeRanges.SequenceEqual(otherObj.StakeRanges);
         }
 
         public override int GetHashCode()

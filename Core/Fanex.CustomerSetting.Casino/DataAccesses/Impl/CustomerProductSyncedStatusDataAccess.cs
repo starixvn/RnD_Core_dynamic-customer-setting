@@ -1,13 +1,13 @@
 ﻿namespace Fanex.CustomerSetting.Casino.DataAccesses.Impl
 {
+    using Fanex.CustomerSetting.DataAccesses;
     using System;
-    using Data;
 
     public class CustomerProductSyncedStatusDataAccess : ICustomerProducSyncedtStatusDataAccess
     {
         public bool CheckCustomerProductSyncedStatus(int customerId, byte productId)
         {
-            using (var objectDb = new ObjectDb("Acc_CustSetting_DisableNewProductSyncStatusSelect"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("Acc_CustSetting_DisableNewProductSyncStatusSelect"))
             {
                 object syncedStatus = objectDb.ExecuteScalar(new { CustId = customerId, ProductId = productId });
 
@@ -17,7 +17,7 @@
 
         public void UpdateCustomerProductSyncedStatus(int customerId, byte productId, int userId, int subAccountId, string ip)
         {
-            using (var objectDb = new ObjectDb("Acc_CustSetting_DisableNewProductSyncStatusUpd"))
+            using (var objectDb = ObjectDbFactory.ObjectDb("Acc_CustSetting_DisableNewProductSyncStatusUpd"))
             {
                 objectDb.ExecuteNonQuery(new
                 {

@@ -5,7 +5,7 @@
 
     public class CustomerSettingConfiguration : ConfigurationSection
     {
-        private static readonly CustomerSettingConfiguration settings
+        private static CustomerSettingConfiguration settings
             = ConfigurationManager.GetSection("CustomerSettingConfiguration") as CustomerSettingConfiguration;
 
         public static CustomerSettingConfiguration Settings
@@ -72,10 +72,14 @@
             set { this["EnableRequestLogging"] = value; }
         }
 
+#pragma warning disable S109 // Magic numbers should not be used
         [ConfigurationProperty("UpdateSettingTimeout", IsRequired = false, DefaultValue = 600)]
+#pragma warning restore S109 // Magic numbers should not be used
         public int UpdateSettingTimeout
         {
+#pragma warning disable S109 // Magic numbers should not be used
             get { return (int)this["UpdateSettingTimeout"] * 1000; }
+#pragma warning restore S109 // Magic numbers should not be used
             set { this["UpdateSettingTimeout"] = value; }
         }
     }

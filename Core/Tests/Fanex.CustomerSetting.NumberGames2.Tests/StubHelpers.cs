@@ -26,6 +26,30 @@
             return new UpdateCustomerSettingCommand(settings, uplineLevel);
         }
 
+        public static MultipleUpdateCustomerSettingCommand CreateMultipleUpdateSettingCommand(
+            string customerIds = null,
+            string customerNames = null,
+            Level customerLevel = null,
+            byte productId = 1,
+            Level uplineLevel = null,
+            byte[] settingTypes = null)
+        {
+            var listCustomerIds = customerIds.Split(',').Select(custId => int.Parse(custId.Trim())).ToList();
+            var listCustomerNames = customerNames.Split(',').Select(userName => userName.Trim()).ToList();
+            var settings = CreateCustomerSetting(
+                listCustomerIds[0],
+                customerLevel ?? Level.Master,
+                productId,
+                settingTypes ?? SettingTypes);
+
+            return new MultipleUpdateCustomerSettingCommand(
+                settings,
+                listCustomerIds,
+                listCustomerNames,
+                uplineLevel
+                );
+        }
+
         public static Setting CreateCustomerSetting(
             int customerId = 1,
             Level customerLevel = null,

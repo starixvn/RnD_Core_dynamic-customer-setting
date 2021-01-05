@@ -10,6 +10,7 @@
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Exceptions;
+    using Fanex.CustomerSetting.Models.Constants;
     using Logging;
     using Models;
     using NSubstitute;
@@ -43,6 +44,19 @@
                 _taskService,
                 _logger,
                 _settingTypeServiceFactory);
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_ValidateIsNotOk_ReturnExpectedResult()
+        {
+            MultipleUpdateCustomerSettingCommand updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            _validationService.ValidateUpdateMultipleSettingAction(Arg.Any<MultipleUpdateCustomerSettingCommand>()).Returns(new Result(ResultValues.AccessDenied, string.Empty));
+
+            var expected = new Result(ResultValues.AccessDenied, string.Empty);
+
+            var actual = _settingService.Update(updateMultipleSettingParam);
+            Assert.AreEqual(expected.Code, actual.Code);
+            Assert.AreEqual(expected.Message, actual.Message);
         }
 
         [Test]

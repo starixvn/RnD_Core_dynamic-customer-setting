@@ -1,9 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.NumberGames2.Tests.Services.Impl
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Criteria;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
@@ -12,6 +8,7 @@
     using CustomerSetting.Services;
     using Data.Repository;
     using Exceptions;
+    using Fanex.CustomerSetting.NumberGames2.Criteria;
     using Logging;
     using NSubstitute;
     using NumberGames2.Services;
@@ -19,6 +16,9 @@
     using NUnit.Framework;
     using ONEbook.NG2.API.Interface;
     using Resources;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using CreateAccountApiModels = ONEbook.NG2.API.DTO.CreateAccount;
 
     public class UpdateNumberGames2SettingServiceTests
@@ -308,6 +308,43 @@
 
             // Assert.
             Assert.That(result.SubResults.Any(subResult => subResult.Message == Messages.UnableToUpdateProductStatus));
+        }
+
+        [Test]
+        public void Update_Multiple_SyncedCustomer_RunNormalFlow()
+        {
+            // Arrange.
+            string customerIds = "1,2,3,4,5";
+            string customerNames = "cust1,cust2,cust3,cust4,cust5";
+            byte productId = 1;
+            MultipleUpdateCustomerSettingCommand command = StubHelpers.CreateMultipleUpdateSettingCommand(
+                customerIds: customerIds,
+                customerNames: customerNames,
+                productId: productId);
+
+            FakeSyncStatusServiceCall(1, productId, true, true);
+            FakeSyncStatusServiceCall(2, productId, true, true);
+            FakeSyncStatusServiceCall(3, productId, true, true);
+            FakeSyncStatusServiceCall(4, productId, true, true);
+            FakeSyncStatusServiceCall(5, productId, true, true);
+
+            // Act.
+            _updateSettingService.Update(command);
+
+            // Assert.
+            Received.InOrder(() =>
+            {
+                foreach (KeyValuePair<short, ISettingTypeService> settingTypeService in _settingTypeServices)
+                {
+                    settingTypeService.Value.UpdateCustomerSettingType(
+                        Arg.Is(_settingContext),
+                        1,
+                        Arg.Is(command.Setting.CustomerLevel),
+                        Arg.Is(command.UplineLevel),
+                        Arg.Is(productId),
+                        Arg.Any<SettingType>());
+                }
+            });
         }
 
         private void FakeSyncStatusServiceCall(
