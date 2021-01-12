@@ -246,4 +246,7 @@
   <data name="SuperPTOnMemberCannotBeLessThan" xml:space="preserve">
     <value>超級總代理於會員的占成必須大於或相等於 {0}。</value>
   </data>
+  <data name="Msg_20044" xml:space="preserve">
+    <value>您不被允許使用自動占成, 請您聯系您的上線。</value>
+  </data>
 </root>

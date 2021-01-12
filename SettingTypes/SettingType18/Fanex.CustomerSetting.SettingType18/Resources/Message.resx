@@ -219,6 +219,9 @@
   <data name="Msg_20034" xml:space="preserve">
     <value>The position taking violates Agent Max PT.</value>
   </data>
+  <data name="Msg_20044" xml:space="preserve">
+    <value>You are not allowed to have Auto PT, please contact your upline.</value>
+  </data>
   <data name="SuperAutoPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
     <value>Super Auto PT must be less than or equal to Super Max PT.</value>
   </data>
