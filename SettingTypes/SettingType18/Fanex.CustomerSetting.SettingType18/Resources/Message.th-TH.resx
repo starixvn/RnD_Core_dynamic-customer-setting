@@ -246,4 +246,7 @@
   <data name="SuperPTOnMemberCannotBeLessThan" xml:space="preserve">
     <value>ค่าความเสี่ยงของซูเปอร์ต่อเมมเบอร์ต้องมากกว่ากว่าหรือเท่ากับ {0}.</value>
   </data>
+  <data name="Msg_20044" xml:space="preserve">
+    <value>คุณไม่ได้รับอนุญาตให้ใช้การตั้งค่าแบ่งสู้อัตโนมัติ โปรดติดต่ออัพไลน์ของคุณ</value>
+  </data>
 </root>

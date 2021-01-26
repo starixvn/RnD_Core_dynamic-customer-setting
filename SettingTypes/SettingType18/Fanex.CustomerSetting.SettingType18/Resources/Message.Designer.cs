@@ -367,6 +367,15 @@ namespace Fanex.CustomerSetting.SettingType18.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are not allowed to have Auto PT, please contact your upline..
+        /// </summary>
+        internal static string Msg_20044 {
+            get {
+                return ResourceManager.GetString("Msg_20044", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Super Auto PT must be less than or equal to Super Max PT..
         /// </summary>
         internal static string SuperAutoPTCannotBeGreaterThanSuperMaxPT {
