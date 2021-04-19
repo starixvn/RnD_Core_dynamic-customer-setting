@@ -39,6 +39,7 @@
 
         public HttpResponseMessage PostSettingRequest([FromBody]QuerySettingRequest request)
         {
+            throw new InvalidCastException("test");
             if (request == null)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request parameters cannot be null.");

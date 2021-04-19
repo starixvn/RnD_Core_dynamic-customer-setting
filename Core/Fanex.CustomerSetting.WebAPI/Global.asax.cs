@@ -1,19 +1,21 @@
 ﻿namespace Fanex.CustomerSetting.WebApi
 {
-    using System;
-    using System.Web;
-    using System.Web.Http;
     using AppStart;
     using Configurations;
     using Data.Configuration;
+    using Fanex.CustomerSetting.LoggingConfig;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using RemotingRef;
+    using System;
+    using System.Web;
+    using System.Web.Http;
 
     public class WebApiApplication : HttpApplication
     {
         protected void Application_Start()
         {
+            LoggingConfig.Init(new[] { "pass", "pwd", "security", "Password" }, getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
             GlobalConfiguration.Configure(WebApiConfig.Register);
             SettingServiceConfig.Run();
             DbSettingProviderManager.Current.Start();
