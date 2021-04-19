@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.MatrixClient.Services
 {
     using System;
+    using System.Net.Http;
     using Configurations;
     using Helpers;
     using Models.Requests;
@@ -22,8 +23,16 @@
 
         public IRestResponse QueryAllProducts()
         {
-            var request = new RestRequest("/product/", Method.GET);
+            for (int i = 0; i < 10; i++)
+            {
+                using (var client = new HttpClient())
+                {
+                   var response = client.GetAsync(new Uri("product/GetAll", UriKind.Relative));
+                    
+                }
+            }
 
+            var request = new RestRequest("/product/", Method.GET);
             return _restClient.Execute(request);
         }
 

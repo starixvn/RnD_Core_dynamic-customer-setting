@@ -6,6 +6,7 @@
     using AppStart;
     using Configurations;
     using Data.Configuration;
+    using Fanex.CustomerSetting.Exceptions;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using RemotingRef;
@@ -29,6 +30,12 @@
 
         protected void Application_Error(object sender, EventArgs e)
         {
+            var error = Server.GetLastError();
+            if (error.GetType() == typeof(InvalidInputException))
+            {
+                ExceptionHandler.Handle(error, System.Diagnostics.TraceEventType.Warning);
+            }
+
             ExceptionHandler.Handle(Server.GetLastError());
         }
     }

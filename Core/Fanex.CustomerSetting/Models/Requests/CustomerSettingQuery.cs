@@ -2,6 +2,7 @@
 {
     using System;
     using Enumerations;
+    using Fanex.CustomerSetting.Exceptions;
 
     public class CustomerSettingQuery
     {
@@ -120,29 +121,40 @@
 
             set
             {
-                if (value != null)
+                try
                 {
-                    if (value < Level.Agent || value > Level.Super)
+                    if (value != null)
                     {
-                        throw new ArgumentOutOfRangeException(nameof(value), "Upline Level is out of value range.");
-                    }
+                        if (value < Level.Agent || value > Level.Super)
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(value), "Upline Level is out of value range.");
+                        }
 
-                    // If current context is editting super/master/agent then Upline level should be null.
-                    // TODO: WTF
-                    if (_customerLevel.IsNotMemberLevel())
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(value), "Upline should be null when getting customer setting is not member");
+                        // If current context is editting super/master/agent then Upline level should be null.
+                        // TODO: WTF
+                        if (_customerLevel.IsNotMemberLevel())
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(value), "Upline should be null when getting customer setting is not member");
+                        }
                     }
-                }
 #pragma warning disable S126 // "if ... else if" constructs should end with "else" clauses
-                else if (_customerLevel.IsMemberLevel())
+                    else if (_customerLevel.IsMemberLevel())
 #pragma warning restore S126 // "if ... else if" constructs should end with "else" clauses
-                {
-                    // When editting member, upline level should have value
-                    throw new ArgumentNullException(nameof(value), "Upline cannot be null when getting member setting.");
-                }
+                    {
+                        // When editting member, upline level should have value
+                        throw new ArgumentNullException(nameof(value), "Upline cannot be null when getting member setting.");
+                    }
 
-                _uplineLevel = value;
+                    _uplineLevel = value;
+                }
+                catch (ArgumentNullException ex)
+                {
+                    throw new InvalidInputException(ex.Message);
+                }
+                catch (ArgumentOutOfRangeException ex )
+                {
+                    throw new InvalidInputException(ex.Message);
+                }
             }
         }
     }

@@ -3,6 +3,7 @@
     using System;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Exceptions;
     using NUnit.Framework;
 
     [TestFixture]
@@ -33,7 +34,7 @@
         public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(Level customerLevel)
         {
             //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
+            Assert.Throws<InvalidInputException>(
                 new TestDelegate(
                     () => new CustomerSettingQuery(1, customerLevel, 1, 0, customerLevel)));
         }
@@ -42,7 +43,7 @@
         public void SetUplineLevel_ValueIsNullAndCustomerIsMember_ThrowArgumentNullException()
         {
             //// Act
-            Assert.Throws<ArgumentNullException>(
+            Assert.Throws<InvalidInputException>(
                 new TestDelegate(
                     () => new CustomerSettingQuery(1, Level.Member, 1, 0, null)));
         }

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models.Requests
 {
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using NUnit.Framework;
@@ -67,20 +68,20 @@
         public void UplineLevel_SetToNullWhenCustomerIsMember_ThrowArgumentNullException()
         {
             customerSettingQuery.CustomerLevel = Level.Member;
-            Assert.Throws<ArgumentNullException>(() => customerSettingQuery.UplineLevel = null);
+            Assert.Throws<InvalidInputException>(() => customerSettingQuery.UplineLevel = null);
         }
 
         [Test]
         public void UplineLevel_SetToUplineWhenCustomerIsSuperMasterAgent_ThrowArgumentOutOfRangeException()
         {
             customerSettingQuery.CustomerLevel = Level.Super;
-            Assert.Throws<ArgumentOutOfRangeException>(() => customerSettingQuery.UplineLevel = Level.Company);
+            Assert.Throws<InvalidInputException>(() => customerSettingQuery.UplineLevel = Level.Company);
 
             customerSettingQuery.CustomerLevel = Level.Master;
-            Assert.Throws<ArgumentOutOfRangeException>(() => customerSettingQuery.UplineLevel = Level.Super);
+            Assert.Throws<InvalidInputException>(() => customerSettingQuery.UplineLevel = Level.Super);
 
             customerSettingQuery.CustomerLevel = Level.Agent;
-            Assert.Throws<ArgumentOutOfRangeException>(() => customerSettingQuery.UplineLevel = Level.Master);
+            Assert.Throws<InvalidInputException>(() => customerSettingQuery.UplineLevel = Level.Master);
         }
 
         [Test]
