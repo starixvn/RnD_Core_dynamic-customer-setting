@@ -95,6 +95,8 @@
     <Content Include="CustomerSetting\Scripts\product-5.min.js" />
     <Content Include="CustomerSetting\Scripts\product-28.js" />
     <Content Include="CustomerSetting\Scripts\product-28.min.js" />
+    <Content Include="CustomerSetting\Scripts\product-66.js" />
+    <Content Include="CustomerSetting\Scripts\product-66.min.js" />
     <Content Include="CustomerSetting\Styles\customer-setting.css" />
     <Content Include="CustomerSetting\Styles\customer-setting.min.css">
       <DependentUpon>customer-setting.css</DependentUpon>
