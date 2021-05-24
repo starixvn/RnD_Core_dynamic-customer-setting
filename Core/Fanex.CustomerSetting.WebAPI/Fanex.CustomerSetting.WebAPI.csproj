@@ -300,7 +300,7 @@
     <Content Include="Web.pro.config" />
     <Content Include="Web.spu2.config" />
     <Content Include="Web.masterLocal.config" />
-    <None Include="Web.aws.config" />
+    <Content Include="Web.aws.config" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
