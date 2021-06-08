@@ -255,31 +255,6 @@
     <Content Include="Web.backupMNL.config" />
     <Content Include="App_Data\ApiConfigurations\LogsConfiguration.config" />
     <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.config" />
-    <Content Include="Web.ConnectionStrings.backupMNL.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.local.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.masterLocal.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.masterSIT.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.pro.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.ConnectionStrings.sit.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.spu2.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.uat.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
     <Content Include="App_Data\PluggableTasks\settingtype-13.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-9.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-2.json" />
@@ -293,6 +268,15 @@
     <Content Include="AppSettings.uat.config" />
     <Content Include="AppSettings.sit.config" />
     <Content Include="AppSettings.aws.config" />
+    <Content Include="Web.ConnectionStrings.backupMNL.config" />
+    <Content Include="Web.ConnectionStrings.local.config" />
+    <Content Include="Web.ConnectionStrings.masterLocal.config" />
+    <Content Include="Web.ConnectionStrings.masterSIT.config" />
+    <Content Include="Web.ConnectionStrings.pro.config" />
+    <Content Include="Web.ConnectionStrings.sit.config" />
+    <Content Include="Web.ConnectionStrings.spu2.config" />
+    <Content Include="Web.ConnectionStrings.uat.config" />
+    <Content Include="Web.ConnectionStrings.aws.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

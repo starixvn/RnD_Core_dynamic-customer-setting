@@ -193,41 +193,28 @@
     <Content Include="AppSettings.pro.config" />
     <Content Include="AppSettings.sit.config" />
     <Content Include="AppSettings.uat.config" />
+    <Content Include="AppSettings.aws.config" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
-    <Content Include="Web.ConnectionStrings.backupMNL.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
     <Content Include="Web.ConnectionStrings.config" />
     <None Include="Properties\PublishProfiles\MatrixPublish.pubxml" />
     <Content Include="Web.backupMNL.config" />
-    <Content Include="Web.ConnectionStrings.pro.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.sit.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.spu2.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.masterLocal.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.masterSIT.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
+    <Content Include="Web.ConnectionStrings.backupMNL.config" />
+    <Content Include="Web.ConnectionStrings.local.config" />
+    <Content Include="Web.ConnectionStrings.masterLocal.config" />
+    <Content Include="Web.ConnectionStrings.masterSIT.config" />
+    <Content Include="Web.ConnectionStrings.pro.config" />
+    <Content Include="Web.ConnectionStrings.sit.config" />
+    <Content Include="Web.ConnectionStrings.spu2.config" />
+    <Content Include="Web.ConnectionStrings.uat.config" />
+    <Content Include="Web.ConnectionStrings.aws.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="Web.ConnectionStrings.uat.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.local.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
     <Content Include="Web.local.config" />
     <Content Include="Web.pro.config" />
     <Content Include="Web.spu2.config" />
     <Content Include="Web.masterLocal.config" />
+    <Content Include="Web.aws.config" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
