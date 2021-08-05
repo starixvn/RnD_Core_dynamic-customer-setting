@@ -10,16 +10,22 @@
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, ISetting setting)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(query, nameof(query));
+            Check.Argument.IsNotNull(setting, nameof(setting));
+            string note = string.Empty;
 
             if (SystemType.IsY7(settingContext.System))
             {
+                if (query.CustomerLevel.IsNotMemberLevel())
+                {
+                    note = Resources.Y7SMANote;
+                }
+
+                setting.AddWarningMessages(note);
                 return;
             }
 
-            Check.Argument.IsNotNull(query, nameof(query));
-            Check.Argument.IsNotNull(setting, nameof(setting));
-
-            var note = query.CustomerLevel.IsMemberLevel() ? Resources.MemberNote : Resources.SMANote;
+            note = query.CustomerLevel.IsMemberLevel() ? Resources.MemberNote : Resources.SMANote;
 
             setting.AddWarningMessages(note);
         }
