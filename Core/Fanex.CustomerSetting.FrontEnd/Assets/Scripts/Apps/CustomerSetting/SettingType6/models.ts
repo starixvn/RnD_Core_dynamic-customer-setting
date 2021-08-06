@@ -11,6 +11,7 @@ module CustomerSetting {
         public maxLossRange: number;
         public isAutoReset: boolean;
         public isAutoResetUpline: boolean;
+        public isUnlimited: boolean;
         public currentWinLossAmount: CurrentWinLossAmountItem;
 
         constructor();
@@ -27,6 +28,7 @@ module CustomerSetting {
                 this.maxLossRange = settingItem.maxLossRange;
                 this.isAutoReset = settingItem.isAutoReset;
                 this.isAutoResetUpline = settingItem.isAutoResetUpline;
+                this.isUnlimited = settingItem.lossLimit === 0;
             }
 
             if (backup) {
@@ -45,6 +47,35 @@ module CustomerSetting {
                 || this.isAutoReset !== oldSetting.isAutoReset;
 
             return isChanged;
+        }
+
+        public copySettingFrom(source: SettingType6Item): boolean {
+            var oldSetting: SettingType6Item = <SettingType6Item>this.oldSetting;
+            var isSuccessful: boolean = true;
+
+            if (source) {
+                this.winLimit = source.winLimit;
+                this.lossLimit = source.lossLimit;
+                this.isAutoReset = source.isAutoReset;
+                this.isUnlimited = source.isUnlimited;
+                isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    this.winLimit = oldSetting.winLimit;
+                    this.lossLimit = oldSetting.lossLimit;
+                    this.isAutoReset = oldSetting.isAutoReset;
+                    this.isUnlimited = oldSetting.isUnlimited;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        winLimit: oldSetting.winLimit,
+                        lossLimit: oldSetting.lossLimit,
+                        isAutoReset: oldSetting.isAutoReset
+                    });
+                }
+            }
+
+            return isSuccessful;
         }
 
         public validate(): boolean {
