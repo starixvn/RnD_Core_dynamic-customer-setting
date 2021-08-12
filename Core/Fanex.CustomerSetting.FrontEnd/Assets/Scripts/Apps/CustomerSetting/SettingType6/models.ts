@@ -50,8 +50,11 @@ module CustomerSetting {
         }
 
         public copySettingFrom(source: SettingType6Item): boolean {
-            var oldSetting: SettingType6Item = <SettingType6Item>this.oldSetting;
             var isSuccessful: boolean = true;
+            var backupWinLimit: number = this.winLimit;
+            var backupLossLimit: number = this.lossLimit;
+            var backupIsAutoReset: boolean = this.isAutoReset;
+            var backupIsUnlimited: boolean = this.isUnlimited;
 
             if (source) {
                 this.winLimit = source.winLimit;
@@ -59,18 +62,18 @@ module CustomerSetting {
                 this.isAutoReset = source.isAutoReset;
                 this.isUnlimited = source.isUnlimited;
                 isSuccessful = this.validate();
-
+                
                 if (!isSuccessful) {
-                    this.winLimit = oldSetting.winLimit;
-                    this.lossLimit = oldSetting.lossLimit;
-                    this.isAutoReset = oldSetting.isAutoReset;
-                    this.isUnlimited = oldSetting.isUnlimited;
+                    this.winLimit = backupWinLimit;
+                    this.lossLimit = backupLossLimit;
+                    this.isAutoReset = backupIsAutoReset;
+                    this.isUnlimited = backupIsUnlimited;
                     this.highlightUnablyCopiedField();
                 } else {
                     this.highlightCopiedFields({
-                        winLimit: oldSetting.winLimit,
-                        lossLimit: oldSetting.lossLimit,
-                        isAutoReset: oldSetting.isAutoReset
+                        winLimit: backupWinLimit,
+                        lossLimit: backupLossLimit,
+                        isAutoReset: backupIsAutoReset
                     });
                 }
             }
@@ -85,7 +88,7 @@ module CustomerSetting {
                 return false;
             }
 
-            if (0 < this.maxWinRange && this.maxWinRange < this.winLimit) {
+            if (0 < this.maxWinRange && (this.winLimit === 0 || this.maxWinRange < this.winLimit)) {
                 this.validationState = new ValidationResult("MaximumWinShouldBotExceedThanUplineMaximumWin", "winLimit");
 
                 return false;
