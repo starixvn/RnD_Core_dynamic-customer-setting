@@ -11,6 +11,7 @@ module CustomerSetting {
         public maxLossRange: number;
         public isAutoReset: boolean;
         public isAutoResetUpline: boolean;
+        public isUnlimited: boolean;
         public currentWinLossAmount: CurrentWinLossAmountItem;
 
         constructor();
@@ -27,6 +28,7 @@ module CustomerSetting {
                 this.maxLossRange = settingItem.maxLossRange;
                 this.isAutoReset = settingItem.isAutoReset;
                 this.isAutoResetUpline = settingItem.isAutoResetUpline;
+                this.isUnlimited = settingItem.lossLimit === 0;
             }
 
             if (backup) {
@@ -47,6 +49,38 @@ module CustomerSetting {
             return isChanged;
         }
 
+        public copySettingFrom(source: SettingType6Item): boolean {
+            var isSuccessful: boolean = true;
+            var backupWinLimit: number = this.winLimit;
+            var backupLossLimit: number = this.lossLimit;
+            var backupIsAutoReset: boolean = this.isAutoReset;
+            var backupIsUnlimited: boolean = this.isUnlimited;
+
+            if (source) {
+                this.winLimit = source.winLimit;
+                this.lossLimit = source.lossLimit;
+                this.isAutoReset = source.isAutoReset;
+                this.isUnlimited = source.isUnlimited;
+                isSuccessful = this.validate();
+                
+                if (!isSuccessful) {
+                    this.winLimit = backupWinLimit;
+                    this.lossLimit = backupLossLimit;
+                    this.isAutoReset = backupIsAutoReset;
+                    this.isUnlimited = backupIsUnlimited;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        winLimit: backupWinLimit,
+                        lossLimit: backupLossLimit,
+                        isAutoReset: backupIsAutoReset
+                    });
+                }
+            }
+
+            return isSuccessful;
+        }
+
         public validate(): boolean {
             if (this.winLimit < 0) {
                 this.validationState = new ValidationResult("MaximumWinShouldNotBeLessThanZero", "winLimit");
@@ -54,7 +88,7 @@ module CustomerSetting {
                 return false;
             }
 
-            if (0 < this.maxWinRange && this.maxWinRange < this.winLimit) {
+            if (0 < this.maxWinRange && (this.winLimit === 0 || this.maxWinRange < this.winLimit)) {
                 this.validationState = new ValidationResult("MaximumWinShouldBotExceedThanUplineMaximumWin", "winLimit");
 
                 return false;

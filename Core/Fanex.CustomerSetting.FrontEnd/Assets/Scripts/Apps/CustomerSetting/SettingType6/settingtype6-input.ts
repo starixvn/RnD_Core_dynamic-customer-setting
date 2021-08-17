@@ -56,7 +56,6 @@ module CustomerSetting {
 
     interface ISettingType6UnlimitedCheckboxDirectiveScope extends ng.IScope {
         item: SettingType6Item;
-        isUnlimited: boolean;
         check(): void;
     }
 
@@ -64,13 +63,12 @@ module CustomerSetting {
         public restrict: string = "A";
 
         public controller: any = ["$scope", ($scope: ISettingType6UnlimitedCheckboxDirectiveScope) => {
-            $scope.isUnlimited = $scope.item.lossLimit === 0;
-
+            $scope.item.isUnlimited = $scope.item.lossLimit === 0;
             $scope.check = () => {
-                $scope.item.lossLimit = $scope.isUnlimited ? 0 : null;
+                $scope.item.lossLimit = $scope.item.isUnlimited ? 0 : null;
 
                 // Hide validation error if there is any.
-                if ($scope.isUnlimited && $scope.item.validationState.fieldName === "lossLimit") {
+                if ($scope.item.isUnlimited && $scope.item.validationState.fieldName === "lossLimit") {
                     $scope.item.resetValidationState();
                 }
             };
