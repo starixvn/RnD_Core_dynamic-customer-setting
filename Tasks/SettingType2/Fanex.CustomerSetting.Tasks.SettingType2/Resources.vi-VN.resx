@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BetSettingNoteMessage" xml:space="preserve">
+    <value>Giới Hạn Cược của Xổ Số Thể Thao sẽ áp dụng cho Xổ Số Bóng Đá và Xổ Số Thể Thao Điện Tử</value>
+  </data>
   <data name="MemberNote" xml:space="preserve">
     <value>Nhập tất cả giá trị của giới hạn cược = 0 để ngăn không cho Member đặt cược.</value>
   </data>

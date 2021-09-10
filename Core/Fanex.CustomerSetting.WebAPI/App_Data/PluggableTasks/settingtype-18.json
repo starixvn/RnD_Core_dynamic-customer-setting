@@ -1,0 +1,13 @@
+﻿[
+  {
+    "order": 1,
+    "tasks": [
+      {
+        "settingTypeId": 18,
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.SettingType18.PTSettingItemNoteTask, Fanex.CustomerSetting.Tasks.SettingType18"
+        ]
+      }
+    ]
+  }
+]

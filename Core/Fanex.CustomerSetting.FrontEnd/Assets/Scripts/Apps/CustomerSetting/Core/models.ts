@@ -57,6 +57,8 @@ module CustomerSetting {
         public oldSetting: DefaultSettingItem;
         public validationState: ValidationResult;
         public highlightState: {};
+        public tooltipMessage: string;
+        public showIconTooltipMessage: boolean;
 
         constructor();
         constructor(settingItem: any);
@@ -67,7 +69,8 @@ module CustomerSetting {
                 this.betTypeId = settingItem.betTypeId;
                 this.betTypeName = settingItem.betTypeName;
                 this.typeName = settingItem.typeName;
-
+                this.tooltipMessage = settingItem.tooltipMessage;
+                this.showIconTooltipMessage = settingItem.showIconTooltipMessage;
                 if (settingItem.isLive !== undefined) {
                     this.isLive = settingItem.isLive;
                 }

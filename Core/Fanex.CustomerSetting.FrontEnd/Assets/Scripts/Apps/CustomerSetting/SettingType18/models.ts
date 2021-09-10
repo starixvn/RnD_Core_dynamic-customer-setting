@@ -73,6 +73,8 @@ module CustomerSetting {
         public n4: number;
         public defaultMaxPT: number;
         public isSupportPT3DecimalSites: boolean;
+        public tooltipMessage: string;
+        public showIconTooltipMessage: boolean;
 
         constructor();
         constructor(settingItem: any);
@@ -82,6 +84,8 @@ module CustomerSetting {
             super(settingItem, multipleUpdates);
             SettingType18Item.fetch(settingItem, <SuperPositionTakingPartialMinPT>this);
             this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
+            this.tooltipMessage = settingItem.tooltipMessage;
+            this.showIconTooltipMessage = settingItem.showIconTooltipMessage;
             if (backup) {
                 this.oldSetting = new SuperPositionTakingPartialMinPT(this, false, multipleUpdates, isSupportPT3DecimalSites);
             }

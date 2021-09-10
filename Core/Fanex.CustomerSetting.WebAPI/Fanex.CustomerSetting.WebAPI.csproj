@@ -277,6 +277,7 @@
     <Content Include="Web.ConnectionStrings.spu2.config" />
     <Content Include="Web.ConnectionStrings.uat.config" />
     <Content Include="Web.ConnectionStrings.aws.config" />
+    <Content Include="App_Data\PluggableTasks\settingtype-18.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -294,6 +295,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\Fanex.CustomerSetting.Tasks.SettingType18\Fanex.CustomerSetting.Tasks.SettingType18.csproj">
+      <Project>{fb04841c-96f5-41b9-ad70-473528912e77}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.SettingType18</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SettingTypes\SettingType11\Fanex.CustomerSetting.SettingType11\Fanex.CustomerSetting.SettingType11.csproj">
       <Project>{24fd214c-e151-4f97-95c7-924680d84c74}</Project>
       <Name>Fanex.CustomerSetting.SettingType11</Name>

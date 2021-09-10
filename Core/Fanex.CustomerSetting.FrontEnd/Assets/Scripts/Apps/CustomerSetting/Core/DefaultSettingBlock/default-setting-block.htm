@@ -27,6 +27,10 @@
                                   data-setting-data="group"
                                   data-setting-type-id="settingType.id">
             </toggle-setting-block>
+            <note-icon-tooltip data-ng-if="group[0].showIconTooltipMessage"
+                               data-tooltip-message
+                               data-tooltip-message-backup="{{group[0].tooltipMessage}}"
+                               data-tooltip-type />
             <copy-setting data-ng-if="(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0"
                           data-setting-type-id="settingType.id"
                           data-setting-items="sportGroups">
@@ -40,10 +44,11 @@
              data-ng-repeat="item in group"
              data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]"
              data-ng-class="{ 'block__item--last': $last,
-                              'block__item--near-last': $index === group.length - 2 && $index % 2 === 0,
-                              'block__item--before-extra-item': $last && group.length % 2 === 1 && group.length > 1,
-                              'block__item--odd': $odd,
-                              'block__item--full-width': group.length === 1 }">
+             'block__item--near-last' : $index= = =group.length - 2 && $index % 2= = =0,
+             'block__item--before-extra-item' : $last && group.length % 2= = =1 && group.length>
+            1,
+            'block__item--odd': $odd,
+            'block__item--full-width': group.length === 1 }">
             <div class="block__lbl"
                  data-product="{{productId}}"
                  data-sport-type="{{item.sportTypeId}}"

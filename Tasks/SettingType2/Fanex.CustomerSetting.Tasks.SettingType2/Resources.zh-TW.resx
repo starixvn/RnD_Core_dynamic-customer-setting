@@ -126,4 +126,7 @@
   <data name="Y7SMANote" xml:space="preserve">
     <value>更新上線的投注設置可會減少所有下線的投注設置，以確保下線們不大於上線的投注設置。</value>
   </data>
+  <data name="BetSettingNoteMessage" xml:space="preserve">
+    <value>體育時時彩的投注設置適用於足球時時彩和電子競技時時彩。</value>
+  </data>
 </root>
