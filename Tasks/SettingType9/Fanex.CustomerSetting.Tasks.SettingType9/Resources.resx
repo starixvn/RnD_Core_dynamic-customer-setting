@@ -123,9 +123,9 @@
   <data name="SMANote" xml:space="preserve">
     <value>Inputting all fields of bet setting = 0 means you do not set limit to the bet setting of this account.&lt;br/&gt;
 To prevent members from playing the game, set Min Bet = 0 and other fields = 0.1.&lt;br/&gt;
-Updating upline's bet setting might decrease all downlines' to make sure the downlines' are not greater than their uplines.</value>
+Updating upline's bet setting might decrease all downlines' bet settings to ensure that they are not greater than upline's bet setting.</value>
   </data>
   <data name="Y7SMANote" xml:space="preserve">
-    <value>Updating upline's bet setting might decrease all downlines' to make sure the downlines' are not greater than their uplines.</value>
+    <value>Updating upline's bet setting might decrease all downlines' bet settings to ensure that they are not greater than upline's bet setting.</value>
   </data>
 </root>

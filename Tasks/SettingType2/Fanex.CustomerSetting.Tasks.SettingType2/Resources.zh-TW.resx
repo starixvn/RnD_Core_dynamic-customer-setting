@@ -118,10 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SMANote" xml:space="preserve">
-    <value>輸入最低投註 = 最高投註 = 單場限額 = 0 即代表沒有限制此賬號的投註設定。&lt;br/&gt;
-倘若欲限制會員進行投註，您可設置 最低投註 / 最高投註 / 單場限額 ： 0 / 0.1 / 0.1/ 0.1</value>
+    <value>輸入所有投注設置欄位= 0 表示您對該賬號的投注設置沒有限制。&lt;br/&gt;為防止會員進行投注，設置最低投注 = 0，其他欄位= 0.1。&lt;br/&gt;更新上線的投注設置可會減少所有下線的投注設置，以確保下線們不能大於上線的投注設置。</value>
   </data>
   <data name="MemberNote" xml:space="preserve">
-    <value>輸入最低投註/ 最高投註/ 單場限額： 0/ 0/ 0 可以限制會員進行投註此產品。</value>
+    <value>輸入所有投注設置欄位= 0 防止會員進行投注。</value>
+  </data>
+  <data name="Y7SMANote" xml:space="preserve">
+    <value>更新上線的投注設置可會減少所有下線的投注設置，以確保下線們不大於上線的投注設置。</value>
   </data>
 </root>

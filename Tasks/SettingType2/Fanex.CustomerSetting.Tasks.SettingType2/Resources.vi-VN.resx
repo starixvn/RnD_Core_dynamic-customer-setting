@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MemberNote" xml:space="preserve">
-    <value>Để ngăn không cho Member đặt cược, hãy thiết lập giá trị Cược nhỏ nhất / Cược lớn nhất/ Cược tối đa cho 1 trận là 0 / 0 /0</value>
+    <value>Nhập tất cả giá trị của giới hạn cược = 0 để ngăn không cho Member đặt cược.</value>
   </data>
   <data name="SMANote" xml:space="preserve">
-    <value>Cược nhỏ nhất = Cược lớn nhất = Cược tối đa cho 1 trận = 0, nghĩa là bạn sẽ không giới hạn mức cược cho tài khoản này.&lt;br/&gt;
-Để ngăn không cho Member đặt cược, hãy thiết lập giá trị Cược nhỏ nhất / Cược lớn nhất/ Cược tối đa cho 1 trận là 0 / 0.1 / 0.1</value>
+    <value>Nhập tất cả giá trị của giới hạn cược = 0 nghĩa là bạn sẽ không giới hạn mức cược cho tài khoản này.&lt;br/&gt;
+Để ngăn không cho Member đặt cược, hãy thiết lập Cược Nhỏ Nhất = 0 và các giá trị khác = 0.1.&lt;br/&gt;Việc cập nhật giới hạn cược của cấp trên có thể làm giảm giới hạn cược của tất cả cấp dưới, nhằm đảm bảo giới hạn cược của cấp dưới không lớn hơn của cấp trên.</value>
+  </data>
+  <data name="Y7SMANote" xml:space="preserve">
+    <value>Cập nhật giới hạn cược của cấp trên có thể giảm giới hạn cược của tất cả cấp dưới, nhằm đảm bảo giới hạn cược của cấp dưới không lớn hơn của cấp trên.</value>
   </data>
 </root>
