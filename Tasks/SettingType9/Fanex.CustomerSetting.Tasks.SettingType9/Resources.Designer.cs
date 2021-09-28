@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType9 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inputting 0 / 0 / 0 for Min Bet / Max Bet / Max Per Number will prevent members from playing the game..
+        ///   Looks up a localized string similar to Inputting all fields of bet setting = 0 to prevent members from playing the game..
         /// </summary>
         public static string MemberNote {
             get {
@@ -70,12 +70,22 @@ namespace Fanex.CustomerSetting.Tasks.SettingType9 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inputting Min Bet = Max Bet = Max Per Number = 0 means that you will not limit the bet setting of this account.&lt;br/&gt;
-        ///In order to prevent members from playing the game, set the value to 0 / 0.1 / 0.1 for Min Bet / Max Bet / Max Per Number..
+        ///   Looks up a localized string similar to Inputting all fields of bet setting = 0 means you do not set limit to the bet setting of this account.&lt;br/&gt;
+        ///To prevent members from playing the game, set Min Bet = 0 and other fields = 0.1.&lt;br/&gt;
+        ///Updating upline&apos;s bet setting might decrease all downlines&apos; bet settings to ensure that they are not greater than upline&apos;s bet setting..
         /// </summary>
         public static string SMANote {
             get {
                 return ResourceManager.GetString("SMANote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating upline&apos;s bet setting might decrease all downlines&apos; bet settings to ensure that they are not greater than upline&apos;s bet setting..
+        /// </summary>
+        public static string Y7SMANote {
+            get {
+                return ResourceManager.GetString("Y7SMANote", resourceCulture);
             }
         }
     }
