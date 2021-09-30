@@ -212,6 +212,7 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\HighlightField\tooltip.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\CopySetting\copy-setting.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\default-setting-block.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\NoteIcon\note-icon-tooltip.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingResult\setting-result.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\customer-setting.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Resource\customer-setting-resource.tt">
@@ -587,6 +588,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CopyWithCheckBoxSettingBlock\CopySettingWithCheckbox\copy-setting-with-checkbox.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\NoteIcon\note-icon-tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\NumericInput\numeric-input.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType17\models.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType17\settingtype17-stake-icon-tooltip.ts" />

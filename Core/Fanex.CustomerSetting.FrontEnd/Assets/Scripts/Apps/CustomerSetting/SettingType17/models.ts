@@ -10,8 +10,6 @@ module CustomerSetting {
         public stakeRanges: Array<SettingType17StakeRange>;
         public stakeRangeGroups: Array<Array<SettingType17StakeRange>>;
         public selectStakeLevelId: number;
-        public tooltipMessage: string;
-        public showIconTooltipMessage: boolean;
         public maxChoice: number;
 
         private systemId: number;

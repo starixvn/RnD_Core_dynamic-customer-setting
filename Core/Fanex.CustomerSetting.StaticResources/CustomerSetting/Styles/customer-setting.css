@@ -285,6 +285,9 @@ th {
 .red-text {
   color: #e9322d; }
 
+.tab {
+  margin-left: 10px; }
+
 .setting-field-wrapper,
 .text-field-wrapper {
   display: inline-block;

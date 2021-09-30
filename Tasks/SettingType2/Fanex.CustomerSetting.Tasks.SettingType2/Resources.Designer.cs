@@ -61,6 +61,15 @@ namespace Fanex.CustomerSetting.Tasks.SettingType2 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sports Lottery&apos;s Bet Setting is applied to Soccer Lottery and E-Sports Lottery.
+        /// </summary>
+        public static string BetSettingNoteMessage {
+            get {
+                return ResourceManager.GetString("BetSettingNoteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inputting all fields of bet setting = 0 to prevent members from playing the game..
         /// </summary>
         public static string MemberNote {

@@ -19,6 +19,8 @@
     {
         private readonly IDataAccess _dataAccess;
 
+        private const int SportsLotteryProductId = 169;
+
         public SettingTypeService()
             : this(null, null, null, null)
         {
@@ -40,7 +42,6 @@
             CustomerSettingQuery query)
         {
             var customerPT = _dataAccess.GetCustomerPT(query);
-
             return SetSportTypeBetTypeName(customerPT, settingContext.Language);
         }
 

@@ -15,6 +15,10 @@
 
         public string BetTypeName { get; set; }
 
+        public string TooltipMessage { get; set; }
+
+        public bool ShowIconTooltipMessage { get; set; }
+
         /// <summary>
         /// For Controller create exactly concrete class when get json from client.
         /// </summary>
