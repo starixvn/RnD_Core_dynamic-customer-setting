@@ -31,7 +31,8 @@
             <note-icon-tooltip data-ng-if="group[0].showIconTooltipMessage"
                                data-tooltip-message
                                data-tooltip-message-backup="{{group[0].tooltipMessage}}"
-                               data-tooltip-type />
+                               data-tooltip-type>
+            </note-icon-tooltip>
             <copy-setting-with-checkbox data-ng-if="(settingType | editableSettingType) && sportGroups.length > 1 && $first && $parent.$parent.$first"
                                         data-setting-type-id="settingType.id"
                                         data-setting-items="sportGroups"
