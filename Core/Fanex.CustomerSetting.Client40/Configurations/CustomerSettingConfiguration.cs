@@ -51,6 +51,13 @@
             set { this["CustomCssUrl"] = value; }
         }
 
+        [ConfigurationProperty("DarkModeCustomCssUrl")]
+        public Uri DarkModeCustomCssUrl
+        {
+            get { return (Uri)this["DarkModeCustomCssUrl"]; }
+            set { this["DarkModeCustomCssUrl"] = value; }
+        }
+
         [ConfigurationProperty("ClientLogCategory", IsRequired = false, DefaultValue = "DCS-Setting-Client-Log")]
         public string ClientLogCategory
         {

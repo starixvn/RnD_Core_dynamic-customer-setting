@@ -26,6 +26,8 @@
 
         internal byte System { get; set; }
 
+        public bool IsDarkMode { get; set; }
+
         internal string ToJson()
         {
             var properties = new List<string>();
