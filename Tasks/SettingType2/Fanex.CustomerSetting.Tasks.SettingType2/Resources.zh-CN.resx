@@ -128,6 +128,6 @@
     <value>更新上线的投注设置可会减少所有下线的投注设置，以确保下线们不大于上线的投注设置。</value>
   </data>
   <data name="BetSettingNoteMessage" xml:space="preserve">
-    <value>体育时时彩的投注设置适用于足球时时彩和电子竞技时时彩。</value>
+    <value>体育时时彩的投注设定将用于足球时时彩， 电竞时时彩 和其他游戏</value>
   </data>
 </root>

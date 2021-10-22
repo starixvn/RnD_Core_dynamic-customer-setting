@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType18 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sports Lottery&apos;s PT Setting is applied to Soccer Lottery and E-Sports Lottery.
+        ///   Looks up a localized string similar to PT Setting of Sports Lottery is applied to Soccer Lottery, E-Sports Lottery, and other games..
         /// </summary>
         internal static string PTNoteMessage {
             get {

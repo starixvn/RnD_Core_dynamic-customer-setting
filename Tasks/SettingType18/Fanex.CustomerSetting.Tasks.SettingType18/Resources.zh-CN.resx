@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PTNoteMessage" xml:space="preserve">
-    <value>Sports Lottery's PT Setting is applied to Soccer Lottery and E-Sports Lottery</value>
+    <value>体育时时彩的占成设定将用于足球时时彩， 电竞时时彩 和其他游戏</value>
   </data>
 </root>

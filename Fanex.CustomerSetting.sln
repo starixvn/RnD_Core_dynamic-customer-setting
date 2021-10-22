@@ -192,7 +192,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Clien
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingType18", "SettingType18", "{D20FAE0F-9718-44C4-96F0-C610D8C668A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType18", "Fanex.CustomerSetting.Tasks.SettingType18\Fanex.CustomerSetting.Tasks.SettingType18.csproj", "{FB04841C-96F5-41B9-AD70-473528912E77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType18", "Tasks\SettingType18\Fanex.CustomerSetting.Tasks.SettingType18\Fanex.CustomerSetting.Tasks.SettingType18.csproj", "{FB04841C-96F5-41B9-AD70-473528912E77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -551,7 +551,7 @@ Global
 		{FB04841C-96F5-41B9-AD70-473528912E77} = {D20FAE0F-9718-44C4-96F0-C610D8C668A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0E5B53E6-7B52-44B7-9EC9-E6557921FED2}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
+		SolutionGuid = {0E5B53E6-7B52-44B7-9EC9-E6557921FED2}
 	EndGlobalSection
 EndGlobal

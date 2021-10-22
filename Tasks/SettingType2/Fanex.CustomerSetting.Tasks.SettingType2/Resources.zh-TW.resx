@@ -127,6 +127,6 @@
     <value>更新上線的投注設置可會減少所有下線的投注設置，以確保下線們不大於上線的投注設置。</value>
   </data>
   <data name="BetSettingNoteMessage" xml:space="preserve">
-    <value>體育時時彩的投注設置適用於足球時時彩和電子競技時時彩。</value>
+    <value>體育時時彩的投注設定將用於足球時時彩， 電競時時彩 和其他遊戲</value>
   </data>
 </root>
