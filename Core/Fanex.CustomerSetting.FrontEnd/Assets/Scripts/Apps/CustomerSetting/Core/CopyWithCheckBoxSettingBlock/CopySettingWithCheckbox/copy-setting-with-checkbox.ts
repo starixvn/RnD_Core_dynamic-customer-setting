@@ -48,7 +48,11 @@ module CustomerSetting {
         copyingState: CopyingWithCheckboxState;
         settingTypeId: number;
         settingItems: Array<Array<CopyWithCheckboxSettingItem>>;
+        settingItemsOneDirection: Array<CopyWithCheckboxSettingItem>;
         isIconActive: boolean;
+        isSporttypeLevel: boolean;
+        copySporttypeActivated: boolean;
+        numOfCopyBettypeActivated: number;
     }
 
     export class CopySettingWithCheckboxDirective implements ng.IDirective {
@@ -60,7 +64,9 @@ module CustomerSetting {
         public get scope(): any {
             return {
                 settingTypeId: "=",
-                settingItems: "="
+                settingItems: "=",
+                isSporttypeLevel: "=",
+                
             };
         }
 
@@ -68,24 +74,43 @@ module CustomerSetting {
             $scope.copyingState = new CopyingWithCheckboxState();
             this.copyingSettingWithCheckboxService.register($scope);
             $scope.isIconActive = false;
-            this.$rootScope.$on("copySettingTypeWithCheckbox" + $scope.settingTypeId, () => {
-                $scope.copy(true);
+            $scope.copySporttypeActivated = false;
+            $scope.numOfCopyBettypeActivated = 0;
+            $scope.settingItemsOneDirection = ArrayHelpers.join2DimensionalArray($scope.settingItems);
+            this.$rootScope.$on("copySettingTypeWithCheckbox" + $scope.settingTypeId, (event: ng.IAngularEvent, bettypeId: number) => {
+                if ($scope.isIconActive && $scope.settingItemsOneDirection[0].betTypeId == bettypeId) {
+                    $scope.copy(true);
+                }
+            });
+            this.$rootScope.$on("updateSporttypeCopyState" + $scope.settingTypeId, (event: ng.IAngularEvent, copySporttypeActivated: boolean) => {
+                if (!$scope.isSporttypeLevel) {
+                    $scope.copySporttypeActivated = copySporttypeActivated;
+                    $scope.isIconActive = false;
+                }
+            });
+            this.$rootScope.$on("updateBettypeCopyState" + $scope.settingTypeId, (event: ng.IAngularEvent, copyBettypeActivated: boolean) => {
+                $scope.numOfCopyBettypeActivated += copyBettypeActivated ? 1 : -1;
             });
 
-            $scope.copy = (isForceCopy: boolean = false) => {
+            $scope.copy = (isSourceChanged: boolean = false) => {
+                if (!$scope.isSporttypeLevel && $scope.copySporttypeActivated)
+                    return;
+                if ($scope.isSporttypeLevel && $scope.numOfCopyBettypeActivated > 0)
+                    return;
                 if ($scope.settingItems && $scope.settingItems.length > 1) {
-                    var items = ArrayHelpers.join2DimensionalArray($scope.settingItems);
-                    var source = items[0];
-                    var targets = items.slice(1);
-                    if (!source.isCheckedUpdateRow || (source.isRowCopied && !$scope.isIconActive) || (isForceCopy && !source.isRowCopied))
-                        return;
-                    if (isForceCopy || !source.isRowCopied) {
+                    //var items = ArrayHelpers.join2DimensionalArray($scope.settingItems);
+                    var source = $scope.settingItemsOneDirection[0];
+                    var targets = $scope.settingItemsOneDirection.slice(1);
+                    //if (!source.isCheckedUpdateRow || (source.isRowCopied && !$scope.isIconActive) || (isSourceChanged && !source.isRowCopied))
+                    //    return;
+                    if (isSourceChanged || (!$scope.isIconActive && source.isCheckedUpdateRow)) {
                         if (source.validate()) {
                             this.copyingSettingWithCheckboxService.hideTooltips($scope);
                             var copyingResult = source.copySettingTo(targets);
                             if (copyingResult.numberOfCopiedItems > 0) {
-                                source.isRowCopied = true;
+                                //source.isRowCopied = true;
                                 $scope.isIconActive = true;
+
                                 if (copyingResult.status)
                                     $scope.copyingState.succeed();
                                 else
@@ -101,6 +126,15 @@ module CustomerSetting {
                         $scope.isIconActive = false;
                         source.removeCopyDisabled(targets);
                         this.copyingSettingWithCheckboxService.hideTooltips($scope);
+                    }
+
+                    if ($scope.isSporttypeLevel) {
+                        $scope.copySporttypeActivated = $scope.isSporttypeLevel ? $scope.isIconActive : $scope.copySporttypeActivated;
+                        $scope.$emit("updateSporttypeCopyState" + $scope.settingTypeId, $scope.copySporttypeActivated);
+                    }
+                    else {
+                        if (!isSourceChanged)
+                            $scope.$emit("updateBettypeCopyState" + $scope.settingTypeId, $scope.isIconActive);
                     }
                 }
             };

@@ -37,7 +37,8 @@
                                         data-setting-type-id="settingType.id"
                                         data-setting-items="sportGroups"
                                         data-is-multiple="isMultiple"
-                                        data-copy-mode="copyMode.group">
+                                        data-copy-mode="copyMode.group"
+                                        data-is-sporttype-level="true">
             </copy-setting-with-checkbox>
         </div>
         <div class="block__lbl-group"
@@ -57,10 +58,11 @@
                  data-sport-type="{{item.sportTypeId}}"
                  data-bet-type="{{item.betTypeId}}">
                 <div class="w15-percent block__lbl--no-border" data-ng-if="(settingType | editableSettingType)">
-                    <copy-setting-with-checkbox data-ng-if="(settingType | editableSettingType) && group.length > 1 && $first && $parent.$parent.$first"
+                    <copy-setting-with-checkbox data-ng-if="(settingType | editableSettingType) && group.length > 1 && $first"
                                                 data-setting-type-id="settingType.id"
                                                 data-setting-items="group"
-                                                data-is-multiple="isMultiple">
+                                                data-is-multiple="isMultiple"
+                                                data-is-sporttype-level="false">
                     </copy-setting-with-checkbox>
                 </div>
                 <div class="w15-percent block__lbl" data-ng-if="(settingType | editableSettingType)">

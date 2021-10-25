@@ -11,6 +11,7 @@ module CustomerSetting {
         togglableSettingBlocks: boolean;
         togglableSharedStates: TogglableSettingBlockSharedStates;
         isAutoChanged: (item: CopyWithCheckboxSettingItem, fieldName: string, isFirst: boolean) => void;
+        copySporttypeActivated: boolean;
     }
 
     export class CopyWithCheckboxSettingTypeDirective implements ng.IDirective {
@@ -39,10 +40,12 @@ module CustomerSetting {
 
                 $timeout(() => {
                     if (isFirst && item.isCheckedUpdateRow) {
-                        $scope.$emit("copySettingTypeWithCheckbox" + $scope.settingType.id);
+                        $scope.$emit("copySettingTypeWithCheckbox" + $scope.settingType.id, item.betTypeId);
                     }
                 }, 100);
             });
+
+            $scope.copySporttypeActivated = false;
         }];
 
         protected groupSettingItemsBySportType(settingItems: ISettingItem[]): CopyWithCheckboxSettingItem[][] {
