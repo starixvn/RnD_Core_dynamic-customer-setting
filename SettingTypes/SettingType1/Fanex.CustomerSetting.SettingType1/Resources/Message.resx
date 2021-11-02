@@ -168,6 +168,9 @@
   <data name="MasterPTOnMemberCannotBeLessThan" xml:space="preserve">
     <value>Master PT on Member must be greater than or equal to {0}.</value>
   </data>
+  <data name="Msg_10068" xml:space="preserve">
+    <value>You have reached the maximum of daily allowance (2 times) to update Position Taking. Please try again after {0} 12:00 PM GMT+8.</value>
+  </data>
   <data name="Msg_20001" xml:space="preserve">
     <value>Invalid position taking.</value>
   </data>

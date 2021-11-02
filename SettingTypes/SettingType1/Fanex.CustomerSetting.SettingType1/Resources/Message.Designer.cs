@@ -214,6 +214,15 @@ namespace Fanex.CustomerSetting.SettingType1.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have reached the maximum of daily allowance (2 times) to update Position Taking. Please try again after {0} 12:00 PM GMT+8..
+        /// </summary>
+        internal static string Msg_10068 {
+            get {
+                return ResourceManager.GetString("Msg_10068", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid position taking..
         /// </summary>
         internal static string Msg_20001 {

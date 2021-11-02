@@ -249,4 +249,7 @@
   <data name="Msg_20044" xml:space="preserve">
     <value>您不被允许使用自动占成, 请您联系您的上线。</value>
   </data>
+  <data name="Msg_10068" xml:space="preserve">
+    <value>您已达到每日更新占成的最高次数（2 次）。请在 {0} 下午 12:00 GMT+8 之后重试。</value>
+  </data>
 </root>
