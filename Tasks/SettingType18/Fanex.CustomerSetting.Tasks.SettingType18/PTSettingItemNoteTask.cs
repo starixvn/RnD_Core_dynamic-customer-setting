@@ -7,7 +7,9 @@
 
     public class PTSettingItemNoteTask : IPostQueryCustomerSettingTypeTask
     {
-        private readonly int[] listSporttypeShowNoteIcon = new int[] { 169 };
+        private readonly int[] listSporttypeShowNoteIcon = new int[] { 169, 224 };
+
+        private readonly string msgTemplate = "PTNoteMessage";
 
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, SettingType settingTypeData)
         {
@@ -17,7 +19,7 @@
                 if (Array.IndexOf(listSporttypeShowNoteIcon, settingItem.SportTypeId) > -1)
                 {
                     settingItem.ShowIconTooltipMessage = true;
-                    settingItem.TooltipMessage = Resources.PTNoteMessage;
+                    settingItem.TooltipMessage = Resources.ResourceManager.GetString(msgTemplate + "_"+ settingItem.SportTypeId);
                 }
             }
         }

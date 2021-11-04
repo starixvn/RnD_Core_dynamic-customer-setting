@@ -63,9 +63,18 @@ namespace Fanex.CustomerSetting.Tasks.SettingType18 {
         /// <summary>
         ///   Looks up a localized string similar to PT Setting of Sports Lottery is applied to Soccer Lottery, E-Sports Lottery, and other games..
         /// </summary>
-        internal static string PTNoteMessage {
+        internal static string PTNoteMessage_169 {
             get {
-                return ResourceManager.GetString("PTNoteMessage", resourceCulture);
+                return ResourceManager.GetString("PTNoteMessage_169", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PT Setting of Funky Games is applied to RNG War and other games.
+        /// </summary>
+        internal static string PTNoteMessage_224 {
+            get {
+                return ResourceManager.GetString("PTNoteMessage_224", resourceCulture);
             }
         }
     }
