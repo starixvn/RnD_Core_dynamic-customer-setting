@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PTNoteMessage" xml:space="preserve">
+  <data name="PTNoteMessage_169" xml:space="preserve">
     <value>體育時時彩的佔成設定將用於足球時時彩， 電競時時彩 和其他遊戲</value>
+  </data>
+  <data name="PTNoteMessage_224" xml:space="preserve">
+    <value>Funky Games的佔成設置用於RNG War和其他遊戲。</value>
   </data>
 </root>
