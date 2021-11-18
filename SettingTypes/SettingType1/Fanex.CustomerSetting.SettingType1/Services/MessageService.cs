@@ -6,6 +6,7 @@
     using CustomerSetting.Services.Impl;
     using Models.Messages;
     using Resources;
+    using System;
 
     internal class MessageService : MessageServiceBase, IMessageService
     {
@@ -33,6 +34,9 @@
                 case MessageTypes.DownlinePTViolation:
                     return TranslateDownlinePTViolationMessage(rawMessage, settingLevel, language);
 
+                case MessageTypes.UpdateTooOften:
+                    return TranslatUpdateTooOftenMessage(rawMessage, language);
+
                 default:
                     return base.TranslateMessage(msgType, rawMessage, settingLevel, language);
             }
@@ -59,6 +63,19 @@
             positionTakingMainMessage.GroupUsernameBySportTypeBetType();
 
             return GetMessageContent<DownlinePTViolationSubMessage>(positionTakingMainMessage, settingLevel, language);
+        }
+
+        private MessageContent TranslatUpdateTooOftenMessage(string rawMessage, string language)
+        {
+            var mainMessage = rawMessage;
+            var updateTooOftenMessage = Deserialize<SimpleMessage>(rawMessage);
+
+            if (updateTooOftenMessage != null)
+            {
+                mainMessage = string.Format(GetMessage(Message.ResourceManager, updateTooOftenMessage.MessageId), DateTime.UtcNow.AddHours(8).ToString("dd/MM/yyyy"));
+            }
+
+            return new MessageContent(mainMessage);
         }
     }
 }

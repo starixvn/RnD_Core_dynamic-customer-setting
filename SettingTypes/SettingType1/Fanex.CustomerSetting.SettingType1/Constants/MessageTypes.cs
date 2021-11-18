@@ -37,5 +37,7 @@
         /// </Root>
         /// </summary>
         public const int WrongPT = 5;
+
+        public const int UpdateTooOften = 6;
     }
 }
