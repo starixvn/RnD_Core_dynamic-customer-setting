@@ -250,6 +250,6 @@
     <value>您不被允許使用自動占成, 請您聯系您的上線。</value>
   </data>
   <data name="Msg_10068" xml:space="preserve">
-    <value>您已達到每日更新佔成的最高次數（2 次）。請在 {0} 下午 12:00 GMT+8 之後重試。</value>
+    <value>您已達到每日更新佔成的最高次數（1 次）。請在 {0} 下午 12:00 GMT+8 之後重試。</value>
   </data>
 </root>
