@@ -5,11 +5,13 @@
     using System.Web.Routing;
     using Client40;
     using MatrixClient;
+    using Fanex.Logging.Extensions.Database;
 
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
+            Fanex.CustomerSetting.DemoSite.LoggingConfig.LoggingConfig.Init(new[] { "pass", "pwd", "security", "Password" }, getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
             AreaRegistration.RegisterAllAreas();
 
             CustomerSettingRegistration.Init();
