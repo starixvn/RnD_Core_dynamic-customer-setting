@@ -25,6 +25,11 @@
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.product">
                     {{productName}}
                 </label>
+                <note-icon-tooltip data-ng-if="item.showIconTooltipMessage"
+                                   data-tooltip-message
+                                   data-tooltip-message-backup="{{item.tooltipMessage}}"
+                                   data-tooltip-type>
+                </note-icon-tooltip>
                 <setting-type8-checkbox-group data-ng-if="(settingType | editableSettingType) && !popupMode"
                                               data-items="item.groups"
                                               data-highlight-state="item.highlightState"
@@ -42,10 +47,16 @@
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.product">
                     {{productName}}
                 </label>
+                <note-icon-tooltip data-ng-if="item.showIconTooltipMessage"
+                                   data-tooltip-message
+                                   data-tooltip-message-backup="{{item.tooltipMessage}}"
+                                   data-tooltip-type>
+                </note-icon-tooltip>
             </div>
             <div class="block__cell"
                  data-ng-repeat="detail in item.details"
-                 data-ng-class="{ 'block__cell--no-border-bottom': $last && !item.hasMoreDetails }">
+                 data-ng-class="{ 'block__cell--no-border-bottom': $last && !item.hasMoreDetails,
+                                  'block__cell--buy-bonus': detail.isBuyBonus }">
                 {{detail.betTypeName }}
             </div>
             <div class="block__cell block__cell--no-border-bottom" data-ng-if="item.hasMoreDetails">

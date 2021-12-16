@@ -183,7 +183,7 @@
             if (stakeLevelGroupDetailsRawData?.Any() == true)
             {
                 stakeLevelGroupDetails = stakeLevelGroupDetailsRawData
-                    .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId })
+                    .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId, rawItem.IsBuyBonus })
                     .Select(group =>
                     {
                         var stakeLevelItem = new StakeLevel();
@@ -192,6 +192,7 @@
                         stakeLevelItem.SportTypeName = ResourceService.GetSportTypeName(stakeLevelItem.SportTypeId, language);
                         stakeLevelItem.BetTypeId = group.Key.BetTypeId;
                         stakeLevelItem.BetTypeName = ResourceService.GetBetTypeName(stakeLevelItem.BetTypeId, language);
+                        stakeLevelItem.IsBuyBonus = group.Key.IsBuyBonus;
                         stakeLevelItem.StakeRanges = group.Select(item => new StakeRange(item.StakeLevelGroupId, item.StakeLevel));
 
                         return stakeLevelItem;

@@ -829,6 +829,8 @@ select.setting-field {
   padding: 0 5px; }
   .settingtype8 .block__cell--no-border-bottom {
     border-bottom: none; }
+  .settingtype8 .block__cell--buy-bonus {
+    background-color: #f2dc8a; }
 
 .settingtype8 .scrollable-area {
   border-right: none;
