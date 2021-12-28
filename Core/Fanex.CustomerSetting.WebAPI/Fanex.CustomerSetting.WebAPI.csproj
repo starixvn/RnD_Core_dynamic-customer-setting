@@ -271,6 +271,7 @@
     </Content>
     <Content Include="AppSettings.sit.config" />
     <Content Include="AppSettings.aws.config" />
+    <Content Include="App_Data\PluggableTasks\settingtype-8.json" />
     <None Include="packages.config" />
     <Content Include="Web.ConnectionStrings.backupMNL.config" />
     <Content Include="Web.ConnectionStrings.local.config" />
@@ -374,6 +375,10 @@
     <ProjectReference Include="..\..\Tasks\SettingType2\Fanex.CustomerSetting.Tasks.SettingType2\Fanex.CustomerSetting.Tasks.SettingType2.csproj">
       <Project>{ce688f6e-48c3-4036-a393-dc22109659ba}</Project>
       <Name>Fanex.CustomerSetting.Tasks.SettingType2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tasks\SettingType8\Fanex.CustomerSetting.Tasks.SettingType8\Fanex.CustomerSetting.Tasks.SettingType8.csproj">
+      <Project>{b2071ef6-7006-4c20-b0f1-3ab246d751a5}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.SettingType8</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tasks\SettingType9\Fanex.CustomerSetting.Tasks.SettingType9\Fanex.CustomerSetting.Tasks.SettingType9.csproj">
       <Project>{c7ed70ad-54e8-48dd-b6f7-f42fe3b8788f}</Project>

@@ -9,5 +9,7 @@
         public int StakeLevelGroupId { get; set; }
 
         public string StakeLevel { get; set; }
+
+        public bool IsBuyBonus { get; set; }
     }
 }

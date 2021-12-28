@@ -194,6 +194,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingType18", "SettingTyp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType18", "Tasks\SettingType18\Fanex.CustomerSetting.Tasks.SettingType18\Fanex.CustomerSetting.Tasks.SettingType18.csproj", "{FB04841C-96F5-41B9-AD70-473528912E77}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingType8", "SettingType8", "{81B7B477-9BD5-43C8-BD33-782137212087}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType8", "Tasks\SettingType8\Fanex.CustomerSetting.Tasks.SettingType8\Fanex.CustomerSetting.Tasks.SettingType8.csproj", "{B2071EF6-7006-4C20-B0F1-3AB246D751A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -456,6 +460,10 @@ Global
 		{FB04841C-96F5-41B9-AD70-473528912E77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB04841C-96F5-41B9-AD70-473528912E77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB04841C-96F5-41B9-AD70-473528912E77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2071EF6-7006-4C20-B0F1-3AB246D751A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2071EF6-7006-4C20-B0F1-3AB246D751A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2071EF6-7006-4C20-B0F1-3AB246D751A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2071EF6-7006-4C20-B0F1-3AB246D751A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -549,9 +557,11 @@ Global
 		{34A6F3B2-8ABE-4EFB-8188-4EB5230C7F48} = {09967616-74BB-44FA-918B-819B7AA63F26}
 		{D20FAE0F-9718-44C4-96F0-C610D8C668A8} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
 		{FB04841C-96F5-41B9-AD70-473528912E77} = {D20FAE0F-9718-44C4-96F0-C610D8C668A8}
+		{81B7B477-9BD5-43C8-BD33-782137212087} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
+		{B2071EF6-7006-4C20-B0F1-3AB246D751A5} = {81B7B477-9BD5-43C8-BD33-782137212087}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
 		SolutionGuid = {0E5B53E6-7B52-44B7-9EC9-E6557921FED2}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal

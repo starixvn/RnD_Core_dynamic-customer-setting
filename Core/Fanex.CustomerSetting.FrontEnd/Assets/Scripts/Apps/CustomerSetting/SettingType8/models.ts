@@ -168,6 +168,7 @@ module CustomerSetting {
 
     export class SettingType8StakeLevel extends DefaultSettingItem {
         public stakeRanges: Array<SettingType8StakeRange>;
+        public isBuyBonus: boolean;
 
         constructor();
         constructor(stakeLevelDetailedItem: any, levelGroups: SettingType8LevelGroup[]);
@@ -176,6 +177,7 @@ module CustomerSetting {
 
             if (stakeLevelDetailedItem) {
                 this.stakeRanges = this.fillLevelGroupDetails(stakeLevelDetailedItem.stakeRanges, levelGroups);
+                this.isBuyBonus = stakeLevelDetailedItem.isBuyBonus;
             }
         }
 

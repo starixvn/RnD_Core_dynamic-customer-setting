@@ -38,6 +38,10 @@
         &--no-border-bottom {
             border-bottom: none;
         }
+
+        &--buy-bonus {
+            background-color: $block-item-lbl-buy-bonus-bg;
+        }
     }
 
     .scrollable-area {

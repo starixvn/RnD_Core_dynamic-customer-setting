@@ -8,6 +8,8 @@
     {
         public IEnumerable<StakeRange> StakeRanges { get; set; }
 
+        public bool IsBuyBonus { get; set; }
+
         public override bool Equals(object obj)
         {
             var otherObj = obj as StakeLevel;
