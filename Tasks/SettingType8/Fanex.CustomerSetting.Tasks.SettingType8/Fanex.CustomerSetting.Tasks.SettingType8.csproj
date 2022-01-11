@@ -67,6 +67,10 @@
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\SettingTypes\SettingType8\Fanex.CustomerSetting.SettingType8\Fanex.CustomerSetting.SettingType8.csproj">
+      <Project>{0b879d62-31d1-4640-ac8c-f618aaaec6d8}</Project>
+      <Name>Fanex.CustomerSetting.SettingType8</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

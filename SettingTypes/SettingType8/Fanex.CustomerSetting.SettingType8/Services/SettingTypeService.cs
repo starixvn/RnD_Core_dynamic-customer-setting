@@ -126,7 +126,7 @@
             if (stakeLevelGroupsRawData?.Any() == true)
             {
                 result = stakeLevelGroupsRawData
-                    .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId })
+                    .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId, rawItem.IsBuyBonus })
                     .Where(group => group.Key.SportTypeId == sportTypeId || !sportTypeId.HasValue)
                     .Select(group =>
                     {
@@ -143,6 +143,7 @@
                             showAll,
                             out numberOfDetailedItem);
                         stakeLevelGroupItem.HasMoreDetails = numberOfDetailedItem > stakeLevelGroupItem.Details.Count();
+                        stakeLevelGroupItem.IsBuyBonus = group.Key.IsBuyBonus;
 
                         return stakeLevelGroupItem;
                     })
