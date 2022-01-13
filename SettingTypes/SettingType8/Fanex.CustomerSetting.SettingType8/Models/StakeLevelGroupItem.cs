@@ -14,6 +14,8 @@
 
         public bool HasMoreDetails { get; set; }
 
+        public bool IsBuyBonus { get; set; }
+
         public override string ToXml()
         {
             var checkedGroupIds = Groups

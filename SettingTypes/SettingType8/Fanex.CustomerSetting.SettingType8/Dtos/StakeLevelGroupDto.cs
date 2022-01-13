@@ -11,5 +11,7 @@
         public int StakeLevelGroupId { get; set; }
 
         public bool Selected { get; set; }
+
+        public bool IsBuyBonus { get; set; }
     }
 }
