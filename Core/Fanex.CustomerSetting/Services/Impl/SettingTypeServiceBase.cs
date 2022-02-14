@@ -10,6 +10,7 @@
     using Models.Enumerations;
     using Models.Requests;
     using Models.Results;
+    using CustomerSetting.LoggingConfig;
 
     public abstract class SettingTypeServiceBase : ISettingTypeService
     {

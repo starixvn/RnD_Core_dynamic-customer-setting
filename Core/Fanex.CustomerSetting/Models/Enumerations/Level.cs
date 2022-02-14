@@ -15,7 +15,7 @@
         {
         }
 
-        private Level(byte value, string displayName)
+        internal Level(byte value, string displayName)
             : base(value, displayName)
         {
         }

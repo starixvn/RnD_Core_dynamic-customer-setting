@@ -1,14 +1,22 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Tests.Services
 {
+    using CustomerSetting.LoggingConfig;
     using CustomerSetting.Models;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
+    using Fanex.Logging.Extensions.Database;
     using NUnit.Framework;
     using SettingType1.Services;
 
     [TestFixture]
     public class SettingTypeServiceFactoryTest
     {
+        [SetUp]
+        public void Setup()
+        {
+            LoggingConfig.Init(new[] { "pass", "pwd", "security", "Password" }, getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
+        }
+
         [Test]
         public void GetInstance_SettingTypeIsPT_ReturnValidSettingTypeService()
         {

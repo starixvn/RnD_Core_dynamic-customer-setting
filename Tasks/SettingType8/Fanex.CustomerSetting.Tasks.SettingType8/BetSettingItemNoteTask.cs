@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.SettingType8.Models;
-    using System;
+    using System.Linq;
 
     public class BetSettingItemNoteTask : IPostQueryCustomerSettingTypeTask
     {
@@ -13,13 +13,12 @@
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, SettingType settingTypeData)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
-            foreach (SettingItemDefault settingItem in settingTypeData.SettingItems)
+            foreach (StakeLevelGroupItem stakeLevelGroupItem in settingTypeData.SettingItems.OfType<StakeLevelGroupItem>())
             {
-                var stakeLevelGroupItem = (StakeLevelGroupItem)settingItem;
                 if (stakeLevelGroupItem.IsBuyBonus)
                 {
-                    settingItem.ShowIconTooltipMessage = true;
-                    settingItem.TooltipMessage = Resources.ResourceManager.GetString(msgTemplate);
+                    stakeLevelGroupItem.ShowIconTooltipMessage = true;
+                    stakeLevelGroupItem.TooltipMessage = Resources.ResourceManager.GetString(msgTemplate);
                 }
             }
         }

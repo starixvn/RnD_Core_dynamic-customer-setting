@@ -10,6 +10,8 @@
 
     internal class MessageService : MessageServiceBase, IMessageService
     {
+        private readonly int GMT8 = 8;
+
         public MessageService(IResourceService resourceService = null)
             : base(resourceService)
         {
@@ -35,7 +37,7 @@
                     return TranslateDownlinePTViolationMessage(rawMessage, settingLevel, language);
 
                 case MessageTypes.UpdateTooOften:
-                    return TranslatUpdateTooOftenMessage(rawMessage, language);
+                    return TranslatUpdateTooOftenMessage(rawMessage);
 
                 default:
                     return base.TranslateMessage(msgType, rawMessage, settingLevel, language);
@@ -65,14 +67,14 @@
             return GetMessageContent<DownlinePTViolationSubMessage>(positionTakingMainMessage, settingLevel, language);
         }
 
-        private MessageContent TranslatUpdateTooOftenMessage(string rawMessage, string language)
+        private MessageContent TranslatUpdateTooOftenMessage(string rawMessage)
         {
             var mainMessage = rawMessage;
             var updateTooOftenMessage = Deserialize<SimpleMessage>(rawMessage);
 
             if (updateTooOftenMessage != null)
             {
-                mainMessage = string.Format(GetMessage(Message.ResourceManager, updateTooOftenMessage.MessageId), DateTime.UtcNow.AddHours(8).ToString("dd/MM/yyyy"));
+                mainMessage = string.Format(GetMessage(Message.ResourceManager, updateTooOftenMessage.MessageId), DateTime.UtcNow.AddHours(GMT8).ToString("dd/MM/yyyy"));
             }
 
             return new MessageContent(mainMessage);

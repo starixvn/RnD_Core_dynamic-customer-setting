@@ -5,9 +5,11 @@
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Services;
+    using CustomerSetting.LoggingConfig;
     using Models;
     using NSubstitute;
     using NUnit.Framework;
+    using Logging.Extensions.Database;
 
     [TestFixture]
     public class QueryCasinoSettingServiceTests
@@ -18,8 +20,8 @@
         [SetUp]
         public void Setup()
         {
+            LoggingConfig.Init(new[] { "pass", "pwd", "security", "Password" }, getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
             var settingContext = new SettingContextStub();
-
             _customerProductSyncedStatusService = Substitute.For<ICustomerProductSyncedStatusService>();
             _queryCasinoSettingService = new QueryCasinoSettingServiceStub(settingContext, _customerProductSyncedStatusService);
         }

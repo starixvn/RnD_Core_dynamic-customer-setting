@@ -19,8 +19,6 @@
     {
         private readonly IDataAccess _dataAccess;
 
-        private const int SportsLotteryProductId = 169;
-
         public SettingTypeService()
             : this(null, null, null, null)
         {

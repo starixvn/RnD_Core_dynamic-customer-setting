@@ -88,20 +88,59 @@
             Assert.NotNull(_setting.WarningMessages);
         }
 
-        [TestCase(SystemType.Y7Alpha)]
-        [TestCase(SystemType.Y7InternalAlpha)]
-        [TestCase(SystemType.Y7ExternalNap)]
-        [TestCase(SystemType.Y7ExternalNapBetSetting)]
-        public void PostQueryCustomerSetting_SystemIs789Y_DoNotShowUnlimitedBetSettingNote(byte system)
+        [TestCase(SystemType.Y7Alpha, 1)]
+        [TestCase(SystemType.Y7InternalAlpha, 1)]
+        [TestCase(SystemType.Y7ExternalNap, 1)]
+        [TestCase(SystemType.Y7ExternalNapBetSetting, 1)]
+        public void PostQueryCustomerSetting_SystemIs789Y_IsMember_DoNotShowUnlimitedBetSettingNote(byte system, int customerLevel)
         {
             // Arrange.
             _settingContext.System = system;
-
+            _query.CustomerLevel = this.GetCustomerLevelEnum(customerLevel);
             // Act.
             _task.Invoke(_settingContext, _query, _setting);
 
             // Assert.
-            Assert.Null(_setting.WarningMessages);
+            Assert.IsFalse(((UpdateSettingResult)_setting.WarningMessages).SubResults.Any());
+        }
+
+        [TestCase(SystemType.Y7Alpha, 4)]
+        [TestCase(SystemType.Y7InternalAlpha, 4)]
+        [TestCase(SystemType.Y7ExternalNap, 4)]
+        [TestCase(SystemType.Y7ExternalNapBetSetting, 4)]
+        [TestCase(SystemType.Y7Alpha, 3)]
+        [TestCase(SystemType.Y7InternalAlpha, 3)]
+        [TestCase(SystemType.Y7ExternalNap, 3)]
+        [TestCase(SystemType.Y7ExternalNapBetSetting, 3)]
+        [TestCase(SystemType.Y7Alpha, 2)]
+        [TestCase(SystemType.Y7InternalAlpha, 2)]
+        [TestCase(SystemType.Y7ExternalNap, 2)]
+        [TestCase(SystemType.Y7ExternalNapBetSetting, 2)]
+        public void PostQueryCustomerSetting_SystemIs789Y_IsNotMember_ShowUnlimitedBetSettingNote(byte system, int customerLevel)
+        {
+            // Arrange.
+            _settingContext.System = system;
+            _query.CustomerLevel = this.GetCustomerLevelEnum(customerLevel);
+            // Act.
+            _task.Invoke(_settingContext, _query, _setting);
+
+            // Assert.
+            Assert.AreEqual(((UpdateSettingResult)_setting.WarningMessages).SubResults[0].Message, Resources.Y7SMANote);
+        }
+
+        private Level GetCustomerLevelEnum(int customerLevel)
+        {
+            switch (customerLevel)
+            {
+                case 1:
+                    return Level.Member;
+                case 2:
+                    return Level.Agent;
+                case 3:
+                    return Level.Master;
+                default:
+                    return Level.Super;
+            }
         }
 
         [Test]
