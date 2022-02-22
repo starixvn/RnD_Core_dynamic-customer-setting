@@ -8,6 +8,7 @@
         private const string BetTypeDefaultFormat = "Bet Type {0}";
         private const string ProductDefaultFormat = "Product {0}";
         private const string ProductRefId = "Product";
+        private const string SportRefId = "DummySport";
         private const string RefResourceDefaultFormat = "Ref Resource: {0} - Key: {1}";
 
         private readonly IRemotingRefService _remotingRef;
@@ -47,6 +48,15 @@
             }
 
             var sportTypeName = _remotingRef.GetSportName(sportTypeId.ToString(), language);
+
+            if (string.IsNullOrWhiteSpace(sportTypeName))
+            {
+                sportTypeName = _remotingRef.GetResourceDataByRefIdAndResourceId(
+                    SportRefId,
+                    sportTypeId.ToString(),
+                    language,
+                    string.Empty);
+            }
 
             return string.IsNullOrEmpty(sportTypeName)
                 ? string.Format(SportTypeDefaultFormat, sportTypeId)
