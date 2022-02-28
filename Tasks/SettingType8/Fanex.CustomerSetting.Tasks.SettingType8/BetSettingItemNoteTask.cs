@@ -13,6 +13,8 @@
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, SettingType settingTypeData)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(query, nameof(query));
+            Check.Argument.IsNotNull(settingTypeData, nameof(settingTypeData));
             foreach (StakeLevelGroupItem stakeLevelGroupItem in settingTypeData.SettingItems.OfType<StakeLevelGroupItem>())
             {
                 if (stakeLevelGroupItem.IsBuyBonus)

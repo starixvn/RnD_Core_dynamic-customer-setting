@@ -13,6 +13,8 @@
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, SettingType settingTypeData)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(query, nameof(query));
+            Check.Argument.IsNotNull(settingTypeData, nameof(settingTypeData));
             foreach (SettingItemDefault settingItem in settingTypeData.SettingItems.OfType<SettingItemDefault>())
             {
                 if (Array.IndexOf(listSporttypeShowNoteIcon, settingItem.SportTypeId) > -1)
