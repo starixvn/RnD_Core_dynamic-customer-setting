@@ -34301,6 +34301,29 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var CustomerInfoDirective = (function () {
+        function CustomerInfoDirective() {
+            this.replace = true;
+            this.templateUrl = "CustomerInfo/customer-info.htm";
+        }
+        Object.defineProperty(CustomerInfoDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    info: "=",
+                    names: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return CustomerInfoDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var CopyWithCheckboxSettingTypeDirective = (function () {
         function CopyWithCheckboxSettingTypeDirective() {
             var _this = this;
@@ -34365,29 +34388,6 @@ var CustomerSetting;
         };
     }
     CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var CustomerInfoDirective = (function () {
-        function CustomerInfoDirective() {
-            this.replace = true;
-            this.templateUrl = "CustomerInfo/customer-info.htm";
-        }
-        Object.defineProperty(CustomerInfoDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    info: "=",
-                    names: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return CustomerInfoDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -35678,43 +35678,43 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var SettingType1Config = (function () {
-        function SettingType1Config() {
+    var SettingType18Config = (function () {
+        function SettingType18Config() {
         }
-        SettingType1Config.step = function (isSupportPT3DecimalSites) {
+        SettingType18Config.step = function (isSupportPT3DecimalSites) {
             return isSupportPT3DecimalSites ? 0.5 : 1;
         };
-        SettingType1Config.roundingFactor = function (isSupportPT3DecimalSites) {
+        SettingType18Config.roundingFactor = function (isSupportPT3DecimalSites) {
             return isSupportPT3DecimalSites ? 100 : 100;
         };
-        return SettingType1Config;
+        return SettingType18Config;
     }());
-    CustomerSetting.SettingType1Config = SettingType1Config;
-    var SettingType1Item = (function () {
-        function SettingType1Item() {
+    CustomerSetting.SettingType18Config = SettingType18Config;
+    var SettingType18Item = (function () {
+        function SettingType18Item() {
         }
-        SettingType1Item.factory = function (settingItem, backup, customerLevel, uplineLevel, extraData, isSupportPT3DecimalSites) {
+        SettingType18Item.factory = function (settingItem, backup, customerLevel, uplineLevel, extraData, multipleUpdates, isSupportPT3DecimalSites) {
             if (customerLevel === CustomerSetting.Level.super) {
-                return new SuperPositionTaking(settingItem, backup);
+                return new SuperPositionTakingPartialMinPT(settingItem, backup, multipleUpdates, isSupportPT3DecimalSites);
             }
             else if (customerLevel === CustomerSetting.Level.master) {
-                return new MasterPositionTaking(settingItem, backup, isSupportPT3DecimalSites);
+                return new MasterPositionTakingPartialMinPT(settingItem, backup, multipleUpdates, isSupportPT3DecimalSites);
             }
             else if (customerLevel === CustomerSetting.Level.agent) {
-                return new AgentPositionTaking(settingItem, backup, isSupportPT3DecimalSites);
+                return new AgentPositionTakingPartialMinPT(settingItem, backup, multipleUpdates, isSupportPT3DecimalSites);
             }
             else if (customerLevel === CustomerSetting.Level.member && uplineLevel === CustomerSetting.Level.super) {
-                return new SuperPositionTakingOnMember(settingItem, backup, isSupportPT3DecimalSites);
+                return new SuperPositionTakingOnMemberPartialMinPT(settingItem, backup, multipleUpdates, isSupportPT3DecimalSites);
             }
             else if (customerLevel === CustomerSetting.Level.member && uplineLevel === CustomerSetting.Level.master) {
-                return new MasterPositionTakingOnMember(settingItem, backup, extraData, isSupportPT3DecimalSites);
+                return new MasterPositionTakingOnMemberPartialMinPT(settingItem, backup, extraData, multipleUpdates, isSupportPT3DecimalSites);
             }
             else if (customerLevel === CustomerSetting.Level.member && uplineLevel === CustomerSetting.Level.agent) {
-                return new AgentPositionTakingOnMember(settingItem, backup);
+                return new AgentPositionTakingOnMemberPartialMinPT(settingItem, backup, multipleUpdates);
             }
         };
-        SettingType1Item.fetch = function (rawData, settingItem) {
-            var addedProperties = ["sportTypeId", "sportTypeName", "betTypeId", "betTypeName", "typeName", "isLive"];
+        SettingType18Item.fetch = function (rawData, settingItem) {
+            var addedProperties = ["sportTypeId", "sportTypeName", "betTypeId", "betTypeName", "typeName", "isLive", "isRowCopied", "isCheckedUpdateRow", "isCheckedUpdateMinPtOnly"];
             if (rawData && settingItem) {
                 Object.keys(rawData).filter(function (propName) {
                     return addedProperties.indexOf(propName) < 0;
@@ -35723,8 +35723,10 @@ var CustomerSetting;
                 });
             }
         };
-        SettingType1Item.detechChanges = function (settingItem) {
+        SettingType18Item.detechChanges = function (settingItem) {
             var reservedProperties = ["oldSetting", "validationState", "highlightState"];
+            if (!settingItem.isMultiple)
+                reservedProperties.push("isRowCopied", "isCheckedUpdateRow", "isCheckedUpdateMinPtOnly", "isMultiple");
             if (settingItem) {
                 return Object.keys(settingItem).some(function (prop) {
                     return reservedProperties.indexOf(prop) < 0
@@ -35734,30 +35736,34 @@ var CustomerSetting;
             }
             return false;
         };
-        return SettingType1Item;
+        return SettingType18Item;
     }());
-    CustomerSetting.SettingType1Item = SettingType1Item;
-    var SuperPositionTaking = (function (_super) {
-        __extends(SuperPositionTaking, _super);
-        function SuperPositionTaking(settingItem, backup, isSupportPT3DecimalSites) {
+    CustomerSetting.SettingType18Item = SettingType18Item;
+    var SuperPositionTakingPartialMinPT = (function (_super) {
+        __extends(SuperPositionTakingPartialMinPT, _super);
+        function SuperPositionTakingPartialMinPT(settingItem, backup, multipleUpdates, isSupportPT3DecimalSites) {
             if (backup === void 0) { backup = false; }
             if (isSupportPT3DecimalSites === void 0) { isSupportPT3DecimalSites = false; }
-            _super.call(this, settingItem);
-            SettingType1Item.fetch(settingItem, this);
+            _super.call(this, settingItem, multipleUpdates);
+            SettingType18Item.fetch(settingItem, this);
             this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
+            this.tooltipMessage = settingItem.tooltipMessage;
+            this.showIconTooltipMessage = settingItem.showIconTooltipMessage;
             if (backup) {
-                this.oldSetting = new SuperPositionTaking(this, false, isSupportPT3DecimalSites);
+                this.oldSetting = new SuperPositionTakingPartialMinPT(this, false, multipleUpdates, isSupportPT3DecimalSites);
             }
         }
-        SuperPositionTaking.prototype.isChanged = function () {
-            return SettingType1Item.detechChanges(this);
+        SuperPositionTakingPartialMinPT.prototype.isChanged = function () {
+            return SettingType18Item.detechChanges(this);
         };
-        SuperPositionTaking.prototype.copySettingFrom = function (source) {
+        SuperPositionTakingPartialMinPT.prototype.copySettingFrom = function (source) {
             var isSuccessful = true;
+            var isCopySuccess = false;
             var backupS4;
             var backupM4;
             var backupA4;
             var backupN4;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupS4 = this.s4;
                 backupM4 = this.m4;
@@ -35767,7 +35773,9 @@ var CustomerSetting;
                 this.m4 = source.m4;
                 this.a4 = source.a4;
                 this.n4 = source.n4;
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     this.s4 = backupS4;
                     this.m4 = backupM4;
@@ -35783,58 +35791,66 @@ var CustomerSetting;
                         n4: backupN4
                     });
                 }
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(CustomerSetting.NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
-            return isSuccessful;
+            return isCopySuccess;
         };
-        SuperPositionTaking.prototype.validate = function () {
-            if (this.s4 > this.defaultMaxPT) {
-                this.validationState = new CustomerSetting.ValidationResult("SuperMaxPTCannotBeGreaterThan", "s4", [this.defaultMaxPT / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
-                return false;
-            }
-            if (this.m4 > this.s4) {
-                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThanSuperMaxPT", "m4");
-                return false;
-            }
-            if (this.a4 > this.m4) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThanMasterMaxPT", "a4");
-                return false;
-            }
-            if (this.n4 > this.s4) {
-                this.validationState = new CustomerSetting.ValidationResult("SuperMinPTCannotBeGreaterThanSuperMaxPT", "n4");
-                return false;
+        SuperPositionTakingPartialMinPT.prototype.validate = function () {
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.s4 > this.defaultMaxPT) {
+                    this.validationState = new CustomerSetting.ValidationResult("SuperMaxPTCannotBeGreaterThan", "s4", [this.defaultMaxPT / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                    return false;
+                }
+                if (this.m4 > this.s4) {
+                    this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThanSuperMaxPT", "m4");
+                    return false;
+                }
+                if (this.a4 > this.m4) {
+                    this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThanMasterMaxPT", "a4");
+                    return false;
+                }
+                if (this.n4 > this.s4) {
+                    this.validationState = new CustomerSetting.ValidationResult("SuperMinPTCannotBeGreaterThanSuperMaxPT", "n4");
+                    return false;
+                }
             }
             this.resetValidationState();
             return true;
         };
-        return SuperPositionTaking;
-    }(CustomerSetting.DefaultSettingItem));
-    CustomerSetting.SuperPositionTaking = SuperPositionTaking;
-    var MasterPositionTaking = (function (_super) {
-        __extends(MasterPositionTaking, _super);
-        function MasterPositionTaking(settingItem, backup, isSupportPT3DecimalSites) {
+        return SuperPositionTakingPartialMinPT;
+    }(CustomerSetting.CopyWithCheckboxSettingItem));
+    CustomerSetting.SuperPositionTakingPartialMinPT = SuperPositionTakingPartialMinPT;
+    var MasterPositionTakingPartialMinPT = (function (_super) {
+        __extends(MasterPositionTakingPartialMinPT, _super);
+        function MasterPositionTakingPartialMinPT(settingItem, backup, multipleUpdates, isSupportPT3DecimalSites) {
             if (backup === void 0) { backup = false; }
             if (isSupportPT3DecimalSites === void 0) { isSupportPT3DecimalSites = false; }
-            _super.call(this, settingItem);
-            SettingType1Item.fetch(settingItem, this);
+            _super.call(this, settingItem, multipleUpdates);
+            SettingType18Item.fetch(settingItem, this);
             this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
             if (backup) {
-                this.oldSetting = new MasterPositionTaking(this, false, isSupportPT3DecimalSites);
+                this.oldSetting = new MasterPositionTakingPartialMinPT(this, false, multipleUpdates, isSupportPT3DecimalSites);
             }
         }
-        MasterPositionTaking.prototype.isChanged = function () {
-            var isChanged = SettingType1Item.detechChanges(this);
+        MasterPositionTakingPartialMinPT.prototype.isChanged = function () {
+            var isChanged = SettingType18Item.detechChanges(this);
             if (isChanged) {
                 this.correctAutoPtValues();
             }
             return isChanged;
         };
-        MasterPositionTaking.prototype.copySettingFrom = function (source) {
+        MasterPositionTakingPartialMinPT.prototype.copySettingFrom = function (source) {
             var isSuccessful = true;
+            var isCopySuccess = false;
             var backupIs3;
             var backupN3;
             var backupM3;
             var backupUs3;
             var backupS3;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupIs3 = this.iS3;
                 backupN3 = this.n3;
@@ -35846,7 +35862,9 @@ var CustomerSetting;
                 this.m3 = source.m3;
                 this.uS3 = source.uS3;
                 this.s3 = source.s3;
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     if (this.iS3 && !backupIs3 && this.validationState.fieldName === "uS3") {
                         this.validationState.fieldName = "s3";
@@ -35870,10 +35888,14 @@ var CustomerSetting;
                         s3: backupS3
                     });
                 }
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(CustomerSetting.NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
-            return isSuccessful;
+            return isCopySuccess;
         };
-        MasterPositionTaking.prototype.copyPtOnMembersFrom = function (source) {
+        MasterPositionTakingPartialMinPT.prototype.copyPtOnMembersFrom = function (source) {
             var isSuccessful = true;
             var backupSuperPTOnMembers;
             if (source) {
@@ -35892,25 +35914,27 @@ var CustomerSetting;
             }
             return isSuccessful;
         };
-        MasterPositionTaking.prototype.validate = function () {
-            if (this.iS3) {
-                if (!this.validateAutoPt()) {
+        MasterPositionTakingPartialMinPT.prototype.validate = function () {
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iS3) {
+                    if (!this.validateAutoPt()) {
+                        return false;
+                    }
+                }
+                else {
+                    if (!this.validateManualPt()) {
+                        return false;
+                    }
+                }
+                if (this.n3 > this.m3) {
+                    this.validationState = new CustomerSetting.ValidationResult("MasterMinPTCannotBeGreaterThanMasterMaxPT", "n3");
                     return false;
                 }
-            }
-            else {
-                if (!this.validateManualPt()) {
-                    return false;
-                }
-            }
-            if (this.n3 > this.m3) {
-                this.validationState = new CustomerSetting.ValidationResult("MasterMinPTCannotBeGreaterThanMasterMaxPT", "n3");
-                return false;
             }
             this.resetValidationState();
             return true;
         };
-        MasterPositionTaking.prototype.validateAutoPt = function () {
+        MasterPositionTakingPartialMinPT.prototype.validateAutoPt = function () {
             var minOfMasterMaxPt = this.n4 - this.uS3;
             var maxOfMasterMaxPt = Math.min(this.s4, this.m4);
             if (this.uS3 > this.s4) {
@@ -35918,21 +35942,21 @@ var CustomerSetting;
                 return false;
             }
             if (this.m3 < minOfMasterMaxPt) {
-                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             if (this.m3 > maxOfMasterMaxPt) {
-                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             return true;
         };
-        MasterPositionTaking.prototype.validateManualPt = function () {
+        MasterPositionTakingPartialMinPT.prototype.validateManualPt = function () {
             var minOfSuperPt = Math.max(0, this.n4 - this.m4);
             var minOfMasterMaxPt = Math.max(0, this.n4 - this.s3);
             var maxOfMasterMaxPt = Math.min(this.s4 - this.s3, this.m4);
             if (this.s3 < minOfSuperPt) {
-                this.validationState = new CustomerSetting.ValidationResult("SuperPTCannotBeLessThan", "s3", [minOfSuperPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("SuperPTCannotBeLessThan", "s3", [minOfSuperPt / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             if (this.s3 > this.s4) {
@@ -35940,28 +35964,28 @@ var CustomerSetting;
                 return false;
             }
             if (this.m3 < minOfMasterMaxPt) {
-                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             if (this.m3 > maxOfMasterMaxPt) {
-                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             return true;
         };
-        MasterPositionTaking.prototype.validatePtOnMembers = function () {
+        MasterPositionTakingPartialMinPT.prototype.validatePtOnMembers = function () {
             var maxOfSuperPtOnMembers = Math.max(0, this.s4 - this.m3);
             if (this.superPTOnMembers < 0) {
                 this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeLessThan", "superPTOnMembers", [0]);
                 return false;
             }
             if (this.superPTOnMembers > maxOfSuperPtOnMembers) {
-                this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "superPTOnMembers", [maxOfSuperPtOnMembers / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "superPTOnMembers", [maxOfSuperPtOnMembers / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             return true;
         };
-        MasterPositionTaking.prototype.correctAutoPtValues = function () {
+        MasterPositionTakingPartialMinPT.prototype.correctAutoPtValues = function () {
             if (this.iS3 && this.s3 > 0) {
                 this.s3 = 0;
             }
@@ -35969,35 +35993,37 @@ var CustomerSetting;
                 this.uS3 = 0;
             }
         };
-        return MasterPositionTaking;
-    }(CustomerSetting.DefaultSettingItem));
-    CustomerSetting.MasterPositionTaking = MasterPositionTaking;
-    var AgentPositionTaking = (function (_super) {
-        __extends(AgentPositionTaking, _super);
-        function AgentPositionTaking(settingItem, backup, isSupportPT3DecimalSites) {
+        return MasterPositionTakingPartialMinPT;
+    }(CustomerSetting.CopyWithCheckboxSettingItem));
+    CustomerSetting.MasterPositionTakingPartialMinPT = MasterPositionTakingPartialMinPT;
+    var AgentPositionTakingPartialMinPT = (function (_super) {
+        __extends(AgentPositionTakingPartialMinPT, _super);
+        function AgentPositionTakingPartialMinPT(settingItem, backup, multipleUpdates, isSupportPT3DecimalSites) {
             if (backup === void 0) { backup = false; }
             if (isSupportPT3DecimalSites === void 0) { isSupportPT3DecimalSites = false; }
-            _super.call(this, settingItem);
-            SettingType1Item.fetch(settingItem, this);
+            _super.call(this, settingItem, multipleUpdates);
+            SettingType18Item.fetch(settingItem, this);
             this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
             if (backup) {
-                this.oldSetting = new AgentPositionTaking(this, false, isSupportPT3DecimalSites);
+                this.oldSetting = new AgentPositionTakingPartialMinPT(this, false, multipleUpdates, isSupportPT3DecimalSites);
             }
         }
-        AgentPositionTaking.prototype.isChanged = function () {
-            var isChanged = SettingType1Item.detechChanges(this);
+        AgentPositionTakingPartialMinPT.prototype.isChanged = function () {
+            var isChanged = SettingType18Item.detechChanges(this);
             if (isChanged) {
                 this.correctAutoPtValues();
             }
             return isChanged;
         };
-        AgentPositionTaking.prototype.copySettingFrom = function (source) {
+        AgentPositionTakingPartialMinPT.prototype.copySettingFrom = function (source) {
             var isSuccessful = true;
+            var isCopySuccess = false;
             var backupIm2;
             var backupN2;
             var backupA2;
             var backupUm2;
             var backupM2;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupIm2 = this.iM2;
                 backupN2 = this.n2;
@@ -36009,7 +36035,9 @@ var CustomerSetting;
                 this.a2 = source.a2;
                 this.uM2 = source.uM2;
                 this.m2 = source.m2;
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     if (this.iM2 && !backupIm2 && this.validationState.fieldName === "uM2") {
                         this.validationState.fieldName = "m2";
@@ -36033,10 +36061,14 @@ var CustomerSetting;
                         m2: backupM2
                     });
                 }
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(CustomerSetting.NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
-            return isSuccessful;
+            return isCopySuccess;
         };
-        AgentPositionTaking.prototype.copyPtOnMembersFrom = function (source) {
+        AgentPositionTakingPartialMinPT.prototype.copyPtOnMembersFrom = function (source) {
             var isSuccessful = true;
             var backupMasterPTOnMembers;
             if (source) {
@@ -36055,25 +36087,27 @@ var CustomerSetting;
             }
             return isSuccessful;
         };
-        AgentPositionTaking.prototype.validate = function () {
-            if (this.iM2) {
-                if (!this.validateAutoPt()) {
+        AgentPositionTakingPartialMinPT.prototype.validate = function () {
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iM2) {
+                    if (!this.validateAutoPt()) {
+                        return false;
+                    }
+                }
+                else {
+                    if (!this.validateManualPt()) {
+                        return false;
+                    }
+                }
+                if (this.n2 > this.a2) {
+                    this.validationState = new CustomerSetting.ValidationResult("AgentMinPTCannotBeGreaterThanAgentMaxPT", "n2");
                     return false;
                 }
-            }
-            else {
-                if (!this.validateManualPt()) {
-                    return false;
-                }
-            }
-            if (this.n2 > this.a2) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentMinPTCannotBeGreaterThanAgentMaxPT", "n2");
-                return false;
             }
             this.resetValidationState();
             return true;
         };
-        AgentPositionTaking.prototype.validateAutoPt = function () {
+        AgentPositionTakingPartialMinPT.prototype.validateAutoPt = function () {
             var minOfAgentMaxPt = this.n3 - this.uM2;
             var maxOfAgentMaxPt = Math.min(this.m3, this.a4);
             if (this.uM2 > this.m3) {
@@ -36081,21 +36115,21 @@ var CustomerSetting;
                 return false;
             }
             if (this.a2 < minOfAgentMaxPt) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             if (this.a2 > maxOfAgentMaxPt) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             return true;
         };
-        AgentPositionTaking.prototype.validateManualPt = function () {
+        AgentPositionTakingPartialMinPT.prototype.validateManualPt = function () {
             var minOfMasterPt = Math.max(0, this.n3 - this.a4);
             var minOfAgentMaxPt = Math.max(0, this.n3 - this.m2);
             var maxOfAgentMaxPt = Math.min(this.m3 - this.m2, this.a4);
             if (this.m2 < minOfMasterPt) {
-                this.validationState = new CustomerSetting.ValidationResult("MasterPTCannotBeLessThan", "m2", [minOfMasterPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("MasterPTCannotBeLessThan", "m2", [minOfMasterPt / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             if (this.m2 > this.m3) {
@@ -36103,28 +36137,28 @@ var CustomerSetting;
                 return false;
             }
             if (this.a2 < minOfAgentMaxPt) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             if (this.a2 > maxOfAgentMaxPt) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             return true;
         };
-        AgentPositionTaking.prototype.validatePtOnMembers = function () {
+        AgentPositionTakingPartialMinPT.prototype.validatePtOnMembers = function () {
             var maxOfMasterPtOnMembers = Math.max(0, this.m3 - this.a2);
             if (this.masterPTOnMembers < 0) {
                 this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeLessThan", "masterPTOnMembers", [0]);
                 return false;
             }
             if (this.masterPTOnMembers > maxOfMasterPtOnMembers) {
-                this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "masterPTOnMembers", [maxOfMasterPtOnMembers / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "masterPTOnMembers", [maxOfMasterPtOnMembers / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
                 return false;
             }
             return true;
         };
-        AgentPositionTaking.prototype.correctAutoPtValues = function () {
+        AgentPositionTakingPartialMinPT.prototype.correctAutoPtValues = function () {
             if (this.iM2 && this.m2 > 0) {
                 this.m2 = 0;
             }
@@ -36132,34 +36166,36 @@ var CustomerSetting;
                 this.uM2 = 0;
             }
         };
-        return AgentPositionTaking;
-    }(CustomerSetting.DefaultSettingItem));
-    CustomerSetting.AgentPositionTaking = AgentPositionTaking;
-    var SuperPositionTakingOnMember = (function (_super) {
-        __extends(SuperPositionTakingOnMember, _super);
-        function SuperPositionTakingOnMember(settingItem, backup, isSupportPT3DecimalSites) {
+        return AgentPositionTakingPartialMinPT;
+    }(CustomerSetting.CopyWithCheckboxSettingItem));
+    CustomerSetting.AgentPositionTakingPartialMinPT = AgentPositionTakingPartialMinPT;
+    var SuperPositionTakingOnMemberPartialMinPT = (function (_super) {
+        __extends(SuperPositionTakingOnMemberPartialMinPT, _super);
+        function SuperPositionTakingOnMemberPartialMinPT(settingItem, backup, multipleUpdates, isSupportPT3DecimalSites) {
             if (backup === void 0) { backup = false; }
             if (isSupportPT3DecimalSites === void 0) { isSupportPT3DecimalSites = false; }
-            _super.call(this, settingItem);
-            SettingType1Item.fetch(settingItem, this);
+            _super.call(this, settingItem, multipleUpdates);
+            SettingType18Item.fetch(settingItem, this);
             this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
             if (backup) {
-                this.oldSetting = new SuperPositionTakingOnMember(this, false, isSupportPT3DecimalSites);
+                this.oldSetting = new SuperPositionTakingOnMemberPartialMinPT(this, false, multipleUpdates, isSupportPT3DecimalSites);
             }
         }
-        SuperPositionTakingOnMember.prototype.isChanged = function () {
-            var isChanged = SettingType1Item.detechChanges(this);
+        SuperPositionTakingOnMemberPartialMinPT.prototype.isChanged = function () {
+            var isChanged = SettingType18Item.detechChanges(this);
             if (isChanged) {
                 this.correctAutoPtValues();
             }
             return isChanged;
         };
-        SuperPositionTakingOnMember.prototype.copySettingFrom = function (source) {
+        SuperPositionTakingOnMemberPartialMinPT.prototype.copySettingFrom = function (source) {
             var isSuccessful = true;
+            var isCopySuccess = false;
             var backupIs1;
             var backupUs1;
             var backups1;
             var isS1Disabled;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupIs1 = this.iS1;
                 backupUs1 = this.uS1;
@@ -36171,7 +36207,9 @@ var CustomerSetting;
                 else if (!this.iS3) {
                     this.s1 = source.s1;
                 }
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     if (this.iS1 && !backupIs1 && this.validationState.fieldName === "uS1") {
                         this.validationState.fieldName = "s1";
@@ -36191,37 +36229,43 @@ var CustomerSetting;
                         s1: backups1
                     });
                 }
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(CustomerSetting.NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
-            return isSuccessful;
+            return isCopySuccess;
         };
-        SuperPositionTakingOnMember.prototype.validate = function () {
-            if (this.iS1) {
-                var minOfSuperAutoPtOnMember = Math.max(0, this.n4 - this.m1 - this.a1);
-                if (this.uS1 < minOfSuperAutoPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTOnMemberCannotBeLessThan", "uS1", [minOfSuperAutoPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
-                    return false;
+        SuperPositionTakingOnMemberPartialMinPT.prototype.validate = function () {
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iS1) {
+                    var minOfSuperAutoPtOnMember = Math.max(0, this.n4 - this.m1 - this.a1);
+                    if (this.uS1 < minOfSuperAutoPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTOnMemberCannotBeLessThan", "uS1", [minOfSuperAutoPtOnMember / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                        return false;
+                    }
+                    if (this.uS1 > this.s4) {
+                        this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT", "uS1");
+                        return false;
+                    }
                 }
-                if (this.uS1 > this.s4) {
-                    this.validationState = new CustomerSetting.ValidationResult("SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT", "uS1");
-                    return false;
-                }
-            }
-            else if (!this.iS3) {
-                var minOfSuperPtOnMember = Math.max(0, this.n4 - this.m1 - this.a1);
-                var maxOfSuperPtOnMember = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
-                if (this.s1 < minOfSuperPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeLessThan", "s1", [minOfSuperPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
-                    return false;
-                }
-                if (this.s1 > maxOfSuperPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "s1", [maxOfSuperPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
-                    return false;
+                else if (!this.iS3) {
+                    var minOfSuperPtOnMember = Math.max(0, this.n4 - this.m1 - this.a1);
+                    var maxOfSuperPtOnMember = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
+                    if (this.s1 < minOfSuperPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeLessThan", "s1", [minOfSuperPtOnMember / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                        return false;
+                    }
+                    if (this.s1 > maxOfSuperPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "s1", [maxOfSuperPtOnMember / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                        return false;
+                    }
                 }
             }
             this.resetValidationState();
             return true;
         };
-        SuperPositionTakingOnMember.prototype.correctAutoPtValues = function () {
+        SuperPositionTakingOnMemberPartialMinPT.prototype.correctAutoPtValues = function () {
             if (this.iS1 && this.s1 > 0) {
                 this.s1 = 0;
             }
@@ -36229,19 +36273,19 @@ var CustomerSetting;
                 this.uS1 = 0;
             }
         };
-        return SuperPositionTakingOnMember;
-    }(CustomerSetting.DefaultSettingItem));
-    CustomerSetting.SuperPositionTakingOnMember = SuperPositionTakingOnMember;
-    var MasterPositionTakingOnMember = (function (_super) {
-        __extends(MasterPositionTakingOnMember, _super);
-        function MasterPositionTakingOnMember(settingItem, backup, extraData, isSupportPT3DecimalSites) {
+        return SuperPositionTakingOnMemberPartialMinPT;
+    }(CustomerSetting.CopyWithCheckboxSettingItem));
+    CustomerSetting.SuperPositionTakingOnMemberPartialMinPT = SuperPositionTakingOnMemberPartialMinPT;
+    var MasterPositionTakingOnMemberPartialMinPT = (function (_super) {
+        __extends(MasterPositionTakingOnMemberPartialMinPT, _super);
+        function MasterPositionTakingOnMemberPartialMinPT(settingItem, backup, extraData, multipleUpdates, isSupportPT3DecimalSites) {
             if (backup === void 0) { backup = false; }
             if (isSupportPT3DecimalSites === void 0) { isSupportPT3DecimalSites = false; }
-            _super.call(this, settingItem);
-            SettingType1Item.fetch(settingItem, this);
+            _super.call(this, settingItem, multipleUpdates);
+            SettingType18Item.fetch(settingItem, this);
             this.isSupportPT3DecimalSites = isSupportPT3DecimalSites;
             if (backup) {
-                this.oldSetting = new MasterPositionTakingOnMember(this, false, null, isSupportPT3DecimalSites);
+                this.oldSetting = new MasterPositionTakingOnMemberPartialMinPT(this, false, extraData, multipleUpdates, isSupportPT3DecimalSites);
             }
             if (extraData) {
                 var isDisableMasterAutoPTValues = extraData.filter(function (item) {
@@ -36252,18 +36296,20 @@ var CustomerSetting;
                 }
             }
         }
-        MasterPositionTakingOnMember.prototype.isChanged = function () {
-            var isChanged = SettingType1Item.detechChanges(this);
+        MasterPositionTakingOnMemberPartialMinPT.prototype.isChanged = function () {
+            var isChanged = SettingType18Item.detechChanges(this);
             if (isChanged) {
                 this.correctAutoPtValues();
             }
             return isChanged;
         };
-        MasterPositionTakingOnMember.prototype.copySettingFrom = function (source) {
+        MasterPositionTakingOnMemberPartialMinPT.prototype.copySettingFrom = function (source) {
             var isSuccessful = true;
+            var isCopySuccess = false;
             var backupIm1;
             var backupUm1;
             var backupM1;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupIm1 = this.iM1;
                 backupUm1 = this.uM1;
@@ -36275,7 +36321,9 @@ var CustomerSetting;
                 else if (!this.iM2) {
                     this.m1 = source.m1;
                 }
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     if (this.iM1 && !backupIm1 && this.validationState.fieldName === "uM1") {
                         this.validationState.fieldName = "m1";
@@ -36295,37 +36343,43 @@ var CustomerSetting;
                         m1: backupM1
                     });
                 }
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(CustomerSetting.NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
-            return isSuccessful;
+            return isCopySuccess;
         };
-        MasterPositionTakingOnMember.prototype.validate = function () {
-            if (this.iM1) {
-                var minOfMasterAutoPtOnMember = Math.max(0, this.n3 - this.a1);
-                if (this.uM1 < minOfMasterAutoPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTOnMemberCannotBeLessThan", "uM1", [minOfMasterAutoPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
-                    return false;
+        MasterPositionTakingOnMemberPartialMinPT.prototype.validate = function () {
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.iM1) {
+                    var minOfMasterAutoPtOnMember = Math.max(0, this.n3 - this.a1);
+                    if (this.uM1 < minOfMasterAutoPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTOnMemberCannotBeLessThan", "uM1", [minOfMasterAutoPtOnMember / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                        return false;
+                    }
+                    if (this.uM1 > this.m3) {
+                        this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT", "uM1");
+                        return false;
+                    }
                 }
-                if (this.uM1 > this.m3) {
-                    this.validationState = new CustomerSetting.ValidationResult("MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT", "uM1");
-                    return false;
-                }
-            }
-            else if (!this.iM2 || this.isDisableMasterAutoPT) {
-                var minOfMasterPtOnMember = Math.max(0, this.n3 - this.a1);
-                var maxOfMasterPtOnMember = this.m3 - this.a1;
-                if (this.m1 < minOfMasterPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeLessThan", "m1", [minOfMasterPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
-                    return false;
-                }
-                if (this.m1 > maxOfMasterPtOnMember) {
-                    this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "m1", [maxOfMasterPtOnMember / SettingType1Config.roundingFactor(this.isSupportPT3DecimalSites)]);
-                    return false;
+                else if (!this.iM2 || this.isDisableMasterAutoPT) {
+                    var minOfMasterPtOnMember = Math.max(0, this.n3 - this.a1);
+                    var maxOfMasterPtOnMember = this.m3 - this.a1;
+                    if (this.m1 < minOfMasterPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeLessThan", "m1", [minOfMasterPtOnMember / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                        return false;
+                    }
+                    if (this.m1 > maxOfMasterPtOnMember) {
+                        this.validationState = new CustomerSetting.ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "m1", [maxOfMasterPtOnMember / SettingType18Config.roundingFactor(this.isSupportPT3DecimalSites)]);
+                        return false;
+                    }
                 }
             }
             this.resetValidationState();
             return true;
         };
-        MasterPositionTakingOnMember.prototype.correctAutoPtValues = function () {
+        MasterPositionTakingOnMemberPartialMinPT.prototype.correctAutoPtValues = function () {
             if (this.iM1 && this.m1 > 0) {
                 this.m1 = 0;
             }
@@ -36333,29 +36387,33 @@ var CustomerSetting;
                 this.uM1 = 0;
             }
         };
-        return MasterPositionTakingOnMember;
-    }(CustomerSetting.DefaultSettingItem));
-    CustomerSetting.MasterPositionTakingOnMember = MasterPositionTakingOnMember;
-    var AgentPositionTakingOnMember = (function (_super) {
-        __extends(AgentPositionTakingOnMember, _super);
-        function AgentPositionTakingOnMember(settingItem, backup) {
+        return MasterPositionTakingOnMemberPartialMinPT;
+    }(CustomerSetting.CopyWithCheckboxSettingItem));
+    CustomerSetting.MasterPositionTakingOnMemberPartialMinPT = MasterPositionTakingOnMemberPartialMinPT;
+    var AgentPositionTakingOnMemberPartialMinPT = (function (_super) {
+        __extends(AgentPositionTakingOnMemberPartialMinPT, _super);
+        function AgentPositionTakingOnMemberPartialMinPT(settingItem, backup, multipleUpdates) {
             if (backup === void 0) { backup = false; }
-            _super.call(this, settingItem);
-            SettingType1Item.fetch(settingItem, this);
+            _super.call(this, settingItem, multipleUpdates);
+            SettingType18Item.fetch(settingItem, this);
             if (backup) {
-                this.oldSetting = new AgentPositionTakingOnMember(this);
+                this.oldSetting = new AgentPositionTakingOnMemberPartialMinPT(this, false, multipleUpdates);
             }
         }
-        AgentPositionTakingOnMember.prototype.isChanged = function () {
-            return SettingType1Item.detechChanges(this);
+        AgentPositionTakingOnMemberPartialMinPT.prototype.isChanged = function () {
+            return SettingType18Item.detechChanges(this);
         };
-        AgentPositionTakingOnMember.prototype.copySettingFrom = function (source) {
+        AgentPositionTakingOnMemberPartialMinPT.prototype.copySettingFrom = function (source) {
             var isSuccessful = true;
+            var isCopySuccess = false;
             var backupA1;
+            var backupisCheckedUpdateRow = this.isCheckedUpdateRow;
             if (source) {
                 backupA1 = this.a1;
                 this.a1 = source.a1;
+                this.isCheckedUpdateRow = true;
                 isSuccessful = this.validate();
+                this.isCheckedUpdateRow = backupisCheckedUpdateRow;
                 if (!isSuccessful) {
                     this.a1 = backupA1;
                     this.highlightUnablyCopiedField();
@@ -36365,24 +36423,31 @@ var CustomerSetting;
                         a1: backupA1
                     });
                 }
+                this.isRowCopied = true;
+                isCopySuccess = !this.hasHighlightField(CustomerSetting.NotificationType.error);
+                if (this.isRowCopied)
+                    this.isCheckedUpdateRow = this.isCheckedUpdateMinPtOnly = isCopySuccess;
             }
-            return isSuccessful;
+            return isCopySuccess;
         };
-        AgentPositionTakingOnMember.prototype.validate = function () {
-            if (this.a1 < this.n2) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentPTCannotBeLessThanAgentMinPT", "a1");
-                return false;
-            }
-            if (this.a1 > this.a2) {
-                this.validationState = new CustomerSetting.ValidationResult("AgentPTCannotBeGreaterThanAgentMaxPT", "a1");
-                return false;
+        AgentPositionTakingOnMemberPartialMinPT.prototype.validate = function (isForceValidate) {
+            if (isForceValidate === void 0) { isForceValidate = false; }
+            if (!this.isMultiple || this.isCheckedUpdateRow) {
+                if (this.a1 < this.n2) {
+                    this.validationState = new CustomerSetting.ValidationResult("AgentPTCannotBeLessThanAgentMinPT", "a1");
+                    return false;
+                }
+                if (this.a1 > this.a2) {
+                    this.validationState = new CustomerSetting.ValidationResult("AgentPTCannotBeGreaterThanAgentMaxPT", "a1");
+                    return false;
+                }
             }
             this.resetValidationState();
             return true;
         };
-        return AgentPositionTakingOnMember;
-    }(CustomerSetting.DefaultSettingItem));
-    CustomerSetting.AgentPositionTakingOnMember = AgentPositionTakingOnMember;
+        return AgentPositionTakingOnMemberPartialMinPT;
+    }(CustomerSetting.CopyWithCheckboxSettingItem));
+    CustomerSetting.AgentPositionTakingOnMemberPartialMinPT = AgentPositionTakingOnMemberPartialMinPT;
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -36481,7 +36546,7 @@ var CustomerSetting;
                 throw "Scope of the modal must not be undefied";
             }
             this.modalScope = scope;
-            this.modalScope.divisor = CustomerSetting.SettingType1Config.roundingFactor(this.settingTypesSharedValuesService.isSupportPT3DecimalSites);
+            this.modalScope.divisor = CustomerSetting.SettingType18Config.roundingFactor(this.settingTypesSharedValuesService.isSupportPT3DecimalSites);
             this.modalScope.cancel = function () {
                 _this.modalScope.isShown = false;
                 _this.resolvePromise();
@@ -36525,18 +36590,18 @@ var CustomerSetting;
             if (customerLevel === CustomerSetting.Level.master) {
                 settingItems.forEach(function (settingItem) {
                     var item = settingItem;
-                    if (!item.iS3 && item.iS3 !== item.oldSetting.iS3) {
+                    if (item.isCheckedUpdateRow && !item.iS3 && item.iS3 !== item.oldSetting.iS3) {
                         changedItems.push(item);
-                        _this.modalScope.ranges.push(_this.valueRangeService.generateRanges(item.superPTOnMembers, 0, item.s4 - item.m3, CustomerSetting.SettingType1Config.step(isSupportPT3DecimalSites), CustomerSetting.SettingType1Config.roundingFactor(isSupportPT3DecimalSites)));
+                        _this.modalScope.ranges.push(_this.valueRangeService.generateRanges(item.superPTOnMembers, 0, item.s4 - item.m3, CustomerSetting.SettingType18Config.step(isSupportPT3DecimalSites), CustomerSetting.SettingType18Config.roundingFactor(isSupportPT3DecimalSites)));
                     }
                 });
             }
             else if (customerLevel === CustomerSetting.Level.agent) {
                 settingItems.forEach(function (settingItem) {
                     var item = settingItem;
-                    if (!item.iM2 && item.iM2 !== item.oldSetting.iM2) {
+                    if (item.isCheckedUpdateRow && !item.iM2 && item.iM2 !== item.oldSetting.iM2) {
                         changedItems.push(item);
-                        _this.modalScope.ranges.push(_this.valueRangeService.generateRanges(item.masterPTOnMembers, 0, item.m3 - item.a2, CustomerSetting.SettingType1Config.step(isSupportPT3DecimalSites), CustomerSetting.SettingType1Config.roundingFactor(isSupportPT3DecimalSites)));
+                        _this.modalScope.ranges.push(_this.valueRangeService.generateRanges(item.masterPTOnMembers, 0, item.m3 - item.a2, CustomerSetting.SettingType18Config.step(isSupportPT3DecimalSites), CustomerSetting.SettingType18Config.roundingFactor(isSupportPT3DecimalSites)));
                     }
                 });
             }
@@ -36662,22 +36727,30 @@ var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
     var PositionTakingSelectDirective = (function () {
-        function PositionTakingSelectDirective($compile, settingTypesSharedValuesService) {
+        function PositionTakingSelectDirective($compile, $timeout, settingTypesSharedValuesService) {
             var _this = this;
             this.replace = true;
             this.templateUrl = "position-taking-select.htm";
             this.controller = ["$scope", "valueRangeService", function ($scope, valueRangeService) {
                     var isSupportPT3DecimalSites = _this.settingTypesSharedValuesService.isSupportPT3DecimalSites;
-                    $scope.divisor = CustomerSetting.SettingType1Config.roundingFactor(isSupportPT3DecimalSites);
+                    $scope.isMinPt = !!$scope.isMinPt;
+                    $scope.isPartialMinPt = !!$scope.isPartialMinPt;
+                    $scope.isFirst = !!$scope.isFirst;
+                    $scope.divisor = CustomerSetting.SettingType18Config.roundingFactor(isSupportPT3DecimalSites);
                     $scope.$watchGroup(["min", "max"], function (newData, oldData) {
                         if ($scope.settingItem) {
                             if (!angular.equals(oldData, newData)) {
                                 $scope.settingItem[$scope.fieldName] = Math.max($scope.min, Math.min($scope.max, $scope.settingItem[$scope.fieldName]));
                             }
-                            $scope.range = valueRangeService.generateRanges($scope.settingItem[$scope.fieldName], $scope.min, $scope.max, CustomerSetting.SettingType1Config.step(isSupportPT3DecimalSites), CustomerSetting.SettingType1Config.roundingFactor(isSupportPT3DecimalSites));
+                            $scope.range = valueRangeService.generateRanges($scope.settingItem[$scope.fieldName], $scope.min, $scope.max, CustomerSetting.SettingType18Config.step(isSupportPT3DecimalSites), CustomerSetting.SettingType18Config.roundingFactor(isSupportPT3DecimalSites));
                         }
                     });
                     $scope.resetState = function (fieldName) {
+                        _this.$timeout(function () {
+                            if ($scope.isPartialMinPt && $scope.isFirst && $scope.settingItem.isCheckedUpdateRow) {
+                                $scope.$emit("copySettingTypeWithCheckbox18");
+                            }
+                        }, 100);
                         var item = $scope.settingItem;
                         if (item.validationState && !item.validationState.isSuccessful) {
                             if (item.validationState.fieldName === fieldName) {
@@ -36690,8 +36763,8 @@ var CustomerSetting;
                     };
                 }];
             this.link = function (scope, element) {
-                var select = element.find("select");
                 var isSupportPT3DecimalSites = _this.settingTypesSharedValuesService.isSupportPT3DecimalSites;
+                var select = element.find("select");
                 select.attr("data-ng-change", "resetState(fieldName)");
                 select.attr("data-ng-model", "settingItem." + scope.fieldName);
                 select.attr("data-ng-options", "item.key as (item.value | ptFormat:" + isSupportPT3DecimalSites + ") for item in range");
@@ -36702,6 +36775,7 @@ var CustomerSetting;
                 _this.$compile(element)(scope);
             };
             this.$compile = $compile;
+            this.$timeout = $timeout;
             this.settingTypesSharedValuesService = settingTypesSharedValuesService;
         }
         Object.defineProperty(PositionTakingSelectDirective.prototype, "scope", {
@@ -36711,19 +36785,22 @@ var CustomerSetting;
                     fieldName: "@",
                     min: "@",
                     max: "@",
-                    disabled: "@"
+                    disabled: "@",
+                    isMinPt: "=?",
+                    isPartialMinPt: "=?",
+                    isFirst: "=?"
                 };
             },
             enumerable: true,
             configurable: true
         });
-        PositionTakingSelectDirective.$inject = ["$compile", "settingTypesSharedValuesService"];
+        PositionTakingSelectDirective.$inject = ["$compile", "$timeout", "settingTypesSharedValuesService"];
         return PositionTakingSelectDirective;
     }());
     CustomerSetting.ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
     function PositionTakingFormatFilter() {
         return function (ptValue, isSupportPT3DecimalSites) {
-            return ptValue / CustomerSetting.SettingType1Config.roundingFactor(isSupportPT3DecimalSites);
+            return ptValue / CustomerSetting.SettingType18Config.roundingFactor(isSupportPT3DecimalSites);
         };
     }
     CustomerSetting.ModuleRegister.filter("ptFormat", PositionTakingFormatFilter);
@@ -36745,23 +36822,63 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var SettingType1Directive = (function (_super) {
-        __extends(SettingType1Directive, _super);
-        function SettingType1Directive(positionTakingResourceService) {
+    var SettingType18Directive = (function (_super) {
+        __extends(SettingType18Directive, _super);
+        function SettingType18Directive(parametersService, positionTakingResourceService) {
             var _this = this;
-            _super.call(this, CustomerSetting.SettingType1Item.factory);
-            this.templateUrl = "settingtype1.htm";
+            _super.call(this, CustomerSetting.SettingType18Item.factory);
+            this.templateUrl = "settingtype18.htm";
             this.link = function (scope) {
-                scope.headerTemplateUrl = "settingtype1-header.htm";
-                scope.valueTemplateUrl = "settingtype1-value.htm";
+                scope.isMultiple = _this.parametersService.multipleUpdates;
+                scope.headerTemplateUrl = "settingtype18-header.htm";
+                scope.valueTemplateUrl = "settingtype18" + (scope.isMultiple ? "" : "-default") + "-value.htm";
                 scope.settingTypeName = _this.positionTakingResourceService.getLabel("PositionTaking");
             };
             this.positionTakingResourceService = positionTakingResourceService;
+            this.parametersService = parametersService;
         }
-        SettingType1Directive.$inject = ["positionTakingResourceService"];
-        return SettingType1Directive;
+        SettingType18Directive.$inject = ["parametersService", "positionTakingResourceService"];
+        return SettingType18Directive;
     }(CustomerSetting.SettingTypeDirective));
-    CustomerSetting.ModuleRegister.directive("settingtype1", SettingType1Directive);
+    CustomerSetting.ModuleRegister.directive("settingtype18", SettingType18Directive);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var UpdateDataCheckboxDirective = (function () {
+        function UpdateDataCheckboxDirective() {
+            this.templateUrl = "update-data-checkbox.htm";
+            this.replace = true;
+            this.controller = ["$scope", function ($scope) {
+                    $scope.click = function () {
+                        $scope.settingItem.isRowCopied = false;
+                        if ($scope.isMinPt) {
+                            $scope.settingItem.isCheckedUpdateMinPtOnly = !$scope.settingItem.isCheckedUpdateMinPtOnly;
+                        }
+                        else {
+                            $scope.settingItem.isCheckedUpdateRow = !$scope.settingItem.isCheckedUpdateRow;
+                            $scope.settingItem.isCheckedUpdateMinPtOnly = $scope.settingItem.isCheckedUpdateRow;
+                        }
+                    };
+                }];
+        }
+        Object.defineProperty(UpdateDataCheckboxDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    settingItem: '=',
+                    isMinPt: '=',
+                    isFirst: '='
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        ;
+        return UpdateDataCheckboxDirective;
+    }());
+    CustomerSetting.UpdateDataCheckboxDirective = UpdateDataCheckboxDirective;
+    CustomerSetting.ModuleRegister.directive("updateDataCheckbox", UpdateDataCheckboxDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -37452,8 +37569,8 @@ var CustomerSetting;
 })(CustomerSetting || (CustomerSetting = {}));
 
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
-$templateCache.put("CopyWithCheckBoxSettingBlock/copy-with-checkbox-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></toggle-setting-block><note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type><copy-setting-with-checkbox data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $first && $parent.$parent.$first\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\" data-is-multiple=\"isMultiple\" data-copy-mode=\"copyMode.group\"></copy-setting-with-checkbox></note-icon-tooltip></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"w15-percent block__lbl--no-border\" data-ng-if=\"(settingType | editableSettingType)\"><copy-setting-with-checkbox data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $first && $parent.$parent.$first\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\" data-is-multiple=\"isMultiple\"></copy-setting-with-checkbox></div><div class=\"w15-percent block__lbl\" data-ng-if=\"(settingType | editableSettingType)\"><update-data-checkbox data-setting-item=\"item\" data-is-min-pt=\"false\" data-is-first=\"$first && $parent.$parent.$first\"></update-data-checkbox></div><div data-ng-class=\"{\'w70-percent block__lbl block__lbl--no-border\': (settingType | editableSettingType)}\"><span class=\"showing-name\">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{::(\"GeneralInformation\" | label)}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"UserName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Phone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"FirstName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"MobilePhone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{::(\"LastName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\">{{::(\"Fax\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div></div></div>");
+$templateCache.put("CopyWithCheckBoxSettingBlock/copy-with-checkbox-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></toggle-setting-block><note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type><copy-setting-with-checkbox data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $first && $parent.$parent.$first\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\" data-is-multiple=\"isMultiple\" data-copy-mode=\"copyMode.group\"></copy-setting-with-checkbox></note-icon-tooltip></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"w15-percent block__lbl--no-border\" data-ng-if=\"(settingType | editableSettingType)\"><copy-setting-with-checkbox data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $first && $parent.$parent.$first\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\" data-is-multiple=\"isMultiple\"></copy-setting-with-checkbox></div><div class=\"w15-percent block__lbl\" data-ng-if=\"(settingType | editableSettingType)\"><update-data-checkbox data-setting-item=\"item\" data-is-min-pt=\"false\" data-is-first=\"$first && $parent.$parent.$first\"></update-data-checkbox></div><div data-ng-class=\"{\'w70-percent block__lbl block__lbl--no-border\': (settingType | editableSettingType)}\"><span class=\"showing-name\">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></toggle-setting-block><note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type><copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></note-icon-tooltip></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\" data-ng-bind-html=\"result.message | unsafe\"></div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\" data-ng-bind-html=\"subResult.message | unsafe\"></div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\"><div class=\"msg__main-message\" data-ng-bind-html=\"settingResult.message | unsafe\"></div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\" data-ng-bind-html=\"message | unsafe\"></div></div></div></div></div>");
 $templateCache.put("CopyWithCheckBoxSettingBlock/CopySettingWithCheckbox/copy-setting-with-checkbox.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\" data-ng-class=\"{ \'icon--copy--active\' : isIconActive }\"></span></div></div>");
@@ -37463,10 +37580,12 @@ $templateCache.put("DefaultSettingBlock/NoteIcon/note-icon-tooltip.htm","<parent
 $templateCache.put("settingtype13-value.htm","<div class=\"setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-if=\"settingType | editableSettingType\" data-field-highlighting data-field-name=\"isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType13ResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\"> <input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-if=\"!(settingType | editableSettingType)\" data-ng-model=\"item.isChecked\"> <span data-ng-if=\"customerLevel === avaiCustomerLevels.super\">{{\'Super\' | label}}</span> <span data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'Master\' | label}}</span> <span data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'Agent\' | label}}</span> <span data-ng-if=\"customerLevel === avaiCustomerLevels.member\">{{\'Member\' | label}}</span></label></div>");
 $templateCache.put("settingtype13.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></copy-position-taking-on-member></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></copy-position-taking-on-member></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-ng-model=\"item.superPTOnMembers\" data-field-highlighting data-field-name=\"superPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-field-highlighting data-field-name=\"masterPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
-$templateCache.put("position-taking-select.htm","<div><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'positionTakingResourceService\':fieldName}}\"></select></div></div>");
-$templateCache.put("settingtype1-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w25-percent\">{{::(\'SuperMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w25-percent\">{{::(\'SuperMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'MasterMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"block__lbl block__lbl--no-border w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div>");
-$templateCache.put("settingtype1-value.htm","<div class=\"block__cell-group\" data-ng-if=\"settingType | editableSettingType\"><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w25-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s4\" data-min=\"{{0}}\" data-max=\"{{item.defaultMaxPT}}\"></position-taking-select></div><div class=\"block__cell w25-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w25-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"a4\" data-min=\"{{0}}\" data-max=\"{{item.m4}}\"></position-taking-select></div><div class=\"block__cell block__cell--no-border w25-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-position-taking-on-member><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iS3\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uS3\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iS3\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s3\" data-min=\"{{[0, item.n4 - item.m4] | maxValue}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iS3\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iS3\');\" data-ng-model=\"item.iS3\"></label></div><div class=\"block__cell w28-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m3\" data-min=\"{{item.iS3 ? item.n4 - item.uS3 : ([0, item.n4 - item.s3] | maxValue)}}\" data-max=\"{{item.iS3 ? ([item.s4, item.m4] | minValue) : ([item.s4 - item.s3, item.m4] | minValue)}}\"></position-taking-select></div><div class=\"block__cell block__cell--no-border w28-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n3\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-position-taking-on-member><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iM2 && !(settingType | hideIsAutoColumn)\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uM2\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m2\" data-min=\"{{[0, item.n3 - item.a4] | maxValue}}\" data-max=\"{{item.m3}}\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iM2\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iM2\');\" data-ng-model=\"item.iM2\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"a2\" data-min=\"{{item.iM2 ? item.n3 - item.uM2 : ([0, item.n3 - item.m2] | maxValue)}}\" data-max=\"{{item.iM2 ? ([item.m3, item.a4] | minValue) : ([item.m3 - item.m2, item.a4] | minValue)}}\"></position-taking-select></div><div class=\"block__cell block__cell--no-border w28-percent align-center\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n2\" data-min=\"{{0}}\" data-max=\"{{item.a2}}\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iS1\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uS1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iS1\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{[item.n4 - item.m1 - item.a1, item.s4 - item.m3] | maxValue}}\" data-disabled=\"{{item.iS3}}\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iS1\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iS1\');\" data-ng-model=\"item.iS1\"></label></div><div class=\"block__cell w28-percent align-center\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w42-percent align-center\" data-ng-show=\"item.iM1 && !(settingType | hideIsAutoColumn)\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uM1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3}}\"></position-taking-select></div><div class=\"block__cell w42-percent align-center\" data-ng-show=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3 - item.a1}}\" data-disabled=\"{{item.iM2 && !(settingType | hideIsAutoColumn)}}\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iM1\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iM1\');\" data-ng-model=\"item.iM1\"></label></div><div class=\"block__cell block__cell--no-border w42-percent align-center\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\"><div><position-taking-select data-setting-item=\"item\" data-field-name=\"a1\" data-min=\"{{item.n2}}\" data-max=\"{{item.a2}}\"></position-taking-select></div></div></div><div class=\"block__cell-group\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w25-percent align-center\">{{item.s4 | ptFormat}}</div><div class=\"block__cell w25-percent align-center\">{{item.m4 | ptFormat}}</div><div class=\"block__cell w25-percent align-center\">{{item.a4 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w25-percent align-center\">{{item.n4 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iS3\">{{item.uS3 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iS3\">{{item.s3 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS3\"></label></div><div class=\"block__cell w28-percent align-center\">{{item.m3 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\">{{item.n3 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iM2 && !(settingType | hideIsAutoColumn)\">{{item.uM2 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.m2 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM2\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.a2 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{item.n2 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iS1\">{{item.uS1 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iS1\">{{item.s1 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS1\"></label></div><div class=\"block__cell w28-percent align-center\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w42-percent align-center\" data-ng-if=\"item.iM1 && !(settingType | hideIsAutoColumn)\">{{item.uM1 | ptFormat}}</div><div class=\"block__cell w42-percent align-center\" data-ng-if=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.m1 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM1\"></label></div><div class=\"block__cell block__cell--no-border w42-percent align-center\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{item.a1 | ptFormat}}</div></div>");
-$templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping><adjust-member-pt-modal data-ng-if=\"settingType | editableSettingType\"></adjust-member-pt-modal></div>");
+$templateCache.put("position-taking-select.htm","<div><div class=\"setting-field-wrapper\"><select class=\"setting-field\" ng-disabled=\"disabled === \'true\' || (isPartialMinPt && (isMinPt ? (!settingItem.isCheckedUpdateMinPtOnly || (settingItem.isRowCopied && !isFirst)) : (!settingItem.isCheckedUpdateRow || (settingItem.isRowCopied && !isFirst))))\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'positionTakingResourceService\':fieldName}}\"></select></div></div>");
+$templateCache.put("settingtype18-default-value.htm","<div class=\"block__cell-group\" data-ng-if=\"settingType | editableSettingType\"><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w25-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s4\" data-min=\"{{0}}\" data-max=\"{{item.defaultMaxPT}}\"></position-taking-select></div><div class=\"block__cell w25-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w25-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"a4\" data-min=\"{{0}}\" data-max=\"{{item.m4}}\"></position-taking-select></div><div class=\"block__cell block__cell--no-border w25-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-position-taking-on-member><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iS3\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uS3\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iS3\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s3\" data-min=\"{{[0, item.n4 - item.m4] | maxValue}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iS3\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iS3\');\" data-ng-model=\"item.iS3\"></label></div><div class=\"block__cell w28-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m3\" data-min=\"{{item.iS3 ? item.n4 - item.uS3 : ([0, item.n4 - item.s3] | maxValue)}}\" data-max=\"{{item.iS3 ? ([item.s4, item.m4] | minValue) : ([item.s4 - item.s3, item.m4] | minValue)}}\"></position-taking-select></div><div class=\"block__cell block__cell--no-border w28-percent align-center\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n3\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-position-taking-on-member><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iM2 && !(settingType | hideIsAutoColumn)\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uM2\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m2\" data-min=\"{{[0, item.n3 - item.a4] | maxValue}}\" data-max=\"{{item.m3}}\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iM2\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iM2\');\" data-ng-model=\"item.iM2\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"a2\" data-min=\"{{item.iM2 ? item.n3 - item.uM2 : ([0, item.n3 - item.m2] | maxValue)}}\" data-max=\"{{item.iM2 ? ([item.m3, item.a4] | minValue) : ([item.m3 - item.m2, item.a4] | minValue)}}\"></position-taking-select></div><div class=\"block__cell block__cell--no-border w28-percent align-center\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n2\" data-min=\"{{0}}\" data-max=\"{{item.a2}}\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iS1\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uS1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{item.s4}}\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iS1\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{[item.n4 - item.m1 - item.a1, item.s4 - item.m3] | maxValue}}\" data-disabled=\"{{item.iS3}}\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iS1\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iS1\');\" data-ng-model=\"item.iS1\"></label></div><div class=\"block__cell w28-percent align-center\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w42-percent align-center\" data-ng-show=\"item.iM1 && !(settingType | hideIsAutoColumn)\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uM1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3}}\"></position-taking-select></div><div class=\"block__cell w42-percent align-center\" data-ng-show=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3 - item.a1}}\" data-disabled=\"{{item.iM2 && !(settingType | hideIsAutoColumn)}}\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iM1\" data-highlight-state=\"item.highlightState\" data-ng-change=\"item.resetFieldHighlightState(\'iM1\');\" data-ng-model=\"item.iM1\"></label></div><div class=\"block__cell block__cell--no-border w42-percent align-center\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\"><div><position-taking-select data-setting-item=\"item\" data-field-name=\"a1\" data-min=\"{{item.n2}}\" data-max=\"{{item.a2}}\"></position-taking-select></div></div></div><div class=\"block__cell-group\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w25-percent align-center\">{{item.s4 | ptFormat}}</div><div class=\"block__cell w25-percent align-center\">{{item.m4 | ptFormat}}</div><div class=\"block__cell w25-percent align-center\">{{item.a4 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w25-percent align-center\">{{item.n4 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iS3\">{{item.uS3 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iS3\">{{item.s3 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS3\"></label></div><div class=\"block__cell w28-percent align-center\">{{item.m3 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\">{{item.n3 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iM2 && !(settingType | hideIsAutoColumn)\">{{item.uM2 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.m2 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM2\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.a2 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{item.n2 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iS1\">{{item.uS1 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iS1\">{{item.s1 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS1\"></label></div><div class=\"block__cell w28-percent align-center\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w42-percent align-center\" data-ng-if=\"item.iM1 && !(settingType | hideIsAutoColumn)\">{{item.uM1 | ptFormat}}</div><div class=\"block__cell w42-percent align-center\" data-ng-if=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.m1 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM1\"></label></div><div class=\"block__cell block__cell--no-border w42-percent align-center\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{item.a1 | ptFormat}}</div></div>");
+$templateCache.put("settingtype18-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w25-percent\">{{::(\'SuperMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w25-percent\">{{::(\'SuperMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'MasterMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"block__lbl block__lbl--no-border w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div>");
+$templateCache.put("settingtype18-value.htm","<div class=\"block__cell-group\" data-ng-if=\"settingType | editableSettingType\"><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w25-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s4\" data-min=\"{{0}}\" data-max=\"{{item.defaultMaxPT}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w25-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w25-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"a4\" data-min=\"{{0}}\" data-max=\"{{item.m4}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w4-percent align-center\" ng-if=\"isMultiple\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied)}\"><update-data-checkbox data-setting-item=\"item\" data-is-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></update-data-checkbox></div><div class=\"block__cell block__cell--no-border w21-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\" data-is-min-pt=\"true\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-position-taking-on-member><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iS3\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uS3\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iS3\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s3\" data-min=\"{{[0, item.n4 - item.m4] | maxValue}}\" data-max=\"{{item.s4}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iS3\" data-highlight-state=\"item.highlightState\" data-ng-change=\"isAutoChanged(item, \'iS3\', $first && $parent.$parent.$parent.$parent.$parent.$first);\" data-ng-model=\"item.iS3\" ng-disabled=\"!item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m3\" data-min=\"{{item.iS3 ? item.n4 - item.uS3 : ([0, item.n4 - item.s3] | maxValue)}}\" data-max=\"{{item.iS3 ? ([item.s4, item.m4] | minValue) : ([item.s4 - item.s3, item.m4] | minValue)}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w3-percent align-center\" ng-if=\"isMultiple\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied)}\"><update-data-checkbox data-setting-item=\"item\" data-is-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></update-data-checkbox></div><div class=\"block__cell block__cell--no-border w25-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n3\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\" data-is-partial-min-pt=\"true\" data-is-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-position-taking-on-member><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iM2 && !(settingType | hideIsAutoColumn)\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uM2\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn), \'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m2\" data-min=\"{{[0, item.n3 - item.a4] | maxValue}}\" data-max=\"{{item.m3}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iM2\" data-highlight-state=\"item.highlightState\" data-ng-change=\"isAutoChanged(item, \'iM2\', $first && $parent.$parent.$parent.$parent.$parent.$first);\" data-ng-model=\"item.iM2\" ng-disabled=\"!item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn), \'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"a2\" data-min=\"{{item.iM2 ? item.n3 - item.uM2 : ([0, item.n3 - item.m2] | maxValue)}}\" data-max=\"{{item.iM2 ? ([item.m3, item.a4] | minValue) : ([item.m3 - item.m2, item.a4] | minValue)}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w3-percent align-center\" ng-if=\"isMultiple\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied)}\"><update-data-checkbox data-setting-item=\"item\" data-is-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></update-data-checkbox></div><div class=\"block__cell block__cell--no-border w25-percent align-center\" data-ng-class=\"{ \'w30-percent--last\': (settingType | hideIsAutoColumn), \'disabled\': !item.isCheckedUpdateMinPtOnly || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n2\" data-min=\"{{0}}\" data-max=\"{{item.a2}}\" data-is-min-pt=\"true\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iS1\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uS1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{item.s4}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iS1\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{[item.n4 - item.m1 - item.a1, item.s4 - item.m3] | maxValue}}\" data-disabled=\"{{item.iS3}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iS1\" data-highlight-state=\"item.highlightState\" data-ng-change=\"isAutoChanged(item, \'iS1\', $first && $parent.$parent.$parent.$parent.$parent.$first);\" data-ng-model=\"item.iS1\" ng-disabled=\"!item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w42-percent align-center\" data-ng-show=\"item.iM1 && !(settingType | hideIsAutoColumn)\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uM1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w42-percent align-center\" data-ng-show=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn), \'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3 - item.a1}}\" data-disabled=\"{{item.iM2 && !(settingType | hideIsAutoColumn)}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iM1\" data-highlight-state=\"item.highlightState\" data-ng-change=\"isAutoChanged(item, \'iM1\', $first && $parent.$parent.$parent.$parent.$parent.$first);\" data-ng-model=\"item.iM1\" ng-disabled=\"!item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)\"></label></div><div class=\"block__cell block__cell--no-border w42-percent align-center\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn), \'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || (!($first && $parent.$parent.$parent.$parent.$parent.$first) && item.isRowCopied && item.isCheckedUpdateRow)}\"><div><position-taking-select data-setting-item=\"item\" data-field-name=\"a1\" data-min=\"{{item.n2}}\" data-max=\"{{item.a2}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first && $parent.$parent.$parent.$parent.$first\"></position-taking-select></div></div></div><div class=\"block__cell-group\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w25-percent align-center\">{{item.s4 | ptFormat}}</div><div class=\"block__cell w25-percent align-center\">{{item.m4 | ptFormat}}</div><div class=\"block__cell w25-percent align-center\">{{item.a4 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w25-percent align-center\">{{item.n4 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iS3\">{{item.uS3 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iS3\">{{item.s3 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS3\"></label></div><div class=\"block__cell w28-percent align-center\">{{item.m3 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\">{{item.n3 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iM2 && !(settingType | hideIsAutoColumn)\">{{item.uM2 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.m2 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM2\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.a2 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{item.n2 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iS1\">{{item.uS1 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iS1\">{{item.s1 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS1\"></label></div><div class=\"block__cell w28-percent align-center\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w42-percent align-center\" data-ng-if=\"item.iM1 && !(settingType | hideIsAutoColumn)\">{{item.uM1 | ptFormat}}</div><div class=\"block__cell w42-percent align-center\" data-ng-if=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.m1 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM1\"></label></div><div class=\"block__cell block__cell--no-border w42-percent align-center\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{item.a1 | ptFormat}}</div></div>");
+$templateCache.put("settingtype18.htm","<div class=\"setting-type-18\"><default-setting-type-grouping class=\"full-width\" data-ng-if=\"!isMultiple\"></default-setting-type-grouping><copy-with-checkbox-setting-type class=\"full-width\" data-ng-if=\"isMultiple\"></copy-with-checkbox-setting-type><adjust-member-pt-modal data-ng-if=\"settingType | editableSettingType\"></adjust-member-pt-modal></div>");
+$templateCache.put("update-data-checkbox.htm","<div><input type=\"checkbox\" ng-checked=\"isMinPt ? settingItem.isCheckedUpdateMinPtOnly : settingItem.isCheckedUpdateRow\" data-is-min-pt=\"{{isMinPt}}\" data-is-first=\"{{isFirst}}\" data-ng-disabled=\"isMinPt ? (settingItem.isCheckedUpdateRow || settingItem.isRowCopied) : settingItem.isRowCopied\" data-ng-click=\"click();\"></div>");
 $templateCache.put("settingtype6-win-limit-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-model=\"settingItem.winLimit\" data-ng-options=\"item.key as item.value for item in range\" data-field-highlighting data-field-name=\"winLimit\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'settingType6ResourceService\':\'winLimit\':\'unlimitedLimit\'}}\"></select><span>{{::(\'OnGivenCredit\' | settingType6Label)}}</span></div>");
 $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype6\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\">{{group[0].sportTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\">{{group[0].betTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumWin\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><settingtype6-win-limit-select data-setting-item=\"item\"></settingtype6-win-limit-select></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? \'X\' : \'\'}} {{::(\'OnGivenCredit\' | settingType6Label)}}</div></div><div class=\"block__row block__row--border-top\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype6-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-field-highlighting data-field-name=\"lossLimit\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype6-unlimited-checkbox data-ng-model=\"item.isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType6Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentWinLossAmount\' | settingType6Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentWinLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentWinLoss(item)\">{{::(\'ClickToViewCurrentWinLossLimit\' | settingType6Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentWinLossAmount\"><div><span>{{\'Winning\' | settingType6Label}}%:</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === -2\"><span class=\"red-text\">{{\'NotAvailable\' | settingType6Label}}</span> <span>({{item.currentWinLossAmount.currentAmount | formatNumber}}/<span class=\"red-text\">{{item.currentWinLossAmount.maxWinAmount}}</span>)</span></span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === -1\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === 0\">{{item.currentWinLossAmount.winPercent}}%</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.winPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.currentAmount | formatNumber}}</span>/{{item.currentWinLossAmount.maxWinAmount | formatNumber}})</span></span></div><div><span>{{\'Losing\' | settingType6Label}}%:</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent === -1\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent === 0\">{{item.currentWinLossAmount.lossPercent}}%</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.lossPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{-item.currentWinLossAmount.currentAmount | formatNumber}}</span>/{{item.currentWinLossAmount.maxLossAmount | formatNumber}})</span></span></div></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-highlight-state=\"item.highlightState\" data-field-name=\"isAutoReset\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType6Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
 $templateCache.put("settingtype7-checkbox-group.htm","<label class=\"check-all-field\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-name=\"checkAll\" data-field-highlighting data-tooltip-message=\"{{tooltipMessage}}\" data-highlight-state=\"highlightState\" data-ng-model=\"checked\" data-ng-click=\"checkAll()\"></label>");
