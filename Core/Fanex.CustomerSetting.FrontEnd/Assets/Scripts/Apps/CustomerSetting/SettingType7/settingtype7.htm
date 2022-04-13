@@ -24,6 +24,11 @@
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType">
                     {{productName}}
                 </label>
+                <note-icon-tooltip data-ng-if="group[0].showIconTooltipMessage"
+                                   data-tooltip-message
+                                   data-tooltip-message-backup="{{group[0].tooltipMessage}}"
+                                   data-tooltip-type>
+                </note-icon-tooltip>
                 <setting-type7-checkbox-group data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
                                               data-items="group" />
             </div>
