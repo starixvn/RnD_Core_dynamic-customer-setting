@@ -15,6 +15,9 @@ module CustomerSetting {
         }
 
         public templateUrl: string = "CustomerInfo/customer-info.htm";
+        public controller: any = ["$scope", ($scope: IDefaultSettingTypeDirectiveScope) => {
+            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1);
+        }];
     }
 
     ModuleRegister.directive("customerInfo", CustomerInfoDirective);

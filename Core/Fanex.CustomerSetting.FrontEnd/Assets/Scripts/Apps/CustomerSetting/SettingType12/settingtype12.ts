@@ -51,7 +51,7 @@ module CustomerSetting {
                 $scope.avaiSettingLevels = SettingLevel;
                 $scope.settingTypeName = settingType12ResourceService.getLabel("LossLimit");
                 $scope.highestPercentageRange = 100;
-
+                $scope.togglableSettingBlocks = true;
                 $scope.$watch("settingType", (settingType: SettingType) => {
                     $scope.normalMode = settingTypesSharedValuesService.normalMode;
 
@@ -69,8 +69,14 @@ module CustomerSetting {
 
                             if (settingType.settingLevel === SettingLevel.sportType || settingType.settingLevel === SettingLevel.sportTypeBetType) {
                                 $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
+                                if ($scope.togglableSettingBlocks) {
+                                    $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.settingLevel === SettingLevel.sportTypeBetType);
+                                }
                             } else {
                                 $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
+                                if ($scope.togglableSettingBlocks) {
+                                    $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, false);
+                                }
                             }
                         }
                     }

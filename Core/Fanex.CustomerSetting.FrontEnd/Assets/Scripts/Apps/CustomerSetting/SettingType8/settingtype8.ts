@@ -47,6 +47,7 @@ module CustomerSetting {
                 $scope.avaiCustomerLevels = Level;
                 $scope.avaiSettingLevels = SettingLevel;
 
+                $scope.togglableSettingBlocks = true;
                 $scope.$watch("settingType", (settingType: SettingType) => {
                     $scope.normalMode = settingTypesSharedValuesService.normalMode;
 

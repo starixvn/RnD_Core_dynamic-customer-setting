@@ -2,6 +2,12 @@
     <div class="block__header"
          data-setting-type="{{settingType.id}}"
          data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
+        <div data-ng-if="togglableSharedStates" class="icon-arrow togglable-bar"
+             data-ng-class="{ 'icon-arrow--collapse': !togglableSharedStates.isExpandedAll(),
+                              'icon-arrow--expand': togglableSharedStates.isExpandedAll() }"
+             data-title="{ 'Collapse': !togglableSharedStates.isExpandedAll(),
+                               'Expand': togglableSharedStates.isExpandedAll() }">
+        </div>
         {{settingTypeName}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{'Update' | label}}"
@@ -9,9 +15,14 @@
              data-ng-click="update({ settingTypeId: settingType.id })">
             <span class="icon icon--update"></span>
         </div>
+        <toggle-setting-block data-ng-if="togglableSharedStates"
+                              data-shared-states="togglableSharedStates"
+                              data-setting-type-id="settingType.id">
+        </toggle-setting-block>
     </div>
-    <div class="block__item-group" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
-        <div class="block__sub-header" data-ng-if="settingType.settingLevel === avaiSettingLevels.product">
+    <div class="block__item-group w100-percent" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups" >
+        <div class="block__sub-header" data-ng-if="settingType.settingLevel === avaiSettingLevels.product"
+             data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[$index]">
             {{productName}}
             <copy-setting data-ng-if="(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0"
                           data-setting-type-id="settingType.id"
@@ -20,16 +31,32 @@
         </div>
         <div class="block__sub-header"
              data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
-             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }">
+             data-ng-class="{ 'block__sub-header--border-top': ($index > 0),
+                              'indent-30': togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType}"
+             data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[$index] && settingType.settingLevel === avaiSettingLevels.sportType">
+            <div data-ng-if="togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType" 
+                 class="icon-arrow togglable-bar"
+                 data-ng-class="{ 'icon-arrow--collapse': !togglableSharedStates.toggleStates[$index],
+                              'icon-arrow--expand': togglableSharedStates.toggleStates[$index] }"
+                 data-title="{ 'Collapse': !togglableSharedStates.toggleStates[$index],
+                               'Expand': togglableSharedStates.toggleStates[$index] }">
+            </div>
             {{group[0].sportTypeName}}
             <copy-setting data-ng-if="(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0"
                           data-setting-type-id="settingType.id"
                           data-setting-items="sportGroups">
             </copy-setting>
+            <toggle-setting-block data-ng-if="togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
+                                  data-shared-states="togglableSharedStates"
+                                  data-block-Index="$index"
+                                  data-setting-data="group"
+                                  data-setting-type-id="settingType.id">
+            </toggle-setting-block>
         </div>
         <div class="block__sub-header"
              data-ng-if="settingType.settingLevel === avaiSettingLevels.betType"
-             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }">
+             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }"
+             data-ng-hide="togglableSharedStates && !togglableSharedStates.isExpandedAll()">
             {{group[0].betTypeName}}
             <copy-setting data-ng-if="(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0"
                           data-setting-type-id="settingType.id"
@@ -40,12 +67,13 @@
              data-ng-repeat="item in group"
              data-product="{{productId}}"
              data-sport-type="{{item.sportTypeId}}"
-             data-bet-type="{{item.betTypeId}}">
-            <div class="block__sub-header block__sub-header--indent" data-ng-if="settingType.settingLevel === avaiSettingLevels.sportTypeBetType">
+             data-bet-type="{{item.betTypeId}}"
+             data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]">
+            <div class="block__sub-header block__sub-header--bettype" data-ng-if="settingType.settingLevel === avaiSettingLevels.sportTypeBetType">
                 {{item.betTypeName}}
             </div>
             <div class="block__column block__column--border-right w50-percent">
-                <div class="block__row">
+                <div class="block__row block__row--border-bottom">
                     <div class="block__lbl w40-percent">{{::('MaximumWin' | settingType6Label)}}</div>
                     <div class="block__value w60-percent" data-ng-if="settingType | editableSettingType">
                         <settingtype6-win-limit-select data-setting-item="item"></settingtype6-win-limit-select>
@@ -54,7 +82,7 @@
                         {{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? 'X' : ''}} {{::('OnGivenCredit' | settingType6Label)}}
                     </div>
                 </div>
-                <div class="block__row block__row--border-top">
+                <div class="block__row block__row--border-bottom">
                     <div class="block__lbl w40-percent">{{::('MaximumLoss' | settingType6Label)}}</div>
                     <div class="block__value w60-percent" data-ng-if="settingType | editableSettingType">
                         <div class="setting-field-wrapper w100-percent">
@@ -86,7 +114,7 @@
                         {{item.lossLimit | formatNumber | unlimitedLimit}}
                     </div>
                 </div>
-                <div class="block__row block__row--border-top" data-ng-if="customerLevel === avaiCustomerLevels.member">
+                <div class="block__row block__row--border-bottom" data-ng-if="customerLevel === avaiCustomerLevels.member">
                     <div class="block__lbl w40-percent">{{::('CurrentWinLossAmount' | settingType6Label)}}</div>
                     <div class="block__value w60-percent setting-field-wrapper" data-ng-if="!item.currentWinLossAmount">
                         <a href="javascript:void(0);" data-ng-click="getCurrentWinLoss(item)">{{::('ClickToViewCurrentWinLossLimit' | settingType6Label)}}</a>
@@ -121,19 +149,21 @@
                     </div>
                 </div>
             </div>
-            <div class="block__column w50-percent">
-                <div class="block__cell setting-field-wrapper">
-                    <label class="setting-field--checkfield">
-                        <input type="checkbox"
-                               class="setting-field--checkfield__check-ctrl"
-                               data-field-highlighting
-                               data-highlight-state="item.highlightState"
-                               data-field-name="isAutoReset"
-                               data-tooltip-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'isAutoReset'}}"
-                               data-ng-model="item.isAutoReset"
-                               data-ng-disabled="!(settingType | editableSettingType) || !item.isAutoResetUpline" />
-                        {{'DailyAutoResetLimit' | settingType6Label}}
-                    </label>
+            <div class="block__column block__column--border-bottom w50-percent">
+                <div class="block__row">
+                    <div class="block__cell setting-field-wrapper">
+                        <label class="setting-field--checkfield">
+                            <input type="checkbox"
+                                   class="setting-field--checkfield__check-ctrl"
+                                   data-field-highlighting
+                                   data-highlight-state="item.highlightState"
+                                   data-field-name="isAutoReset"
+                                   data-tooltip-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'isAutoReset'}}"
+                                   data-ng-model="item.isAutoReset"
+                                   data-ng-disabled="!(settingType | editableSettingType) || !item.isAutoResetUpline" />
+                            {{'DailyAutoResetLimit' | settingType6Label}}
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>

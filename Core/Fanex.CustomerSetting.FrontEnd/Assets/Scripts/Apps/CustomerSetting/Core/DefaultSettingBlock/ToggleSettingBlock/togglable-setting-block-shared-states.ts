@@ -5,13 +5,14 @@
         public toggleStates: boolean[];
         public numberofExpandedBlocks: number;
 
-        constructor(numberofBlocks: number) {
+        constructor(numberofBlocks: number, expandFirstBlock: boolean = true) {
+            expandFirstBlock = expandFirstBlock || false;
             if (numberofBlocks > 0) {
                 this.toggleStates = [];
-                this.numberofExpandedBlocks = 1;
+                this.numberofExpandedBlocks = expandFirstBlock ? 1 : 0;
 
                 for (var index = 0; index < numberofBlocks; index++) {
-                    this.toggleStates[index] = index === 0 ? true : false;
+                    this.toggleStates[index] = (expandFirstBlock && index === 0) ? true : false;
                 }
             }
         }

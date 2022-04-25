@@ -10,8 +10,9 @@
         vertical-align: middle;
     }
 
-    .block__sub-header--indent {
-        padding-left: 10px;
+    .block__sub-header--bettype {
+        padding-left: 50px;
+        display: table-caption;
     }
 
     .block__item {
@@ -30,6 +31,10 @@
         &--border-right {
             @include border(right);
         }
+
+        &--border-bottom {
+            @include border(bottom);
+        }
     }
 
     .block__row {
@@ -38,6 +43,10 @@
 
         &--border-top {
             @include border(top);
+        }
+
+        &--border-bottom {
+            @include border(bottom);
         }
     }
 

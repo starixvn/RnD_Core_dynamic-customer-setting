@@ -37,6 +37,7 @@ module CustomerSetting {
                 $scope.avaiSettingLevels = SettingLevel;
                 $scope.settingTypeName = settingType7ResourceService.getLabel("BetLimit");
 
+                $scope.togglableSettingBlocks = true;
                 $scope.$watch("settingType", (settingType: SettingType) => {
                     $scope.normalMode = settingTypesSharedValuesService.normalMode;
 
