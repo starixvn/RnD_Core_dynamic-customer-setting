@@ -59,8 +59,14 @@ module CustomerSetting {
 
                             if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
                                 $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
+                                if ($scope.togglableSettingBlocks) {
+                                    $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.settingLevel === SettingLevel.sportTypeBetType);
+                                }
                             } else {
                                 $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
+                                if ($scope.togglableSettingBlocks) {
+                                    $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, settingType.settingLevel === SettingLevel.sportTypeBetType);
+                                }
                             }
                         }
                     }
