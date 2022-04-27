@@ -67,6 +67,10 @@ module CustomerSetting {
                                 }
                             });
                         }
+
+                        if ($scope.togglableSettingBlocks) {
+                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, false);
+                        }
                     }
                 });
 

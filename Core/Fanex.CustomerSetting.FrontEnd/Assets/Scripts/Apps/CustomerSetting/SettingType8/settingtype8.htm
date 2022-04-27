@@ -3,6 +3,12 @@
          data-setting-type="{{settingType.id}}"
          data-ng-if="!popupMode"
          data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
+        <div data-ng-if="togglableSharedStates" class="icon-arrow togglable-bar"
+             data-ng-class="{ 'icon-arrow--collapse': !togglableSharedStates.isExpandedAll(),
+                              'icon-arrow--expand': togglableSharedStates.isExpandedAll() }"
+             data-title="{ 'Collapse': !togglableSharedStates.isExpandedAll(),
+                               'Expand': togglableSharedStates.isExpandedAll() }">
+        </div>
         {{::('BetLimit' | settingType8Label)}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{::('Update' | label)}}"
@@ -10,8 +16,13 @@
              data-ng-click="update({ settingTypeId: settingType.id })">
             <span class="icon icon--update"></span>
         </div>
+        <toggle-setting-block data-ng-if="togglableSharedStates"
+                              data-shared-states="togglableSharedStates"
+                              data-setting-type-id="settingType.id">
+        </toggle-setting-block>
     </div>
     <div class="block__item-group"
+         data-ng-hide="!popupMode && togglableSharedStates && !togglableSharedStates.isExpandedAll()"
          data-ng-if="settingType | validSettingType"
          data-ng-repeat="item in settingType.settingItems">
         <div class="col col--lbl w20-percent"
