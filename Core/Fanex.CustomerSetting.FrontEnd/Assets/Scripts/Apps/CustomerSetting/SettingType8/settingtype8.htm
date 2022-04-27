@@ -6,8 +6,8 @@
         <div data-ng-if="togglableSharedStates" class="icon-arrow togglable-bar"
              data-ng-class="{ 'icon-arrow--collapse': !togglableSharedStates.isExpandedAll(),
                               'icon-arrow--expand': togglableSharedStates.isExpandedAll() }"
-             data-title="{ 'Collapse': !togglableSharedStates.isExpandedAll(),
-                               'Expand': togglableSharedStates.isExpandedAll() }">
+             title="{{togglableSharedStates.isExpandedAll() ? 'Expand' : 'Collapse'}}"
+>
         </div>
         {{::('BetLimit' | settingType8Label)}}
         <div class="right-btn-area right-btn-area--seperate"
