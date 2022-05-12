@@ -1,0 +1,13 @@
+﻿[
+  {
+    "order": 1,
+    "tasks": [
+      {
+        "settingTypeId": 7,
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.SettingType7.BetSettingItemNoteTask, Fanex.CustomerSetting.Tasks.SettingType7"
+        ]
+      }
+    ]
+  }
+] 

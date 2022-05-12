@@ -19,10 +19,20 @@
                 <label class="check-all-field-lbl"
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.sportTypeBetType">
                     {{group[0].sportTypeName}}
+                    <note-icon-tooltip data-ng-if="group[0].showIconTooltipMessage"
+                                       data-tooltip-message
+                                       data-tooltip-message-backup="{{group[0].tooltipMessage}}"
+                                       data-tooltip-type>
+                    </note-icon-tooltip>
                 </label>
                 <label class="check-all-field-lbl"
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType">
                     {{productName}}
+                    <note-icon-tooltip data-ng-if="group[0].showIconTooltipMessage"
+                                       data-tooltip-message
+                                       data-tooltip-message-backup="{{group[0].tooltipMessage}}"
+                                       data-tooltip-type>
+                    </note-icon-tooltip>
                 </label>
                 <setting-type7-checkbox-group data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
                                               data-items="group" />
