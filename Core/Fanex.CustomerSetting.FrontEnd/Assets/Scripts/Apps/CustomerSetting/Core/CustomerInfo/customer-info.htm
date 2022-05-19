@@ -4,33 +4,33 @@
     </div>
     <div class="block" data-ng-if="!names" data-ng-show="info">
         <div class="block__header">
-            {{::("GeneralInformation" | label)}}
             <toggle-setting-block data-ng-if="togglableSharedStates"
                                   data-shared-states="togglableSharedStates"
                                   data-setting-type-id="0">
             </toggle-setting-block>
+            {{::("GeneralInformation" | label)}}
         </div>
-        <div class="block__item" data-ng-hide="!togglableSharedStates.toggleStates[0]">
+        <div class="block__item" data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[0]">
             <div class="block__lbl block__lbl--white">{{::("UserName" | label)}}</div>
             <div class="block__value text-field-wrapper">{{info.userName | naValue}}</div>
         </div>
-        <div class="block__item block__item--even" data-ng-hide="!togglableSharedStates.toggleStates[0]">
+        <div class="block__item block__item--even" data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[0]">
             <div class="block__lbl block__lbl--white">{{::("Phone" | label)}}</div>
             <div class="block__value text-field-wrapper">{{info.phone | naValue}}</div>
         </div>
-        <div class="block__item" data-ng-hide="!togglableSharedStates.toggleStates[0]">
+        <div class="block__item" data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[0]">
             <div class="block__lbl block__lbl--white">{{::("FirstName" | label)}}</div>
             <div class="block__value text-field-wrapper">{{info.firstName | naValue}}</div>
         </div>
-        <div class="block__item block__item--even" data-ng-hide="!togglableSharedStates.toggleStates[0]">
+        <div class="block__item block__item--even" data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[0]">
             <div class="block__lbl block__lbl--white">{{::("MobilePhone" | label)}}</div>
             <div class="block__value text-field-wrapper">{{info.mobilePhone | naValue}}</div>
         </div>
-        <div class="block__item block__item--near-last" data-ng-hide="!togglableSharedStates.toggleStates[0]">
+        <div class="block__item block__item--near-last" data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[0]">
             <div class="block__lbl block__lbl--white">{{::("LastName" | label)}}</div>
             <div class="block__value text-field-wrapper">{{info.lastName | naValue}}</div>
         </div>
-        <div class="block__item block__item--last" data-ng-hide="!togglableSharedStates.toggleStates[0]">
+        <div class="block__item block__item--last" data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[0]">
             <div class="block__lbl block__lbl--white">{{::("Fax" | label)}}</div>
             <div class="block__value text-field-wrapper">{{info.fax | naValue}}</div>
         </div>

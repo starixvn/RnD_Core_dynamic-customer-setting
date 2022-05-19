@@ -13,6 +13,8 @@ module CustomerSetting {
     }
 
     export class ToggleSettingBlockDirective implements ng.IDirective {
+        public replace: boolean = true;
+        public templateUrl: string = "DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm";
         public static $inject: string[] = ["$rootScope", "$timeout"];
 
         public get scope(): any {
@@ -37,6 +39,17 @@ module CustomerSetting {
                     this.toggle(scope);
 
                     return false;
+                }
+            });
+
+            this.$rootScope.$on("toggleAllSettingTypes", (event: ng.IAngularEvent, isExpandAll: boolean) => {
+                if (scope.settingTypeId != 0 && this.isToggleAllDirective(scope)) {
+                    if (isExpandAll) {
+                        scope.sharedStates.expandAllBlocks();
+                    }
+                    else {
+                        scope.sharedStates.collapseAllBlocks();
+                    }
                 }
             });
 
@@ -80,6 +93,10 @@ module CustomerSetting {
                 } else {
                     scope.sharedStates.expandAllBlocks();
                 }
+
+                if (this.isGeneralInfo(scope)) {
+                    this.$rootScope.$emit("toggleAllSettingTypes", scope.sharedStates.isExpandedAll());
+                }
             } else {
                 if (scope.sharedStates.isExpanded(scope.blockIndex)) {
                     scope.sharedStates.collapseBlock(scope.blockIndex);
@@ -98,6 +115,10 @@ module CustomerSetting {
 
         private triggerPageHeightChangedEvent(): void {
             this.$rootScope.$emit("page-height-changed");
+        }
+
+        private isGeneralInfo(scope: IToggleSettingBlockScope): boolean {
+            return scope.settingTypeId == 0;
         }
     }
 

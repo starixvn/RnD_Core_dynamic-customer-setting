@@ -25,6 +25,10 @@
 
         public bool IsError { get; set; }
 
+        public bool IsEnableCollapseExpand { get; set; }
+
+        public bool IsCollapsed { get; set; }
+
         public IEnumerable<ISettingItem> SettingItems
         {
             get

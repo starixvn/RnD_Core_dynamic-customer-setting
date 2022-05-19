@@ -1,0 +1,13 @@
+﻿[
+  {
+    "productId": 41,
+    "order": 1,
+    "tasks": [
+      {
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.CollapseExpandToggle.CollapseExpandToggleProduct41, Fanex.CustomerSetting.Tasks.CollapseExpandToggle"
+        ]
+      }
+    ]
+  }
+]

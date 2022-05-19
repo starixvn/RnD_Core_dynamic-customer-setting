@@ -18,7 +18,6 @@ module CustomerSetting {
             scope.headerTemplateUrl = "settingtype9-header.htm";
             scope.valueTemplateUrl = "settingtype9-value.htm";
             scope.settingTypeName = this.settingType9ResourceService.getLabel("BetSetting");
-            scope.togglableSettingBlocks = true;
         };
 
         private settingType9ResourceService: SettingType9ResourceService;

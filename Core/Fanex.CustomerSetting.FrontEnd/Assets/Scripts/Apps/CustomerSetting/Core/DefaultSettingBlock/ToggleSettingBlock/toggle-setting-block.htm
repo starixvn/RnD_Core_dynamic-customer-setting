@@ -1,0 +1,8 @@
+﻿<div class="togglable-bar"
+     data-ng-class="{ 'icon-collapse-all': settingTypeId == 0 && !sharedStates.isExpandedAll(),
+                      'icon-expand-all': settingTypeId == 0 && sharedStates.isExpandedAll(),
+                      'icon-collapse': settingTypeId != 0 && (blockIndex == undefined ? !sharedStates.isExpandedAll() : !sharedStates.toggleStates[blockIndex]),
+                      'icon-expand': settingTypeId != 0 && (blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex])}"
+     title="{{((settingTypeId == 0 && sharedStates.isExpandedAll()) || (settingTypeId != 0 && (blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]))) ? 'Expand' : 'Collapse'}}">
+
+</div>

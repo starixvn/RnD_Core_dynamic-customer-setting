@@ -3,8 +3,13 @@
 
 module CustomerSetting {
     "use strict";
+    export interface ICustomerInfoScope extends ng.IScope {
+        info: CustomerInfo;
+        names: string;
+        togglableSharedStates: TogglableSettingBlockSharedStates;
+    }
 
-    class CustomerInfoDirective implements ng.IDirective {
+    export class CustomerInfoDirective implements ng.IDirective {
         public replace: boolean = true;
 
         public get scope(): any {
@@ -15,8 +20,13 @@ module CustomerSetting {
         }
 
         public templateUrl: string = "CustomerInfo/customer-info.htm";
-        public controller: any = ["$scope", ($scope: IDefaultSettingTypeDirectiveScope) => {
-            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1);
+        public controller: any = ["$scope", ($scope: ICustomerInfoScope) => {
+            $scope.$watch("info", (info: CustomerInfo) => {
+                if (info && info.isEnableCollapseExpand) {
+                    $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, info.isCollapsed);
+                }
+            });
+            
         }];
     }
 

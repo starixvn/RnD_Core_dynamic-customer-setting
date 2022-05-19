@@ -37,8 +37,8 @@ module CustomerSetting {
                 $scope.avaiSettingLevels = SettingLevel;
                 $scope.settingTypeName = settingType17ResourceService.getLabel("BetLimit");
 
-                $scope.togglableSettingBlocks = true;
                 $scope.$watch("settingType", (settingType: SettingType) => {
+                    $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                     $scope.normalMode = settingTypesSharedValuesService.normalMode;
 
                     if (settingType && angular.isArray(settingType.settingItems)) {
@@ -60,12 +60,12 @@ module CustomerSetting {
                             if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
                                 $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
                                 if ($scope.togglableSettingBlocks) {
-                                    $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.settingLevel === SettingLevel.sportTypeBetType);
+                                    $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
                                 }
                             } else {
                                 $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
                                 if ($scope.togglableSettingBlocks) {
-                                    $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, settingType.settingLevel === SettingLevel.sportTypeBetType);
+                                    $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
                                 }
                             }
                         }

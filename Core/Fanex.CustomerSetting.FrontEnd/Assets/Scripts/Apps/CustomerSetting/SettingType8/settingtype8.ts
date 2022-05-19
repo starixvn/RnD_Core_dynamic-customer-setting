@@ -47,8 +47,8 @@ module CustomerSetting {
                 $scope.avaiCustomerLevels = Level;
                 $scope.avaiSettingLevels = SettingLevel;
 
-                $scope.togglableSettingBlocks = true;
                 $scope.$watch("settingType", (settingType: SettingType) => {
+                    $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                     $scope.normalMode = settingTypesSharedValuesService.normalMode;
 
                     if (settingType && angular.isArray(settingType.settingItems)) {
@@ -69,7 +69,7 @@ module CustomerSetting {
                         }
 
                         if ($scope.togglableSettingBlocks) {
-                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, false);
+                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
                         }
                     }
                 });

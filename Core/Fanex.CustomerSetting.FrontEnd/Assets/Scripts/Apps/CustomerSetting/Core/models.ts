@@ -30,6 +30,8 @@ module CustomerSetting {
         public currency: number;
         public isSupportPT3DecimalSites: boolean;
         public isY7Sites: boolean;
+        public isEnableCollapseExpand: boolean;
+        public isCollapsed: boolean;
 
         constructor(info: any) {
             if (info) {
@@ -43,6 +45,8 @@ module CustomerSetting {
                 this.currency = info.currency;
                 this.isSupportPT3DecimalSites = info.isSupportPT3DecimalSites;
                 this.isY7Sites = info.isY7Sites;
+                this.isEnableCollapseExpand = info.isEnableCollapseExpand;
+                this.isCollapsed = info.isCollapsed;
             }
         }
     }
@@ -279,6 +283,8 @@ module CustomerSetting {
         public displayMode: number;
         public isError: boolean;
         public extraData: Array<KeyValuePair<string, any>>;
+        public isEnableCollapseExpand: boolean;
+        public isCollapsed: boolean;
 
         constructor();
         constructor(settingType: any);
@@ -293,6 +299,8 @@ module CustomerSetting {
                 this.displayMode = settingType.displayMode;
                 this.isError = settingType.isError;
                 this.extraData = this.getExtraData(settingType);
+                this.isEnableCollapseExpand = settingType.isEnableCollapseExpand;
+                this.isCollapsed = settingType.isCollapsed;
             }
         }
 

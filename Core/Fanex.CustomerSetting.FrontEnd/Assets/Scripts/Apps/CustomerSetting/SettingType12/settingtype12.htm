@@ -2,11 +2,10 @@
     <div class="block__header"
          data-setting-type="{{settingType.id}}"
          data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
-        <div data-ng-if="togglableSharedStates" class="icon-arrow togglable-bar"
-             data-ng-class="{ 'icon-arrow--collapse': !togglableSharedStates.isExpandedAll(),
-                              'icon-arrow--expand': togglableSharedStates.isExpandedAll() }"
-             title="{{togglableSharedStates.isExpandedAll() ? 'Expand' : 'Collapse'}}">
-        </div>
+        <toggle-setting-block data-ng-if="togglableSharedStates"
+                              data-shared-states="togglableSharedStates"
+                              data-setting-type-id="settingType.id">
+        </toggle-setting-block>
         {{settingTypeName}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{'Update' | label}}"
@@ -14,10 +13,6 @@
              data-ng-click="update({ settingTypeId: settingType.id })">
             <span class="icon icon--update"></span>
         </div>
-        <toggle-setting-block data-ng-if="togglableSharedStates"
-                              data-shared-states="togglableSharedStates"
-                              data-setting-type-id="settingType.id">
-        </toggle-setting-block>
     </div>
     <div class="block__item-group w100-percent" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
         <div class="block__sub-header" data-ng-if="settingType.settingLevel === avaiSettingLevels.product"
@@ -29,19 +24,13 @@
              data-ng-class="{ 'block__sub-header--border-top': ($index > 0),
                               'indent-30': togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType}"
              data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[$index] && settingType.settingLevel === avaiSettingLevels.sportType">
-            <div data-ng-if="togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
-                 class="icon-arrow togglable-bar"
-                 data-ng-class="{ 'icon-arrow--collapse': !togglableSharedStates.toggleStates[$index],
-                              'icon-arrow--expand': togglableSharedStates.toggleStates[$index] }"
-                 title="{{togglableSharedStates.toggleStates[$index] ? 'Expand' : 'Collapse'}}">
-            </div>
-            {{group[0].sportTypeName}}
             <toggle-setting-block data-ng-if="togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
                                   data-shared-states="togglableSharedStates"
                                   data-block-Index="$index"
                                   data-setting-data="group"
                                   data-setting-type-id="settingType.id">
             </toggle-setting-block>
+            {{group[0].sportTypeName}}
         </div>
         <div class="block__sub-header"
              data-ng-if="settingType.settingLevel === avaiSettingLevels.betType"

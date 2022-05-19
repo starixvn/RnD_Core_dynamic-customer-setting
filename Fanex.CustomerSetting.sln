@@ -202,6 +202,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingType7", "SettingType
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType7", "Tasks\SettingType7\Fanex.CustomerSetting.Tasks.SettingType7\Fanex.CustomerSetting.Tasks.SettingType7.csproj", "{28011687-4A90-4458-A2EE-0543379F170C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CollapseExpandToggle", "CollapseExpandToggle", "{AEE38FA0-4584-4C32-94FF-C6E2E31D4ED9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.CollapseExpandToggle", "Tasks\CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle.csproj", "{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -472,6 +476,10 @@ Global
 		{28011687-4A90-4458-A2EE-0543379F170C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28011687-4A90-4458-A2EE-0543379F170C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28011687-4A90-4458-A2EE-0543379F170C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -569,9 +577,11 @@ Global
 		{B2071EF6-7006-4C20-B0F1-3AB246D751A5} = {81B7B477-9BD5-43C8-BD33-782137212087}
 		{C4EC91F3-7ECA-41D4-95B1-56A2FA9B9ED2} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
 		{28011687-4A90-4458-A2EE-0543379F170C} = {C4EC91F3-7ECA-41D4-95B1-56A2FA9B9ED2}
+		{AEE38FA0-4584-4C32-94FF-C6E2E31D4ED9} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
+		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25} = {AEE38FA0-4584-4C32-94FF-C6E2E31D4ED9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0E5B53E6-7B52-44B7-9EC9-E6557921FED2}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
+		SolutionGuid = {0E5B53E6-7B52-44B7-9EC9-E6557921FED2}
 	EndGlobalSection
 EndGlobal
