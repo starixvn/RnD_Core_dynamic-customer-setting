@@ -79,6 +79,24 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click to Expand All..
+        /// </summary>
+        public static string CollapseAllToolTip {
+            get {
+                return ResourceManager.GetString("CollapseAllToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to Expand..
+        /// </summary>
+        public static string CollapseToolTip {
+            get {
+                return ResourceManager.GetString("CollapseToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click to duplicate the values.
         /// </summary>
         public static string CopyTooltip {
@@ -93,6 +111,24 @@ namespace Fanex.CustomerSetting.Resource {
         public static string CustomerSetting {
             get {
                 return ResourceManager.GetString("CustomerSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to Collapse All..
+        /// </summary>
+        public static string ExpandAllToolTip {
+            get {
+                return ResourceManager.GetString("ExpandAllToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to Collapse..
+        /// </summary>
+        public static string ExpandToolTip {
+            get {
+                return ResourceManager.GetString("ExpandToolTip", resourceCulture);
             }
         }
         

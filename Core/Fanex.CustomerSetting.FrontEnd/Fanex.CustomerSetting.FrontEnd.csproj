@@ -326,6 +326,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>commission-resources.js</LastGenOutput>
     </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\settingtype19-default-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\settingtype19-header.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\settingtype19-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\settingtype19.htm" />

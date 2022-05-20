@@ -3,6 +3,6 @@
                       'icon-expand-all': settingTypeId == 0 && sharedStates.isExpandedAll(),
                       'icon-collapse': settingTypeId != 0 && (blockIndex == undefined ? !sharedStates.isExpandedAll() : !sharedStates.toggleStates[blockIndex]),
                       'icon-expand': settingTypeId != 0 && (blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex])}"
-     title="{{((settingTypeId == 0 && sharedStates.isExpandedAll()) || (settingTypeId != 0 && (blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]))) ? 'Expand' : 'Collapse'}}">
+     title="{{((settingTypeId == 0 && sharedStates.isExpandedAll()) || (settingTypeId != 0 && (blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]))) ? ('ExpandToolTip' | label) : ('CollapseToolTip' | label)}}">
 
 </div>
