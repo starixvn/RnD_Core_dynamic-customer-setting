@@ -2,6 +2,10 @@
     <div class="block__header"
          data-setting-type="{{settingType.id}}"
          data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
+        <toggle-setting-block data-ng-if="togglableSharedStates"
+                              data-shared-states="togglableSharedStates"
+                              data-setting-type-id="settingType.id">
+        </toggle-setting-block>
         {{settingTypeName}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{'Update' | label}}"
@@ -13,11 +17,19 @@
     <div class="block__item-group" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
         <div class="block__sub-header"
              data-ng-if="settingType.settingLevel !== avaiSettingLevels.product"
-             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }">
+             data-ng-class="{ 'block__sub-header--border-top': ($index > 0),
+                              'indent-30': togglableSharedStates }"
+             data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[$index] && settingType.settingLevel !== avaiSettingLevels.sportTypeBetType">
             <div class="block__header-cell"
                  data-ng-class="{ 'block__header-cell--no-border': !(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member) }">
                 <label class="check-all-field-lbl"
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.sportTypeBetType">
+                    <toggle-setting-block data-ng-if="togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
+                                          data-shared-states="togglableSharedStates"
+                                          data-block-Index="$index"
+                                          data-setting-data="group"
+                                          data-setting-type-id="settingType.id">
+                    </toggle-setting-block>
                     {{group[0].sportTypeName}}
                     <note-icon-tooltip data-ng-if="group[0].showIconTooltipMessage"
                                        data-tooltip-message
@@ -40,6 +52,7 @@
         </div>
         <div class="block__item"
              data-ng-repeat="item in group"
+             data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]"
              data-ng-class="{ 'block__item--last': $last }">
             <div class="block__lbl"
                  data-product="{{productId}}"
