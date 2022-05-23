@@ -238,15 +238,15 @@
     <value>Bet Setting</value>
   </data>
   <data name="CollapseAllToolTip" xml:space="preserve">
-    <value>Click to Expand All.</value>
+    <value>Click to Expand All</value>
   </data>
   <data name="CollapseToolTip" xml:space="preserve">
-    <value>Click to Expand.</value>
+    <value>Click to Expand</value>
   </data>
   <data name="ExpandAllToolTip" xml:space="preserve">
-    <value>Click to Collapse All.</value>
+    <value>Click to Collapse All</value>
   </data>
   <data name="ExpandToolTip" xml:space="preserve">
-    <value>Click to Collapse.</value>
+    <value>Click to Collapse</value>
   </data>
 </root>

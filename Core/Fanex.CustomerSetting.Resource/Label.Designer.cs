@@ -79,7 +79,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click to Expand All..
+        ///   Looks up a localized string similar to Click to Expand All.
         /// </summary>
         public static string CollapseAllToolTip {
             get {
@@ -88,7 +88,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click to Expand..
+        ///   Looks up a localized string similar to Click to Expand.
         /// </summary>
         public static string CollapseToolTip {
             get {
@@ -115,7 +115,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click to Collapse All..
+        ///   Looks up a localized string similar to Click to Collapse All.
         /// </summary>
         public static string ExpandAllToolTip {
             get {
@@ -124,7 +124,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click to Collapse..
+        ///   Looks up a localized string similar to Click to Collapse.
         /// </summary>
         public static string ExpandToolTip {
             get {

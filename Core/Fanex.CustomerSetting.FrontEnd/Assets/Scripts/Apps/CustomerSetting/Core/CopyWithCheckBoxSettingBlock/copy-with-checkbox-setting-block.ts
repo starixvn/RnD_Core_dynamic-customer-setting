@@ -21,15 +21,18 @@ module CustomerSetting {
             $scope.avaiSettingLevels = SettingLevel;
 
             $scope.$watch("settingType", (settingType: SettingType) => {
+                $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                 if (settingType && angular.isArray(settingType.settingItems)) {
                     if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
                         $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
-
                         if ($scope.togglableSettingBlocks) {
-                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length);
+                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
                         }
                     } else {
                         $scope.sportGroups = <CopyWithCheckboxSettingItem[][]>[settingType.settingItems];
+                        if ($scope.togglableSettingBlocks) {
+                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
+                        }
                     }
                 }
             });
