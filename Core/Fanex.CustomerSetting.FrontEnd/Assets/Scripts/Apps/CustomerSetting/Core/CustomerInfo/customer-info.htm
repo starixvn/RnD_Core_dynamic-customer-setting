@@ -2,37 +2,36 @@
     <div class="block" data-ng-if="names">
         <div class="block__header block__header--no-border">{{names}}</div>
     </div>
-    <div class="block" data-ng-if="!names" data-ng-show="info">
+    <div class="block" data-ng-if="!names" data-ng-show="setting.customerInfo">
         <div class="block__header">
-            <toggle-setting-block data-ng-if="togglableSharedStates"
-                                  data-shared-states="togglableSharedStates"
-                                  data-setting-type-id="0">
-            </toggle-setting-block>
+            <toggle-all-setting-block data-ng-if="togglableSharedStates"
+                                  data-shared-states="togglableSharedStates">
+            </toggle-all-setting-block>
             {{::("GeneralInformation" | label)}}
         </div>
         <div class="block__item">
             <div class="block__lbl block__lbl--white">{{::("UserName" | label)}}</div>
-            <div class="block__value text-field-wrapper">{{info.userName | naValue}}</div>
+            <div class="block__value text-field-wrapper">{{setting.customerInfo.userName | naValue}}</div>
         </div>
         <div class="block__item block__item--even">
             <div class="block__lbl block__lbl--white">{{::("Phone" | label)}}</div>
-            <div class="block__value text-field-wrapper">{{info.phone | naValue}}</div>
+            <div class="block__value text-field-wrapper">{{setting.customerInfo.phone | naValue}}</div>
         </div>
         <div class="block__item">
             <div class="block__lbl block__lbl--white">{{::("FirstName" | label)}}</div>
-            <div class="block__value text-field-wrapper">{{info.firstName | naValue}}</div>
+            <div class="block__value text-field-wrapper">{{setting.customerInfo.firstName | naValue}}</div>
         </div>
         <div class="block__item block__item--even">
             <div class="block__lbl block__lbl--white">{{::("MobilePhone" | label)}}</div>
-            <div class="block__value text-field-wrapper">{{info.mobilePhone | naValue}}</div>
+            <div class="block__value text-field-wrapper">{{setting.customerInfo.mobilePhone | naValue}}</div>
         </div>
         <div class="block__item block__item--near-last">
             <div class="block__lbl block__lbl--white">{{::("LastName" | label)}}</div>
-            <div class="block__value text-field-wrapper">{{info.lastName | naValue}}</div>
+            <div class="block__value text-field-wrapper">{{setting.customerInfo.lastName | naValue}}</div>
         </div>
         <div class="block__item block__item--last">
             <div class="block__lbl block__lbl--white">{{::("Fax" | label)}}</div>
-            <div class="block__value text-field-wrapper">{{info.fax | naValue}}</div>
+            <div class="block__value text-field-wrapper">{{setting.customerInfo.fax | naValue}}</div>
         </div>
     </div>
 </div>

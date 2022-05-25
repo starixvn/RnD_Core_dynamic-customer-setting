@@ -4,7 +4,7 @@
 module CustomerSetting {
     "use strict";
     export interface ICustomerInfoScope extends ng.IScope {
-        info: CustomerInfo;
+        setting: Setting;
         names: string;
         togglableSharedStates: TogglableSettingBlockSharedStates;
     }
@@ -14,19 +14,28 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
-                info: "=",
-                names: "="
+                setting: "=",
+                names: "=",
             };
         }
 
         public templateUrl: string = "CustomerInfo/customer-info.htm";
         public controller: any = ["$scope", ($scope: ICustomerInfoScope) => {
-            $scope.$watch("info", (info: CustomerInfo) => {
-                if (info && info.isEnableCollapseExpand) {
-                    $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, info.isCollapsed);
+            $scope.$watch("setting", (setting: Setting) => {
+                if (setting && setting.customerInfo && setting.customerInfo.isEnableCollapseExpand) {
+                    var togglableSharedStates = new TogglableSettingBlockSharedStates(setting.settingTypes.length, setting.customerInfo.isCollapsed);
+                    for (var i = 0; i < setting.settingTypes.length; i++) {
+                        if (setting.settingTypes[i].isCollapsed) {
+                            togglableSharedStates.collapseBlock(i);
+                        }
+                        else {
+                            togglableSharedStates.expandBlock(i);
+                        }
+                    }
+
+                    $scope.togglableSharedStates = togglableSharedStates;
                 }
             });
-            
         }];
     }
 

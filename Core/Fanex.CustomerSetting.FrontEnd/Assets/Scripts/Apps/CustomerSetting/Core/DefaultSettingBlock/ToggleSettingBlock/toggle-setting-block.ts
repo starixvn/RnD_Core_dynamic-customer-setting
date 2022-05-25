@@ -10,6 +10,7 @@ module CustomerSetting {
         sharedStates: TogglableSettingBlockSharedStates;
         settingData: DefaultSettingItem[];
         settingTypeId: number;
+        settingTypeIndex: number;
     }
 
     export class ToggleSettingBlockDirective implements ng.IDirective {
@@ -22,7 +23,8 @@ module CustomerSetting {
                 blockIndex: "=",
                 sharedStates: "=",
                 settingData: "=",
-                settingTypeId: "="
+                settingTypeId: "=",
+                settingTypeIndex: "="
             };
         }
 
@@ -30,7 +32,6 @@ module CustomerSetting {
 
         public link: ng.IDirectiveLinkFn = (scope: IToggleSettingBlockScope, element: ng.IAugmentedJQuery) => {
             var container: ng.IAugmentedJQuery = angular.element(element.parent());
-
             container.addClass("togglable-bar");
             container.on("click", (event: BaseJQueryEventObject) => {
                 var target: ng.IAugmentedJQuery = angular.element(event.target);
@@ -43,7 +44,7 @@ module CustomerSetting {
             });
 
             this.$rootScope.$on("toggleAllSettingTypes", (event: ng.IAngularEvent, isExpandAll: boolean) => {
-                if (scope.settingTypeId != 0 && this.isToggleAllDirective(scope)) {
+                if (this.isToggleAllDirective(scope)) {
                     if (isExpandAll) {
                         scope.sharedStates.expandAllBlocks();
                     }
@@ -93,16 +94,16 @@ module CustomerSetting {
                 } else {
                     scope.sharedStates.expandAllBlocks();
                 }
-
-                if (this.isGeneralInfo(scope)) {
-                    this.$rootScope.$emit("toggleAllSettingTypes", scope.sharedStates.isExpandedAll());
-                }
             } else {
                 if (scope.sharedStates.isExpanded(scope.blockIndex)) {
                     scope.sharedStates.collapseBlock(scope.blockIndex);
                 } else {
                     scope.sharedStates.expandBlock(scope.blockIndex);
                 }
+            }
+
+            if (scope.settingTypeIndex !== null && scope.settingTypeIndex !== undefined) {
+                this.$rootScope.$emit("toggleSettingType", scope.sharedStates.isExpandedAll(), scope.settingTypeIndex);
             }
 
             scope.$apply();
@@ -115,10 +116,6 @@ module CustomerSetting {
 
         private triggerPageHeightChangedEvent(): void {
             this.$rootScope.$emit("page-height-changed");
-        }
-
-        private isGeneralInfo(scope: IToggleSettingBlockScope): boolean {
-            return scope.settingTypeId == 0;
         }
     }
 

@@ -23,7 +23,8 @@ module CustomerSetting {
         public get scope(): any {
             return {
                 settingType: "=",
-                update: "&"
+                update: "&",
+                index: "@"
             };
         }
 

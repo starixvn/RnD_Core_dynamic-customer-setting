@@ -1,8 +1,6 @@
 ﻿<div class="togglable-bar"
-     data-ng-class="{ 'icon-collapse-all': settingTypeId == 0 && !sharedStates.isExpandedAll(),
-                      'icon-expand-all': settingTypeId == 0 && sharedStates.isExpandedAll(),
-                      'icon-collapse': settingTypeId != 0 && (blockIndex == undefined ? !sharedStates.isExpandedAll() : !sharedStates.toggleStates[blockIndex]),
-                      'icon-expand': settingTypeId != 0 && (blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex])}"
-     title="{{((settingTypeId == 0 && sharedStates.isExpandedAll()) || (settingTypeId != 0 && (blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]))) ? ((settingTypeId == 0 ? 'ExpandAllToolTip': 'ExpandToolTip') | label) : ((settingTypeId == 0 ? 'CollapseAllToolTip': 'CollapseToolTip') | label)}}">
+     data-ng-class="{ 'icon-collapse': blockIndex == undefined ? !sharedStates.isExpandedAll() : !sharedStates.toggleStates[blockIndex],
+                      'icon-expand': blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]}"
+     title="{{(blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]) ? ('ExpandToolTip' | label) : ('CollapseToolTip' | label)}}">
 
 </div>

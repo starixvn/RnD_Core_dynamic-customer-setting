@@ -22,7 +22,8 @@ module CustomerSetting {
             return {
                 settingType: "=",
                 popupMode: "=",
-                update: "&"
+                update: "&",
+                index: "@"
             };
         }
 

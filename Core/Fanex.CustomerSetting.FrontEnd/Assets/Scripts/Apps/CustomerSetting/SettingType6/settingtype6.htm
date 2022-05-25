@@ -4,7 +4,8 @@
          data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
         <toggle-setting-block data-ng-if="togglableSharedStates"
                               data-shared-states="togglableSharedStates"
-                              data-setting-type-id="settingType.id">
+                              data-setting-type-id="settingType.id"
+                              data-setting-type-index="index">
         </toggle-setting-block>
         {{settingTypeName}}
         <div class="right-btn-area right-btn-area--seperate"
@@ -32,7 +33,8 @@
                                   data-shared-states="togglableSharedStates"
                                   data-block-Index="$index"
                                   data-setting-data="group"
-                                  data-setting-type-id="settingType.id">
+                                  data-setting-type-id="settingType.id"
+                                  data-setting-type-index="index">
             </toggle-setting-block>
             {{group[0].sportTypeName}}
             <copy-setting data-ng-if="(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0"
