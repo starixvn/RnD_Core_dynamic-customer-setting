@@ -89,7 +89,7 @@
 
         private bool IsValidRequest(HttpRequestMessage req, string siteId, string incomingBase64Signature, string nonce, string requestTimeStamp)
         {
-            string requestUri = HttpUtility.UrlEncode(req.RequestUri.AbsoluteUri.ToLower());
+            string requestUri = HttpUtility.UrlEncode(req.RequestUri.AbsolutePath.ToLower());
             string requestHttpMethod = req.Method.Method;
 
             var sharedKey = CustomerSettingApiConfiguration.Settings.SecretKey;
@@ -104,11 +104,11 @@
             var secretKeyBytes = Convert.FromBase64String(sharedKey);
 
             byte[] signature = Encoding.UTF8.GetBytes(data);
-
             using (HMACSHA256 hmac = new HMACSHA256(secretKeyBytes))
             {
                 byte[] signatureBytes = hmac.ComputeHash(signature);
-
+                
+            Logging.Logger.Log.Info($"Request URI: {requestUri}; data: {data}; incommingSignature: {incomingBase64Signature}; Signature: {Convert.ToBase64String(signatureBytes)}");
                 return incomingBase64Signature.Equals(Convert.ToBase64String(signatureBytes), StringComparison.Ordinal);
             }
         }

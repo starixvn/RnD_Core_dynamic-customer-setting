@@ -39,7 +39,7 @@
             }
 
 #pragma warning disable S1449 // Culture should be specified for "string" operations
-            string requestUri = HttpUtility.UrlEncode(client.BuildUri(request).ToString().ToLower());
+            string requestUri = HttpUtility.UrlEncode(request.Resource.ToLower());
 #pragma warning restore S1449 // Culture should be specified for "string" operations
             string requestHttpMethod = request.Method.ToString();
 
@@ -59,7 +59,7 @@
             {
                 byte[] signatureBytes = hmac.ComputeHash(signature);
                 string requestSignatureBase64String = Convert.ToBase64String(signatureBytes);
-
+                Logging.Logger.Log.Info($"Request URI: {requestUri}; signatureRawData: {signatureRawData}; Signature: {Convert.ToBase64String(signatureBytes)}");
                 // Setting the values in the Authorization header using custom scheme (amx)
                 string authHeader = $"amx {_machineIP}:{requestSignatureBase64String}:{nonce}:{requestTimeStamp}";
                 request.AddParameter("Authorization", authHeader, ParameterType.HttpHeader);
