@@ -4,6 +4,8 @@
          data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
         <toggle-setting-block data-ng-if="togglableSharedStates"
                               data-shared-states="togglableSharedStates"
+                              data-setting-data="settingType.settingItems"
+                              data-setting-level="settingType.settingLevel"
                               data-setting-type-id="settingType.id">
         </toggle-setting-block>
         {{settingTypeName}}
@@ -25,6 +27,7 @@
                                   data-shared-states="togglableSharedStates"
                                   data-block-index="$index"
                                   data-setting-data="group"
+                                  data-setting-level="settingType.settingLevel"
                                   data-setting-type-id="settingType.id">
             </toggle-setting-block>
             {{group[0].sportTypeName}}

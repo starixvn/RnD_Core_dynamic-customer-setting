@@ -11,6 +11,7 @@ module CustomerSetting {
         settingData: DefaultSettingItem[];
         settingTypeId: number;
         settingTypeIndex: number;
+        settingLevel: number;
     }
 
     export class ToggleSettingBlockDirective implements ng.IDirective {
@@ -24,7 +25,8 @@ module CustomerSetting {
                 sharedStates: "=",
                 settingData: "=",
                 settingTypeId: "=",
-                settingTypeIndex: "="
+                settingTypeIndex: "=",
+                settingLevel: "="
             };
         }
 
@@ -54,29 +56,44 @@ module CustomerSetting {
                 }
             });
 
-            if (!this.isToggleAllDirective(scope)) {
-                scope.$watch("settingData", () => {
-                    if (this.initializing) {
-                        this.$timeout(() => this.initializing = false);
-                    } else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
+            scope.$watch("settingData", () => {
+                if (this.initializing) {
+                    this.$timeout(() => this.initializing = false);
+                    return;
+                }
+                if (scope.settingLevel && scope.settingLevel === SettingLevel.sportTypeBetType) {
+                    if (!this.isToggleAllDirective(scope)) {
                         scope.sharedStates.expandBlock(scope.blockIndex);
-                        this.triggerPageHeightChangedEvent();
                     }
-                }, true);
+                }
+                else {
+                    if (this.isToggleAllDirective(scope)) {
+                        scope.sharedStates.expandAllBlocks();
+                    }
+                }
 
-                this.$rootScope.$on("updateSetting", (event: ng.IAngularEvent, settingTypeId: number) => {
-                    if ((!settingTypeId || settingTypeId === scope.settingTypeId)
-                        && scope.settingData
-                        && scope.settingData.some((item: DefaultSettingItem) => !item.validationState.isSuccessful)
-                        && !scope.sharedStates.isExpanded(scope.blockIndex)) {
-                        scope.sharedStates.expandBlock(scope.blockIndex);
-                        this.triggerPageHeightChangedEvent();
+                this.triggerPageHeightChangedEvent();
+            }, true);
+
+            this.$rootScope.$on("updateSetting", (event: ng.IAngularEvent, settingTypeId: number) => {
+                if ((!settingTypeId || settingTypeId === scope.settingTypeId)
+                    && scope.settingData
+                    && scope.settingData.some((item: DefaultSettingItem) => !item.validationState.isSuccessful)) {
+                    if (scope.settingLevel && scope.settingLevel === SettingLevel.sportTypeBetType) {
+                        if (!this.isToggleAllDirective(scope))
+                            scope.sharedStates.expandBlock(scope.blockIndex);
+                    } else {
+                        if (this.isToggleAllDirective(scope))
+                            scope.sharedStates.expandAllBlocks();
                     }
-                });
-                this.$rootScope.$on("queriedSetting", () => {
-                    this.initializing = true;
-                });
-            }
+
+                    this.triggerPageHeightChangedEvent();
+                }
+            });
+
+            this.$rootScope.$on("queriedSetting", () => {
+                this.initializing = true;
+            });
         }
 
         private $rootScope: ng.IRootScopeService;
