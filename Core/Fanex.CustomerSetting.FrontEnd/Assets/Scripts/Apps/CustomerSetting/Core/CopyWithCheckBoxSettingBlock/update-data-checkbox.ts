@@ -10,7 +10,7 @@ module CustomerSetting {
 
 
     export class UpdateDataCheckboxDirective implements ng.IDirective {
-        public templateUrl: string = "update-data-checkbox.htm";
+        public templateUrl: string = "CopyWithCheckBoxSettingBlock/update-data-checkbox.htm";
         public replace: boolean = true;
 
         public get scope(): any {

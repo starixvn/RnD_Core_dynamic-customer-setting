@@ -46,8 +46,8 @@ module CustomerSetting {
 
             $scope.resetValidationState = () => {
                 $scope.settingItem.resetValidationState();
-                if ($scope.isCopyWithCheckbox && !$scope.disabled) {
-                    $scope.$emit("copySettingTypeWithCheckbox19");
+                if ($scope.isCopyWithCheckbox && $scope.settingItem.isCheckedUpdateRow) {
+                    $scope.$emit("copySettingTypeWithCheckbox19", $scope.settingItem.betTypeId);
                 }
             }
         }];

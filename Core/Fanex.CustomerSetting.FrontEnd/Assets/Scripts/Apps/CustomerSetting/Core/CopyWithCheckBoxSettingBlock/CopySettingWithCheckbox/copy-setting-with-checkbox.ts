@@ -36,12 +36,6 @@ module CustomerSetting {
         }
     }
 
-    export enum CopyMode {
-        minPt = 1,
-        row = 2,
-        group = 3
-    }
-
     export interface ICopySettingWithCheckboxScope extends ng.IScope {
         copy: (isForceCopy: boolean) => void;
         hideTooltip: () => void;
@@ -66,7 +60,7 @@ module CustomerSetting {
                 settingTypeId: "=",
                 settingItems: "=",
                 isSporttypeLevel: "=",
-                
+
             };
         }
 
@@ -100,7 +94,11 @@ module CustomerSetting {
                 if ($scope.settingItems && $scope.settingItems.length > 1) {
                     //var items = ArrayHelpers.join2DimensionalArray($scope.settingItems);
                     var source = $scope.settingItemsOneDirection[0];
+                    source.isSourceRow = false;
                     var targets = $scope.settingItemsOneDirection.slice(1);
+                    targets.forEach((item: CopyWithCheckboxSettingItem) => {
+                        item.isSourceRow = false;
+                    });
                     //if (!source.isCheckedUpdateRow || (source.isRowCopied && !$scope.isIconActive) || (isSourceChanged && !source.isRowCopied))
                     //    return;
                     if (isSourceChanged || (!$scope.isIconActive && source.isCheckedUpdateRow)) {
@@ -108,9 +106,8 @@ module CustomerSetting {
                             this.copyingSettingWithCheckboxService.hideTooltips($scope);
                             var copyingResult = source.copySettingTo(targets);
                             if (copyingResult.numberOfCopiedItems > 0) {
-                                //source.isRowCopied = true;
                                 $scope.isIconActive = true;
-
+                                source.isSourceRow = true;
                                 if (copyingResult.status)
                                     $scope.copyingState.succeed();
                                 else

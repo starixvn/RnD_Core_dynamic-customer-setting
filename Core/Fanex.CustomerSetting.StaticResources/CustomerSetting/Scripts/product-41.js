@@ -32886,6 +32886,8 @@ var CustomerSetting;
                 this.currency = info.currency;
                 this.isSupportPT3DecimalSites = info.isSupportPT3DecimalSites;
                 this.isY7Sites = info.isY7Sites;
+                this.isEnableCollapseExpand = info.isEnableCollapseExpand;
+                this.isCollapsed = info.isCollapsed;
             }
         }
         return CustomerInfo;
@@ -33074,6 +33076,8 @@ var CustomerSetting;
                 this.displayMode = settingType.displayMode;
                 this.isError = settingType.isError;
                 this.extraData = this.getExtraData(settingType);
+                this.isEnableCollapseExpand = settingType.isEnableCollapseExpand;
+                this.isCollapsed = settingType.isCollapsed;
             }
         }
         SettingType.prototype.getChanges = function () {
@@ -34309,15 +34313,19 @@ var CustomerSetting;
             this.controller = ["$scope", "$timeout", function ($scope, $timeout) {
                     $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
                     $scope.$watch("settingType", function (settingType) {
+                        $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                         if (settingType && angular.isArray(settingType.settingItems)) {
                             if (settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
                                 $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
                                 if ($scope.togglableSettingBlocks) {
-                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length);
+                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
                                 }
                             }
                             else {
                                 $scope.sportGroups = [settingType.settingItems];
+                                if ($scope.togglableSettingBlocks) {
+                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
+                                }
                             }
                         }
                     });
@@ -34371,16 +34379,70 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var UpdateDataCheckboxDirective = (function () {
+        function UpdateDataCheckboxDirective() {
+            this.templateUrl = "CopyWithCheckBoxSettingBlock/update-data-checkbox.htm";
+            this.replace = true;
+            this.controller = ["$scope", function ($scope) {
+                    $scope.click = function () {
+                        $scope.settingItem.isRowCopied = false;
+                        if ($scope.isMinPt) {
+                            $scope.settingItem.isCheckedUpdateMinPtOnly = !$scope.settingItem.isCheckedUpdateMinPtOnly;
+                        }
+                        else {
+                            $scope.settingItem.isCheckedUpdateRow = !$scope.settingItem.isCheckedUpdateRow;
+                            $scope.settingItem.isCheckedUpdateMinPtOnly = $scope.settingItem.isCheckedUpdateRow;
+                        }
+                    };
+                }];
+        }
+        Object.defineProperty(UpdateDataCheckboxDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    settingItem: '=',
+                    isMinPt: '=',
+                    isFirst: '='
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        ;
+        return UpdateDataCheckboxDirective;
+    }());
+    CustomerSetting.UpdateDataCheckboxDirective = UpdateDataCheckboxDirective;
+    CustomerSetting.ModuleRegister.directive("updateDataCheckbox", UpdateDataCheckboxDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var CustomerInfoDirective = (function () {
         function CustomerInfoDirective() {
             this.replace = true;
             this.templateUrl = "CustomerInfo/customer-info.htm";
+            this.controller = ["$scope", function ($scope) {
+                    $scope.$watch("setting", function (setting) {
+                        if (setting && setting.customerInfo && setting.customerInfo.isEnableCollapseExpand) {
+                            var togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates(setting.settingTypes.length, setting.customerInfo.isCollapsed);
+                            for (var i = 0; i < setting.settingTypes.length; i++) {
+                                if (setting.settingTypes[i].isCollapsed) {
+                                    togglableSharedStates.collapseBlock(i);
+                                }
+                                else {
+                                    togglableSharedStates.expandBlock(i);
+                                }
+                            }
+                            $scope.togglableSharedStates = togglableSharedStates;
+                        }
+                    });
+                }];
         }
         Object.defineProperty(CustomerInfoDirective.prototype, "scope", {
             get: function () {
                 return {
-                    info: "=",
-                    names: "="
+                    setting: "=",
+                    names: "=",
                 };
             },
             enumerable: true,
@@ -34388,6 +34450,7 @@ var CustomerSetting;
         });
         return CustomerInfoDirective;
     }());
+    CustomerSetting.CustomerInfoDirective = CustomerInfoDirective;
     CustomerSetting.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -34432,7 +34495,8 @@ var CustomerSetting;
             get: function () {
                 return {
                     settingType: "=",
-                    update: "&"
+                    update: "&",
+                    index: "@"
                 };
             },
             enumerable: true,
@@ -34447,12 +34511,14 @@ var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
     var TogglableSettingBlockSharedStates = (function () {
-        function TogglableSettingBlockSharedStates(numberofBlocks) {
+        function TogglableSettingBlockSharedStates(numberofBlocks, isCollapsed) {
+            if (isCollapsed === void 0) { isCollapsed = false; }
+            isCollapsed = isCollapsed || false;
             if (numberofBlocks > 0) {
                 this.toggleStates = [];
-                this.numberofExpandedBlocks = 1;
+                this.numberofExpandedBlocks = isCollapsed ? 0 : numberofBlocks;
                 for (var index = 0; index < numberofBlocks; index++) {
-                    this.toggleStates[index] = index === 0 ? true : false;
+                    this.toggleStates[index] = !isCollapsed;
                 }
             }
         }
@@ -34502,15 +34568,19 @@ var CustomerSetting;
             this.controller = ["$scope", function ($scope) {
                     $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
                     $scope.$watch("settingType", function (settingType) {
+                        $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                         if (settingType && angular.isArray(settingType.settingItems)) {
                             if (settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
                                 $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
                                 if ($scope.togglableSettingBlocks) {
-                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length);
+                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
                                 }
                             }
                             else {
                                 $scope.sportGroups = [settingType.settingItems];
+                                if ($scope.togglableSettingBlocks) {
+                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
+                                }
                             }
                         }
                     });
@@ -34816,6 +34886,7 @@ var CustomerSetting;
                             index,
                             "]\"",
                             " data-update=\"update({ settingTypeId: settingTypeId})\"",
+                            " data-index=\"", index, "\"",
                             "></",
                             settingTypeName,
                             ">"
@@ -34835,6 +34906,128 @@ var CustomerSetting;
         return SettingTypeDirectiveLoader;
     }());
     CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var CopyingState = (function () {
+        function CopyingState(positionModel, displayingSeconds) {
+            if (displayingSeconds === void 0) { displayingSeconds = 5; }
+            this.positionModel = positionModel || CustomerSetting.PositionModel.relative;
+            this.displayingSeconds = displayingSeconds;
+        }
+        CopyingState.prototype.isShowingMessage = function () {
+            return !!this.messageKey || this.type === "none";
+        };
+        CopyingState.prototype.succeed = function () {
+            this.messageKey = "CopiedSuccessfully";
+            this.type = "success";
+        };
+        CopyingState.prototype.fail = function () {
+            this.messageKey = "CopyingFailed";
+            this.type = "error";
+        };
+        CopyingState.prototype.none = function () {
+            this.messageKey = null;
+            this.type = "none";
+        };
+        return CopyingState;
+    }());
+    CustomerSetting.CopyingState = CopyingState;
+    var CopySettingDirective = (function () {
+        function CopySettingDirective(copyingSettingService) {
+            var _this = this;
+            this.replace = true;
+            this.templateUrl = "DefaultSettingBlock/CopySetting/copy-setting.htm";
+            this.controller = ["$scope", function ($scope) {
+                    $scope.copyingState = new CopyingState();
+                    _this.copyingSettingService.register($scope);
+                    $scope.copy = function () {
+                        if ($scope.settingItems && $scope.settingItems.length > 1) {
+                            var items = CustomerSetting.ArrayHelpers.join2DimensionalArray($scope.settingItems);
+                            var source = items[0];
+                            var targets = items.slice(1);
+                            if (source.validate()) {
+                                _this.copyingSettingService.hideTooltips($scope);
+                                var copyingResult = source.copySettingTo(targets);
+                                if (!copyingResult.status) {
+                                    $scope.copyingState.fail();
+                                }
+                                else if (copyingResult.numberOfCopiedItems > 0) {
+                                    $scope.copyingState.succeed();
+                                }
+                                else {
+                                    $scope.copyingState.none();
+                                }
+                            }
+                        }
+                    };
+                    $scope.hideTooltip = function () {
+                        $scope.copyingState.none();
+                    };
+                }];
+            this.copyingSettingService = copyingSettingService;
+        }
+        Object.defineProperty(CopySettingDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    settingTypeId: "=",
+                    settingItems: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        CopySettingDirective.$inject = ["copyingSettingService"];
+        return CopySettingDirective;
+    }());
+    CustomerSetting.CopySettingDirective = CopySettingDirective;
+    CustomerSetting.ModuleRegister.directive("copySetting", CopySettingDirective);
+    var CopyingSettingService = (function () {
+        function CopyingSettingService($rootScope) {
+            var _this = this;
+            this.$rootScope = $rootScope;
+            this.scopes = new Array();
+            this.$rootScope.$on("updateSetting", function () {
+                _this.scopes.forEach(function (registeredScope) {
+                    if (registeredScope.copyingState.isShowingMessage()) {
+                        var items = CustomerSetting.ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
+                        registeredScope.copyingState.none();
+                        items.forEach(function (item) {
+                            item.resetHighlightState();
+                        });
+                    }
+                });
+            });
+        }
+        CopyingSettingService.prototype.register = function (scope) {
+            var isExisting = this.scopes.filter(function (registeredScope) {
+                return registeredScope.$id === scope.$id;
+            }).length > 0;
+            if (!isExisting) {
+                this.scopes.push(scope);
+            }
+        };
+        CopyingSettingService.prototype.hideTooltips = function (scope) {
+            var settingTypeId = scope.settingTypeId;
+            this.scopes.forEach(function (registeredScope) {
+                if (registeredScope.copyingState.isShowingMessage()) {
+                    var registeredSettingTypeId = registeredScope.settingTypeId;
+                    if (registeredSettingTypeId === settingTypeId) {
+                        var items = CustomerSetting.ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
+                        registeredScope.copyingState.none();
+                        items.forEach(function (item) {
+                            item.resetHighlightState();
+                        });
+                    }
+                }
+            });
+        };
+        CopyingSettingService.$inject = ["$rootScope"];
+        return CopyingSettingService;
+    }());
+    CustomerSetting.ModuleRegister.service("copyingSettingService", CopyingSettingService);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -35009,298 +35202,6 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var CopyingWithCheckboxState = (function () {
-        function CopyingWithCheckboxState(positionModel, displayingSeconds) {
-            if (displayingSeconds === void 0) { displayingSeconds = 5; }
-            this.positionModel = positionModel || CustomerSetting.PositionModel.relative;
-            this.displayingSeconds = displayingSeconds;
-        }
-        CopyingWithCheckboxState.prototype.isShowingMessage = function () {
-            return !!this.messageKey || this.type === "none";
-        };
-        CopyingWithCheckboxState.prototype.succeed = function () {
-            this.messageKey = "CopiedSuccessfully";
-            this.type = "success";
-        };
-        CopyingWithCheckboxState.prototype.fail = function () {
-            this.messageKey = "CopyingFailed";
-            this.type = "error";
-        };
-        CopyingWithCheckboxState.prototype.none = function () {
-            this.messageKey = null;
-            this.type = "none";
-        };
-        return CopyingWithCheckboxState;
-    }());
-    CustomerSetting.CopyingWithCheckboxState = CopyingWithCheckboxState;
-    (function (CopyMode) {
-        CopyMode[CopyMode["minPt"] = 1] = "minPt";
-        CopyMode[CopyMode["row"] = 2] = "row";
-        CopyMode[CopyMode["group"] = 3] = "group";
-    })(CustomerSetting.CopyMode || (CustomerSetting.CopyMode = {}));
-    var CopyMode = CustomerSetting.CopyMode;
-    var CopySettingWithCheckboxDirective = (function () {
-        function CopySettingWithCheckboxDirective($rootScope, copyingSettingWithCheckboxService) {
-            var _this = this;
-            this.replace = true;
-            this.templateUrl = "CopyWithCheckBoxSettingBlock/CopySettingWithCheckbox/copy-setting-with-checkbox.htm";
-            this.controller = ["$scope", function ($scope) {
-                    $scope.copyingState = new CopyingWithCheckboxState();
-                    _this.copyingSettingWithCheckboxService.register($scope);
-                    $scope.isIconActive = false;
-                    $scope.copySporttypeActivated = false;
-                    $scope.numOfCopyBettypeActivated = 0;
-                    $scope.settingItemsOneDirection = CustomerSetting.ArrayHelpers.join2DimensionalArray($scope.settingItems);
-                    _this.$rootScope.$on("copySettingTypeWithCheckbox" + $scope.settingTypeId, function (event, bettypeId) {
-                        if ($scope.isIconActive && $scope.settingItemsOneDirection[0].betTypeId == bettypeId) {
-                            $scope.copy(true);
-                        }
-                    });
-                    _this.$rootScope.$on("updateSporttypeCopyState" + $scope.settingTypeId, function (event, copySporttypeActivated) {
-                        if (!$scope.isSporttypeLevel) {
-                            $scope.copySporttypeActivated = copySporttypeActivated;
-                            $scope.isIconActive = false;
-                        }
-                    });
-                    _this.$rootScope.$on("updateBettypeCopyState" + $scope.settingTypeId, function (event, copyBettypeActivated) {
-                        $scope.numOfCopyBettypeActivated += copyBettypeActivated ? 1 : -1;
-                    });
-                    $scope.copy = function (isSourceChanged) {
-                        if (isSourceChanged === void 0) { isSourceChanged = false; }
-                        if (!$scope.isSporttypeLevel && $scope.copySporttypeActivated)
-                            return;
-                        if ($scope.isSporttypeLevel && $scope.numOfCopyBettypeActivated > 0)
-                            return;
-                        if ($scope.settingItems && $scope.settingItems.length > 1) {
-                            var source = $scope.settingItemsOneDirection[0];
-                            var targets = $scope.settingItemsOneDirection.slice(1);
-                            if (isSourceChanged || (!$scope.isIconActive && source.isCheckedUpdateRow)) {
-                                if (source.validate()) {
-                                    _this.copyingSettingWithCheckboxService.hideTooltips($scope);
-                                    var copyingResult = source.copySettingTo(targets);
-                                    if (copyingResult.numberOfCopiedItems > 0) {
-                                        $scope.isIconActive = true;
-                                        if (copyingResult.status)
-                                            $scope.copyingState.succeed();
-                                        else
-                                            $scope.copyingState.fail();
-                                    }
-                                    else {
-                                        $scope.copyingState.none();
-                                        return;
-                                    }
-                                }
-                            }
-                            else {
-                                source.isRowCopied = false;
-                                $scope.isIconActive = false;
-                                source.removeCopyDisabled(targets);
-                                _this.copyingSettingWithCheckboxService.hideTooltips($scope);
-                            }
-                            if ($scope.isSporttypeLevel) {
-                                $scope.copySporttypeActivated = $scope.isSporttypeLevel ? $scope.isIconActive : $scope.copySporttypeActivated;
-                                $scope.$emit("updateSporttypeCopyState" + $scope.settingTypeId, $scope.copySporttypeActivated);
-                            }
-                            else {
-                                if (!isSourceChanged)
-                                    $scope.$emit("updateBettypeCopyState" + $scope.settingTypeId, $scope.isIconActive);
-                            }
-                        }
-                    };
-                    $scope.hideTooltip = function () {
-                        $scope.copyingState.none();
-                    };
-                }];
-            this.copyingSettingWithCheckboxService = copyingSettingWithCheckboxService;
-            this.$rootScope = $rootScope;
-        }
-        Object.defineProperty(CopySettingWithCheckboxDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    settingTypeId: "=",
-                    settingItems: "=",
-                    isSporttypeLevel: "=",
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        CopySettingWithCheckboxDirective.$inject = ["$rootScope", "copyingSettingWithCheckboxService"];
-        return CopySettingWithCheckboxDirective;
-    }());
-    CustomerSetting.CopySettingWithCheckboxDirective = CopySettingWithCheckboxDirective;
-    CustomerSetting.ModuleRegister.directive("copySettingWithCheckbox", CopySettingWithCheckboxDirective);
-    var CopyingSettingWithCheckboxService = (function () {
-        function CopyingSettingWithCheckboxService($rootScope) {
-            var _this = this;
-            this.$rootScope = $rootScope;
-            this.scopes = new Array();
-            this.$rootScope.$on("updateSetting", function () {
-                _this.scopes.forEach(function (registeredScope) {
-                    if (registeredScope.copyingState.isShowingMessage()) {
-                        var items = CustomerSetting.ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
-                        registeredScope.copyingState.none();
-                        items.forEach(function (item) {
-                            item.resetHighlightState();
-                        });
-                    }
-                });
-            });
-        }
-        CopyingSettingWithCheckboxService.prototype.register = function (scope) {
-            var isExisting = this.scopes.filter(function (registeredScope) {
-                return registeredScope.$id === scope.$id;
-            }).length > 0;
-            if (!isExisting) {
-                this.scopes.push(scope);
-            }
-        };
-        CopyingSettingWithCheckboxService.prototype.hideTooltips = function (scope) {
-            var settingTypeId = scope.settingTypeId;
-            this.scopes.forEach(function (registeredScope) {
-                if (registeredScope.copyingState.isShowingMessage()) {
-                    var registeredSettingTypeId = registeredScope.settingTypeId;
-                    if (registeredSettingTypeId === settingTypeId) {
-                        var items = CustomerSetting.ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
-                        registeredScope.copyingState.none();
-                        items.forEach(function (item) {
-                            item.resetHighlightState();
-                        });
-                    }
-                }
-            });
-        };
-        CopyingSettingWithCheckboxService.$inject = ["$rootScope"];
-        return CopyingSettingWithCheckboxService;
-    }());
-    CustomerSetting.ModuleRegister.service("copyingSettingWithCheckboxService", CopyingSettingWithCheckboxService);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var CopyingState = (function () {
-        function CopyingState(positionModel, displayingSeconds) {
-            if (displayingSeconds === void 0) { displayingSeconds = 5; }
-            this.positionModel = positionModel || CustomerSetting.PositionModel.relative;
-            this.displayingSeconds = displayingSeconds;
-        }
-        CopyingState.prototype.isShowingMessage = function () {
-            return !!this.messageKey || this.type === "none";
-        };
-        CopyingState.prototype.succeed = function () {
-            this.messageKey = "CopiedSuccessfully";
-            this.type = "success";
-        };
-        CopyingState.prototype.fail = function () {
-            this.messageKey = "CopyingFailed";
-            this.type = "error";
-        };
-        CopyingState.prototype.none = function () {
-            this.messageKey = null;
-            this.type = "none";
-        };
-        return CopyingState;
-    }());
-    CustomerSetting.CopyingState = CopyingState;
-    var CopySettingDirective = (function () {
-        function CopySettingDirective(copyingSettingService) {
-            var _this = this;
-            this.replace = true;
-            this.templateUrl = "DefaultSettingBlock/CopySetting/copy-setting.htm";
-            this.controller = ["$scope", function ($scope) {
-                    $scope.copyingState = new CopyingState();
-                    _this.copyingSettingService.register($scope);
-                    $scope.copy = function () {
-                        if ($scope.settingItems && $scope.settingItems.length > 1) {
-                            var items = CustomerSetting.ArrayHelpers.join2DimensionalArray($scope.settingItems);
-                            var source = items[0];
-                            var targets = items.slice(1);
-                            if (source.validate()) {
-                                _this.copyingSettingService.hideTooltips($scope);
-                                var copyingResult = source.copySettingTo(targets);
-                                if (!copyingResult.status) {
-                                    $scope.copyingState.fail();
-                                }
-                                else if (copyingResult.numberOfCopiedItems > 0) {
-                                    $scope.copyingState.succeed();
-                                }
-                                else {
-                                    $scope.copyingState.none();
-                                }
-                            }
-                        }
-                    };
-                    $scope.hideTooltip = function () {
-                        $scope.copyingState.none();
-                    };
-                }];
-            this.copyingSettingService = copyingSettingService;
-        }
-        Object.defineProperty(CopySettingDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    settingTypeId: "=",
-                    settingItems: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        CopySettingDirective.$inject = ["copyingSettingService"];
-        return CopySettingDirective;
-    }());
-    CustomerSetting.CopySettingDirective = CopySettingDirective;
-    CustomerSetting.ModuleRegister.directive("copySetting", CopySettingDirective);
-    var CopyingSettingService = (function () {
-        function CopyingSettingService($rootScope) {
-            var _this = this;
-            this.$rootScope = $rootScope;
-            this.scopes = new Array();
-            this.$rootScope.$on("updateSetting", function () {
-                _this.scopes.forEach(function (registeredScope) {
-                    if (registeredScope.copyingState.isShowingMessage()) {
-                        var items = CustomerSetting.ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
-                        registeredScope.copyingState.none();
-                        items.forEach(function (item) {
-                            item.resetHighlightState();
-                        });
-                    }
-                });
-            });
-        }
-        CopyingSettingService.prototype.register = function (scope) {
-            var isExisting = this.scopes.filter(function (registeredScope) {
-                return registeredScope.$id === scope.$id;
-            }).length > 0;
-            if (!isExisting) {
-                this.scopes.push(scope);
-            }
-        };
-        CopyingSettingService.prototype.hideTooltips = function (scope) {
-            var settingTypeId = scope.settingTypeId;
-            this.scopes.forEach(function (registeredScope) {
-                if (registeredScope.copyingState.isShowingMessage()) {
-                    var registeredSettingTypeId = registeredScope.settingTypeId;
-                    if (registeredSettingTypeId === settingTypeId) {
-                        var items = CustomerSetting.ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
-                        registeredScope.copyingState.none();
-                        items.forEach(function (item) {
-                            item.resetHighlightState();
-                        });
-                    }
-                }
-            });
-        };
-        CopyingSettingService.$inject = ["$rootScope"];
-        return CopyingSettingService;
-    }());
-    CustomerSetting.ModuleRegister.service("copyingSettingService", CopyingSettingService);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
     var DetectMaxHeightDirective = (function () {
         function DetectMaxHeightDirective($window, $timeout) {
             var _this = this;
@@ -35415,9 +35316,180 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var ToggleSettingBlockDirective = (function () {
-        function ToggleSettingBlockDirective($rootScope, $timeout) {
+    var CopyingWithCheckboxState = (function () {
+        function CopyingWithCheckboxState(positionModel, displayingSeconds) {
+            if (displayingSeconds === void 0) { displayingSeconds = 5; }
+            this.positionModel = positionModel || CustomerSetting.PositionModel.relative;
+            this.displayingSeconds = displayingSeconds;
+        }
+        CopyingWithCheckboxState.prototype.isShowingMessage = function () {
+            return !!this.messageKey || this.type === "none";
+        };
+        CopyingWithCheckboxState.prototype.succeed = function () {
+            this.messageKey = "CopiedSuccessfully";
+            this.type = "success";
+        };
+        CopyingWithCheckboxState.prototype.fail = function () {
+            this.messageKey = "CopyingFailed";
+            this.type = "error";
+        };
+        CopyingWithCheckboxState.prototype.none = function () {
+            this.messageKey = null;
+            this.type = "none";
+        };
+        return CopyingWithCheckboxState;
+    }());
+    CustomerSetting.CopyingWithCheckboxState = CopyingWithCheckboxState;
+    var CopySettingWithCheckboxDirective = (function () {
+        function CopySettingWithCheckboxDirective($rootScope, copyingSettingWithCheckboxService) {
             var _this = this;
+            this.replace = true;
+            this.templateUrl = "CopyWithCheckBoxSettingBlock/CopySettingWithCheckbox/copy-setting-with-checkbox.htm";
+            this.controller = ["$scope", function ($scope) {
+                    $scope.copyingState = new CopyingWithCheckboxState();
+                    _this.copyingSettingWithCheckboxService.register($scope);
+                    $scope.isIconActive = false;
+                    $scope.copySporttypeActivated = false;
+                    $scope.numOfCopyBettypeActivated = 0;
+                    $scope.settingItemsOneDirection = CustomerSetting.ArrayHelpers.join2DimensionalArray($scope.settingItems);
+                    _this.$rootScope.$on("copySettingTypeWithCheckbox" + $scope.settingTypeId, function (event, bettypeId) {
+                        if ($scope.isIconActive && $scope.settingItemsOneDirection[0].betTypeId == bettypeId) {
+                            $scope.copy(true);
+                        }
+                    });
+                    _this.$rootScope.$on("updateSporttypeCopyState" + $scope.settingTypeId, function (event, copySporttypeActivated) {
+                        if (!$scope.isSporttypeLevel) {
+                            $scope.copySporttypeActivated = copySporttypeActivated;
+                            $scope.isIconActive = false;
+                        }
+                    });
+                    _this.$rootScope.$on("updateBettypeCopyState" + $scope.settingTypeId, function (event, copyBettypeActivated) {
+                        $scope.numOfCopyBettypeActivated += copyBettypeActivated ? 1 : -1;
+                    });
+                    $scope.copy = function (isSourceChanged) {
+                        if (isSourceChanged === void 0) { isSourceChanged = false; }
+                        if (!$scope.isSporttypeLevel && $scope.copySporttypeActivated)
+                            return;
+                        if ($scope.isSporttypeLevel && $scope.numOfCopyBettypeActivated > 0)
+                            return;
+                        if ($scope.settingItems && $scope.settingItems.length > 1) {
+                            var source = $scope.settingItemsOneDirection[0];
+                            source.isSourceRow = false;
+                            var targets = $scope.settingItemsOneDirection.slice(1);
+                            targets.forEach(function (item) {
+                                item.isSourceRow = false;
+                            });
+                            if (isSourceChanged || (!$scope.isIconActive && source.isCheckedUpdateRow)) {
+                                if (source.validate()) {
+                                    _this.copyingSettingWithCheckboxService.hideTooltips($scope);
+                                    var copyingResult = source.copySettingTo(targets);
+                                    if (copyingResult.numberOfCopiedItems > 0) {
+                                        $scope.isIconActive = true;
+                                        source.isSourceRow = true;
+                                        if (copyingResult.status)
+                                            $scope.copyingState.succeed();
+                                        else
+                                            $scope.copyingState.fail();
+                                    }
+                                    else {
+                                        $scope.copyingState.none();
+                                        return;
+                                    }
+                                }
+                            }
+                            else {
+                                source.isRowCopied = false;
+                                $scope.isIconActive = false;
+                                source.removeCopyDisabled(targets);
+                                _this.copyingSettingWithCheckboxService.hideTooltips($scope);
+                            }
+                            if ($scope.isSporttypeLevel) {
+                                $scope.copySporttypeActivated = $scope.isSporttypeLevel ? $scope.isIconActive : $scope.copySporttypeActivated;
+                                $scope.$emit("updateSporttypeCopyState" + $scope.settingTypeId, $scope.copySporttypeActivated);
+                            }
+                            else {
+                                if (!isSourceChanged)
+                                    $scope.$emit("updateBettypeCopyState" + $scope.settingTypeId, $scope.isIconActive);
+                            }
+                        }
+                    };
+                    $scope.hideTooltip = function () {
+                        $scope.copyingState.none();
+                    };
+                }];
+            this.copyingSettingWithCheckboxService = copyingSettingWithCheckboxService;
+            this.$rootScope = $rootScope;
+        }
+        Object.defineProperty(CopySettingWithCheckboxDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    settingTypeId: "=",
+                    settingItems: "=",
+                    isSporttypeLevel: "=",
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        CopySettingWithCheckboxDirective.$inject = ["$rootScope", "copyingSettingWithCheckboxService"];
+        return CopySettingWithCheckboxDirective;
+    }());
+    CustomerSetting.CopySettingWithCheckboxDirective = CopySettingWithCheckboxDirective;
+    CustomerSetting.ModuleRegister.directive("copySettingWithCheckbox", CopySettingWithCheckboxDirective);
+    var CopyingSettingWithCheckboxService = (function () {
+        function CopyingSettingWithCheckboxService($rootScope) {
+            var _this = this;
+            this.$rootScope = $rootScope;
+            this.scopes = new Array();
+            this.$rootScope.$on("updateSetting", function () {
+                _this.scopes.forEach(function (registeredScope) {
+                    if (registeredScope.copyingState.isShowingMessage()) {
+                        var items = CustomerSetting.ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
+                        registeredScope.copyingState.none();
+                        items.forEach(function (item) {
+                            item.resetHighlightState();
+                        });
+                    }
+                });
+            });
+        }
+        CopyingSettingWithCheckboxService.prototype.register = function (scope) {
+            var isExisting = this.scopes.filter(function (registeredScope) {
+                return registeredScope.$id === scope.$id;
+            }).length > 0;
+            if (!isExisting) {
+                this.scopes.push(scope);
+            }
+        };
+        CopyingSettingWithCheckboxService.prototype.hideTooltips = function (scope) {
+            var settingTypeId = scope.settingTypeId;
+            this.scopes.forEach(function (registeredScope) {
+                if (registeredScope.copyingState.isShowingMessage()) {
+                    var registeredSettingTypeId = registeredScope.settingTypeId;
+                    if (registeredSettingTypeId === settingTypeId) {
+                        var items = CustomerSetting.ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
+                        registeredScope.copyingState.none();
+                        items.forEach(function (item) {
+                            item.resetHighlightState();
+                        });
+                    }
+                }
+            });
+        };
+        CopyingSettingWithCheckboxService.$inject = ["$rootScope"];
+        return CopyingSettingWithCheckboxService;
+    }());
+    CustomerSetting.ModuleRegister.service("copyingSettingWithCheckboxService", CopyingSettingWithCheckboxService);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var ToggleAllSettingBlockDirective = (function () {
+        function ToggleAllSettingBlockDirective($rootScope, $timeout) {
+            var _this = this;
+            this.replace = true;
+            this.templateUrl = "DefaultSettingBlock/ToggleSettingBlock/toggle-all-setting-block.htm";
             this.initializing = true;
             this.link = function (scope, element) {
                 var container = angular.element(element.parent());
@@ -35429,29 +35501,113 @@ var CustomerSetting;
                         return false;
                     }
                 });
-                if (!_this.isToggleAllDirective(scope)) {
-                    scope.$watch("settingData", function () {
-                        if (_this.initializing) {
-                            _this.$timeout(function () { return _this.initializing = false; });
+                _this.$rootScope.$on("toggleSettingType", function (event, isExpandAll, settingTypeIndex) {
+                    if (isExpandAll) {
+                        scope.sharedStates.expandBlock(settingTypeIndex);
+                    }
+                    else {
+                        scope.sharedStates.collapseBlock(settingTypeIndex);
+                    }
+                });
+            };
+            this.$rootScope = $rootScope;
+            this.$timeout = $timeout;
+        }
+        Object.defineProperty(ToggleAllSettingBlockDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    sharedStates: "=",
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        ToggleAllSettingBlockDirective.prototype.toggle = function (scope) {
+            if (scope.sharedStates.isExpandedAll()) {
+                scope.sharedStates.collapseAllBlocks();
+            }
+            else {
+                scope.sharedStates.expandAllBlocks();
+            }
+            this.$rootScope.$emit("toggleAllSettingTypes", scope.sharedStates.isExpandedAll());
+            scope.$apply();
+            this.triggerPageHeightChangedEvent();
+        };
+        ;
+        ToggleAllSettingBlockDirective.prototype.triggerPageHeightChangedEvent = function () {
+            this.$rootScope.$emit("page-height-changed");
+        };
+        ToggleAllSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
+        return ToggleAllSettingBlockDirective;
+    }());
+    CustomerSetting.ToggleAllSettingBlockDirective = ToggleAllSettingBlockDirective;
+    CustomerSetting.ModuleRegister.directive("toggleAllSettingBlock", ToggleAllSettingBlockDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var ToggleSettingBlockDirective = (function () {
+        function ToggleSettingBlockDirective($rootScope, $timeout) {
+            var _this = this;
+            this.replace = true;
+            this.templateUrl = "DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm";
+            this.initializing = true;
+            this.link = function (scope, element) {
+                var container = angular.element(element.parent());
+                container.addClass("togglable-bar");
+                container.on("click", function (event) {
+                    var target = angular.element(event.target);
+                    if (target.hasClass("togglable-bar")) {
+                        _this.toggle(scope);
+                        return false;
+                    }
+                });
+                _this.$rootScope.$on("toggleAllSettingTypes", function (event, isExpandAll) {
+                    if (_this.isToggleAllDirective(scope)) {
+                        if (isExpandAll) {
+                            scope.sharedStates.expandAllBlocks();
                         }
-                        else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
+                        else {
+                            scope.sharedStates.collapseAllBlocks();
+                        }
+                    }
+                });
+                scope.$watch("settingData", function () {
+                    if (_this.initializing) {
+                        _this.$timeout(function () { return _this.initializing = false; });
+                        return;
+                    }
+                    if (scope.settingLevel && scope.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
+                        if (!_this.isToggleAllDirective(scope)) {
                             scope.sharedStates.expandBlock(scope.blockIndex);
-                            _this.triggerPageHeightChangedEvent();
                         }
-                    }, true);
-                    _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
-                        if ((!settingTypeId || settingTypeId === scope.settingTypeId)
-                            && scope.settingData
-                            && scope.settingData.some(function (item) { return !item.validationState.isSuccessful; })
-                            && !scope.sharedStates.isExpanded(scope.blockIndex)) {
-                            scope.sharedStates.expandBlock(scope.blockIndex);
-                            _this.triggerPageHeightChangedEvent();
+                    }
+                    else {
+                        if (_this.isToggleAllDirective(scope)) {
+                            scope.sharedStates.expandAllBlocks();
                         }
-                    });
-                    _this.$rootScope.$on("queriedSetting", function () {
-                        _this.initializing = true;
-                    });
-                }
+                    }
+                    _this.triggerPageHeightChangedEvent();
+                }, true);
+                _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
+                    if ((!settingTypeId || settingTypeId === scope.settingTypeId)
+                        && scope.settingData
+                        && scope.settingData.some(function (item) { return !item.validationState.isSuccessful; })) {
+                        if (scope.settingLevel && scope.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
+                            if (!_this.isToggleAllDirective(scope))
+                                scope.sharedStates.expandBlock(scope.blockIndex);
+                        }
+                        else {
+                            if (_this.isToggleAllDirective(scope))
+                                scope.sharedStates.expandAllBlocks();
+                        }
+                        _this.triggerPageHeightChangedEvent();
+                    }
+                });
+                _this.$rootScope.$on("queriedSetting", function () {
+                    _this.initializing = true;
+                });
             };
             this.$rootScope = $rootScope;
             this.$timeout = $timeout;
@@ -35462,7 +35618,9 @@ var CustomerSetting;
                     blockIndex: "=",
                     sharedStates: "=",
                     settingData: "=",
-                    settingTypeId: "="
+                    settingTypeId: "=",
+                    settingTypeIndex: "=",
+                    settingLevel: "="
                 };
             },
             enumerable: true,
@@ -35484,6 +35642,9 @@ var CustomerSetting;
                 else {
                     scope.sharedStates.expandBlock(scope.blockIndex);
                 }
+            }
+            if (scope.settingTypeIndex !== null && scope.settingTypeIndex !== undefined) {
+                this.$rootScope.$emit("toggleSettingType", scope.sharedStates.isExpandedAll(), scope.settingTypeIndex);
             }
             scope.$apply();
             this.triggerPageHeightChangedEvent();
@@ -36709,44 +36870,6 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.directive("settingtype18", SettingType18Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var UpdateDataCheckboxDirective = (function () {
-        function UpdateDataCheckboxDirective() {
-            this.templateUrl = "update-data-checkbox.htm";
-            this.replace = true;
-            this.controller = ["$scope", function ($scope) {
-                    $scope.click = function () {
-                        $scope.settingItem.isRowCopied = false;
-                        if ($scope.isMinPt) {
-                            $scope.settingItem.isCheckedUpdateMinPtOnly = !$scope.settingItem.isCheckedUpdateMinPtOnly;
-                        }
-                        else {
-                            $scope.settingItem.isCheckedUpdateRow = !$scope.settingItem.isCheckedUpdateRow;
-                            $scope.settingItem.isCheckedUpdateMinPtOnly = $scope.settingItem.isCheckedUpdateRow;
-                        }
-                    };
-                }];
-        }
-        Object.defineProperty(UpdateDataCheckboxDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    settingItem: '=',
-                    isMinPt: '=',
-                    isFirst: '='
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        ;
-        return UpdateDataCheckboxDirective;
-    }());
-    CustomerSetting.UpdateDataCheckboxDirective = UpdateDataCheckboxDirective;
-    CustomerSetting.ModuleRegister.directive("updateDataCheckbox", UpdateDataCheckboxDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -36869,8 +36992,8 @@ var CustomerSetting;
                     });
                     $scope.resetValidationState = function () {
                         $scope.settingItem.resetValidationState();
-                        if ($scope.isCopyWithCheckbox && !$scope.disabled) {
-                            $scope.$emit("copySettingTypeWithCheckbox19");
+                        if ($scope.isCopyWithCheckbox && $scope.settingItem.isCheckedUpdateRow) {
+                            $scope.$emit("copySettingTypeWithCheckbox19", $scope.settingItem.betTypeId);
                         }
                     };
                 }];
@@ -37388,6 +37511,7 @@ var CustomerSetting;
                     $scope.settingTypeName = settingType6ResourceService.getLabel("WinLossLimit");
                     $scope.highestPercentageRange = 100;
                     $scope.$watch("settingType", function (settingType) {
+                        $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                         $scope.normalMode = settingTypesSharedValuesService.normalMode;
                         if (settingType && angular.isArray(settingType.settingItems)) {
                             if (settingType.isError) {
@@ -37403,9 +37527,15 @@ var CustomerSetting;
                                 });
                                 if (settingType.settingLevel === CustomerSetting.SettingLevel.sportType || settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
                                     $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
+                                    if ($scope.togglableSettingBlocks) {
+                                        $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
+                                    }
                                 }
                                 else {
                                     $scope.sportGroups = [settingType.settingItems];
+                                    if ($scope.togglableSettingBlocks) {
+                                        $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
+                                    }
                                 }
                             }
                         }
@@ -37425,7 +37555,8 @@ var CustomerSetting;
             get: function () {
                 return {
                     settingType: "=",
-                    update: "&"
+                    update: "&",
+                    index: "@"
                 };
             },
             enumerable: true,
@@ -37733,6 +37864,7 @@ var CustomerSetting;
                     $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
                     $scope.settingTypeName = settingType7ResourceService.getLabel("BetLimit");
                     $scope.$watch("settingType", function (settingType) {
+                        $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                         $scope.normalMode = settingTypesSharedValuesService.normalMode;
                         if (settingType && angular.isArray(settingType.settingItems)) {
                             if (settingType.isError) {
@@ -37748,9 +37880,15 @@ var CustomerSetting;
                                 });
                                 if (settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
                                     $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
+                                    if ($scope.togglableSettingBlocks) {
+                                        $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
+                                    }
                                 }
                                 else {
                                     $scope.sportGroups = [settingType.settingItems];
+                                    if ($scope.togglableSettingBlocks) {
+                                        $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
+                                    }
                                 }
                             }
                         }
@@ -37761,7 +37899,8 @@ var CustomerSetting;
             get: function () {
                 return {
                     settingType: "=",
-                    update: "&"
+                    update: "&",
+                    index: "@"
                 };
             },
             enumerable: true,
@@ -37985,6 +38124,7 @@ var CustomerSetting;
                     $scope.settingTypeName = settingType12ResourceService.getLabel("LossLimit");
                     $scope.highestPercentageRange = 100;
                     $scope.$watch("settingType", function (settingType) {
+                        $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                         $scope.normalMode = settingTypesSharedValuesService.normalMode;
                         if (settingType && angular.isArray(settingType.settingItems)) {
                             if (settingType.isError) {
@@ -38000,9 +38140,15 @@ var CustomerSetting;
                                 });
                                 if (settingType.settingLevel === CustomerSetting.SettingLevel.sportType || settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
                                     $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
+                                    if ($scope.togglableSettingBlocks) {
+                                        $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
+                                    }
                                 }
                                 else {
                                     $scope.sportGroups = [settingType.settingItems];
+                                    if ($scope.togglableSettingBlocks) {
+                                        $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
+                                    }
                                 }
                             }
                         }
@@ -38022,7 +38168,8 @@ var CustomerSetting;
             get: function () {
                 return {
                     settingType: "=",
-                    update: "&"
+                    update: "&",
+                    index: "@"
                 };
             },
             enumerable: true,
@@ -38373,6 +38520,7 @@ var CustomerSetting;
                     $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
                     $scope.settingTypeName = settingType17ResourceService.getLabel("BetLimit");
                     $scope.$watch("settingType", function (settingType) {
+                        $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                         $scope.normalMode = settingTypesSharedValuesService.normalMode;
                         if (settingType && angular.isArray(settingType.settingItems)) {
                             if (settingType.isError) {
@@ -38388,9 +38536,15 @@ var CustomerSetting;
                                 });
                                 if (settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
                                     $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
+                                    if ($scope.togglableSettingBlocks) {
+                                        $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
+                                    }
                                 }
                                 else {
                                     $scope.sportGroups = [settingType.settingItems];
+                                    if ($scope.togglableSettingBlocks) {
+                                        $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
+                                    }
                                 }
                             }
                         }
@@ -38401,7 +38555,8 @@ var CustomerSetting;
             get: function () {
                 return {
                     settingType: "=",
-                    update: "&"
+                    update: "&",
+                    index: "@"
                 };
             },
             enumerable: true,
@@ -38413,13 +38568,16 @@ var CustomerSetting;
 })(CustomerSetting || (CustomerSetting = {}));
 
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
-$templateCache.put("CopyWithCheckBoxSettingBlock/copy-with-checkbox-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></toggle-setting-block><note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type></note-icon-tooltip><copy-setting-with-checkbox data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $first && $parent.$parent.$first\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\" data-is-multiple=\"isMultiple\" data-copy-mode=\"copyMode.group\" data-is-sporttype-level=\"true\"></copy-setting-with-checkbox></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"w15-percent block__lbl--no-border\" data-ng-if=\"(settingType | editableSettingType)\"><copy-setting-with-checkbox data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $first\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\" data-is-multiple=\"isMultiple\" data-is-sporttype-level=\"false\"></copy-setting-with-checkbox></div><div class=\"w15-percent block__lbl\" data-ng-if=\"(settingType | editableSettingType)\"><update-data-checkbox data-setting-item=\"item\" data-is-min-pt=\"false\" data-is-first=\"$first && $parent.$parent.$first\"></update-data-checkbox></div><div data-ng-class=\"{\'w70-percent block__lbl block__lbl--no-border\': (settingType | editableSettingType)}\"><span class=\"showing-name\">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
-$templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{::(\"GeneralInformation\" | label)}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"UserName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Phone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"FirstName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"MobilePhone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{::(\"LastName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\">{{::(\"Fax\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div></div></div>");
-$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></toggle-setting-block><note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type></note-icon-tooltip><copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
+$templateCache.put("CopyWithCheckBoxSettingBlock/copy-with-checkbox-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\"><toggle-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\" data-setting-data=\"settingType.settingItems\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\"></toggle-setting-block>{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'indent-30\': togglableSharedStates, \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\"><toggle-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\"></toggle-setting-block>{{group[0].sportTypeName}}<note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type></note-icon-tooltip><copy-setting-with-checkbox data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $first && $parent.$parent.$first\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\" data-is-multiple=\"isMultiple\" data-is-sporttype-level=\"true\"></copy-setting-with-checkbox></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"w15-percent block__lbl--no-border\" data-ng-if=\"(settingType | editableSettingType)\"><copy-setting-with-checkbox data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $first\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\" data-is-multiple=\"isMultiple\" data-is-sporttype-level=\"false\"></copy-setting-with-checkbox></div><div class=\"w15-percent block__lbl\" data-ng-if=\"(settingType | editableSettingType)\"><update-data-checkbox data-setting-item=\"item\" data-is-min-pt=\"false\" data-is-first=\"$first && $parent.$parent.$first\"></update-data-checkbox></div><div data-ng-class=\"{\'w70-percent block__lbl block__lbl--no-border\': (settingType | editableSettingType)}\"><span class=\"showing-name\">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
+$templateCache.put("CopyWithCheckBoxSettingBlock/update-data-checkbox.htm","<div><input type=\"checkbox\" ng-checked=\"isMinPt ? settingItem.isCheckedUpdateMinPtOnly : settingItem.isCheckedUpdateRow\" data-is-min-pt=\"{{isMinPt}}\" data-is-first=\"{{isFirst}}\" data-ng-disabled=\"settingItem.isSourceRow || (isMinPt ? (settingItem.isCheckedUpdateRow || settingItem.isRowCopied) : settingItem.isRowCopied)\" data-ng-click=\"click();\"></div>");
+$templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"setting.customerInfo\"><div class=\"block__header\"><toggle-all-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\"></toggle-all-setting-block>{{::(\"GeneralInformation\" | label)}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"UserName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{setting.customerInfo.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Phone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{setting.customerInfo.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"FirstName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{setting.customerInfo.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"MobilePhone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{setting.customerInfo.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{::(\"LastName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{setting.customerInfo.lastName | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\">{{::(\"Fax\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{setting.customerInfo.fax | naValue}}</div></div></div></div>");
+$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\"><toggle-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\" data-setting-data=\"settingType.settingItems\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'indent-30\': togglableSharedStates, \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\"><toggle-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{group[0].sportTypeName}}<note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type></note-icon-tooltip><copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\" data-ng-bind-html=\"result.message | unsafe\"></div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\" data-ng-bind-html=\"subResult.message | unsafe\"></div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\"><div class=\"msg__main-message\" data-ng-bind-html=\"settingResult.message | unsafe\"></div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\" data-ng-bind-html=\"message | unsafe\"></div></div></div></div></div>");
+$templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/HighlightField/tooltip.htm","<div class=\"tooltip tooltip--{{highlightType}}\" data-ng-if=\"tooltipMessage\"><div class=\"tooltip__content\">{{tooltipMessage}}</div></div>");
 $templateCache.put("CopyWithCheckBoxSettingBlock/CopySettingWithCheckbox/copy-setting-with-checkbox.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\" data-ng-class=\"{ \'icon--copy--active\' : isIconActive }\"></span></div></div>");
-$templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
+$templateCache.put("DefaultSettingBlock/ToggleSettingBlock/toggle-all-setting-block.htm","<div class=\"togglable-bar\" data-ng-class=\"{ \'icon-collapse-all\': !sharedStates.isExpandedAll(), \'icon-expand-all\': sharedStates.isExpandedAll()}\" title=\"{{sharedStates.isExpandedAll() ? (\'ExpandAllToolTip\' | label) : (\'CollapseAllToolTip\' | label)}}\"></div>");
+$templateCache.put("DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm","<div class=\"togglable-bar\" data-ng-class=\"{ \'icon-collapse\': blockIndex == undefined ? !sharedStates.isExpandedAll() : !sharedStates.toggleStates[blockIndex], \'icon-expand\': blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]}\" title=\"{{(blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]) ? (\'ExpandToolTip\' | label) : (\'CollapseToolTip\' | label)}}\"></div>");
 $templateCache.put("DefaultSettingBlock/NoteIcon/note-icon-tooltip.htm","<parent><div class=\"icon icon--warning icon--warning--pointer--margintop setting-field--checkfield__check-ctrl tab\" data-tooltip-message=\"{{tooltipMessage}}\" data-tooltip-type=\"{{tooltipType}}\" data-field-highlighting data-ng-mouseenter=\"showTooltip()\" data-ng-mouseleave=\"removeMessage()\"></div></parent>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></copy-position-taking-on-member></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></copy-position-taking-on-member></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-ng-model=\"item.superPTOnMembers\" data-field-highlighting data-field-name=\"superPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-field-highlighting data-field-name=\"masterPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
 $templateCache.put("position-taking-select.htm","<div><div class=\"setting-field-wrapper\"><select class=\"setting-field\" ng-disabled=\"disabled === \'true\' || isPartialMinPt && (settingItem.isRowCopied || (isMinPt ? !settingItem.isCheckedUpdateMinPtOnly : !settingItem.isCheckedUpdateRow))\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'positionTakingResourceService\':fieldName}}\"></select></div></div>");
@@ -38427,7 +38585,6 @@ $templateCache.put("settingtype18-default-value.htm","<div class=\"block__cell-g
 $templateCache.put("settingtype18-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w25-percent\">{{::(\'SuperMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w25-percent\">{{::(\'SuperMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'MasterMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"block__lbl block__lbl--no-border w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div>");
 $templateCache.put("settingtype18-value.htm","<div class=\"block__cell-group\" data-ng-if=\"settingType | editableSettingType\"><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w25-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s4\" data-min=\"{{0}}\" data-max=\"{{item.defaultMaxPT}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w25-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w25-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"a4\" data-min=\"{{0}}\" data-max=\"{{item.m4}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w4-percent align-center\" ng-if=\"isMultiple\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateMinPtOnly || item.isRowCopied}\"><update-data-checkbox data-setting-item=\"item\" data-is-min-pt=\"true\" data-is-first=\"$first\"></update-data-checkbox></div><div class=\"block__cell block__cell--no-border w21-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateMinPtOnly || item.isRowCopied}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\" data-is-min-pt=\"true\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-position-taking-on-member><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iS3\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uS3\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iS3\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s3\" data-min=\"{{[0, item.n4 - item.m4] | maxValue}}\" data-max=\"{{item.s4}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iS3\" data-highlight-state=\"item.highlightState\" data-ng-change=\"isAutoChanged(item, \'iS3\', $first );\" data-ng-model=\"item.iS3\" ng-disabled=\"!item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m3\" data-min=\"{{item.iS3 ? item.n4 - item.uS3 : ([0, item.n4 - item.s3] | maxValue)}}\" data-max=\"{{item.iS3 ? ([item.s4, item.m4] | minValue) : ([item.s4 - item.s3, item.m4] | minValue)}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w3-percent align-center\" ng-if=\"isMultiple\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateMinPtOnly || item.isRowCopied}\"><update-data-checkbox data-setting-item=\"item\" data-is-min-pt=\"true\" data-is-first=\"$first\"></update-data-checkbox></div><div class=\"block__cell block__cell--no-border w25-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateMinPtOnly || item.isRowCopied}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n3\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\" data-is-partial-min-pt=\"true\" data-is-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-position-taking-on-member><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iM2 && !(settingType | hideIsAutoColumn)\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uM2\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn), \'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m2\" data-min=\"{{[0, item.n3 - item.a4] | maxValue}}\" data-max=\"{{item.m3}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iM2\" data-highlight-state=\"item.highlightState\" data-ng-change=\"isAutoChanged(item, \'iM2\', $first);\" data-ng-model=\"item.iM2\" ng-disabled=\"!item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn), \'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"a2\" data-min=\"{{item.iM2 ? item.n3 - item.uM2 : ([0, item.n3 - item.m2] | maxValue)}}\" data-max=\"{{item.iM2 ? ([item.m3, item.a4] | minValue) : ([item.m3 - item.m2, item.a4] | minValue)}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w3-percent align-center\" ng-if=\"isMultiple\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateMinPtOnly || item.isRowCopied}\"><update-data-checkbox data-setting-item=\"item\" data-is-min-pt=\"true\" data-is-first=\"$first\"></update-data-checkbox></div><div class=\"block__cell block__cell--no-border w25-percent align-center\" data-ng-class=\"{ \'w30-percent--last\': (settingType | hideIsAutoColumn), \'disabled\': !item.isCheckedUpdateMinPtOnly || (!$first && item.isRowCopied)}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"n2\" data-min=\"{{0}}\" data-max=\"{{item.a2}}\" data-is-min-pt=\"true\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w28-percent align-center\" data-ng-show=\"item.iS1\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uS1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{item.s4}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w28-percent align-center\" data-ng-show=\"!item.iS1\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"s1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{[item.n4 - item.m1 - item.a1, item.s4 - item.m3] | maxValue}}\" data-disabled=\"{{item.iS3}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iS1\" data-highlight-state=\"item.highlightState\" data-ng-change=\"isAutoChanged(item, \'iS1\', $first);\" data-ng-model=\"item.iS1\" ng-disabled=\"!item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w42-percent align-center\" data-ng-show=\"item.iM1 && !(settingType | hideIsAutoColumn)\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"uM1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w42-percent align-center\" data-ng-show=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn), \'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><position-taking-select data-setting-item=\"item\" data-field-name=\"m1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3 - item.a1}}\" data-disabled=\"{{item.iM2 && !(settingType | hideIsAutoColumn)}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"iM1\" data-highlight-state=\"item.highlightState\" data-ng-change=\"isAutoChanged(item, \'iM1\', $first);\" data-ng-model=\"item.iM1\" ng-disabled=\"!item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow\"></label></div><div class=\"block__cell block__cell--no-border w42-percent align-center\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn), \'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\" data-ng-class=\"{\'disabled\': !item.isCheckedUpdateRow || item.isRowCopied && item.isCheckedUpdateRow}\"><div><position-taking-select data-setting-item=\"item\" data-field-name=\"a1\" data-min=\"{{item.n2}}\" data-max=\"{{item.a2}}\" data-is-partial-min-pt=\"true\" data-is-first=\"$first\"></position-taking-select></div></div></div><div class=\"block__cell-group\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w25-percent align-center\">{{item.s4 | ptFormat}}</div><div class=\"block__cell w25-percent align-center\">{{item.m4 | ptFormat}}</div><div class=\"block__cell w25-percent align-center\">{{item.a4 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w25-percent align-center\">{{item.n4 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iS3\">{{item.uS3 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iS3\">{{item.s3 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS3\"></label></div><div class=\"block__cell w28-percent align-center\">{{item.m3 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\">{{item.n3 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iM2 && !(settingType | hideIsAutoColumn)\">{{item.uM2 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.m2 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM2\"></label></div><div class=\"block__cell w28-percent align-center\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.a2 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{item.n2 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w28-percent align-center\" data-ng-if=\"item.iS1\">{{item.uS1 | ptFormat}}</div><div class=\"block__cell w28-percent align-center\" data-ng-if=\"!item.iS1\">{{item.s1 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS1\"></label></div><div class=\"block__cell w28-percent align-center\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent align-center\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w42-percent align-center\" data-ng-if=\"item.iM1 && !(settingType | hideIsAutoColumn)\">{{item.uM1 | ptFormat}}</div><div class=\"block__cell w42-percent align-center\" data-ng-if=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.m1 | ptFormat}}</div><div class=\"block__cell w16-percent align-center\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM1\"></label></div><div class=\"block__cell block__cell--no-border w42-percent align-center\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.a1 | ptFormat}}</div></div><div class=\"block__cell-group align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{item.a1 | ptFormat}}</div></div>");
 $templateCache.put("settingtype18.htm","<div class=\"setting-type-18\"><default-setting-type-grouping class=\"full-width\" data-ng-if=\"!isMultiple\"></default-setting-type-grouping><copy-with-checkbox-setting-type class=\"full-width\" data-ng-if=\"isMultiple\"></copy-with-checkbox-setting-type><adjust-member-pt-modal data-ng-if=\"settingType | editableSettingType\"></adjust-member-pt-modal></div>");
-$templateCache.put("update-data-checkbox.htm","<div><input type=\"checkbox\" ng-checked=\"isMinPt ? settingItem.isCheckedUpdateMinPtOnly : settingItem.isCheckedUpdateRow\" data-is-min-pt=\"{{isMinPt}}\" data-is-first=\"{{isFirst}}\" data-ng-disabled=\"isMinPt ? (settingItem.isCheckedUpdateRow || settingItem.isRowCopied) : settingItem.isRowCopied\" data-ng-click=\"click();\"></div>");
 $templateCache.put("comm-rate-select.htm","<div class=\"setting-field-wrapper\" data-ng-class=\"{\'disabled\': disabled}\"><select class=\"setting-field\" data-field-highlighting data-field-name=\"commRate\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'commissionResourceService\'}}\" data-ng-change=\"resetValidationState()\" data-ng-model=\"settingItem.commRate\" data-ng-options=\"item.value as item.key for item in range\" ng-disabled=\"disabled\"></select></div>");
 $templateCache.put("settingtype19-default-value.htm","<comm-rate-select data-ng-if=\"settingType | editableSettingType\" data-setting-item=\"item\"></comm-rate-select><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)\">{{item.commRate}}</div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w33-percent\">{{item.upline.upline.commRate}}</div><div class=\"block__cell w33-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.commRate}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w50-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.commRate}}</div></div>");
 $templateCache.put("settingtype19-header.htm","<div data-ng-if=\"uplineLevel === avaiCustomerLevels.super\"><div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'CommissionForMaster\' | commissionLabel)}}</div><div class=\"block__lbl w33-percent\">{{::(\'CommissionForAgent\' | commissionLabel)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'CommissionForMember\' | commissionLabel)}}</div></div></div><div data-ng-if=\"uplineLevel === avaiCustomerLevels.master\"><div class=\"block__lbl\"></div><div class=\"block__lbl w40-percent\">{{::(\'CommissionForAgent\' | commissionLabel)}}</div><div class=\"block__lbl block__lbl--no-border w40-percent\">{{::(\'CommissionForMember\' | commissionLabel)}}</div></div>");
@@ -38436,13 +38593,13 @@ $templateCache.put("settingtype19.htm","<div data-ng-class=\"{ \'full-width\': c
 $templateCache.put("settingtype13-value.htm","<div class=\"setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-if=\"settingType | editableSettingType\" data-field-highlighting data-field-name=\"isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType13ResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\"> <input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-if=\"!(settingType | editableSettingType)\" data-ng-model=\"item.isChecked\"> <span data-ng-if=\"customerLevel === avaiCustomerLevels.super\">{{\'Super\' | label}}</span> <span data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'Master\' | label}}</span> <span data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'Agent\' | label}}</span> <span data-ng-if=\"customerLevel === avaiCustomerLevels.member\">{{\'Member\' | label}}</span></label></div>");
 $templateCache.put("settingtype13.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
 $templateCache.put("settingtype6-win-limit-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-model=\"settingItem.winLimit\" data-ng-options=\"item.key as item.value for item in range\" data-field-highlighting data-field-name=\"winLimit\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'settingType6ResourceService\':\'winLimit\':\'unlimitedLimit\'}}\"></select><span>{{::(\'OnGivenCredit\' | settingType6Label)}}</span></div>");
-$templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype6\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\">{{group[0].sportTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\">{{group[0].betTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumWin\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><settingtype6-win-limit-select data-setting-item=\"item\"></settingtype6-win-limit-select></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? \'X\' : \'\'}} {{::(\'OnGivenCredit\' | settingType6Label)}}</div></div><div class=\"block__row block__row--border-top\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype6-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-field-highlighting data-field-name=\"lossLimit\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype6-unlimited-checkbox data-ng-model=\"item.isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType6Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentWinLossAmount\' | settingType6Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentWinLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentWinLoss(item)\">{{::(\'ClickToViewCurrentWinLossLimit\' | settingType6Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentWinLossAmount\"><div><span>{{\'Winning\' | settingType6Label}}%:</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === -2\"><span class=\"red-text\">{{\'NotAvailable\' | settingType6Label}}</span> <span>({{item.currentWinLossAmount.currentAmount | formatNumber}}/<span class=\"red-text\">{{item.currentWinLossAmount.maxWinAmount}}</span>)</span></span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === -1\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === 0\">{{item.currentWinLossAmount.winPercent}}%</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.winPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.currentAmount | formatNumber}}</span>/{{item.currentWinLossAmount.maxWinAmount | formatNumber}})</span></span></div><div><span>{{\'Losing\' | settingType6Label}}%:</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent === -1\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent === 0\">{{item.currentWinLossAmount.lossPercent}}%</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.lossPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{-item.currentWinLossAmount.currentAmount | formatNumber}}</span>/{{item.currentWinLossAmount.maxLossAmount | formatNumber}})</span></span></div></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-highlight-state=\"item.highlightState\" data-field-name=\"isAutoReset\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType6Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
+$templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype6\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\"><toggle-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\" data-setting-data=\"settingType.settingItems\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group w100-percent\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\">{{productName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'indent-30\': togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType}\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index] && settingType.settingLevel === avaiSettingLevels.sportType\"><toggle-setting-block data-ng-if=\"togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{group[0].sportTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.isExpandedAll()\">{{group[0].betTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\"><div class=\"block__sub-header block__sub-header--bettype\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row block__row--border-bottom\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumWin\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><settingtype6-win-limit-select data-setting-item=\"item\"></settingtype6-win-limit-select></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? \'X\' : \'\'}} {{::(\'OnGivenCredit\' | settingType6Label)}}</div></div><div class=\"block__row block__row--border-bottom\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype6-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-field-highlighting data-field-name=\"lossLimit\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype6-unlimited-checkbox data-ng-model=\"item.isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType6Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-bottom\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentWinLossAmount\' | settingType6Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentWinLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentWinLoss(item)\">{{::(\'ClickToViewCurrentWinLossLimit\' | settingType6Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentWinLossAmount\"><div><span>{{\'Winning\' | settingType6Label}}%:</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === -2\"><span class=\"red-text\">{{\'NotAvailable\' | settingType6Label}}</span> <span>({{item.currentWinLossAmount.currentAmount | formatNumber}}/<span class=\"red-text\">{{item.currentWinLossAmount.maxWinAmount}}</span>)</span></span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === -1\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent === 0\">{{item.currentWinLossAmount.winPercent}}%</span> <span data-ng-if=\"item.currentWinLossAmount.winPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.winPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.currentAmount | formatNumber}}</span>/{{item.currentWinLossAmount.maxWinAmount | formatNumber}})</span></span></div><div><span>{{\'Losing\' | settingType6Label}}%:</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent === -1\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent === 0\">{{item.currentWinLossAmount.lossPercent}}%</span> <span data-ng-if=\"item.currentWinLossAmount.lossPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.lossPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{-item.currentWinLossAmount.currentAmount | formatNumber}}</span>/{{item.currentWinLossAmount.maxLossAmount | formatNumber}})</span></span></div></div></div></div><div class=\"block__column block__column--border-bottom w50-percent\"><div class=\"block__row\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-highlight-state=\"item.highlightState\" data-field-name=\"isAutoReset\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType6Label}}</label></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
 $templateCache.put("settingtype7-checkbox-group.htm","<label class=\"check-all-field\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-name=\"checkAll\" data-field-highlighting data-tooltip-message=\"{{tooltipMessage}}\" data-highlight-state=\"highlightState\" data-ng-model=\"checked\" data-ng-click=\"checkAll()\"></label>");
-$templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype7\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel !== avaiSettingLevels.product\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': !(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member) }\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}<note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type></note-icon-tooltip></label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType\">{{productName}}<note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type></note-icon-tooltip></label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></setting-type7-checkbox-group></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType)\" data-items=\"item.stakeRanges\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"></setting-type7-checkbox-group></div><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\" data-field-highlighting data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\"><div class=\"block__cell setting-field-wrapper\" data-ng-class=\"{ \'block__cell--no-border\': $last }\" data-ng-repeat=\"stakeRange in stakeRangeGroup\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input id=\"{{stakeRange.stakeLevelId}}\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"> <input id=\"{{stakeRange.stakeLevelId}}\" type=\"radio\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.selectStakeLevelId\" data-ng-value=\"stakeRange.stakeLevelId\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
-$templateCache.put("settingtype12.htm","<div class=\"block full-width settingtype12\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\">{{group[0].sportTypeName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\">{{group[0].betTypeName}}</div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType12Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype12-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-field-highlighting data-field-name=\"lossLimit\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType12ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype12-unlimited-checkbox data-ng-model=\"isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType12Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentLossAmount\' | settingType12Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentLoss(item)\">{{::(\'ClickToViewCurrentLossAmount\' | settingType12Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentLossAmount\"><span>{{\'Losing\' | settingType12Label}}%:</span> <span data-ng-if=\"item.currentLossAmount.lossPercent === -1\">{{\'Unlimited\' | settingType12Label}}</span> <span data-ng-if=\"item.currentLossAmount.lossPercent === 0\">{{item.currentLossAmount.lossPercent}}%</span> <span data-ng-if=\"item.currentLossAmount.lossPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentLossAmount.lossPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentLossAmount.lossPercent >= highestPercentageRange }\">{{-item.currentLossAmount.currentAmount | formatNumber}}</span>/{{item.currentLossAmount.maxLossAmount | formatNumber}})</span></span></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-highlight-state=\"item.highlightState\" data-field-name=\"isAutoReset\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType12ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType12Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
+$templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype7\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\"><toggle-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\" data-setting-data=\"settingType.settingItems\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel !== avaiSettingLevels.product\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'indent-30\': togglableSharedStates }\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index] && settingType.settingLevel !== avaiSettingLevels.sportTypeBetType\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': !(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member) }\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\"><toggle-setting-block data-ng-if=\"togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{group[0].sportTypeName}}<note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type></note-icon-tooltip></label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType\">{{productName}}<note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type></note-icon-tooltip></label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></setting-type7-checkbox-group></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType)\" data-items=\"item.stakeRanges\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"></setting-type7-checkbox-group></div><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\" data-field-highlighting data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\"><div class=\"block__cell setting-field-wrapper\" data-ng-class=\"{ \'block__cell--no-border\': $last }\" data-ng-repeat=\"stakeRange in stakeRangeGroup\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input id=\"{{stakeRange.stakeLevelId}}\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"> <input id=\"{{stakeRange.stakeLevelId}}\" type=\"radio\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.selectStakeLevelId\" data-ng-value=\"stakeRange.stakeLevelId\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
+$templateCache.put("settingtype12.htm","<div class=\"block full-width settingtype12\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\"><toggle-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\" data-setting-data=\"settingType.settingItems\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group w100-percent\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\">{{productName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'indent-30\': togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType}\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index] && settingType.settingLevel === avaiSettingLevels.sportType\"><toggle-setting-block data-ng-if=\"togglableSharedStates && settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{group[0].sportTypeName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.isExpandedAll()\">{{group[0].betTypeName}}</div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\"><div class=\"block__sub-header block__sub-header--bettype\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row block__row--border-bottom\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType12Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype12-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-field-highlighting data-field-name=\"lossLimit\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType12ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype12-unlimited-checkbox data-ng-model=\"isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType12Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-bottom\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentLossAmount\' | settingType12Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentLoss(item)\">{{::(\'ClickToViewCurrentLossAmount\' | settingType12Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentLossAmount\"><span>{{\'Losing\' | settingType12Label}}%:</span> <span data-ng-if=\"item.currentLossAmount.lossPercent === -1\">{{\'Unlimited\' | settingType12Label}}</span> <span data-ng-if=\"item.currentLossAmount.lossPercent === 0\">{{item.currentLossAmount.lossPercent}}%</span> <span data-ng-if=\"item.currentLossAmount.lossPercent > 0\"><span data-ng-class=\"{ \'red-text\': item.currentLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentLossAmount.lossPercent | formatNumber}}%</span> <span>(<span data-ng-class=\"{ \'red-text\': item.currentLossAmount.lossPercent >= highestPercentageRange }\">{{-item.currentLossAmount.currentAmount | formatNumber}}</span>/{{item.currentLossAmount.maxLossAmount | formatNumber}})</span></span></div></div></div><div class=\"block__column block__column--border-bottom w50-percent\"><div class=\"block__row\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-highlight-state=\"item.highlightState\" data-field-name=\"isAutoReset\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType12ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType12Label}}</label></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
 $templateCache.put("settingtype17-checkbox-group.htm","<label class=\"check-all-field\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-name=\"checkAll\" data-field-highlighting data-tooltip-message=\"{{tooltipMessage}}\" data-highlight-state=\"highlightState\" data-ng-model=\"checked\" data-ng-click=\"checkAll()\"></label>");
 $templateCache.put("settingtype17-stake-icon-tooltip.htm","<parent><div class=\"icon icon--warning icon--warning--pointer--margintop setting-field--checkfield__check-ctrl\" data-tooltip-message=\"{{tooltipMessage}}\" data-tooltip-type=\"{{tooltipType}}\" data-field-highlighting data-ng-mouseenter=\"showTooltip()\" data-ng-mouseleave=\"removeMessage()\"></div></parent>");
-$templateCache.put("settingtype17.htm","<div class=\"block full-width settingtype17\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel !== avaiSettingLevels.product\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': !(settingType | editableSettingType) }\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType\">{{productName}}</label><setting-type17-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></setting-type17-checkbox-group></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type17-checkbox-group data-ng-if=\"(settingType | editableSettingType) && customerLevel !== avaiCustomerLevels.member\" data-items=\"item.stakeRanges\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"></setting-type17-checkbox-group></div><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type17-stake-icon-tooltip data-ng-if=\"(settingType | editableSettingType) && customerLevel === avaiCustomerLevels.member && item.showIconTooltipMessage && item.maxChoice > 0\" data-items=\"item.stakeRanges\" data-max-choice=\"item.maxChoice\" data-tooltip-message data-tooltip-message-backup=\"{{item.tooltipMessage}}\" data-tooltip-type></setting-type17-stake-icon-tooltip></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\"><div class=\"block__cell setting-field-wrapper\" data-ng-class=\"{ \'block__cell--no-border\': $last }\" data-ng-repeat=\"stakeRange in stakeRangeGroup\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input id=\"{{stakeRange.stakeLevelId}}\" data-ng-if=\"$first && $parent.$parent.$first && customerLevel === avaiCustomerLevels.member\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-field-highlighting data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType17ResourceService\'}}\" data-highlight-state=\"highlightState\" data-field-name=\"{{stakeRange.stakeLevelId}}\" data-ng-disabled=\"!(settingType | editableSettingType) || stakeRange.disabled\"> <input id=\"{{stakeRange.stakeLevelId}}\" data-ng-if=\"!$first || !$parent.$parent.$first || customerLevel !== avaiCustomerLevels.member\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-ng-disabled=\"!(settingType | editableSettingType) || stakeRange.disabled\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
+$templateCache.put("settingtype17.htm","<div class=\"block full-width settingtype17\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\"><toggle-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\" data-setting-data=\"settingType.settingItems\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel !== avaiSettingLevels.product\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'indent-30\': togglableSharedStates }\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index] && settingType.settingLevel !== avaiSettingLevels.sportTypeBetType\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': !(settingType | editableSettingType) }\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\"><toggle-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{group[0].sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType\">{{productName}}</label><setting-type17-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></setting-type17-checkbox-group></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type17-checkbox-group data-ng-if=\"(settingType | editableSettingType) && customerLevel !== avaiCustomerLevels.member\" data-items=\"item.stakeRanges\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"></setting-type17-checkbox-group></div><div class=\"block__lbl-wrapper\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type17-stake-icon-tooltip data-ng-if=\"(settingType | editableSettingType) && customerLevel === avaiCustomerLevels.member && item.showIconTooltipMessage && item.maxChoice > 0\" data-items=\"item.stakeRanges\" data-max-choice=\"item.maxChoice\" data-tooltip-message data-tooltip-message-backup=\"{{item.tooltipMessage}}\" data-tooltip-type></setting-type17-stake-icon-tooltip></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\"><div class=\"block__cell setting-field-wrapper\" data-ng-class=\"{ \'block__cell--no-border\': $last }\" data-ng-repeat=\"stakeRange in stakeRangeGroup\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input id=\"{{stakeRange.stakeLevelId}}\" data-ng-if=\"$first && $parent.$parent.$first && customerLevel === avaiCustomerLevels.member\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-field-highlighting data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType17ResourceService\'}}\" data-highlight-state=\"highlightState\" data-field-name=\"{{stakeRange.stakeLevelId}}\" data-ng-disabled=\"!(settingType | editableSettingType) || stakeRange.disabled\"> <input id=\"{{stakeRange.stakeLevelId}}\" data-ng-if=\"!$first || !$parent.$parent.$first || customerLevel !== avaiCustomerLevels.member\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-ng-disabled=\"!(settingType | editableSettingType) || stakeRange.disabled\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
 
 (function () {
@@ -38454,8 +38611,12 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
     resources["label"]["en-us"] = {
         "Agent": "Agent",
         "Agents": "Agents",
+        "CollapseAllToolTip": "Click to Expand All",
+        "CollapseToolTip": "Click to Expand",
         "CopyTooltip": "Click to duplicate the values",
         "CustomerSetting": "Customer Setting",
+        "ExpandAllToolTip": "Click to Collapse All",
+        "ExpandToolTip": "Click to Collapse",
         "Fax": "Fax",
         "FirstName": "First Name",
         "GeneralInformation": "General Information",
@@ -38469,6 +38630,24 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
         "Nickname": "Nickname",
         "No": "No",
         "Phone": "Phone",
+        "SettingType_1": "Position Taking",
+        "SettingType_11": "Product Status",
+        "SettingType_12": "Loss Limit",
+        "SettingType_13": "Product Status",
+        "SettingType_14": "Ticket Commission",
+        "SettingType_15": "Winning Share Commission",
+        "SettingType_16": "Bet Setting",
+        "SettingType_17": "Bet Limit",
+        "SettingType_18": "Position Taking",
+        "SettingType_19": "Commission",
+        "SettingType_2": "Bet Setting",
+        "SettingType_3": "Commission",
+        "SettingType_4": "Product Status",
+        "SettingType_5": "Charge Commission",
+        "SettingType_6": "Win Loss Limit",
+        "SettingType_7": "Bet Limit",
+        "SettingType_8": "Bet Limit",
+        "SettingType_9": "Bet Setting",
         "Super": "Super",
         "Update": "Update",
         "UserName": "Username",
@@ -38495,6 +38674,24 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
         "Nickname": "昵称",
         "No": "无",
         "Phone": "电话",
+        "SettingType_1": "占成数",
+        "SettingType_11": "产品状态",
+        "SettingType_12": "输的限额",
+        "SettingType_13": "产品状态",
+        "SettingType_14": "注单佣金",
+        "SettingType_15": "获奖赢额佣金",
+        "SettingType_16": "投注设定",
+        "SettingType_17": "投注限额",
+        "SettingType_18": "占成数",
+        "SettingType_19": "佣金",
+        "SettingType_2": "投注设定",
+        "SettingType_3": "佣金",
+        "SettingType_4": "产品状态",
+        "SettingType_5": "抽取佣金",
+        "SettingType_6": "输赢限额",
+        "SettingType_7": "投注限额",
+        "SettingType_8": "投注限额",
+        "SettingType_9": "投注设定",
         "Super": "超级总代理",
         "Update": "更改",
         "UserName": "用户名",
@@ -38521,6 +38718,24 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
         "Nickname": "暱稱",
         "No": "無",
         "Phone": "電話",
+        "SettingType_1": "佔成數",
+        "SettingType_11": "產品狀態",
+        "SettingType_12": "輸的限額",
+        "SettingType_13": "產品狀態",
+        "SettingType_14": "注單佣金",
+        "SettingType_15": "獲獎贏額佣",
+        "SettingType_16": "投注設定",
+        "SettingType_17": "投注限額",
+        "SettingType_18": "佔成數",
+        "SettingType_19": "佣金",
+        "SettingType_2": "投注設定",
+        "SettingType_3": "佣金",
+        "SettingType_4": "產品狀態",
+        "SettingType_5": "抽取傭金",
+        "SettingType_6": "輸贏限額",
+        "SettingType_7": "投注限額",
+        "SettingType_8": "投注限額",
+        "SettingType_9": "投注設定",
         "Super": "超級總代理",
         "Update": "更改",
         "UserName": "用戶名",
@@ -38543,6 +38758,13 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
         "Nickname": "닉네임",
         "No": "아니오",
         "Phone": "전화",
+        "SettingType_1": "거래 조건",
+        "SettingType_16": "배팅 설정",
+        "SettingType_18": "거래 조건",
+        "SettingType_19": "수수료",
+        "SettingType_2": "배팅 설정",
+        "SettingType_3": "수수료",
+        "SettingType_9": "배팅 설정",
         "Update": "업데이트",
         "UserName": "사용자 이름",
         "Yes": "Yes"
@@ -38583,6 +38805,24 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
         "Nickname": "ชื่อเล่น",
         "No": "ไม่",
         "Phone": "โทรศัพท์",
+        "SettingType_1": "ค่าความเสี่ยง",
+        "SettingType_11": "สถานะผลิตภันฑ์",
+        "SettingType_12": "จำกัดยอดเสีย",
+        "SettingType_13": "สถานะผลิตภันฑ์",
+        "SettingType_14": "ค่าคอมมิชชั่นของตั๋ว",
+        "SettingType_15": "ค่าคอมมิชชั่นที่ชนะ",
+        "SettingType_16": "การกำหนดการวางเดิมพัน",
+        "SettingType_17": "วงเงินเดิมพัน",
+        "SettingType_18": "ค่าความเสี่ยง",
+        "SettingType_19": "คอมมิชชั่น",
+        "SettingType_2": "การกำหนดการวางเดิมพัน",
+        "SettingType_3": "คอมมิชชั่น",
+        "SettingType_4": "สถานะผลิตภันฑ์",
+        "SettingType_5": "ค่าธรรมเนียมคอมมิชชั่น",
+        "SettingType_6": "วงเงินแพ้ชนะ",
+        "SettingType_7": "วงเงินเดิมพัน",
+        "SettingType_8": "วงเงินเดิมพัน",
+        "SettingType_9": "การกำหนดการวางเดิมพัน",
         "Super": "ซุปเปอร์",
         "Update": "ล่าสุด",
         "UserName": "ชื่อผู้ใช้ระบบ",
@@ -38606,6 +38846,23 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
         "Nickname": "Biệt danh",
         "No": "Không",
         "Phone": "Điện thoại",
+        "SettingType_1": "PT",
+        "SettingType_11": "Trạng thái trò chơi",
+        "SettingType_12": "Giới Hạn Tiền Thua",
+        "SettingType_13": "Trạng thái trò chơi",
+        "SettingType_14": "Hoa hồng trên vé cược",
+        "SettingType_15": "Phần chia thắng cược",
+        "SettingType_16": "Tiền Cược",
+        "SettingType_17": "Giới hạn cược",
+        "SettingType_18": "PT",
+        "SettingType_19": "Hoa hồng",
+        "SettingType_2": "Tiền Cược",
+        "SettingType_3": "Hoa hồng",
+        "SettingType_4": "Trạng thái trò chơi",
+        "SettingType_6": "Giới hạn thắng thua",
+        "SettingType_7": "Giới hạn cược",
+        "SettingType_8": "Giới hạn cược",
+        "SettingType_9": "Tiền Cược",
         "Update": "Cập nhật",
         "UserName": "Tài khoản",
         "Yes": "Có"
@@ -38615,9 +38872,11 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
     resources["message"]["en-us"] = {
         "AccessDeniedMsg": "Sorry, You don&apos;t have permission to access this page.",
         "AccountWasDisabled": "This account was disabled.",
+        "AllProducts": "All Products",
         "CopiedSuccessfully": "All fields in green are copied.",
         "CopyingFailed": "Unable to copy to the fields in red.",
         "CustomersAreNotSameLine": "Customers are not in the same line!",
+        "CustomerSettings": "Customer Settings",
         "DataIsNotValid": "Data is not valid.",
         "DuplicateValuesAlertMsg": "Out of range for highlighted values.",
         "Msg_90001": "Update process is unsuccessful !",
@@ -38628,6 +38887,9 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
         "SportTypeOrBetTypeIsInvalid": "Sport Type or Bet Type is invalid!",
         "SubAccountIdShouldBeZeroWhenSystemIsNotAgency": "Sub Account Id Should Be Zero When System Is Not Agency.",
         "SystemError": "Oops... you are here because of a system error, please notify system administrator.",
+        "UMMainMsg": "Unable to Update because of the maintenance of the settings below (GMT+8):",
+        "UMSubMsg": "{0}: {1} ({2} to {3})",
+        "UnderMaintainanceMainMsg": "Here is the maintenance schedule (GMT +8). During the maintenance period, these settings cannot be changed. We are sorry for any inconvenience caused.",
         "UplineLevelCannotBeNullIncaseOfEdittingMember": "Upline Level cannot be null incase of editting member.",
         "UplineLevelIsNotValid": "Upline Level is not valid.",
         "UplineLevelShouldBeNull": "Upline Level should be null.",
@@ -38638,14 +38900,18 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
     resources["message"]["zh-cn"] = {
         "AccessDeniedMsg": "对不起,您不被允许进入此网页.",
         "AccountWasDisabled": "这个帐号禁用",
+        "AllProducts": "所有产品",
         "CopiedSuccessfully": "绿色的所有字段已被复制。",
         "CopyingFailed": "红色字段无法复制。",
         "CustomersAreNotSameLine": "会员不同线！",
+        "CustomerSettings": "客户设定",
         "DuplicateValuesAlertMsg": "突显值已超出范围。",
         "Msg_90001": "更新程序失败！",
         "NoChangeToUpdate": "没有任何的变化更新。",
         "SettingTypeError": "由于技术故障导致加载设置类型失败。请稍后再试或联系系统管理员！",
         "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧",
+        "UMMainMsg": "由於以下設定正在維護中，因此無法更新 (GMT+8):",
+        "UMSubMsg": "{0}: {1} ({2} 至 {3})",
         "YouAreNotAuthorized": "您没有使用此功能的权限"
     };
     
@@ -38653,14 +38919,18 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
     resources["message"]["zh-tw"] = {
         "AccessDeniedMsg": "對不起, 您不被允許進入此網頁.",
         "AccountWasDisabled": "這個帳號禁用",
+        "AllProducts": "所有產品",
         "CopiedSuccessfully": "綠色的所有字段已被複製。",
         "CopyingFailed": "紅色字段無法複製。",
         "CustomersAreNotSameLine": "會員不同線！",
+        "CustomerSettings": "客戶設定",
         "DuplicateValuesAlertMsg": "突顯值已超出範圍。",
         "Msg_90001": "更新程序失敗！",
         "NoChangeToUpdate": "沒有任何的變化更新。",
         "SettingTypeError": "由於技術故障導致加載設置類型失敗。請稍後再試或聯系系統管理員！",
         "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧",
+        "UMMainMsg": "由于以下设定正在维护中，因此无法更新 (GMT+8):",
+        "UMSubMsg": "{0}: {1} ({2} 至 {3})",
         "YouAreNotAuthorized": "您沒有使用此功能的權限"
     };
     
@@ -38683,14 +38953,18 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
     resources["message"]["th-th"] = {
         "AccessDeniedMsg": "ขออภัยคุณไม่ได้รับอนุญาติให้เข้าหน้านี้",
         "AccountWasDisabled": "บัญชีนี้ได้ถูกปิดไปแล้ว",
+        "AllProducts": "โปรดักส์ทั้งหมด",
         "CopiedSuccessfully": "ช่องสีเขียวทั้งหมดจะถูกคัดลอก",
         "CopyingFailed": "ไม่สามารถคัดลอกไปยังช่องสีแดง",
         "CustomersAreNotSameLine": "ลูกเค้าไม่ได้อยู่ในสายเดียวกัน",
+        "CustomerSettings": "การตั้งค่าของลูกค้า",
         "DuplicateValuesAlertMsg": "ตัวเลขที่ถูกไฮไลท์ไม่ได้อยู่ในขอบเขต",
         "Msg_90001": "กระบวนการอัพเดทสำเร็จแล้ว",
         "NoChangeToUpdate": "ไม่มีการเปลี่ยนแปลงการอัพเดท",
         "SettingTypeError": "ไม่สามารถโหลดการตั้งค่าต่าง ๆ เนื่องจากปัญหาทางด้านเทคนิค รบกวนลองใหม่อีกครั้งหรือจนกว่าจะได้รับคำประกาศจากทางผู้ดูแลระบบ",
         "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ",
+        "UMMainMsg": "เนื่องจากอยู่ในระหว่างการปรับปรุง ดังนั้นในช่วงเวลาดังกล่าวจึงไม่สามารถอัพเดทได้ (GMT+8):",
+        "UMSubMsg": "{0}: {1} ({2} ถึง {3})",
         "YouAreNotAuthorized": "คุณไม่มีอำนาจในการเข้าใช้งานฟังก์ชันนี้"
     };
     
@@ -38698,10 +38972,14 @@ $templateCache.put("settingtype17.htm","<div class=\"block full-width settingtyp
     resources["message"]["vi-vn"] = {
         "AccessDeniedMsg": "Xin lỗi, bạn không được phép truy cập vào trang này",
         "AccountWasDisabled": "Tài khoản bị vô hiệu hóa",
+        "AllProducts": "Tất cả sản phẩm",
         "CopiedSuccessfully": "Tất cả những ô được gán giá trị sao chép sẽ được đánh dấu xanh.",
         "CopyingFailed": "Không thể gán giá trị được sao chép vào những ô được đánh dấu đỏ.",
+        "CustomerSettings": "Thiết lập khách hàng",
         "NoChangeToUpdate": "Không có thay đổi mới được cập nhật.",
         "SystemError": "Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý",
+        "UMMainMsg": "Không thể cập nhật do hệ thống đang bảo trì các thiết lập sau (GMT+8):",
+        "UMSubMsg": "{0}: {1} ({2} đến {3})",
         "YouAreNotAuthorized": "Bạn không được cho phép sử dụng chức năng này"
     };
 

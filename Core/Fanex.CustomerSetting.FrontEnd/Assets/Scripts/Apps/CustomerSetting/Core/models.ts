@@ -192,6 +192,7 @@ module CustomerSetting {
         public isCheckedUpdateRow: boolean;
         public isCheckedUpdateMinPtOnly: boolean;
         public isMultiple: boolean;
+        public isSourceRow: boolean;
 
         constructor();
         constructor(settingItem: any);
