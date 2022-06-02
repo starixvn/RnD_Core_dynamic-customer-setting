@@ -53,7 +53,7 @@
                 {{item.betTypeName}}
             </div>
             <div class="block__column block__column--border-right w50-percent">
-                <div class="block__row block__row--border-bottom">
+                <div class="block__row">
                     <div class="block__lbl w40-percent">{{::('MaximumLoss' | settingType12Label)}}</div>
                     <div class="block__value w60-percent" data-ng-if="settingType | editableSettingType">
                         <div class="setting-field-wrapper w100-percent">
@@ -85,7 +85,7 @@
                         {{item.lossLimit | formatNumber | unlimitedLimit}}
                     </div>
                 </div>
-                <div class="block__row block__row--border-bottom" data-ng-if="customerLevel === avaiCustomerLevels.member">
+                <div class="block__row block__row--border-top" data-ng-if="customerLevel === avaiCustomerLevels.member">
                     <div class="block__lbl w40-percent">{{::('CurrentLossAmount' | settingType12Label)}}</div>
                     <div class="block__value w60-percent setting-field-wrapper" data-ng-if="!item.currentLossAmount">
                         <a href="javascript:void(0);" data-ng-click="getCurrentLoss(item)">{{::('ClickToViewCurrentLossAmount' | settingType12Label)}}</a>
@@ -103,21 +103,19 @@
                     </div>
                 </div>
             </div>
-            <div class="block__column block__column--border-bottom w50-percent">
-                <div class="block__row">
-                    <div class="block__cell setting-field-wrapper">
-                        <label class="setting-field--checkfield">
-                            <input type="checkbox"
-                                   class="setting-field--checkfield__check-ctrl"
-                                   data-field-highlighting
-                                   data-highlight-state="item.highlightState"
-                                   data-field-name="isAutoReset"
-                                   data-tooltip-message="{{item.validationState | tooltipMessage:'settingType12ResourceService':'isAutoReset'}}"
-                                   data-ng-model="item.isAutoReset"
-                                   data-ng-disabled="!(settingType | editableSettingType) || !item.isAutoResetUpline" />
-                            {{'DailyAutoResetLimit' | settingType12Label}}
-                        </label>
-                    </div>
+            <div class="block__column w50-percent">
+                <div class="block__cell setting-field-wrapper">
+                    <label class="setting-field--checkfield">
+                        <input type="checkbox"
+                               class="setting-field--checkfield__check-ctrl"
+                               data-field-highlighting
+                               data-highlight-state="item.highlightState"
+                               data-field-name="isAutoReset"
+                               data-tooltip-message="{{item.validationState | tooltipMessage:'settingType12ResourceService':'isAutoReset'}}"
+                               data-ng-model="item.isAutoReset"
+                               data-ng-disabled="!(settingType | editableSettingType) || !item.isAutoResetUpline" />
+                        {{'DailyAutoResetLimit' | settingType12Label}}
+                    </label>
                 </div>
             </div>
         </div>

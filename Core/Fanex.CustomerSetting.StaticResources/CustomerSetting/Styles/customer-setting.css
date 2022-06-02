@@ -774,15 +774,10 @@ select.setting-field {
 .settingtype6 .block__column--border-right {
   border-right: 1px solid #7c98a4; }
 
-.settingtype6 .block__column--border-bottom {
-  border-bottom: 1px solid #7c98a4; }
-
 .settingtype6 .block__row {
   width: 100%; }
   .settingtype6 .block__row--border-top {
     border-top: 1px solid #7c98a4; }
-  .settingtype6 .block__row--border-bottom {
-    border-bottom: 1px solid #7c98a4; }
 
 .settingtype6 .block__cell, .settingtype6 .block__lbl, .settingtype6 .block__value {
   border: none; }
@@ -959,15 +954,10 @@ select.setting-field {
 .settingtype12 .block__column--border-right {
   border-right: 1px solid #7c98a4; }
 
-.settingtype12 .block__column--border-bottom {
-  border-bottom: 1px solid #7c98a4; }
-
 .settingtype12 .block__row {
   width: 100%; }
   .settingtype12 .block__row--border-top {
     border-top: 1px solid #7c98a4; }
-  .settingtype12 .block__row--border-bottom {
-    border-bottom: 1px solid #7c98a4; }
 
 .settingtype12 .block__cell, .settingtype12 .block__lbl, .settingtype12 .block__value {
   border: none; }

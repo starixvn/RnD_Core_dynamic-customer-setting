@@ -31,10 +31,6 @@
         &--border-right {
             @include border(right);
         }
-
-        &--border-bottom {
-            @include border(bottom);
-        }
     }
 
     .block__row {
@@ -43,10 +39,6 @@
 
         &--border-top {
             @include border(top);
-        }
-
-        &--border-bottom {
-            @include border(bottom);
         }
     }
 

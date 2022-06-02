@@ -316,7 +316,7 @@
       <DependentUpon>settingtype17-resources.tt</DependentUpon>
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType17\settingtype17-checkbox-group.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\update-data-checkbox.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CopyWithCheckBoxSettingBlock\update-data-checkbox.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\comm-rate-select.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\commission-resources.js">
       <DependentUpon>commission-resources.tt</DependentUpon>
@@ -605,7 +605,7 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\settingtype18.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\position-taking-resources.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CopyWithCheckBoxSettingBlock\copy-with-checkbox-setting-block.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\update-data-checkbox.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\CopyWithCheckBoxSettingBlock\update-data-checkbox.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\comm-rate-select.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\commission-resources.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType19\models.ts" />
