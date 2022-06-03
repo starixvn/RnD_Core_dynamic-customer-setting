@@ -237,4 +237,16 @@
   <data name="SettingType_9" xml:space="preserve">
     <value>การกำหนดการวางเดิมพัน</value>
   </data>
+  <data name="CollapseAllToolTip" xml:space="preserve">
+    <value>คลิกเพื่อขยายทั้งหมด</value>
+  </data>
+  <data name="CollapseToolTip" xml:space="preserve">
+    <value>คลิกเพื่อขยาย</value>
+  </data>
+  <data name="ExpandAllToolTip" xml:space="preserve">
+    <value>คลิกเพื่อปิดส่วนขยายทั้งหมด</value>
+  </data>
+  <data name="ExpandToolTip" xml:space="preserve">
+    <value>คลิกเพื่อปิดส่วนขยาย</value>
+  </data>
 </root>
