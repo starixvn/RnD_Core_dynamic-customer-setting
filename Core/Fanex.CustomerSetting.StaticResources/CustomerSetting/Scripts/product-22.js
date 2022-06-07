@@ -35202,154 +35202,6 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var DetectMaxHeightDirective = (function () {
-        function DetectMaxHeightDirective($window, $timeout) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var container = angular.element(element.parent());
-                var debounceResize = CustomerSetting.debounce(function () {
-                    if (!element.hasClass("ng-hide")) {
-                        _this.calculateHeight(element, container);
-                    }
-                }, 100);
-                _this.calculateHeight(element, container);
-                container.css({ "height": "auto" });
-                angular.element(_this.$window).on("resize", debounceResize);
-            };
-            this.$window = $window;
-            this.$timeout = $timeout;
-        }
-        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
-            var _this = this;
-            this.$timeout(function () {
-                var outerHeight = _this.$window.innerHeight;
-                var maxHeigth = outerHeight * 0.6;
-                var marginTop = outerHeight * 0.2 - 35;
-                element.css({
-                    "max-height": maxHeigth + "px"
-                });
-                container.css({ "margin-top": marginTop + "px" });
-            });
-        };
-        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
-        return DetectMaxHeightDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DraggableDirective = (function () {
-        function DraggableDirective($document) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
-                var container = angular.element(element.parent())[0];
-                var width;
-                var height;
-                var startX;
-                var startY;
-                var currentX;
-                var currentY;
-                draggableBanner.css({
-                    cursor: "move"
-                });
-                draggableBanner.on("mousedown", function (event) {
-                    startX = event.clientX - element[0].offsetLeft;
-                    startY = event.clientY - element[0].offsetTop;
-                    width = element[0].offsetWidth;
-                    height = element[0].offsetHeight;
-                    _this.$document.on("mousemove", mouseMove);
-                    _this.$document.on("mouseup", mouseUp);
-                });
-                var mouseMove = function (event) {
-                    currentX = event.clientX - startX;
-                    currentY = event.clientY - startY;
-                    updatePosition();
-                };
-                var mouseUp = function (event) {
-                    _this.$document.off("mousemove", mouseMove);
-                    _this.$document.off("mouseup", mouseUp);
-                };
-                function updatePosition() {
-                    if (container) {
-                        var containerClientRect = container.getBoundingClientRect();
-                        if (currentX < containerClientRect.left) {
-                            currentX = containerClientRect.left;
-                        }
-                        else if (currentX > containerClientRect.right - width) {
-                            currentX = containerClientRect.right - width;
-                        }
-                        if (currentY < containerClientRect.top) {
-                            currentY = containerClientRect.top;
-                        }
-                        else if (currentY > containerClientRect.bottom - height) {
-                            currentY = containerClientRect.bottom - height;
-                        }
-                    }
-                    element.css({
-                        "margin-top": currentY + "px",
-                        "margin-left": currentX + "px"
-                    });
-                }
-            };
-            this.$document = $document;
-        }
-        Object.defineProperty(DraggableDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    draggableBanner: "=draggable"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        DraggableDirective.$inject = ["$document"];
-        return DraggableDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var NoteIconTooltipDirective = (function () {
-        function NoteIconTooltipDirective() {
-            this.replace = true;
-            this.templateUrl = "DefaultSettingBlock/NoteIcon/note-icon-tooltip.htm";
-            this.controller = ["$scope", function ($scope) {
-                    $scope.showTooltip = function () {
-                        $scope.tooltipType = "warning";
-                        $scope.tooltipMessage = $scope.tooltipMessageBackup;
-                    };
-                    $scope.removeMessage = function () {
-                        $scope.tooltipType = "warning";
-                        $scope.tooltipMessage = null;
-                    };
-                }];
-        }
-        Object.defineProperty(NoteIconTooltipDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    tooltipMessage: "@?",
-                    tooltipType: "@?",
-                    tooltipMessageBackup: "@?"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return NoteIconTooltipDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("noteIconTooltip", NoteIconTooltipDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
     var FieldHighlightingDirective = (function () {
         function FieldHighlightingDirective($window, $compile, $timeout, $templateCache, $rootScope) {
             var _this = this;
@@ -35514,6 +35366,154 @@ var CustomerSetting;
     }
     TooltipMessage.$inject = ["$injector", "$filter"];
     CustomerSetting.ModuleRegister.filter("tooltipMessage", TooltipMessage);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DetectMaxHeightDirective = (function () {
+        function DetectMaxHeightDirective($window, $timeout) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var container = angular.element(element.parent());
+                var debounceResize = CustomerSetting.debounce(function () {
+                    if (!element.hasClass("ng-hide")) {
+                        _this.calculateHeight(element, container);
+                    }
+                }, 100);
+                _this.calculateHeight(element, container);
+                container.css({ "height": "auto" });
+                angular.element(_this.$window).on("resize", debounceResize);
+            };
+            this.$window = $window;
+            this.$timeout = $timeout;
+        }
+        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
+            var _this = this;
+            this.$timeout(function () {
+                var outerHeight = _this.$window.innerHeight;
+                var maxHeigth = outerHeight * 0.6;
+                var marginTop = outerHeight * 0.2 - 35;
+                element.css({
+                    "max-height": maxHeigth + "px"
+                });
+                container.css({ "margin-top": marginTop + "px" });
+            });
+        };
+        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
+        return DetectMaxHeightDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DraggableDirective = (function () {
+        function DraggableDirective($document) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
+                var container = angular.element(element.parent())[0];
+                var width;
+                var height;
+                var startX;
+                var startY;
+                var currentX;
+                var currentY;
+                draggableBanner.css({
+                    cursor: "move"
+                });
+                draggableBanner.on("mousedown", function (event) {
+                    startX = event.clientX - element[0].offsetLeft;
+                    startY = event.clientY - element[0].offsetTop;
+                    width = element[0].offsetWidth;
+                    height = element[0].offsetHeight;
+                    _this.$document.on("mousemove", mouseMove);
+                    _this.$document.on("mouseup", mouseUp);
+                });
+                var mouseMove = function (event) {
+                    currentX = event.clientX - startX;
+                    currentY = event.clientY - startY;
+                    updatePosition();
+                };
+                var mouseUp = function (event) {
+                    _this.$document.off("mousemove", mouseMove);
+                    _this.$document.off("mouseup", mouseUp);
+                };
+                function updatePosition() {
+                    if (container) {
+                        var containerClientRect = container.getBoundingClientRect();
+                        if (currentX < containerClientRect.left) {
+                            currentX = containerClientRect.left;
+                        }
+                        else if (currentX > containerClientRect.right - width) {
+                            currentX = containerClientRect.right - width;
+                        }
+                        if (currentY < containerClientRect.top) {
+                            currentY = containerClientRect.top;
+                        }
+                        else if (currentY > containerClientRect.bottom - height) {
+                            currentY = containerClientRect.bottom - height;
+                        }
+                    }
+                    element.css({
+                        "margin-top": currentY + "px",
+                        "margin-left": currentX + "px"
+                    });
+                }
+            };
+            this.$document = $document;
+        }
+        Object.defineProperty(DraggableDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    draggableBanner: "=draggable"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        DraggableDirective.$inject = ["$document"];
+        return DraggableDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var NoteIconTooltipDirective = (function () {
+        function NoteIconTooltipDirective() {
+            this.replace = true;
+            this.templateUrl = "DefaultSettingBlock/NoteIcon/note-icon-tooltip.htm";
+            this.controller = ["$scope", function ($scope) {
+                    $scope.showTooltip = function () {
+                        $scope.tooltipType = "warning";
+                        $scope.tooltipMessage = $scope.tooltipMessageBackup;
+                    };
+                    $scope.removeMessage = function () {
+                        $scope.tooltipType = "warning";
+                        $scope.tooltipMessage = null;
+                    };
+                }];
+        }
+        Object.defineProperty(NoteIconTooltipDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    tooltipMessage: "@?",
+                    tooltipType: "@?",
+                    tooltipMessageBackup: "@?"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return NoteIconTooltipDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("noteIconTooltip", NoteIconTooltipDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -37856,8 +37856,8 @@ $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\" data-ng-bind-html=\"result.message | unsafe\"></div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\" data-ng-bind-html=\"subResult.message | unsafe\"></div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\"><div class=\"msg__main-message\" data-ng-bind-html=\"settingResult.message | unsafe\"></div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\" data-ng-bind-html=\"message | unsafe\"></div></div></div></div></div>");
 $templateCache.put("CopyWithCheckBoxSettingBlock/CopySettingWithCheckbox/copy-setting-with-checkbox.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\" data-ng-class=\"{ \'icon--copy--active\' : isIconActive }\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
-$templateCache.put("DefaultSettingBlock/NoteIcon/note-icon-tooltip.htm","<parent><div class=\"icon icon--warning icon--warning--pointer--margintop setting-field--checkfield__check-ctrl tab\" data-tooltip-message=\"{{tooltipMessage}}\" data-tooltip-type=\"{{tooltipType}}\" data-field-highlighting data-ng-mouseenter=\"showTooltip()\" data-ng-mouseleave=\"removeMessage()\"></div></parent>");
 $templateCache.put("DefaultSettingBlock/HighlightField/tooltip.htm","<div class=\"tooltip tooltip--{{highlightType}}\" data-ng-if=\"tooltipMessage\"><div class=\"tooltip__content\">{{tooltipMessage}}</div></div>");
+$templateCache.put("DefaultSettingBlock/NoteIcon/note-icon-tooltip.htm","<parent><div class=\"icon icon--warning icon--warning--pointer--margintop setting-field--checkfield__check-ctrl tab\" data-tooltip-message=\"{{tooltipMessage}}\" data-tooltip-type=\"{{tooltipType}}\" data-field-highlighting data-ng-mouseenter=\"showTooltip()\" data-ng-mouseleave=\"removeMessage()\"></div></parent>");
 $templateCache.put("DefaultSettingBlock/ToggleSettingBlock/toggle-all-setting-block.htm","<div class=\"togglable-bar\" data-ng-class=\"{ \'icon-collapse-all\': !sharedStates.isExpandedAll(), \'icon-expand-all\': sharedStates.isExpandedAll()}\" title=\"{{sharedStates.isExpandedAll() ? (\'ExpandAllToolTip\' | label) : (\'CollapseAllToolTip\' | label)}}\"></div>");
 $templateCache.put("DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm","<div class=\"togglable-bar\" data-ng-class=\"{ \'icon-collapse\': blockIndex == undefined ? !sharedStates.isExpandedAll() : !sharedStates.toggleStates[blockIndex], \'icon-expand\': blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]}\" title=\"{{(blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]) ? (\'ExpandToolTip\' | label) : (\'CollapseToolTip\' | label)}}\"></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></copy-position-taking-on-member></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></copy-position-taking-on-member></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-ng-model=\"item.superPTOnMembers\" data-field-highlighting data-field-name=\"superPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-field-highlighting data-field-name=\"masterPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");

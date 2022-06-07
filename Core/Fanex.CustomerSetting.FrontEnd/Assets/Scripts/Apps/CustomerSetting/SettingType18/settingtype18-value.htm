@@ -150,7 +150,7 @@
         </div>
         <div class="block__cell block__cell--no-border w25-percent align-center"
              data-ng-class="{   'w30-percent--last': (settingType | hideIsAutoColumn),
-                                'disabled': !item.isCheckedUpdateMinPtOnly || (!$first  && item.isRowCopied)}">
+                                'disabled': !item.isCheckedUpdateMinPtOnly || item.isRowCopied}">
             <position-taking-select data-setting-item="item"
                                     data-field-name="n2"
                                     data-min="{{0}}"
