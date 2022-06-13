@@ -11,6 +11,7 @@ module CustomerSetting {
         togglableSettingBlocks: boolean;
         togglableSharedStates: TogglableSettingBlockSharedStates;
         isAutoChanged: (item: CopyWithCheckboxSettingItem, fieldName: string, isFirst: boolean) => void;
+        copySporttypeActivated: boolean;
     }
 
     export class CopyWithCheckboxSettingTypeDirective implements ng.IDirective {
@@ -21,15 +22,18 @@ module CustomerSetting {
             $scope.avaiSettingLevels = SettingLevel;
 
             $scope.$watch("settingType", (settingType: SettingType) => {
+                $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                 if (settingType && angular.isArray(settingType.settingItems)) {
                     if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
                         $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
-
                         if ($scope.togglableSettingBlocks) {
-                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length);
+                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
                         }
                     } else {
                         $scope.sportGroups = <CopyWithCheckboxSettingItem[][]>[settingType.settingItems];
+                        if ($scope.togglableSettingBlocks) {
+                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
+                        }
                     }
                 }
             });
@@ -39,10 +43,12 @@ module CustomerSetting {
 
                 $timeout(() => {
                     if (isFirst && item.isCheckedUpdateRow) {
-                        $scope.$emit("copySettingTypeWithCheckbox" + $scope.settingType.id);
+                        $scope.$emit("copySettingTypeWithCheckbox" + $scope.settingType.id, item.betTypeId);
                     }
                 }, 100);
             });
+
+            $scope.copySporttypeActivated = false;
         }];
 
         protected groupSettingItemsBySportType(settingItems: ISettingItem[]): CopyWithCheckboxSettingItem[][] {

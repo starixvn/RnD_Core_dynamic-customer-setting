@@ -276,6 +276,7 @@
     <Content Include="AppSettings.aws.config" />
     <Content Include="App_Data\PluggableTasks\settingtype-8.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-7.json" />
+    <Content Include="App_Data\PluggableTasks\collapse-expand-toggle.json" />
     <None Include="packages.config" />
     <Content Include="Web.ConnectionStrings.backupMNL.config" />
     <Content Include="Web.ConnectionStrings.local.config" />
@@ -363,6 +364,10 @@
     <ProjectReference Include="..\..\SettingTypes\SettingType9\Fanex.CustomerSetting.SettingType9\Fanex.CustomerSetting.SettingType9.csproj">
       <Project>{3fcf65fb-a2e7-4b82-b0d1-665d73468c3a}</Project>
       <Name>Fanex.CustomerSetting.SettingType9</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tasks\CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle.csproj">
+      <Project>{0128e0b4-3f44-4d5d-9f70-d3bc0a0a0f25}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.CollapseExpandToggle</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tasks\Product41\Fanex.CustomerSetting.Tasks.Product41\Fanex.CustomerSetting.Tasks.Product41.csproj">
       <Project>{c2a70d3e-3d35-46eb-bff3-af224090bacb}</Project>

@@ -10,6 +10,7 @@ module CustomerSetting {
     }
 
     export interface ISettingTypeDirectiveSharedScope extends ng.IScope {
+        index: number
         customerId: number;
         uplineLevel: Level;
         customerLevel: Level;
@@ -30,7 +31,8 @@ module CustomerSetting {
         public get scope(): any {
             return {
                 settingType: "=",
-                update: "&"
+                update: "&",
+                index: "@"
             };
         }
 

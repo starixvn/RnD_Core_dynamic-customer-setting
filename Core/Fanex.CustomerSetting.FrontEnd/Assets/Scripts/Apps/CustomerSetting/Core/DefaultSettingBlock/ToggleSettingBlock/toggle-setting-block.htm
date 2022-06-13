@@ -1,0 +1,6 @@
+﻿<div class="togglable-bar"
+     data-ng-class="{ 'icon-collapse': blockIndex == undefined ? !sharedStates.isExpandedAll() : !sharedStates.toggleStates[blockIndex],
+                      'icon-expand': blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]}"
+     title="{{(blockIndex == undefined ? sharedStates.isExpandedAll() : sharedStates.toggleStates[blockIndex]) ? ('ExpandToolTip' | label) : ('CollapseToolTip' | label)}}">
+
+</div>

@@ -51,6 +51,7 @@ module CustomerSetting {
                             index,
                             "]\"",
                             " data-update=\"update({ settingTypeId: settingTypeId})\"",
+                            " data-index=\"", index, "\"",
                             "></",
                             settingTypeName,
                             ">"

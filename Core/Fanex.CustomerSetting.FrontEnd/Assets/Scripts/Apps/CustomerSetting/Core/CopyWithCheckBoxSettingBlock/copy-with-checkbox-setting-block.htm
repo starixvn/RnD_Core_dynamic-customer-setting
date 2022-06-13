@@ -2,6 +2,12 @@
     <div class="block__header"
          data-setting-type="{{settingType.id}}"
          data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
+        <toggle-setting-block data-ng-if="togglableSharedStates"
+                              data-shared-states="togglableSharedStates"
+                              data-setting-data="settingType.settingItems"
+                              data-setting-level="settingType.settingLevel"
+                              data-setting-type-id="settingType.id">
+        </toggle-setting-block>
         {{settingTypeName}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{'Update' | label}}"
@@ -9,34 +15,32 @@
              data-ng-click="update({ settingTypeId: settingType.id })">
             <span class="icon icon--update"></span>
         </div>
-
-        <toggle-setting-block data-ng-if="togglableSharedStates && togglableSharedStates.toggleStates.length > 1"
-                              data-shared-states="togglableSharedStates"
-                              data-setting-type-id="settingType.id">
-        </toggle-setting-block>
     </div>
     <div class="block__item-group" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
         <div class="block__sub-header"
              data-ng-if="settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
              data-ng-class="{ 'block__sub-header--border-top': ($index > 0),
+                              'indent-30': togglableSharedStates,
                               'block__sub-header--no-border-bottom': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }"
              data-sport-type="{{group[0].sportTypeId}}">
-            {{group[0].sportTypeName}}
-            <toggle-setting-block data-ng-if="togglableSharedStates && togglableSharedStates.toggleStates.length > 1"
+            <toggle-setting-block data-ng-if="togglableSharedStates"
                                   data-shared-states="togglableSharedStates"
-                                  data-block-Index="$index"
+                                  data-block-index="$index"
                                   data-setting-data="group"
+                                  data-setting-level="settingType.settingLevel"
                                   data-setting-type-id="settingType.id">
             </toggle-setting-block>
+            {{group[0].sportTypeName}}
             <note-icon-tooltip data-ng-if="group[0].showIconTooltipMessage"
                                data-tooltip-message
                                data-tooltip-message-backup="{{group[0].tooltipMessage}}"
-                               data-tooltip-type />
+                               data-tooltip-type>
+            </note-icon-tooltip>
             <copy-setting-with-checkbox data-ng-if="(settingType | editableSettingType) && sportGroups.length > 1 && $first && $parent.$parent.$first"
                                         data-setting-type-id="settingType.id"
                                         data-setting-items="sportGroups"
                                         data-is-multiple="isMultiple"
-                                        data-copy-mode="copyMode.group">
+                                        data-is-sporttype-level="true">
             </copy-setting-with-checkbox>
         </div>
         <div class="block__lbl-group"
@@ -56,10 +60,11 @@
                  data-sport-type="{{item.sportTypeId}}"
                  data-bet-type="{{item.betTypeId}}">
                 <div class="w15-percent block__lbl--no-border" data-ng-if="(settingType | editableSettingType)">
-                    <copy-setting-with-checkbox data-ng-if="(settingType | editableSettingType) && group.length > 1 && $first && $parent.$parent.$first"
+                    <copy-setting-with-checkbox data-ng-if="(settingType | editableSettingType) && group.length > 1 && $first"
                                                 data-setting-type-id="settingType.id"
                                                 data-setting-items="group"
-                                                data-is-multiple="isMultiple">
+                                                data-is-multiple="isMultiple"
+                                                data-is-sporttype-level="false">
                     </copy-setting-with-checkbox>
                 </div>
                 <div class="w15-percent block__lbl" data-ng-if="(settingType | editableSettingType)">

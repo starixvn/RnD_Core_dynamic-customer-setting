@@ -65,7 +65,7 @@ module CustomerSetting {
             $scope.resetState = (fieldName: string) => {
                 this.$timeout(() => {
                     if ($scope.isPartialMinPt && $scope.isFirst && $scope.settingItem.isCheckedUpdateRow) {
-                        $scope.$emit("copySettingTypeWithCheckbox18");
+                        $scope.$emit("copySettingTypeWithCheckbox18", $scope.settingItem.betTypeId);
                     }
                 }, 100);
 

@@ -237,4 +237,16 @@
   <data name="SettingType_9" xml:space="preserve">
     <value>投注設定</value>
   </data>
+  <data name="CollapseAllToolTip" xml:space="preserve">
+    <value>點擊全部擴張</value>
+  </data>
+  <data name="CollapseToolTip" xml:space="preserve">
+    <value>點擊擴張</value>
+  </data>
+  <data name="ExpandAllToolTip" xml:space="preserve">
+    <value>點擊全部收起</value>
+  </data>
+  <data name="ExpandToolTip" xml:space="preserve">
+    <value>點擊收起</value>
+  </data>
 </root>

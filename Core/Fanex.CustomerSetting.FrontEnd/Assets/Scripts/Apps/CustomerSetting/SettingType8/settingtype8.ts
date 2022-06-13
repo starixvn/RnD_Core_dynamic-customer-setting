@@ -22,7 +22,8 @@ module CustomerSetting {
             return {
                 settingType: "=",
                 popupMode: "=",
-                update: "&"
+                update: "&",
+                index: "@"
             };
         }
 
@@ -48,6 +49,7 @@ module CustomerSetting {
                 $scope.avaiSettingLevels = SettingLevel;
 
                 $scope.$watch("settingType", (settingType: SettingType) => {
+                    $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
                     $scope.normalMode = settingTypesSharedValuesService.normalMode;
 
                     if (settingType && angular.isArray(settingType.settingItems)) {
@@ -65,6 +67,10 @@ module CustomerSetting {
                                         parametersService.systemId);
                                 }
                             });
+                        }
+
+                        if ($scope.togglableSettingBlocks) {
+                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
                         }
                     }
                 });

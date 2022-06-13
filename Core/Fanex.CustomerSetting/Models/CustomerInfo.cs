@@ -28,5 +28,9 @@ namespace Fanex.CustomerSetting.Models
 
         public bool IsY7Sites
             => AppSettings.Y7Sites.Any(site => site.Equals(this.Site, System.StringComparison.CurrentCultureIgnoreCase));
+
+        public bool IsEnableCollapseExpand { get; set; }
+
+        public bool IsCollapsed { get; set; }
     }
 }

@@ -10,9 +10,13 @@ module CustomerSetting {
         sharedStates: TogglableSettingBlockSharedStates;
         settingData: DefaultSettingItem[];
         settingTypeId: number;
+        settingTypeIndex: number;
+        settingLevel: number;
     }
 
     export class ToggleSettingBlockDirective implements ng.IDirective {
+        public replace: boolean = true;
+        public templateUrl: string = "DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm";
         public static $inject: string[] = ["$rootScope", "$timeout"];
 
         public get scope(): any {
@@ -20,7 +24,9 @@ module CustomerSetting {
                 blockIndex: "=",
                 sharedStates: "=",
                 settingData: "=",
-                settingTypeId: "="
+                settingTypeId: "=",
+                settingTypeIndex: "=",
+                settingLevel: "="
             };
         }
 
@@ -28,7 +34,6 @@ module CustomerSetting {
 
         public link: ng.IDirectiveLinkFn = (scope: IToggleSettingBlockScope, element: ng.IAugmentedJQuery) => {
             var container: ng.IAugmentedJQuery = angular.element(element.parent());
-
             container.addClass("togglable-bar");
             container.on("click", (event: BaseJQueryEventObject) => {
                 var target: ng.IAugmentedJQuery = angular.element(event.target);
@@ -40,29 +45,55 @@ module CustomerSetting {
                 }
             });
 
-            if (!this.isToggleAllDirective(scope)) {
-                scope.$watch("settingData", () => {
-                    if (this.initializing) {
-                        this.$timeout(() => this.initializing = false);
-                    } else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
-                        scope.sharedStates.expandBlock(scope.blockIndex);
-                        this.triggerPageHeightChangedEvent();
+            this.$rootScope.$on("toggleAllSettingTypes", (event: ng.IAngularEvent, isExpandAll: boolean) => {
+                if (this.isToggleAllDirective(scope)) {
+                    if (isExpandAll) {
+                        scope.sharedStates.expandAllBlocks();
                     }
-                }, true);
+                    else {
+                        scope.sharedStates.collapseAllBlocks();
+                    }
+                }
+            });
 
-                this.$rootScope.$on("updateSetting", (event: ng.IAngularEvent, settingTypeId: number) => {
-                    if ((!settingTypeId || settingTypeId === scope.settingTypeId)
-                        && scope.settingData
-                        && scope.settingData.some((item: DefaultSettingItem) => !item.validationState.isSuccessful)
-                        && !scope.sharedStates.isExpanded(scope.blockIndex)) {
+            scope.$watch("settingData", () => {
+                if (this.initializing) {
+                    this.$timeout(() => this.initializing = false);
+                    return;
+                }
+                if (scope.settingLevel && scope.settingLevel === SettingLevel.sportTypeBetType) {
+                    if (!this.isToggleAllDirective(scope)) {
                         scope.sharedStates.expandBlock(scope.blockIndex);
-                        this.triggerPageHeightChangedEvent();
                     }
-                });
-                this.$rootScope.$on("queriedSetting", () => {
-                    this.initializing = true;
-                });
-            }
+                }
+                else {
+                    if (this.isToggleAllDirective(scope)) {
+                        scope.sharedStates.expandAllBlocks();
+                    }
+                }
+
+                this.triggerPageHeightChangedEvent();
+            }, true);
+
+            this.$rootScope.$on("updateSetting", (event: ng.IAngularEvent, settingTypeId: number) => {
+                if ((!settingTypeId || settingTypeId === scope.settingTypeId)
+                    && scope.settingData
+                    && scope.settingData.some((item: DefaultSettingItem) => !item.validationState.isSuccessful)) {
+                    if (scope.settingLevel && scope.settingLevel === SettingLevel.sportTypeBetType) {
+                        if (!this.isToggleAllDirective(scope))
+                            scope.sharedStates.expandBlock(scope.blockIndex);
+                    } else {
+                        if (this.isToggleAllDirective(scope))
+                            scope.sharedStates.expandAllBlocks();
+                    }
+
+                    this.triggerPageHeightChangedEvent();
+                }
+            });
+
+            this.$rootScope.$on("queriedSetting", () => {
+                this.initializing = true;
+            });
         }
 
         private $rootScope: ng.IRootScopeService;
@@ -86,6 +117,10 @@ module CustomerSetting {
                 } else {
                     scope.sharedStates.expandBlock(scope.blockIndex);
                 }
+            }
+
+            if (scope.settingTypeIndex !== null && scope.settingTypeIndex !== undefined) {
+                this.$rootScope.$emit("toggleSettingType", scope.sharedStates.isExpandedAll(), scope.settingTypeIndex);
             }
 
             scope.$apply();

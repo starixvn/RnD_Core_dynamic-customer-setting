@@ -137,6 +137,63 @@
     }
 }
 
+
+.icon-expand {
+    background: {
+        image: url("Images/sprite.png");
+        position: -1px -47px;
+        repeat: no-repeat;
+    }
+
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    margin-top: 7px;
+    margin-left: 5px;
+}
+
+.icon-collapse {
+    background: {
+        image: url("Images/sprite.png");
+        position: -16px -47px;
+        repeat: no-repeat;
+    }
+
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    margin-top: 7px;
+    margin-left: 5px;
+}
+
+.icon-expand-all {
+    background: {
+        image: url("Images/sprite.png");
+        position: -31px -47px;
+        repeat: no-repeat;
+    }
+
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    margin-top: 7px;
+    margin-left: 5px;
+}
+
+.icon-collapse-all {
+    background: {
+        image: url("Images/sprite.png");
+        position: -48px -47px;
+        repeat: no-repeat;
+    }
+
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    margin-top: 7px;
+    margin-left: 5px;
+}
+
 %overlay {
     bottom: 0;
     left: 0;

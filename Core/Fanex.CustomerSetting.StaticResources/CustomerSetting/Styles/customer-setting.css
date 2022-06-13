@@ -210,6 +210,9 @@ th {
 .x-ng-cloak {
   display: none !important; }
 
+.ng-hide {
+  transition: .5s ease; }
+
 .w3-percent, .w4-percent, .w15-percent, .w13-percent, .w16-percent, .w18-percent, .w20-percent, .w21-percent, .w25-percent, .w28-percent, .w30-percent, .w33-percent, .w40-percent, .w42-percent, .w50-percent, .w60-percent, .w70-percent, .w80-percent, .w100-percent, .block__item, .block__item--full-width, .block__item--full-width .block__lbl,
 .block__item--full-width .block__lbl--white, .block__item--full-width .block__value, .block__lbl, .block__value, .full-width .block__item, .full-width .block__lbl,
 .full-width .block__lbl--white, .full-width .block__value {
@@ -287,6 +290,9 @@ th {
 
 .tab {
   margin-left: 10px; }
+
+.indent-30 {
+  text-indent: 30px; }
 
 .setting-field-wrapper,
 .text-field-wrapper {
@@ -377,6 +383,46 @@ th {
     background-position: -26px -26px;
     height: 17px;
     width: 18px; }
+
+.icon-expand {
+  background-image: url("Images/sprite.png");
+  background-position: -1px -47px;
+  background-repeat: no-repeat;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  margin-top: 7px;
+  margin-left: 5px; }
+
+.icon-collapse {
+  background-image: url("Images/sprite.png");
+  background-position: -16px -47px;
+  background-repeat: no-repeat;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  margin-top: 7px;
+  margin-left: 5px; }
+
+.icon-expand-all {
+  background-image: url("Images/sprite.png");
+  background-position: -31px -47px;
+  background-repeat: no-repeat;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  margin-top: 7px;
+  margin-left: 5px; }
+
+.icon-collapse-all {
+  background-image: url("Images/sprite.png");
+  background-position: -48px -47px;
+  background-repeat: no-repeat;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  margin-top: 7px;
+  margin-left: 5px; }
 
 .block-ui-overlay, .modal-overlay {
   bottom: 0;
@@ -717,8 +763,9 @@ select.setting-field {
   float: none;
   vertical-align: middle; }
 
-.settingtype6 .block__sub-header--indent {
-  padding-left: 10px; }
+.settingtype6 .block__sub-header--bettype {
+  padding-left: 50px;
+  display: table-caption; }
 
 .settingtype6 .block__item {
   float: none;
@@ -896,8 +943,9 @@ select.setting-field {
   float: none;
   vertical-align: middle; }
 
-.settingtype12 .block__sub-header--indent {
-  padding-left: 10px; }
+.settingtype12 .block__sub-header--bettype {
+  padding-left: 50px;
+  display: table-caption; }
 
 .settingtype12 .block__item {
   float: none;
