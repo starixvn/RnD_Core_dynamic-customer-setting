@@ -482,6 +482,7 @@
     <Content Include="Assets\Styles\Images\auto-pt.gif" />
     <Content Include="Assets\Styles\Images\loading.gif" />
     <Content Include="Assets\Styles\Images\not-allow-auto-pt.gif" />
+    <Content Include="Assets\Styles\Images\sprite1.png" />
     <Content Include="Assets\Styles\Images\sprite.png" />
     <Content Include="Gulpfile.js" />
     <Content Include="Gulp\combine-scripts.js" />

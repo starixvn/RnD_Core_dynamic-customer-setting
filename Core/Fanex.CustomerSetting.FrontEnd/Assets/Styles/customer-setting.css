@@ -349,7 +349,7 @@ th {
     margin-top: 10px; }
 
 .icon {
-  background-image: url("Images/sprite.png");
+  background-image: url("Images/sprite1.png");
   background-position: 0 0;
   background-repeat: no-repeat;
   display: inline-block; }
@@ -385,7 +385,7 @@ th {
     width: 18px; }
 
 .icon-expand {
-  background-image: url("Images/sprite.png");
+  background-image: url("Images/sprite1.png");
   background-position: -1px -47px;
   background-repeat: no-repeat;
   width: 14px;
@@ -395,7 +395,7 @@ th {
   margin-left: 5px; }
 
 .icon-collapse {
-  background-image: url("Images/sprite.png");
+  background-image: url("Images/sprite1.png");
   background-position: -16px -47px;
   background-repeat: no-repeat;
   width: 14px;
@@ -405,7 +405,7 @@ th {
   margin-left: 5px; }
 
 .icon-expand-all {
-  background-image: url("Images/sprite.png");
+  background-image: url("Images/sprite1.png");
   background-position: -31px -47px;
   background-repeat: no-repeat;
   width: 14px;
@@ -415,7 +415,7 @@ th {
   margin-left: 5px; }
 
 .icon-collapse-all {
-  background-image: url("Images/sprite.png");
+  background-image: url("Images/sprite1.png");
   background-position: -48px -47px;
   background-repeat: no-repeat;
   width: 14px;
