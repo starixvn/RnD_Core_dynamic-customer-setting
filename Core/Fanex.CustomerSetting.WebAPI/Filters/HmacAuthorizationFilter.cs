@@ -108,8 +108,9 @@
             using (HMACSHA256 hmac = new HMACSHA256(secretKeyBytes))
             {
                 byte[] signatureBytes = hmac.ComputeHash(signature);
-
-                return incomingBase64Signature.Equals(Convert.ToBase64String(signatureBytes), StringComparison.Ordinal);
+                var result = incomingBase64Signature.Equals(Convert.ToBase64String(signatureBytes), StringComparison.Ordinal);
+                Fanex.Logging.LogService.Info($"HMAC result: " + result.ToString());
+                return result;
             }
         }
 
