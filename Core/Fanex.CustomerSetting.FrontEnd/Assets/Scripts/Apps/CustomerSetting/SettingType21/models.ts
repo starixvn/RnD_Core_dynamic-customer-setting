@@ -23,7 +23,9 @@ module CustomerSetting {
         public set isChecked(isChecked: boolean) {
             this.isDisabled = !isChecked;
             if (this.parentSportTypeId == 0 && this.parentBetTypeId == 0) {
-                this.$rootScope.$emit("checkedChanged", {isDisable: this.isDisabled, settingTypeId: this.settingTypeId});
+                this.$rootScope.$emit("checkedChanged", {
+                    settingTypeId: this.settingTypeId
+                });
             }
 
         }
@@ -43,23 +45,23 @@ module CustomerSetting {
 
             if (settingItem) {
                 this.isDisabled = settingItem.isDisabled;
-                this.readonly = false;
+                this.readonly = settingItem.readonly;
 
                 if (settingItem.upline) {
                     this.upline = new SettingType21Item(settingItem.upline);
-                    this.readonly = settingItem.upline.isDisabled;
+                    this.readonly = settingItem.upline.isDisabled || settingItem.readonly;
                 }
 
                 if ((this.systemId === System.alpha || this.systemId === System.internalAlpha)
                     && this.customerLevel !== Level.member) {
                     this.readonly = this.readonly || this.isChecked;
                 }
+              
             }
 
             if (backup) {
                 this.oldSetting = new SettingType21Item(this);
             }
-
         }
 
         public isChanged(): boolean {

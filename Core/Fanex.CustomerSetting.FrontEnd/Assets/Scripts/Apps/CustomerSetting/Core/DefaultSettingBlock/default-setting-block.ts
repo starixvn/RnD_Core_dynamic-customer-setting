@@ -47,7 +47,7 @@ module CustomerSetting {
         }];
 
         private disableChildByParentState($scope: IDefaultSettingTypeDirectiveScope) {
-            const parentGame = $scope.settingType.settingItems.find(e => e["parentBetTypeId"] === 0 && e["parentSportTypeId"] === 0);
+            const parentGame = $scope.settingType.settingItems.filter(e => e["parentBetTypeId"] === 0 && e["parentSportTypeId"] === 0)[0];
             const childGames = $scope.settingType.settingItems.filter(e => e["parentBetTypeId"] === parentGame["betTypeId"] && e["parentSportTypeId"] === parentGame["sportTypeId"]);
             if (parentGame["isDisabled"]) {
                 childGames.forEach(e => {
