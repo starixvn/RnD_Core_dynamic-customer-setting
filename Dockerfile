@@ -1,6 +1,6 @@
 # escape=`
 FROM hub.nexdev.net/base/rocketor/buildservice AS builder
-ARG DEPLOY_ENV
+ARG TRANSFORM_CONFIG
 ARG ROCKETOR_API
 ARG REDMINE_IDS
 
@@ -33,36 +33,35 @@ WORKDIR C:/Compiled
 RUN `
     if defined REDMINE_IDS `
     FOR %P IN ( `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\APILoggerSpNames.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Casino.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.NumberGames2.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType5.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType6.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType7.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType8.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType9.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType11.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType13.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType14.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType15.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType16.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType17.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType18.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType20.xml, `
-        Core\Fanex.CustomerSetting.WebAPI\App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml `
+        App_Data\CustomerSettingSpNames\APILoggerSpNames.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Casino.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.NumberGames2.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType5.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType6.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType7.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType8.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType9.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType11.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType13.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType14.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType15.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType16.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType17.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType18.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType20.xml, `
+        App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml `
     ) `
     DO curl --fail -o C:\sp-result.xml --form file=@"%P" --form "redmineIds=%REDMINE_IDS%" -X POST %ROCKETOR_API% `
         && xcopy C:\sp-result.xml "%P" /Y
 
 # Transform config
-# RUN echo "%DEPLOY_ENV%" `
-#     && xcopy "Core\Fanex.CustomerSetting.WebAPI\Web.%DEPLOY_ENV%.config" "Web.config" /Y `
-#     && xcopy "Core\Fanex.CustomerSetting.WebAPI\Web.ConnectionStrings.%DEPLOY_ENV%.config" "Web.config" /Y `
-#     && xcopy "Core\Fanex.CustomerSetting.WebAPI\AppSettings.%DEPLOY_ENV%.config" "Web.config" /Y `
+RUN echo "%TRANSFORM_CONFIG%" `
+    && xcopy "Web.%TRANSFORM_CONFIG%.config" "Web.config" /Y `
+    && xcopy "Web.ConnectionStrings.%TRANSFORM_CONFIG%.config" "Web.config" /Y 
 
 FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
 

@@ -38,6 +38,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public string Index()
         {
             Fanex.Logging.Logger.Log.Info("test");
