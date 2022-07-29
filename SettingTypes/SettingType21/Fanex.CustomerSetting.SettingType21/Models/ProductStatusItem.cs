@@ -38,6 +38,8 @@
         }
 
         public bool IsDisabled { get; set; }
+        
+        public bool IsReadOnly { get; set; }
 
         public ProductStatusItem Upline { get; set; }
 

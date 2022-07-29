@@ -49,7 +49,7 @@ module CustomerSetting {
 
                 if (settingItem.upline) {
                     this.upline = new SettingType21Item(settingItem.upline);
-                    this.readonly = settingItem.upline.isDisabled || settingItem.readonly;
+                    this.readonly = settingItem.upline.isDisabled || settingItem.isReadOnly;
                 }
 
                 if ((this.systemId === System.alpha || this.systemId === System.internalAlpha)

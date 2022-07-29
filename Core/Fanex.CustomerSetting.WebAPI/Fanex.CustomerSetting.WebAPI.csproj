@@ -220,6 +220,7 @@
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType8.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType9.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml" />
+    <Content Include="App_Data\PluggableTasks\settingtype-21.json" />
     <Content Include="App_Data\Templates\customer-setting.htm" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
@@ -373,6 +374,10 @@
     <ProjectReference Include="..\..\Tasks\CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle.csproj">
       <Project>{0128e0b4-3f44-4d5d-9f70-d3bc0a0a0f25}</Project>
       <Name>Fanex.CustomerSetting.Tasks.CollapseExpandToggle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tasks\Fanex.CustomerSetting.Tasks.SettingType21\Fanex.CustomerSetting.Tasks.SettingType21.csproj">
+      <Project>{115c2a62-f0dc-4f73-9e18-06b7b9f4d861}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.SettingType21</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tasks\Product41\Fanex.CustomerSetting.Tasks.Product41\Fanex.CustomerSetting.Tasks.Product41.csproj">
       <Project>{c2a70d3e-3d35-46eb-bff3-af224090bacb}</Project>

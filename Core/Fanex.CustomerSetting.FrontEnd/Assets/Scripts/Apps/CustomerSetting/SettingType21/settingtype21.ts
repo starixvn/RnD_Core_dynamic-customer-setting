@@ -16,15 +16,6 @@ module CustomerSetting {
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtype21-value.htm";
             scope.settingTypeName = this.settingType21ResourceService.getLabel("ProductStatus");
-            
-            const parentGame = scope.settingType.settingItems.filter(e => e["parentBetTypeId"] === 0 && e["parentSportTypeId"] === 0)[0];
-            const childGames = scope.settingType.settingItems.filter(e => e["parentBetTypeId"] === parentGame["betTypeId"] && e["parentSportTypeId"] === parentGame["sportTypeId"]);
-            if (parentGame["isDisabled"]) {
-                childGames.forEach(e => {
-                    e["isDisabled"] = true;
-                    e["readonly"] = true;
-                })
-            }
         };
 
         private settingType21ResourceService: SettingType21ResourceService;
