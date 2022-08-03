@@ -132,4 +132,7 @@
   <data name="Msg_90012" xml:space="preserve">
     <value>คุณไม่สามารถดำเนินการนี้</value>
   </data>
+  <data name="Msg_60037" xml:space="preserve">
+    <value>ไม่สามารถเปิดใช้งาน {0} เมื่อ {1} ปิดอยู่</value>
+  </data>
 </root>

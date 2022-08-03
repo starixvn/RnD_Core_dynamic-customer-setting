@@ -132,4 +132,7 @@
   <data name="Msg_90012" xml:space="preserve">
     <value>您不能执行此操作。</value>
   </data>
+  <data name="Msg_60037" xml:space="preserve">
+    <value>您必须先启用 {1}，才能启用 {0}。</value>
+  </data>
 </root>

@@ -132,4 +132,7 @@
   <data name="Msg_90012" xml:space="preserve">
     <value>Bạn không thể thực thi hành động này.</value>
   </data>
+  <data name="Msg_60037" xml:space="preserve">
+    <value>Bạn không thể kích hoạt {0} khi {1} đang bị vô hiệu hóa.</value>
+  </data>
 </root>
