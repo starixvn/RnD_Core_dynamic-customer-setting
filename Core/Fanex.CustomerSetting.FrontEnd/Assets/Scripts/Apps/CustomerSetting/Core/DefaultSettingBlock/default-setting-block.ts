@@ -20,7 +20,7 @@ module CustomerSetting {
         public replace: boolean = true;
         public templateUrl: string = "DefaultSettingBlock/default-setting-block.htm";
 
-        public controller: any = ["$scope", ($scope: IDefaultSettingTypeDirectiveScope) => {
+        public controller: any = ["$scope", "$rootScope", ($scope: IDefaultSettingTypeDirectiveScope, $rootScope: ng.IRootScopeService) => {
             $scope.avaiSettingLevels = SettingLevel;
             $scope.$watch("settingType", (settingType: SettingType) => {
                 $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
@@ -38,7 +38,28 @@ module CustomerSetting {
                     }
                 }
             });
+
+            $rootScope.$on("checkedChanged", (event, args) => {
+                if ($scope.settingType && angular.isArray($scope.settingType.settingItems) && $scope.settingType.id === args.settingTypeId) {
+                    this.disableChildByParentState($scope);
+                }
+            })
         }];
+
+        private disableChildByParentState($scope: IDefaultSettingTypeDirectiveScope) {
+            const parentGame = $scope.settingType.settingItems.filter(e => e["parentBetTypeId"] === 0 && e["parentSportTypeId"] === 0)[0];
+            const childGames = $scope.settingType.settingItems.filter(e => e["parentBetTypeId"] === parentGame["betTypeId"] && e["parentSportTypeId"] === parentGame["sportTypeId"]);
+            if (parentGame["isDisabled"]) {
+                childGames.forEach(e => {
+                    e["isDisabled"] = true;
+                    e["readonly"] = true;
+                })
+            } else {
+                childGames.forEach(e => {
+                    e["readonly"] = false;
+                })
+            }
+        }
 
         protected groupSettingItemsBySportType(settingItems: ISettingItem[]): DefaultSettingItem[][] {
             var currentSportTypeId: number = -1;

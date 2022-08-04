@@ -358,6 +358,20 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType20\settingtype20.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType21\models.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType21\settingtype21-resources.js">
+      <DependentUpon>settingtype21-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType21\settingtype21-resources.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType21\settingtype21-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype21-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType21\settingtype21-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType21\settingtype21.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType21\settingtype21.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-input.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -589,7 +603,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CopyWithCheckBoxSettingBlock\CopySettingWithCheckbox\copy-setting-with-checkbox.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\NoteIcon\note-icon-tooltip.ts" />

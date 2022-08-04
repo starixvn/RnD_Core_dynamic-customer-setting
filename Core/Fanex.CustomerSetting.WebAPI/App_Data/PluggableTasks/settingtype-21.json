@@ -1,0 +1,13 @@
+﻿[
+  {
+    "order": 1,
+    "tasks": [
+      {
+        "settingTypeId": 21,
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.SettingType21.AddSettingType21QueryWarningTask, Fanex.CustomerSetting.Tasks.SettingType21"
+        ]
+      }
+    ]
+  }
+]
