@@ -278,6 +278,7 @@
     <Content Include="App_Data\PluggableTasks\settingtype-8.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-7.json" />
     <Content Include="App_Data\PluggableTasks\collapse-expand-toggle.json" />
+    <Content Include="App_Data\ApiConfigurations\LogsConfiguration.config" />
     <None Include="packages.config" />
     <Content Include="Web.ConnectionStrings.backupMNL.config" />
     <Content Include="Web.ConnectionStrings.local.config" />
