@@ -61,7 +61,8 @@ namespace Fanex.CustomerSetting.Tasks.SettingType7 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bet Setting of Soccer Mines is applied for Basketball Mines, Cricket Mines, Soccer Towers, Basketball Towers, Cricket Towers..
+        ///   Looks up a localized string similar to Bet Setting of Soccer Mines is applied for Basketball Mines, Cricket Mines, Soccer Towers, Basketball Towers, Cricket Towers
+        ///Bet Setting of Baccarat is applied for Lux Gaming - Baccarat, Lux Gaming - Xoc Dia, Lux Gaming - Sic Bo, Lux Gaming - Roulette.
         /// </summary>
         internal static string BetSettingNoteMessage {
             get {

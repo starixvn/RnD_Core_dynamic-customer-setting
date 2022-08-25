@@ -501,7 +501,8 @@ th {
     max-width: 300px;
     padding: 8px;
     text-align: center;
-    text-decoration: none; }
+    text-decoration: none;
+    white-space: pre-line; }
   .tooltip--right:after {
     display: inline-block; }
   .tooltip--right .tooltip__content {

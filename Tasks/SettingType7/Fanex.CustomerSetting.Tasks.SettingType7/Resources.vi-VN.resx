@@ -118,6 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BetSettingNoteMessage" xml:space="preserve">
-    <value>Giới Hạn Cược của Soccer Mines sẽ áp dụng cho Basketball Mines, Cricket Mines, Soccer Towers, Basketball Towers, Cricket Towers</value>
+    <value>Giới Hạn Cược của Soccer Mines sẽ áp dụng cho Basketball Mines, Cricket Mines, Soccer Towers, Basketball Towers, Cricket Towers
+Bet Setting of Baccarat is applied for Lux Gaming - Baccarat, Lux Gaming - Xoc Dia, Lux Gaming - Sic Bo, Lux Gaming - Roulette</value>
   </data>
 </root>
