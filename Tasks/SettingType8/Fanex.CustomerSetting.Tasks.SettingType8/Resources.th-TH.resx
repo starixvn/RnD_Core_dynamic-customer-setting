@@ -120,4 +120,7 @@
   <data name="BetSettingNoteMessage" xml:space="preserve">
     <value>เกมส์ที่ไฮไลท์จะมีการเสนอคุณลักษณะซื้อโบนัส ซึ่งสมาชิกสามารถเดิมพันได้ถึง 100 เท่าของมูลค่าเดิมพันสูงสุด</value>
   </data>
+  <data name="BetSettingNoteMessage_155" xml:space="preserve">
+    <value>เกมส์ที่ไฮไลท์จะมีการเสนอคุณลักษณะซื้อโบนัส ซึ่งสมาชิกสามารถเดิมพันได้ถึง 150 เท่าของมูลค่าเดิมพันสูงสุด</value>
+  </data>
 </root>

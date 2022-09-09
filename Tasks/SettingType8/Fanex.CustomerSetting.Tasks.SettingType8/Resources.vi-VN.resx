@@ -120,4 +120,7 @@
   <data name="BetSettingNoteMessage" xml:space="preserve">
     <value>Các trò chơi (được tô sáng) hỗ trợ tính năng Mua Lượt Quay Miễn Phí, cho phép người chơi đặt cược lên đến 100x giá trị Cược Lớn Nhất.</value>
   </data>
+  <data name="BetSettingNoteMessage_155" xml:space="preserve">
+    <value>Các trò chơi (được tô sáng) hỗ trợ tính năng Mua Lượt Quay Miễn Phí, cho phép người chơi đặt cược lên đến 150x giá trị Cược Lớn Nhất.</value>
+  </data>
 </root>

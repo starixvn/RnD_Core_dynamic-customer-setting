@@ -120,4 +120,7 @@
   <data name="BetSettingNoteMessage" xml:space="preserve">
     <value>The highlighted games are offered the Buy Bonus feature which allows member to place bet up to 100x Max Bet value.</value>
   </data>
+  <data name="BetSettingNoteMessage_155" xml:space="preserve">
+    <value>The highlighted games are offered the Buy Bonus feature which allows member to place bet up to 150x Max Bet value.</value>
+  </data>
 </root>
