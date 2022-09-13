@@ -77,5 +77,15 @@ namespace Fanex.CustomerSetting.Tasks.SettingType8 {
                 return ResourceManager.GetString("BetSettingNoteMessage_155", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The highlighted games are offered the Buy Bonus feature which allows member to place bet up to 248x Max Bet value..
+        /// </summary>
+        public static string BetSettingNoteMessage_212 {
+            get {
+                return ResourceManager.GetString("BetSettingNoteMessage_212", resourceCulture);
+            }
+        }
+
     }
 }
