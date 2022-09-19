@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32228.343
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".readme", ".readme", "{5697E4DC-4C04-474A-83C0-5B24B1344DB9}"
 	ProjectSection(SolutionItems) = preProject
@@ -215,6 +215,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType21", "Tasks\Fanex.CustomerSetting.Tasks.SettingType21\Fanex.CustomerSetting.Tasks.SettingType21.csproj", "{115C2A62-F0DC-4F73-9E18-06B7B9F4D861}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.SettingType21.Tests", "Tasks\Fanex.CustomerSetting.Tasks.SettingType21.Tests\Fanex.CustomerSetting.Tasks.SettingType21.Tests.csproj", "{FFF760E1-4FC7-43E4-953C-82A215A6D069}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.CollapseExpandToggle", "Tasks\CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle.csproj", "{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -486,10 +488,6 @@ Global
 		{28011687-4A90-4458-A2EE-0543379F170C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28011687-4A90-4458-A2EE-0543379F170C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28011687-4A90-4458-A2EE-0543379F170C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8B083F7E-92C0-4052-A7CF-F12D18A6B4F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B083F7E-92C0-4052-A7CF-F12D18A6B4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B083F7E-92C0-4052-A7CF-F12D18A6B4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -506,6 +504,10 @@ Global
 		{FFF760E1-4FC7-43E4-953C-82A215A6D069}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFF760E1-4FC7-43E4-953C-82A215A6D069}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFF760E1-4FC7-43E4-953C-82A215A6D069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -604,17 +606,16 @@ Global
 		{C4EC91F3-7ECA-41D4-95B1-56A2FA9B9ED2} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
 		{28011687-4A90-4458-A2EE-0543379F170C} = {C4EC91F3-7ECA-41D4-95B1-56A2FA9B9ED2}
 		{AEE38FA0-4584-4C32-94FF-C6E2E31D4ED9} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
-		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25} = {AEE38FA0-4584-4C32-94FF-C6E2E31D4ED9}
-		{84D59DDD-DAD4-40DD-9651-2261C4D504B2} = {B306779E-7128-423D-AC57-5963D0629397}
-		{7F94F1AD-D4EF-4F0E-BCE3-48239A81756E} = {B306779E-7128-423D-AC57-5963D0629397}
 		{8B083F7E-92C0-4052-A7CF-F12D18A6B4F6} = {7F94F1AD-D4EF-4F0E-BCE3-48239A81756E}
 		{11E78E67-CF37-48AE-88A5-DB3575AA34AF} = {7F94F1AD-D4EF-4F0E-BCE3-48239A81756E}
+		{7F94F1AD-D4EF-4F0E-BCE3-48239A81756E} = {B306779E-7128-423D-AC57-5963D0629397}
 		{7C51E8DE-1583-4B51-AA93-76D7A66BD547} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
 		{115C2A62-F0DC-4F73-9E18-06B7B9F4D861} = {7C51E8DE-1583-4B51-AA93-76D7A66BD547}
 		{FFF760E1-4FC7-43E4-953C-82A215A6D069} = {7C51E8DE-1583-4B51-AA93-76D7A66BD547}
+		{0128E0B4-3F44-4D5D-9F70-D3BC0A0A0F25} = {AEE38FA0-4584-4C32-94FF-C6E2E31D4ED9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
 		SolutionGuid = {0E5B53E6-7B52-44B7-9EC9-E6557921FED2}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal
