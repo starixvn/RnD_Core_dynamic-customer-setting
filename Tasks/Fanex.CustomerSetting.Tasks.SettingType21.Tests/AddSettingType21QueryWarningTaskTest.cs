@@ -8,6 +8,8 @@
     using Models.Results;
     using NSubstitute;
     using NUnit.Framework;
+    using System.Collections.Generic;
+    using Fanex.CustomerSetting.SettingType21.Models;
 
     public class AddSettingType21QueryWarningTaskTest
     {
@@ -44,6 +46,50 @@
 
             // Assert.
             Assert.Throws(typeof(ArgumentNullException), invokeDelegate);
+        }
+
+        [Test]
+        public void DisableChildrenProduct21_ParentProductDisable_ReadOnlyChildrenProduct()
+        {
+            // Arrange.
+            var childProductStatusItem = new ProductStatusItem
+                { BetTypeId = 4001, ParentBetTypeId = 4001, ParentSportTypeId = 212, SportTypeId = 9904 };
+            var parentProductStatusItem = new ProductStatusItem
+                { BetTypeId = 4001, ParentBetTypeId = 0, ParentSportTypeId = 0, SportTypeId = 212, IsDisabled = true };
+            _setting = new Setting(1176070, Level.Super, null, 22, "Macau Games", new[]
+            {
+                new SettingType()
+                {
+                    Id = 21,
+                    Name = "Product Status",
+                    SettingItems = new List<ProductStatusItem>
+                    {
+                        childProductStatusItem,
+                        parentProductStatusItem
+                    }
+                }
+            });
+            // Act.
+            _task.Invoke(_settingContext, _query, _setting);
+
+            // Assert.
+
+            Assert.True(childProductStatusItem.IsReadOnly);
+        }  
+        
+        [Test]
+        public void SettingType21Null_DisableChildrenByParentState_NotRun()
+        {
+            // Arrange.
+            var childProductStatusItem = new ProductStatusItem { BetTypeId = 4001, ParentBetTypeId = 4001, ParentSportTypeId = 212, SportTypeId = 9904 };
+            _setting = new Setting(1176070, Level.Super, null, 22, "Macau Games",null);
+            
+            // Act.
+            _task.Invoke(_settingContext, _query, _setting);
+
+            // Assert.
+
+            Assert.False(childProductStatusItem.IsReadOnly);
         }
 
         [Test]
@@ -110,7 +156,8 @@
             // Assert.
             var messageContainer = _setting.WarningMessages as UpdateSettingResult;
 
-            Assert.IsTrue(messageContainer?.SubResults.Any(subResult => subResult.Message == Resources.ProductStatusNoteForExternalSites));
+            Assert.IsTrue(messageContainer?.SubResults.Any(subResult =>
+                subResult.Message == Resources.ProductStatusNoteForExternalSites));
         }
 
         [Test]
@@ -125,7 +172,8 @@
             // Assert.
             var messageContainer = _setting.WarningMessages as UpdateSettingResult;
 
-            Assert.IsTrue(messageContainer?.SubResults.Any(subResult => subResult.Message == Resources.ProductStatusNoteForExternalSites));
+            Assert.IsTrue(messageContainer?.SubResults.Any(subResult =>
+                subResult.Message == Resources.ProductStatusNoteForExternalSites));
         }
 
         [Test]
@@ -156,7 +204,8 @@
             // Assert.
             var messageContainer = _setting.WarningMessages as UpdateSettingResult;
 
-            Assert.IsTrue(messageContainer?.SubResults.Any(subResult => subResult.Message == Resources.ProductStatusNoteForExternalSites));
+            Assert.IsTrue(messageContainer?.SubResults.Any(subResult =>
+                subResult.Message == Resources.ProductStatusNoteForExternalSites));
         }
 
         [TestCase(SystemType.Nap)]

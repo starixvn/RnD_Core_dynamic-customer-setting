@@ -12,8 +12,9 @@
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, SettingType settingTypeData)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
-            foreach (SettingItemDefault settingItem in settingTypeData.SettingItems)
+            foreach (var settingItem1 in settingTypeData.SettingItems)
             {
+                var settingItem = (SettingItemDefault)settingItem1;
                 if (Array.IndexOf(listSporttypeShowNoteIcon, settingItem.SportTypeId) > -1)
                 {
                     settingItem.ShowIconTooltipMessage = true;

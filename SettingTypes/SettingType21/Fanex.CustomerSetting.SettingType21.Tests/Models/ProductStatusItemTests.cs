@@ -16,15 +16,48 @@ namespace Fanex.CustomerSetting.SettingType21.Tests.Models
                     {
                         SportTypeId = 1,
                         BetTypeId = 1,
-                        IsDisabled = true
+                        IsDisabled = true,
+                        IsReadOnly=true
                     }).Returns("<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\"/>");
                 yield return new TestCaseData(
                     new ProductStatusItem
                     {
                         SportTypeId = 1,
                         BetTypeId = 1,
-                        IsDisabled = false
+                        IsDisabled = false,
+                        IsReadOnly=true
                     }).Returns("<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"0\"/>");
+            }
+        }
+        
+        private static IEnumerable SampleProductStatusForGetHashCodeMethod
+        {
+            get
+            {
+                yield return new TestCaseData(
+                    new ProductStatusItem
+                    {
+                        SportTypeId = 2,
+                        BetTypeId = 2,
+                        IsDisabled = true,
+                        IsReadOnly = true,
+                        Upline = new ProductStatusItem
+                        {
+                            SportTypeId = 23,
+                            BetTypeId = 22,
+                            IsDisabled = true,
+                            IsReadOnly = true,
+                        }
+                    }).Returns(65537);
+                yield return new TestCaseData(
+                    new ProductStatusItem
+                    {
+                        SportTypeId = 2,
+                        BetTypeId = 2,
+                        IsDisabled = true,
+                        IsReadOnly = true,
+                        Upline = null
+                    }).Returns(1);
             }
         }
 
@@ -44,7 +77,8 @@ namespace Fanex.CustomerSetting.SettingType21.Tests.Models
                     {
                         SportTypeId = 1,
                         BetTypeId = 1,
-                        IsDisabled = true
+                        IsDisabled = true,
+                        IsReadOnly=true
                     });
                 yield return new TestCaseData(
                     new ProductStatusDto
@@ -52,14 +86,15 @@ namespace Fanex.CustomerSetting.SettingType21.Tests.Models
                         BetTypeId = 1,
                         SportTypeId = 1,
                         IsDisabled = true,
-                        IsDisabledUpline = false
+                        IsDisabledUpline = false,
                     }).Returns(
                     new ProductStatusItem
                     {
                         SportTypeId = 1,
                         BetTypeId = 1,
                         IsDisabled = true,
-                        Upline = new ProductStatusItem(false)
+                        Upline = new ProductStatusItem(false),
+                        IsReadOnly=true
                     });
                 yield return new TestCaseData(
                     new ProductStatusDto
@@ -74,7 +109,8 @@ namespace Fanex.CustomerSetting.SettingType21.Tests.Models
                         SportTypeId = 1,
                         BetTypeId = 1,
                         IsDisabled = true,
-                        Upline = new ProductStatusItem(true)
+                        Upline = new ProductStatusItem(true),
+                        IsReadOnly=true
                     });
             }
         }
@@ -85,12 +121,20 @@ namespace Fanex.CustomerSetting.SettingType21.Tests.Models
         {
             return productStatusItem.ToXml();
         }
+       
 
         [Test]
         [TestCaseSource(nameof(SampleOdProductStatusDtos))]
         public ProductStatusItem ConstructorInstantiateDataFromDto(ProductStatusDto dto)
         {
             return new ProductStatusItem(dto);
+        }
+        
+        [Test]
+        [TestCaseSource(nameof(SampleProductStatusForGetHashCodeMethod))]
+        public int GetHashCodeMethodReturnsExpectedInt(ProductStatusItem productStatusItem)
+        {
+             return  productStatusItem.GetHashCode();
         }
     }
 }

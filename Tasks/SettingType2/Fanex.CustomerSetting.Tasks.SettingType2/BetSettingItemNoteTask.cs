@@ -8,7 +8,7 @@
 
     public class BetSettingItemNoteTask : IPostQueryCustomerSettingTypeTask
     {
-        private readonly int[] listSporttypeShowNoteIcon = new[] { 169 };
+        private readonly int[] listSporttypeShowNoteIcon = { 169 };
 
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, SettingType settingTypeData)
         {

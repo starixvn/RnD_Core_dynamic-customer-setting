@@ -72,7 +72,7 @@
         {
             var mainMessage = rawMessage;
             var updateTooOftenMessage = Deserialize<SimpleMessage>(rawMessage);
-
+            
             if (updateTooOftenMessage != null)
             {
                 DateTime lastUpdatedTime;
