@@ -10,6 +10,8 @@
     using CustomerSetting.Models.Results;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
+    using CustomerSetting.LoggingConfig;
+    using Fanex.Logging.Extensions.Database;
     using Logging;
     using Models;
     using NSubstitute;
@@ -19,8 +21,12 @@
     public class SettingTypeServiceBaseTests : SettingTypeServiceBase
     {
         private const string DefaultLanguage = "en-US";
+        static SettingTypeServiceBaseTests()
+        {
+            LoggingConfig.Init(new[] { "pass", "pwd", "security", "Password" }, getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
+        }
 
-        [SetUp]
+        [OneTimeSetUp]
         public void SetUp()
         {
             ResourceService = Substitute.For<IResourceService>();

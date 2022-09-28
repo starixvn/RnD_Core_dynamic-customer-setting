@@ -7,15 +7,12 @@
     using NSubstitute;
     using NUnit.Framework;
     using System;
-    using System.Collections;
-    using System.Web.Script.Serialization;
 
     [TestFixture]
     public class CustomerProductSyncedStatusServiceTests
     {
         private ICustomerProductSyncedStatusService _customerProductSyncedStatusService;
         private IObjectDb subObjectDb;
-        JavaScriptSerializer serializer = new JavaScriptSerializer();
 
         public CustomerProductSyncedStatusServiceTests()
         {

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.NumberGames2.Tests.Services.Impl
 {
+    using CustomerSetting.LoggingConfig;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
@@ -8,6 +9,7 @@
     using CustomerSetting.Services;
     using CustomerSetting.Tests.Models;
     using Fanex.CustomerSetting.NumberGames2.Services.Impl;
+    using Logging.Extensions.Database;
     using Models;
     using NSubstitute;
     using NUnit.Framework;
@@ -24,6 +26,7 @@
         [SetUp]
         public void Setup()
         {
+            LoggingConfig.Init(new[] { "pass", "pwd", "security", "Password" }, getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
             _settingContext = new SettingContextStub();
             _resourceService = Substitute.For<IResourceService>();
             _pluggableTaskService = Substitute.For<ITaskService>();

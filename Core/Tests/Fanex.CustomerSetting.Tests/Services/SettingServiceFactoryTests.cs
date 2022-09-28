@@ -5,6 +5,8 @@
     using CustomerSetting.Configurations;
     using CustomerSetting.Models;
     using CustomerSetting.Services.Impl;
+    using CustomerSetting.LoggingConfig;
+    using Fanex.Logging.Extensions.Database;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -19,6 +21,7 @@
         [SetUp]
         public void SetUpServiceTypeConfig()
         {
+            LoggingConfig.Init(new[] { "pass", "pwd", "security", "Password" }, getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
             configurator = new SettingServiceConfigurator();
         }
 

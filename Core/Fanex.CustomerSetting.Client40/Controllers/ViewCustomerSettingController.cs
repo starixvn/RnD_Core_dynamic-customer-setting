@@ -1,10 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Runtime.Caching;
-    using System.Web.Mvc;
     using Attributes;
     using Configurations;
     using Exceptions;
@@ -13,13 +8,16 @@
     using Models.Requests;
     using RestSharp;
     using Services;
+    using System;
+    using System.Net;
+    using System.Runtime.Caching;
+    using System.Web.Mvc;
 
     [ExceptionHandling]
     public class ViewCustomerSettingController : Controller
     {
         private const string SettingTemplateCachingKey = "CustomerSettingTemplate";
         private const byte CachingHours = 4;
-        public static readonly List<int> DefaultBetCounts = new List<int> { 2, 3, 4, 5, 8, 10, 15, 20, 30, 50, 100 };
         private readonly ICustomerSettingService _customerSettingService;
 
         internal bool FlexboxInapplicable { get; set; }

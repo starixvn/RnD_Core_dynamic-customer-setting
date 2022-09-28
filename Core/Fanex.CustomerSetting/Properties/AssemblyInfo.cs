@@ -41,6 +41,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType1.Tests")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType2")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType2.Tests")]
+[assembly: InternalsVisibleTo("Fanex.CustomerSetting.Tasks.SettingType2.Tests")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType3")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType3.Tests")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType4")]
