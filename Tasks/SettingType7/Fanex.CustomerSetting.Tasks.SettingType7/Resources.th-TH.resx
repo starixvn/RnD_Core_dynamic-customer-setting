@@ -118,6 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BetSettingNoteMessage" xml:space="preserve">
-    <value>การตั้งค่าเดิมพันของกีฬาจำลองฟุตบอล Mines ใช้ได้กับบาสเก็ตบอล Mines , คริกเก็ต Mines , ฟุตบอล Towers, บาสเก็ตบอล Towers, คริกเก็ต Towers</value>
+    <value>การตั้งค่าเดิมพันของกีฬาจำลองฟุตบอล Mines ใช้ได้กับบาสเก็ตบอล Mines , คริกเก็ต Mines , ฟุตบอล Towers, บาสเก็ตบอล Towers, คริกเก็ต Towers
+การตั้งค่าเดิมพันของ Baccarat จะนำไปใช้กับ Lux Gaming - Baccarat, Lux Gaming - Xoc Dia, Lux Gaming - Sic Bo และ Lux Gaming - Roulette</value>
   </data>
 </root>
