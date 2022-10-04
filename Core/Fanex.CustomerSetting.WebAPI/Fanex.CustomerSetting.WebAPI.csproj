@@ -224,6 +224,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="whoami.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SettingServiceConfig.cs" />

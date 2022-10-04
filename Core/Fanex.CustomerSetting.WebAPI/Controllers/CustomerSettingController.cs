@@ -37,6 +37,14 @@
         {
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public string Index()
+        {
+            Fanex.Logging.Logger.Log.Info("test");
+            return "Hello World v1.";
+        }
+
         public HttpResponseMessage PostSettingRequest([FromBody]QuerySettingRequest request)
         {
             if (request == null)
