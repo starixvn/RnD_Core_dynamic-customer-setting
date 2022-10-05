@@ -1,5 +1,6 @@
 # escape=`
 FROM hub.nexdev.net/base/rocketor/buildservice AS builder
+
 ARG TRANSFORM_CONFIG
 ARG ROCKETOR_API
 ARG REDMINE_IDS
@@ -8,11 +9,16 @@ SHELL ["cmd", "/S", "/C"]
 
 WORKDIR /build
 
-
 # Copy files *.sln, *.csproj, packages.config to restore nuget packages
 COPY . .
 
+
+
+
+
+
 RUN nuget.exe restore Fanex.CustomerSetting.sln
+
 
 
 RUN MSBuild.exe ./Core/Fanex.CustomerSetting.WebAPI/Fanex.CustomerSetting.WebAPI.csproj `
@@ -27,7 +33,7 @@ RUN MSBuild.exe ./Core/Fanex.CustomerSetting.WebAPI/Fanex.CustomerSetting.WebAPI
     /p:publishUrl="C:\Compiled" `
     /consoleloggerparameters:ErrorsOnly
 
-WORKDIR C:/Compiled
+WORKDIR C:\Compiled
 
 # Change SP Version
 RUN `
@@ -61,14 +67,14 @@ RUN `
 # Transform config
 RUN echo "%TRANSFORM_CONFIG%" `
     && xcopy "Web.%TRANSFORM_CONFIG%.config" "Web.config" /Y `
-    && xcopy "Web.ConnectionStrings.%TRANSFORM_CONFIG%.config" "Web.config" /Y 
+    && xcopy "Web.ConnectionStrings.%TRANSFORM_CONFIG%.config" "Web.ConnectionStrings.config" /Y 
 
 FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
 
-WORKDIR C:/inetpub/wwwroot
+WORKDIR C:\inetpub\wwwroot
 
-COPY --from=builder C:/Compiled .
+COPY --from=builder C:\Compiled .
 
-RUN dir ./bin/
+RUN dir .\bin\
 
 ENTRYPOINT ["C:\\LogMonitor\\LogMonitor.exe", "C:\\ServiceMonitor.exe", "w3svc"]
