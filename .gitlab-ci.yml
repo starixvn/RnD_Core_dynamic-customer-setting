@@ -1,4 +1,8 @@
 include:
-    - project: "ci/repos-ci/rome_dcs_settingapi" # Refer to field CI Script Repo at step #3
+    - project: "ci/repos-ci/rome_dcs_setting_api" # Refer to field CI Script Repo at step #3
       ref: master
       file: "gitlab-ci.yml"
+
+    - project: "ci/repos-ci/rome_dcs_matrix_setting_api" # Refer to field CI Script Repo at step #3
+      ref: master
+      file: "gitlab-ci-mixing.yml"

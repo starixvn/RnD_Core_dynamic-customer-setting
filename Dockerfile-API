@@ -67,6 +67,7 @@ RUN `
 # Transform config
 RUN echo "%TRANSFORM_CONFIG%" `
     && xcopy "Web.%TRANSFORM_CONFIG%.config" "Web.config" /Y `
+    && xcopy "AppSettings.%TRANSFORM_CONFIG%.config" "AppSettings.config" /Y `
     && xcopy "Web.ConnectionStrings.%TRANSFORM_CONFIG%.config" "Web.ConnectionStrings.config" /Y 
 
 FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
