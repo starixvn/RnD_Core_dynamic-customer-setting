@@ -117,6 +117,7 @@
     <Content Include="CustomerSetting\Styles\Images\sprite.png" />
     <Content Include="CustomerSetting\Styles\Images\sprite1.png" />
     <Content Include="Web.config" />
+    <Content Include="whoami.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
