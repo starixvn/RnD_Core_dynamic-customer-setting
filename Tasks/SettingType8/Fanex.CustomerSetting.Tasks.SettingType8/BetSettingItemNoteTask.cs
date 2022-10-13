@@ -8,8 +8,8 @@
 
     public class BetSettingItemNoteTask : IPostQueryCustomerSettingTypeTask
     {
-        private readonly string msgTemplate = "BetSettingNoteMessage";
-
+        private const string defaultMsg = "BetSettingNoteMessage";
+        
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, SettingType settingTypeData)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
@@ -20,9 +20,15 @@
                 if (stakeLevelGroupItem.IsBuyBonus)
                 {
                     stakeLevelGroupItem.ShowIconTooltipMessage = true;
-                    stakeLevelGroupItem.TooltipMessage = Resources.ResourceManager.GetString(msgTemplate);
+                    stakeLevelGroupItem.TooltipMessage = GetToolTipMessageBySportTypeId(stakeLevelGroupItem.SportTypeId);
                 }
             }
+        }
+
+        private string GetToolTipMessageBySportTypeId(int sportTypeId)
+        {
+            var msg= Resources.ResourceManager.GetString($"BetSettingNoteMessage_{sportTypeId}");
+            return msg ?? Resources.ResourceManager.GetString(defaultMsg);
         }
     }
 }

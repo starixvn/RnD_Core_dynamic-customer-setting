@@ -120,4 +120,7 @@
   <data name="BetSettingNoteMessage" xml:space="preserve">
     <value>该亮点游戏将会提供购买奖金特征， 允许会员下注至100 倍的最大赌注值。</value>
   </data>
+  <data name="BetSettingNoteMessage_155" xml:space="preserve">
+    <value>该亮点游戏将会提供购买奖金特征， 允许会员下注至150 倍的最大赌注值。</value>
+  </data>
 </root>
