@@ -24,7 +24,7 @@
                 }
             }
         }
-
+        
         private string GetToolTipMessageBySportTypeId(int sportTypeId)
         {
             var msg= Resources.ResourceManager.GetString($"BetSettingNoteMessage_{sportTypeId}");
