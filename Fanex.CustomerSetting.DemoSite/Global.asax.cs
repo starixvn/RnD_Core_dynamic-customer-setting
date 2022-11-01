@@ -6,6 +6,7 @@
     using Client40;
     using MatrixClient;
     using Fanex.Logging.Extensions.Database;
+    using System.Net;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -21,6 +22,8 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
         }
     }
 }

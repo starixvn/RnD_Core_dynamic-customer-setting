@@ -39,8 +39,7 @@
             }
 
 #pragma warning disable S1449 // Culture should be specified for "string" operations
-            string requestUri = HttpUtility.UrlEncode(client.BuildUri(request).ToString().ToLower());
-            Fanex.Logging.LogService.Info($"HMAC requestUri: " + requestUri);
+            string localPath = client.BuildUri(request).LocalPath.ToLower();
 #pragma warning restore S1449 // Culture should be specified for "string" operations
             string requestHttpMethod = request.Method.ToString();
 
@@ -53,7 +52,7 @@
             string nonce = Guid.NewGuid().ToString("N");
 
             // Creating the raw signature string
-            string signatureRawData = $"{_machineIP}{requestHttpMethod}{requestUri}{requestTimeStamp}{nonce}";
+            string signatureRawData = $"{_machineIP}{requestHttpMethod}{localPath}{requestTimeStamp}{nonce}";
             var secretKeyByteArray = Convert.FromBase64String(CustomerSettingConfiguration.Settings.SecretKey);
             byte[] signature = Encoding.UTF8.GetBytes(signatureRawData);
             using (HMACSHA256 hmac = new HMACSHA256(secretKeyByteArray))

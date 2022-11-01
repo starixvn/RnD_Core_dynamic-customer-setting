@@ -35,7 +35,7 @@
             jsonFormater.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             jsonFormater.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
 
-            //config.Filters.Add(new HmacAuthorizationFilterAttribute());
+            config.Filters.Add(new HmacAuthorizationFilterAttribute());
             config.Filters.Add(new GlobalExceptionFilterAttribute());
         }
     }

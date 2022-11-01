@@ -82,7 +82,7 @@
 
         private bool IsValidRequest(HttpRequestMessage req, string siteId, string incomingBase64Signature, string nonce, string requestTimeStamp)
         {
-            string requestUri = HttpUtility.UrlEncode(req.RequestUri.AbsoluteUri.ToLower());
+            string localPath = req.RequestUri.LocalPath.ToLower();
             string requestHttpMethod = req.Method.Method;
 
             var sharedKey = SettingMatrixApiConfiguration.Settings.SecretKey;
@@ -92,7 +92,7 @@
                 return false;
             }
 
-            string data = string.Format("{0}{1}{2}{3}{4}", siteId, requestHttpMethod, requestUri, requestTimeStamp, nonce);
+            string data = string.Format("{0}{1}{2}{3}{4}", siteId, requestHttpMethod, localPath, requestTimeStamp, nonce);
 
             var secretKeyBytes = Convert.FromBase64String(sharedKey);
 

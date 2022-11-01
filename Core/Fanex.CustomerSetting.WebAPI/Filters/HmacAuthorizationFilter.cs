@@ -89,8 +89,7 @@
 
         private bool IsValidRequest(HttpRequestMessage req, string siteId, string incomingBase64Signature, string nonce, string requestTimeStamp)
         {
-            string requestUri = HttpUtility.UrlEncode(req.RequestUri.AbsoluteUri.ToLower());
-            Fanex.Logging.LogService.Info($"HMAC requestUri: " + requestUri);
+            string localPath = req.RequestUri.LocalPath.ToLower();
             string requestHttpMethod = req.Method.Method;
 
             var sharedKey = CustomerSettingApiConfiguration.Settings.SecretKey;
@@ -100,7 +99,7 @@
                 return false;
             }
 
-            string data = string.Format("{0}{1}{2}{3}{4}", siteId, requestHttpMethod, requestUri, requestTimeStamp, nonce);
+            string data = string.Format("{0}{1}{2}{3}{4}", siteId, requestHttpMethod, localPath, requestTimeStamp, nonce);
 
             var secretKeyBytes = Convert.FromBase64String(sharedKey);
 
@@ -110,7 +109,7 @@
             {
                 byte[] signatureBytes = hmac.ComputeHash(signature);
                 var result = incomingBase64Signature.Equals(Convert.ToBase64String(signatureBytes), StringComparison.Ordinal);
-                Fanex.Logging.LogService.Info($"HMAC result: " + result.ToString() + "; requestUri: " + requestUri);
+                Fanex.Logging.LogService.Info($"HMAC result: " + result.ToString());
                 return result;
             }
         }

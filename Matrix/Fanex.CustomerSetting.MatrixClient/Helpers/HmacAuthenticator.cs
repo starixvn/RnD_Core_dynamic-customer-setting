@@ -32,7 +32,7 @@
                 throw new ArgumentNullException(nameof(request), "Rest Request cannot be null");
             }
 
-            string requestUri = HttpUtility.UrlEncode(client.BuildUri(request).ToString().ToLower());
+            string localPath = client.BuildUri(request).LocalPath.ToLower();
 
             string requestHttpMethod = request.Method.ToString();
 
@@ -45,7 +45,7 @@
             string nonce = Guid.NewGuid().ToString("N");
 
             // Creating the raw signature string
-            string signatureRawData = $"{_machineIP}{requestHttpMethod}{requestUri}{requestTimeStamp}{nonce}";
+            string signatureRawData = $"{_machineIP}{requestHttpMethod}{localPath}{requestTimeStamp}{nonce}";
             var secretKeyByteArray = Convert.FromBase64String(SettingMatrixConfiguration.Settings.SecretKey);
             byte[] signature = Encoding.UTF8.GetBytes(signatureRawData);
 
