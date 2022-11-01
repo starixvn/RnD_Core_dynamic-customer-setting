@@ -40,6 +40,7 @@
 
 #pragma warning disable S1449 // Culture should be specified for "string" operations
             string requestUri = HttpUtility.UrlEncode(client.BuildUri(request).ToString().ToLower());
+            Fanex.Logging.LogService.Info($"HMAC requestUri: " + requestUri);
 #pragma warning restore S1449 // Culture should be specified for "string" operations
             string requestHttpMethod = request.Method.ToString();
 
