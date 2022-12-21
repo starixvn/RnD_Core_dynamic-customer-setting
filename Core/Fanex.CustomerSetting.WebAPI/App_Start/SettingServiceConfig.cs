@@ -7,7 +7,7 @@
     public static class SettingServiceConfig
     {
         public const int AllBets = 21;
-        public const int MacauGames = 22;
+        public const int RNGSlot = 18;
         public const int NumberGames2 = 23;
 
         public static void Run()
@@ -17,7 +17,7 @@
             configurator
                 .UseQueryServiceType(typeof(QueryCasinoSettingService))
                 .UseUpdateServiceType(typeof(UpdateCasinoSettingService))
-                .ForProducts(AllBets, MacauGames)
+                .ForProducts(AllBets, RNGSlot)
                 .ForAllSystems()
                 .Apply();
 
