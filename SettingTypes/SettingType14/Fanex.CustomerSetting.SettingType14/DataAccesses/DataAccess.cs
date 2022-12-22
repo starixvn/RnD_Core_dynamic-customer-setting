@@ -5,6 +5,7 @@
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using Dtos;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using System.Collections;
     using System.Collections.Generic;
@@ -43,6 +44,7 @@
                 { "custid", customerId },
                 { "ip", settingContext.IP },
                 { "commission", commissionXml },
+                { "settingstatus", AppSettings.SettingStatus },
                 { "msgtype", 0 },
                 { "errcode", 0 },
                 { "errmsg", string.Empty }

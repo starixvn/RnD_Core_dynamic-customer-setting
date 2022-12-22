@@ -1,0 +1,111 @@
+﻿$border-color: #7c98a4;
+$table-head-background-color: #b5c4d0;
+$hover-background-color: #e2f3d1;
+
+.settingtype22 {
+    %display-table {
+        display: table;
+        table-layout: fixed;
+    }
+
+    %display-table-cell {
+        display: table-cell;
+        float: none;
+        vertical-align: middle;
+    }
+
+    .block__sub-header--bettype {
+        padding-left: 50px;
+        display: table-caption;
+    }
+
+    .block__item {
+        @extend %display-table;
+        float: none;
+        height: 100%;
+    }
+
+    .block__item-group {
+        @extend %display-table;
+    }
+
+    .block__column {
+        @extend %display-table-cell;
+
+        &--border-right {
+            @include border(right);
+        }
+    }
+
+    .block__row {
+        @extend %display-table;
+        width: 100%;
+
+        &--border-top {
+            @include border(top);
+        }
+    }
+
+    .block__cell {
+        @extend %display-table-cell;
+        border: none;
+    }
+
+    .block__lbl {
+        @extend %display-table-cell;
+        @include border(right);
+        width: 40%;
+    }
+
+    .block__value {
+        @extend %display-table-cell;
+        width: 60%;
+    }
+
+    .block__value {
+        float: none;
+        width: auto;
+    }
+
+    select.setting-field {
+        margin-right: 5px;
+    }
+
+    table, tr, td, th {
+        border: 1px solid $border-color;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    table {
+        margin: 20px;
+        width: 90%;
+
+        th {
+            background-color: $table-head-background-color;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        th, td {
+            height: 25px;
+            padding-left: 2px;
+        }
+
+        tr:hover, tr:hover td {
+            background-color: $hover-background-color;
+        }
+
+        .cell {
+            padding-left: 5px;
+
+            &-text {
+                text-align: left;
+            }
+
+            &-number {
+                text-align: center;
+            }
+        }
+    }
+}

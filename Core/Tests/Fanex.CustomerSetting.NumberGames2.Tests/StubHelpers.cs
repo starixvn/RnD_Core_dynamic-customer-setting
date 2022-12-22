@@ -15,6 +15,7 @@
             Level customerLevel = null,
             byte productId = 1,
             Level uplineLevel = null,
+            byte settingStatus = 0,
             byte[] settingTypes = null)
         {
             var settings = CreateCustomerSetting(
@@ -23,7 +24,7 @@
                 productId,
                 settingTypes ?? SettingTypes);
 
-            return new UpdateCustomerSettingCommand(settings, uplineLevel);
+            return new UpdateCustomerSettingCommand(settings, settingStatus, uplineLevel);
         }
 
         public static MultipleUpdateCustomerSettingCommand CreateMultipleUpdateSettingCommand(

@@ -66,6 +66,7 @@
             Level customerLevel = null,
             byte productId = 1,
             Level uplineLevel = null,
+            byte settingStatus = 0,
             byte[] settingTypes = null)
         {
             var settings = CreateCustomerSetting(
@@ -76,8 +77,8 @@
 
             return new UpdateCustomerSettingCommand(
                 settings,
-                uplineLevel
-                );
+                settingStatus,
+                uplineLevel);
         }
 
         private Setting CreateCustomerSetting(

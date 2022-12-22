@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Criteria
 {
     using Data.Repository;
+    using Fanex.CustomerSetting.Configurations;
 
     internal class GetSettingTypeLevelCriteria : CriteriaBase
     {
@@ -11,6 +12,8 @@
 
         [SpParam(SqlParamName = "SettingType")]
         public short SettingTypeId { get; set; }
+
+        public byte SettingStatus => AppSettings.SettingStatus;
 
         public override string GetSettingKey()
         {

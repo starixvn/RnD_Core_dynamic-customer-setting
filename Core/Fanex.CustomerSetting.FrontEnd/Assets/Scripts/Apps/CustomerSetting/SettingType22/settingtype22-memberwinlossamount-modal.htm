@@ -1,0 +1,34 @@
+﻿<div class="modal-overlay" data-ng-show="hostItem.showWinLossAmount">
+    <div class="modal" data-draggable="'.modal__title'">
+        <div class="modal__title">
+            {{::('CurrentWinLossAmount' | settingType22Label)}}
+        </div>
+        <div class="modal__content" data-detect-max-height>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Winning%</th>
+                        <th>Losing%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="winLossAmount in hostItem.currentWinLossAmount">
+                        <td class="cell-text">
+                            {{winLossAmount.sportTypeName}}
+                        </td>
+                        <td class="cell-number">
+                            {{winLossAmount.winPercent | unlimitedLimit}} {{winLossAmount.winPercent > 0 ? '%' : ''}}
+                        </td>
+                        <td class="cell-number">
+                            {{winLossAmount.lossPercent}}%
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal__footer">
+            <button class="btn btn--small" data-ng-click="cancel()">{{::('Close' | settingType22Label)}}</button>
+        </div>
+    </div>
+</div>

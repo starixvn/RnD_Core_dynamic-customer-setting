@@ -19,5 +19,16 @@
         ]
       }
     ]
+  },
+  {
+    "productId": 44,
+    "order": 3,
+    "tasks": [
+      {
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.CollapseExpandToggle.CollapseExpandToggleProduct44, Fanex.CustomerSetting.Tasks.CollapseExpandToggle"
+        ]
+      }
+    ]
   }
 ]

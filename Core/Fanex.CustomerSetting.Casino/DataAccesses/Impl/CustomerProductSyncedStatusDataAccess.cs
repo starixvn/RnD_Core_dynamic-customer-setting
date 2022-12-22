@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Casino.DataAccesses.Impl
 {
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using System;
 
@@ -9,7 +10,7 @@
         {
             using (var objectDb = ObjectDbFactory.ObjectDb("Acc_CustSetting_DisableNewProductSyncStatusSelect"))
             {
-                object syncedStatus = objectDb.ExecuteScalar(new { CustId = customerId, ProductId = productId });
+                object syncedStatus = objectDb.ExecuteScalar(new { CustId = customerId, ProductId = productId, AppSettings.SettingStatus });
 
                 return Convert.ToBoolean(syncedStatus);
             }
@@ -25,7 +26,8 @@
                     ProductID = productId,
                     SubAccID = subAccountId,
                     UserID = userId,
-                    IP = ip
+                    IP = ip,
+                    AppSettings.SettingStatus
                 });
             }
         }

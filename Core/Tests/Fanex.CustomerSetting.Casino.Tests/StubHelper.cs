@@ -16,13 +16,14 @@
             Level customerLevel = null,
             byte productId = 1,
             Level uplineLevel = null,
+            byte settingStatus = 0,
             params byte[] settingTypeValues)
         {
             customerLevel = customerLevel ?? Level.Master;
             var setting = (settingTypeValues != null && settingTypeValues.Any())
                 ? CreateCustomerSetting(customerId, customerLevel, productId, settingTypeValues)
                 : CreateCustomerSetting(customerId, customerLevel, productId, DefaultSettingTypeValues);
-            return new UpdateCustomerSettingCommand(setting, uplineLevel);
+            return new UpdateCustomerSettingCommand(setting, settingStatus, uplineLevel);
         }
 
         public static Setting CreateCustomerSetting(

@@ -6,6 +6,7 @@
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using Dtos;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.SettingType21.Constants;
     using System.Collections;
@@ -43,6 +44,7 @@
                 { "ip", settingContext.IP },
                 { "systemid", settingContext.System },
                 { "isdisabled", productStatusXml },
+                { "settingstatus", AppSettings.SettingStatus },
                 { "errcode", 0 },
                 { "errmsg", string.Empty },
                 { "msgtype", 0 },

@@ -10,13 +10,13 @@ module.exports = function (configs) {
         var config = {
             user: "dbateam",
             password: "@bigboy#",
-            server: "10.18.200.233",
+            server: "10.18.200.54",
             database: "CustDB"
         };
 
         var connection = new mssql.Connection(config, function (error) {
             var request = new mssql.Request(connection);
-            var query = "SELECT DISTINCT [ProductId], [SettingType] FROM [CustDB].[dbo].[ProductSettingDetail] WHERE [SettingStatus] != 2";
+            var query = "SELECT DISTINCT [ProductId], [SettingType] FROM [CustDB].[dbo].[ProductSettingDetail_UAT] WHERE [SettingStatus] != 2";
 
             if (error) {
                 console.log(error);
