@@ -1,0 +1,13 @@
+﻿[
+  {
+    "productId": 18,
+    "order": 1,
+    "tasks": [
+      {
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.Product18.ProductSettingNoteTask, Fanex.CustomerSetting.Tasks.Product18"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions SiteId="68" SiteName="DCS">
+    <Function>
+        <Setting Key="Acc_CustSetting_CheckMacauEnable" SpName="Acc_CustSetting_CheckMacauEnable_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+        </Setting>
+    </Function>
+</Functions>

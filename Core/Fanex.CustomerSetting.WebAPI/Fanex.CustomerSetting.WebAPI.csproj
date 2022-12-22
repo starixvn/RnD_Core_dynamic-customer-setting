@@ -218,7 +218,9 @@
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType7.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType8.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType9.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Task.Product18.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml" />
+    <Content Include="App_Data\PluggableTasks\product-18.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-21.json" />
     <Content Include="App_Data\Templates\customer-setting.htm" />
     <Content Include="Global.asax" />
@@ -281,6 +283,9 @@
     <Content Include="App_Data\ApiConfigurations\LogsConfiguration.config" />
     <None Include="packages.config" />
     <Content Include="Web.ConnectionStrings.backupMNL.config" />
+    <Content Include="Web.ConnectionStrings.dev.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.ConnectionStrings.local.config" />
     <Content Include="Web.ConnectionStrings.masterLocal.config" />
     <Content Include="Web.ConnectionStrings.masterSIT.config" />
@@ -374,6 +379,10 @@
     <ProjectReference Include="..\..\Tasks\CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle.csproj">
       <Project>{0128e0b4-3f44-4d5d-9f70-d3bc0a0a0f25}</Project>
       <Name>Fanex.CustomerSetting.Tasks.CollapseExpandToggle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tasks\Fanex.CustomerSetting.Tasks.Product18\Fanex.CustomerSetting.Tasks.Product18.csproj">
+      <Project>{3df29da7-2b86-4c19-8c44-f581c65e1a13}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.Product18</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tasks\Fanex.CustomerSetting.Tasks.SettingType21\Fanex.CustomerSetting.Tasks.SettingType21.csproj">
       <Project>{115c2a62-f0dc-4f73-9e18-06b7b9f4d861}</Project>

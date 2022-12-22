@@ -77,6 +77,8 @@
     <Content Include="CustomerSettingMatrix\Styles\Images\sprite.png" />
     <Content Include="CustomerSetting\Scripts\product-16.js" />
     <Content Include="CustomerSetting\Scripts\product-16.min.js" />
+    <Content Include="CustomerSetting\Scripts\product-18.js" />
+    <Content Include="CustomerSetting\Scripts\product-18.min.js" />
     <Content Include="CustomerSetting\Scripts\product-22.js" />
     <Content Include="CustomerSetting\Scripts\product-22.min.js" />
     <Content Include="CustomerSetting\Scripts\product-23.js" />
