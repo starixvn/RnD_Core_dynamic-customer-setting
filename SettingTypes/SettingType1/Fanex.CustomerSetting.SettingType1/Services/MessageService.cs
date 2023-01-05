@@ -4,13 +4,14 @@
     using CustomerSetting.Models.Messages;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.Exceptions;
     using Models.Messages;
     using Resources;
     using System;
 
     internal class MessageService : MessageServiceBase, IMessageService
     {
-        private readonly int GMT8 = 8;
+        private readonly int TimeDiffGMT_4ToGMT8 = 12;
 
         public MessageService(IResourceService resourceService = null)
             : base(resourceService)
@@ -74,7 +75,11 @@
 
             if (updateTooOftenMessage != null)
             {
-                mainMessage = string.Format(GetMessage(Message.ResourceManager, updateTooOftenMessage.MessageId), DateTime.UtcNow.AddHours(GMT8).ToString("dd/MM/yyyy"));
+                DateTime lastUpdatedTime;
+                if (DateTime.TryParse(updateTooOftenMessage.Message, out lastUpdatedTime))
+                {
+                    mainMessage = string.Format(GetMessage(Message.ResourceManager, updateTooOftenMessage.MessageId), lastUpdatedTime.AddHours(TimeDiffGMT_4ToGMT8).ToString("dd/MM/yyyy"));
+                }
             }
 
             return new MessageContent(mainMessage);
