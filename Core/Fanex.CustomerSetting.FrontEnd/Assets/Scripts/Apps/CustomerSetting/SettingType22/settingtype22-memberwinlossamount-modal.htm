@@ -18,10 +18,10 @@
                             {{winLossAmount.sportTypeName}}
                         </td>
                         <td class="cell-number">
-                            {{winLossAmount.winPercent | unlimitedLimit}} {{winLossAmount.winPercent > 0 ? '%' : ''}}
+                            {{winLossAmount.winPercent | unlimitedLimit : true}} {{winLossAmount.winPercent >= 0 ? '%' : ''}}
                         </td>
                         <td class="cell-number">
-                            {{winLossAmount.lossPercent}}%
+                            {{winLossAmount.lossPercent | unlimitedLimit : true}} {{winLossAmount.lossPercent >= 0 ? '%' : ''}}
                         </td>
                     </tr>
                 </tbody>

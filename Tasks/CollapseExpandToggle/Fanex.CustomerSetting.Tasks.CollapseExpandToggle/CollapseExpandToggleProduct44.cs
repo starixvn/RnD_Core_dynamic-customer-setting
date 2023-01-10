@@ -7,7 +7,7 @@
 
     public class CollapseExpandToggleProduct44 : IPostQueryCustomerSettingTask
     {
-        private readonly int[] CollapseByDefaultSettingTypes = { 2 };
+        private readonly int[] CollapseByDefaultSettingTypes = { 8 };
 
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, ISetting setting)
         {

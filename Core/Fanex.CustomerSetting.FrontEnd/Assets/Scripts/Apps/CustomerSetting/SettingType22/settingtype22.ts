@@ -112,9 +112,9 @@ module CustomerSetting {
 
     ModuleRegister.directive("settingtype22", SettingType22Directive);
 
-    function UnlimitedLimitFilter(settingType22ResourceService: SettingType22ResourceService) {
-        return (value: any) => {
-            return parseFloat(value) > 0 ? value : settingType22ResourceService.getLabel("Unlimited");
+    function UnlimitedLimitFilter(settingType22ResourceService: SettingType22ResourceService, preservedZero: boolean = false) {
+        return (value: any, preservedZero: boolean) => {
+            return ((preservedZero && parseFloat(value) === 0) || parseFloat(value) > 0) ? value : settingType22ResourceService.getLabel("Unlimited");
         };
     }
 
