@@ -45,6 +45,7 @@
                 { "custid", customerId },
                 { "ip", settingContext.IP },
                 { "limit", winLossLimitXml },
+                { "settingtype", Constants.Constants.SettingTypeId },
                 { "settingstatus", AppSettings.SettingStatus },
                 { "msgtype", 0 },
                 { "errcode", 0 },

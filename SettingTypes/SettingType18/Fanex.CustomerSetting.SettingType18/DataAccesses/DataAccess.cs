@@ -7,12 +7,13 @@
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using Data;
+    using Fanex.CustomerSetting.Configurations;
+    using Fanex.CustomerSetting.DataAccesses;
     using Models;
     using Resources;
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.DataAccesses;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
@@ -130,6 +131,7 @@
             param.Add("custid", customerId);
             param.Add("ip", settingContext.IP);
             param.Add("pt", positionTakingXml);
+            param.Add("settingstatus", AppSettings.SettingStatus);
             if (customerLevel.IsNotMemberLevel())
             {
                 param.Add("onlyminpt", minPtXml);
@@ -174,6 +176,7 @@
             param.Add("custidlist", groupedMemberIds);
             param.Add("pt", positionTakingXml);
             param.Add("ip", ip);
+            param.Add("settingstatus", AppSettings.SettingStatus);
             param.Add("errcode", 0);
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);

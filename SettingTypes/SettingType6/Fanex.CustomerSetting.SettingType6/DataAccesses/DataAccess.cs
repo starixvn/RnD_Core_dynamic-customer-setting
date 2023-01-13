@@ -5,7 +5,7 @@
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
-    using Data;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using Models;
     using Models.Requests;
@@ -43,6 +43,7 @@
                 { "custid", customerId },
                 { "ip", settingContext.IP },
                 { "limit", winLossLimitXml },
+                { "settingstatus", AppSettings.SettingStatus },
                 { "msgtype", 0 },
                 { "errcode", 0 },
                 { "errmsg", string.Empty }
