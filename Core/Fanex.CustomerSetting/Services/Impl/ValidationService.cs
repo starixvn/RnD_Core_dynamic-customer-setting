@@ -24,15 +24,13 @@
         private readonly IValidationDataAccess _validationDataAccess;
         private readonly IDynamicRepository _dynamicRepository;
         private readonly ILogger _logger;
-        private readonly byte _settingStatus;
 
         public ValidationService(
             ISettingContext settingContext,
             IProductService productService = null,
             IValidationDataAccess validationDataAccess = null,
             IDynamicRepository dynamicRepository = null,
-            ILogger logger = null,
-            byte settingStatus = 0)
+            ILogger logger = null)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
 
@@ -41,7 +39,6 @@
             _validationDataAccess = validationDataAccess ?? new ValidationDataAccess();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
             _logger = logger ?? Logger.Log;
-            _settingStatus = settingStatus;
         }
 
         /// <summary>
@@ -213,7 +210,7 @@
 
         private void CheckCustomerSettingTypesIsValidWithProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
         {
-            var productSettingTypes = _productService.GetProductSettingTypes(productId, _settingContext.System, _settingStatus)
+            var productSettingTypes = _productService.GetProductSettingTypes(productId, _settingContext.System)
                 .Where(product => product.DisplayMode == DisplayModes.Editable);
 
             foreach (var customerSettingType in customerSettingTypes)

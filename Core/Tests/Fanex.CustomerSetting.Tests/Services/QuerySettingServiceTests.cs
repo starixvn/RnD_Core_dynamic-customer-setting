@@ -183,7 +183,6 @@
             //// Assert
             _productService.Received().GetProductSettingTypes(
                 Arg.Is<byte>(productId => productId == querySettingParam.ProductId),
-                Arg.Any<byte>(),
                 Arg.Any<byte>());
         }
 
@@ -195,7 +194,7 @@
             AssumeQuerySettingActionIsValid(querySettingParam);
 
             var productSettingTypes = InstanceFactory.CreateProduct().SettingTypes;
-            _productService.GetProductSettingTypes(Arg.Any<byte>(), Arg.Any<byte>(), Arg.Any<byte>()).Returns(productSettingTypes);
+            _productService.GetProductSettingTypes(Arg.Any<byte>(), Arg.Any<byte>()).Returns(productSettingTypes);
 
             productSettingTypes.First().SettingItems = new List<SettingItemStub> { new SettingItemStub() };
             SetupSettingTypeServiceStub(productSettingTypes.First());
@@ -257,7 +256,7 @@
             IEnumerable<SettingType> dummySettingTypes = null)
         {
             var productSettingTypes = dummySettingTypes ?? InstanceFactory.CreateProduct().SettingTypes;
-            _productService.GetProductSettingTypes(Arg.Any<byte>(), Arg.Any<byte>(), Arg.Any<byte>()).Returns(productSettingTypes);
+            _productService.GetProductSettingTypes(Arg.Any<byte>(), Arg.Any<byte>()).Returns(productSettingTypes);
 
             return productSettingTypes;
         }
