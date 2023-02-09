@@ -8,7 +8,7 @@
 
     public class PTSettingItemNoteTask : IPostQueryCustomerSettingTypeTask
     {
-        private readonly int[] listSporttypeShowNoteIcon = { 169, 224 };
+        private readonly int[] listSporttypeShowNoteIcon = new[] { 169, 224 };
 
         private readonly string msgTemplate = "PTNoteMessage";
 

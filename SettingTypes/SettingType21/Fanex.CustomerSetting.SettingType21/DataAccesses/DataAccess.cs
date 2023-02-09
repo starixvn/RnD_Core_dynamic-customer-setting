@@ -13,8 +13,6 @@
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
-        private const int SettingType21 = 21;
-
         public IEnumerable<ProductStatusDto> GetCustomerProductStatus(CustomerSettingQuery query)
         {
             using (var objectDb = ObjectDbFactory.ObjectDb("Acc_CustSetting_DisableNewProductStatusSelect"))
