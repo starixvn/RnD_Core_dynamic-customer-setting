@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Fanex.CustomerSetting.Services;
 using Fanex.CustomerSetting.SettingType21.Constants;
 using Fanex.CustomerSetting.SettingType21.Resources;
@@ -38,6 +39,10 @@ namespace Fanex.CustomerSetting.SettingType21.Tests.Services
         [TestCase(2, 90012)]
         [TestCase(3, 90012)]
         [TestCase(4, 90012)]
+        [TestCase(1, 60037)]
+        [TestCase(2, 60037)]
+        [TestCase(3, 60037)]
+        [TestCase(4, 60037)]
         public void TranslateMessage_Always_MainMessageIsMsgIdFromRawMsg(byte settingLevel, int msgId)
         {
             // Arrange
@@ -115,6 +120,54 @@ namespace Fanex.CustomerSetting.SettingType21.Tests.Services
             var expectedSubMsg = "Sport type 1 - Bet type 1";
 
             Assert.AreEqual(expectedSubMsg, actualMessageContent.SubMessages.First());
+        }
+        
+        [Test]
+        public void TranslateMessage_DependenceViolation()
+        {
+            // Arrange
+            byte settingLevel = 1;
+
+            _resourceService.GetSportTypeName(9904, Arg.Any<string>()).Returns("Jackpot1");
+            _resourceService.GetSportTypeName(9905, Arg.Any<string>()).Returns("Jackpot2");
+            _resourceService.GetSportTypeName(212, Arg.Any<string>()).Returns("Macau Games_1");
+            _resourceService.GetSportTypeName(213, Arg.Any<string>()).Returns("Macau Games_2");
+            _msgType = MessageTypes.DependenceViolation;
+            _rawMessage = "<Root MsgID=\"60037 \" Msg=\"You cannot Enable {DependedSport} when {ParentSport} is Disabled.\">"
+                          + "<Row SportType=\"9904\" BetType=\"4001\" ParentSportType=\"212\" ParentBetType=\"4001\" />"
+                          + "<Row SportType=\"9905\" BetType=\"4001\" ParentSportType=\"212\" ParentBetType=\"4001\" />"
+                          + "<Row SportType=\"9904\" BetType=\"4001\" ParentSportType=\"213\" ParentBetType=\"4001\" />"
+                          + "<Row SportType=\"9905\" BetType=\"4001\" ParentSportType=\"213\" ParentBetType=\"4001\" />"
+                          + "</Root>";
+            // Act
+            var actualMessageContent = _messageService.TranslateMessage(_msgType, _rawMessage, settingLevel, "en-US");
+
+            // Assert
+         
+            var expectedSubMsg = new List<string>()
+            {
+                "You cannot Enable Jackpot1, Jackpot2 when Macau Games_1 is Disabled." ,
+                "You cannot Enable Jackpot1, Jackpot2 when Macau Games_2 is Disabled."
+            };
+
+            Assert.AreEqual(expectedSubMsg, actualMessageContent.SubMessages.ToList());
+        }
+        
+        [Test]
+        public void TranslateMessage_Default()
+        {
+            // Arrange
+            byte settingLevel = 1;
+             _msgType = 99;
+            _rawMessage = "default message";
+            // Act
+            var actualMessageContent = _messageService.TranslateMessage(_msgType, _rawMessage, settingLevel, "en-US");
+
+            // Assert
+
+            var expectedSubMsg = "default message";
+
+            Assert.AreEqual(expectedSubMsg, actualMessageContent.MainMessage);
         }
     }
 }

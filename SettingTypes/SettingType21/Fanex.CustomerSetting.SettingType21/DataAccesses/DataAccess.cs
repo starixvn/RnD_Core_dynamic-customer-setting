@@ -48,7 +48,7 @@
                 { "msgtype", 0 },
                 { "settingtype", settingTypeId }
             };
-            
+
             return ExecuteNonQuery("Acc_CustSetting_DisableNewProductStatusUpd", parameters);
         }
     }
