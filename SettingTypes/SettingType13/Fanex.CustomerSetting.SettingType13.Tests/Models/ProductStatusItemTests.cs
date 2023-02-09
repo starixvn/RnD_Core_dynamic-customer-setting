@@ -79,9 +79,45 @@
             }
         }
 
+        private static IEnumerable SampleProductStatusItemsForToEqualsMethod
+        {
+            get
+            {
+                yield return new TestCaseData(
+                        new ProductStatusItem
+                        {
+                            BetTypeId = 1,
+                            SportTypeId = 1,
+                            IsDisabled = true,
+                        }).Returns(false);
+            }
+        }
+        
+        private static IEnumerable SampleProductForToEqualsMethod
+        {
+            get
+            {
+                yield return new TestCaseData(
+                    new ProductStatusItem
+                    {
+                        BetTypeId = 1,
+                        SportTypeId = 1,
+                        IsDisabled = true,
+                    }).Returns(true);
+            }
+        }
+
         [Test, TestCaseSource(nameof(SampleProductStatusForToXmlMethod))]
         public string ToXmlMethodReturnsExpectedXmlString(ProductStatusItem productStatusItem)
             => productStatusItem.ToXml();
+        
+        [Test, TestCaseSource(nameof(SampleProductStatusItemsForToEqualsMethod))]
+        public bool EqualsMethodReturnFalse(ProductStatusItem productStatusItem)
+            => productStatusItem.Equals(null); 
+        
+        [Test, TestCaseSource(nameof(SampleProductForToEqualsMethod))]
+        public bool EqualsMethodReturnTrue(ProductStatusItem productStatusItem)
+            => productStatusItem.Equals(productStatusItem);
 
         [Test, TestCaseSource(nameof(SampleOdProductStatusDtos))]
         public ProductStatusItem ConstructorInstantiateDataFromDto(ProductStatusDto dto)

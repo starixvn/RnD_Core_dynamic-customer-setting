@@ -205,5 +205,22 @@
             Assert.AreEqual(Message.Msg_20001, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
+        
+        [TestCase(1 , "01/12/2022",  "You have reached the maximum of monthly allowance (1 time) to update Position Taking. Please try again after 12/01/2022 12:00 PM GMT+8.")]
+        [TestCase(1,  "" , "<Root MsgID=\"10068\" Msg=\"\"> </Root>")]
+        public void TranslateMessage_MessageTypeIsUpdateTooOften_ReturnMatchedMessageContent(byte settingLevel,string msgTime, string expectedMainMessage)
+        {
+            /// Arrange
+            int msgType = 6; //// UpdateTooOften
+            var rawMessage2 = "<Root MsgID=\"10068\" Msg=\""+msgTime+"\"> </Root>";
+            
+
+            //// Act
+            var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage2, settingLevel, SettingContext.Language);
+
+            //// Assert
+            Assert.AreEqual(expectedMainMessage, actualMessageContent.MainMessage);
+           
+        }
     }
 }
