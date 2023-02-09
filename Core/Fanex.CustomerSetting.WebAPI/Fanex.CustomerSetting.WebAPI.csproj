@@ -33,7 +33,7 @@
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Fanex.CustomerSetting.WebAPI.Debug.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\..\dynamic-customer-setting-1\Core\Fanex.CustomerSetting.WebAPI\Fanex.CustomerSetting.WebAPI.Debug.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

@@ -21,7 +21,10 @@
             Check.Argument.IsNotNull(setting, nameof(setting));
             
             var productsName = _tasksService.GetProductsName(settingContext, query, setting);
-            if (productsName == "") return;
+            if (productsName == "")
+            {
+                return;
+            }
             
             var messageNote = string.Format(Resource.ProductNote_18, productsName);
             setting.AddWarningMessages(messageNote);

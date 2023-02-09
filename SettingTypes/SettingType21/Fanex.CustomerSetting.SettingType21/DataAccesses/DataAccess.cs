@@ -7,6 +7,7 @@
     using CustomerSetting.Models.Results;
     using Dtos;
     using Fanex.CustomerSetting.DataAccesses;
+    using Fanex.CustomerSetting.SettingType21.Constants;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -21,7 +22,7 @@
                     CustId = query.CustomerId,
                     ProductId = query.ProductId,
                     SettingStatus = query.SettingStatus,
-                    SettingType = 21
+                    SettingType = Constants.SettingTypeId
                 });
             }
         }

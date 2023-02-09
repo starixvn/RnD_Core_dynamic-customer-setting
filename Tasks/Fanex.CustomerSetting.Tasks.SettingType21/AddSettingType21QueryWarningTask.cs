@@ -34,7 +34,10 @@ namespace Fanex.CustomerSetting.Tasks.SettingType21
 
         private static void DisableChildrenByParentState(IEnumerable<ISettingItem> settingType21Items)
         {
-            if (settingType21Items == null) return;
+            if (settingType21Items == null)
+            {
+                return;
+            }
 
             var parent = settingType21Items.FirstOrDefault(item =>
                 ((ProductStatusItem)item).ParentBetTypeId == 0 && 

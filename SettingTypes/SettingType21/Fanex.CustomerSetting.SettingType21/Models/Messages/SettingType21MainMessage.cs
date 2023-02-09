@@ -11,7 +11,10 @@ namespace Fanex.CustomerSetting.SettingType21.Models.Messages
     {
         public IEnumerable<string> TranslateSubMessages(IResourceService resourceService, string language, string templateMessage)
         {
-            if (SubMessages == null || !SubMessages.Any()) return Enumerable.Empty<string>();
+            if (SubMessages == null || !SubMessages.Any())
+            {
+                return Enumerable.Empty<string>();
+            }
 
             var messages = new List<string>();
             var parentSportTypeGroups = SubMessages.GroupBy(row => new
@@ -27,7 +30,7 @@ namespace Fanex.CustomerSetting.SettingType21.Models.Messages
                     .Select(subMessage => resourceService.GetSportTypeName(subMessage.SportType, language)).ToList();
 
                 var builtMessage = string.Format(templateMessage, string.Join(", ", childSportTypeNames), parentSportTypeName);
-                
+
                 messages.Add(builtMessage);
             }
 
