@@ -18,10 +18,28 @@
                             {{winLossAmount.sportTypeName}}
                         </td>
                         <td class="cell-number">
-                            {{winLossAmount.winPercent | unlimitedLimit : true}} {{winLossAmount.winPercent >= 0 ? '%' : ''}}
+                            <span data-ng-if="winLossAmount.winPercent === -2">
+                                <span class="red-text">{{'NotAvailable' | settingType22Label}}</span>
+                                <span> ({{winLossAmount.currentAmount | formatNumber}}/<span class="red-text">{{winLossAmount.maxWinAmount}}</span>)</span>
+                            </span>
+                            <span data-ng-if="winLossAmount.winPercent === -1">{{'Unlimited' | settingType22Label}}</span>
+                            <span data-ng-if="winLossAmount.winPercent === 0">{{winLossAmount.winPercent}}%</span>
+                            <span data-ng-if="winLossAmount.winPercent > 0">
+                                <span data-ng-class="{ 'red-text': winLossAmount.winPercent >= highestPercentageRange }">
+                                    {{winLossAmount.winPercent | formatNumber}}%
+                                </span>
+                                <span> (<span data-ng-class="{ 'red-text': winLossAmount.winPercent >= highestPercentageRange }">{{winLossAmount.currentAmount | formatNumber}}</span>/{{winLossAmount.maxWinAmount | formatNumber}})</span>
+                            </span>
                         </td>
                         <td class="cell-number">
-                            {{winLossAmount.lossPercent | unlimitedLimit : true}} {{winLossAmount.lossPercent >= 0 ? '%' : ''}}
+                            <span data-ng-if="winLossAmount.lossPercent === -1">{{'Unlimited' | settingType22Label}}</span>
+                            <span data-ng-if="winLossAmount.lossPercent === 0">{{winLossAmount.lossPercent}}%</span>
+                            <span data-ng-if="winLossAmount.lossPercent > 0">
+                                <span data-ng-class="{ 'red-text': winLossAmount.lossPercent >= highestPercentageRange }">
+                                    {{winLossAmount.lossPercent | formatNumber}}%
+                                </span>
+                                <span> (<span data-ng-class="{ 'red-text': winLossAmount.lossPercent >= highestPercentageRange }">{{-winLossAmount.currentAmount | formatNumber}}</span>/{{winLossAmount.maxLossAmount | formatNumber}})</span>
+                            </span>
                         </td>
                     </tr>
                 </tbody>
