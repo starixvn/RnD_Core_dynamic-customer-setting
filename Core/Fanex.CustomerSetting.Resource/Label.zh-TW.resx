@@ -249,4 +249,7 @@
   <data name="ExpandToolTip" xml:space="preserve">
     <value>點擊收起</value>
   </data>
+  <data name="SettingType_22" xml:space="preserve">
+    <value>輸贏限額</value>
+  </data>
 </root>

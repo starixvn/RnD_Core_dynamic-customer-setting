@@ -349,6 +349,15 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Win Loss Limit.
+        /// </summary>
+        public static string SettingType_22 {
+            get {
+                return ResourceManager.GetString("SettingType_22", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Commission.
         /// </summary>
         public static string SettingType_3 {

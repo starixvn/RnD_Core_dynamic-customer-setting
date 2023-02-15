@@ -219,4 +219,7 @@
   <data name="SettingType_9" xml:space="preserve">
     <value>Tiền Cược</value>
   </data>
+  <data name="SettingType_22" xml:space="preserve">
+    <value>Giới hạn thắng thua</value>
+  </data>
 </root>
