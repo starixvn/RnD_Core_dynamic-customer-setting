@@ -1082,7 +1082,7 @@ select.setting-field {
   margin: 20px;
   width: 90%; }
   .settingtype22 table th {
-    background-color: #b5c4d0;
+    width: auto;
     text-align: center;
     font-weight: bold; }
   .settingtype22 table th, .settingtype22 table td {
