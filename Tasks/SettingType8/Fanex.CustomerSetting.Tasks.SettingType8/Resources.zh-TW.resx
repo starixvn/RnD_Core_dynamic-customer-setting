@@ -121,10 +121,9 @@
     <value>該亮點遊戲將會提供購買獎金特征,允許會員下註至100倍的最大賭註值。</value>
   </data>
   <data name="BetSettingNoteMessage_155" xml:space="preserve">
-    <value>該亮點遊戲將會提供購買獎金特征,允許會員下註至150倍的最大賭註值。</value>
+    <value>該亮點遊戲將會提供購買獎金特征,允許會員下註至500倍的最大賭註值。</value>
   </data>
   <data name="BetSettingNoteMessage_212" xml:space="preserve">
     <value>該亮點遊戲將會提供購買獎金特征,允許會員下註至248倍的最大賭註值。</value>
   </data>
-
 </root>
