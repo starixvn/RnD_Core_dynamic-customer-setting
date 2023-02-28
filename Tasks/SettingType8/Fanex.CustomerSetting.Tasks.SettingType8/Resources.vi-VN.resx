@@ -121,10 +121,9 @@
     <value>Các trò chơi (được tô sáng) hỗ trợ tính năng Mua Lượt Quay Miễn Phí, cho phép người chơi đặt cược lên đến 100x giá trị Cược Lớn Nhất.</value>
   </data>
   <data name="BetSettingNoteMessage_155" xml:space="preserve">
-    <value>Các trò chơi (được tô sáng) hỗ trợ tính năng Mua Lượt Quay Miễn Phí, cho phép người chơi đặt cược lên đến 150x giá trị Cược Lớn Nhất.</value>
+    <value>Các trò chơi (được tô sáng) hỗ trợ tính năng Mua Lượt Quay Miễn Phí, cho phép người chơi đặt cược lên đến 500x giá trị Cược Lớn Nhất.</value>
   </data>
   <data name="BetSettingNoteMessage_212" xml:space="preserve">
     <value>Các trò chơi (được tô sáng) hỗ trợ tính năng Mua Lượt Quay Miễn Phí, cho phép người chơi đặt cược lên đến 248x giá trị Cược Lớn Nhất.</value>
   </data>
-
 </root>
