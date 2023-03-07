@@ -1,7 +1,6 @@
 ﻿@import "../_variables";
 @import "../other";
 $border-color: #7c98a4;
-$hover-background-color: #e2f3d1;
 
 .settingtype22 {
     %display-table {
@@ -91,10 +90,6 @@ $hover-background-color: #e2f3d1;
         th, td {
             height: 25px;
             padding-left: 2px;
-        }
-
-        tr:hover, tr:hover td {
-            background-color: $hover-background-color;
         }
 
         .cell {

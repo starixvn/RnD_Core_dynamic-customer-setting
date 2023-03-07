@@ -6,9 +6,5 @@
   {
     "outputFile": "Assets/Styles/flexbox-patch.css",
     "inputFile": "Assets/Styles/flexbox-patch.scss"
-  },
-  {
-    "outputFile": "Assets/Styles/SettingTypes/_settingtype22.css",
-    "inputFile": "Assets/Styles/SettingTypes/_settingtype22.scss"
   }
 ]
