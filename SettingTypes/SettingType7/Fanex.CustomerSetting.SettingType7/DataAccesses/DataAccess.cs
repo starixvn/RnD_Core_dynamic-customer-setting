@@ -6,6 +6,7 @@
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using Dtos;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using System.Collections;
     using System.Collections.Generic;
@@ -40,6 +41,7 @@
                 { "stakelevel", stakeLevelXml },
                 { "msgtype", 0 },
                 { "settingType", Constants.Constants.SettingTypeId },
+                { "settingstatus", AppSettings.SettingStatus },
                 { "errcode", 0 },
                 { "errmsg", string.Empty }
             };

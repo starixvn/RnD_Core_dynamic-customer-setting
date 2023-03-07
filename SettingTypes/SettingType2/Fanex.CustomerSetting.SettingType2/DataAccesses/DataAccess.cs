@@ -6,8 +6,8 @@
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
-    using Data;
     using Dtos;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using System.Collections;
     using System.Collections.Generic;
@@ -47,6 +47,7 @@
             param.Add("custid", customerId);
             param.Add("ip", settingContext.IP);
             param.Add("betlimit", betLimitXml);
+            param.Add("settingstatus", AppSettings.SettingStatus);
             param.Add("errcode", 0);
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);

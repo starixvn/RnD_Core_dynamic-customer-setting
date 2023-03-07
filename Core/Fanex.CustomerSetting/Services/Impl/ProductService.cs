@@ -6,6 +6,7 @@
     using Common.Helper;
     using Criteria;
     using Data.Repository;
+    using Fanex.CustomerSetting.Configurations;
     using Models;
 
     public class ProductService : IProductService
@@ -23,7 +24,7 @@
             _cachingService = cachingService ?? new CachingService();
         }
 
-        public IEnumerable<SettingType> GetProductSettingTypes(byte productId, byte systemId, byte settingStatus)
+        public IEnumerable<SettingType> GetProductSettingTypes(byte productId, byte systemId)
         {
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
             Check.Argument.IsNotNegative(systemId, "systemId");
@@ -37,7 +38,7 @@
                            {
                                ProductId = productId,
                                SystemId = systemId,
-                               SettingStatus = settingStatus
+                               SettingStatus = AppSettings.SettingStatus
                            });
                    },
                    new TimeSpan(CacheDuration, 0, 0));
@@ -45,9 +46,9 @@
             return settingTypes;
         }
 
-        public SettingType GetProductSettingType(byte productId, short settingTypeId, byte systemId, byte settingStatus)
+        public SettingType GetProductSettingType(byte productId, short settingTypeId, byte systemId)
         {
-            var productSettingTypes = GetProductSettingTypes(productId, systemId, settingStatus);
+            var productSettingTypes = GetProductSettingTypes(productId, systemId);
 
             if (productSettingTypes == null)
             {

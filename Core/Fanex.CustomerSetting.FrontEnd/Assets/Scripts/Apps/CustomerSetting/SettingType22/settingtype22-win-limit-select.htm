@@ -1,0 +1,10 @@
+﻿<div class="setting-field-wrapper">
+    <select class="setting-field"
+            data-ng-model="settingItem.winLimit"
+            data-ng-options="item.key as item.value for item in range"
+            data-field-highlighting
+            data-field-name="winLimit"
+            data-highlight-state="settingItem.highlightState"
+            data-tooltip-message="{{settingItem.validationState | tooltipMessage:'settingType22ResourceService':'winLimit':'unlimitedLimit'}}"></select>
+    <span>{{::('OnGivenCredit' | settingType22Label)}}</span>
+</div>

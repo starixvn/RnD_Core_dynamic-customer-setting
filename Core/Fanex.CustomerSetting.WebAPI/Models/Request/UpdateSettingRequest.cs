@@ -3,6 +3,7 @@
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Configurations;
 
     public class UpdateSettingRequest : SettingRequest
     {
@@ -12,6 +13,7 @@
         {
             return new UpdateCustomerSettingCommand(
                 setting: Setting,
+                settingStatus: AppSettings.SettingStatus,
                 uplineLevel: UplineLevel == null ? null : Enumeration.FromValue<Level>(UplineLevel.Value));
         }
     }

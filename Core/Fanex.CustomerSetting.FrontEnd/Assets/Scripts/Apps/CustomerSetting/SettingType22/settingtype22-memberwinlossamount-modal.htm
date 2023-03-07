@@ -1,0 +1,52 @@
+﻿<div class="modal-overlay" data-ng-show="hostItem.showWinLossAmount">
+    <div class="modal" data-draggable="'.modal__title'">
+        <div class="modal__title">
+            {{::('CurrentWinLossAmount' | settingType22Label)}}
+        </div>
+        <div class="modal__content" data-detect-max-height>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="block__sub-header">Product</th>
+                        <th class="block__sub-header">Winning%</th>
+                        <th class="block__sub-header">Losing%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="winLossAmount in hostItem.currentWinLossAmount">
+                        <td class="cell-text">
+                            {{winLossAmount.sportTypeName}}
+                        </td>
+                        <td class="cell-number">
+                            <span data-ng-if="winLossAmount.winPercent === -2">
+                                <span class="red-text">{{'NotAvailable' | settingType22Label}}</span>
+                                <span> ({{winLossAmount.currentAmount | formatNumber}}/<span class="red-text">{{winLossAmount.maxWinAmount}}</span>)</span>
+                            </span>
+                            <span data-ng-if="winLossAmount.winPercent === -1">{{'Unlimited' | settingType22Label}}</span>
+                            <span data-ng-if="winLossAmount.winPercent === 0">{{winLossAmount.winPercent}}%</span>
+                            <span data-ng-if="winLossAmount.winPercent > 0">
+                                <span data-ng-class="{ 'red-text': winLossAmount.winPercent >= highestPercentageRange }">
+                                    {{winLossAmount.winPercent | formatNumber}}%
+                                </span>
+                                <span> (<span data-ng-class="{ 'red-text': winLossAmount.winPercent >= highestPercentageRange }">{{winLossAmount.currentAmount | formatNumber}}</span>/{{winLossAmount.maxWinAmount | formatNumber}})</span>
+                            </span>
+                        </td>
+                        <td class="cell-number">
+                            <span data-ng-if="winLossAmount.lossPercent === -1">{{'Unlimited' | settingType22Label}}</span>
+                            <span data-ng-if="winLossAmount.lossPercent === 0">{{winLossAmount.lossPercent}}%</span>
+                            <span data-ng-if="winLossAmount.lossPercent > 0">
+                                <span data-ng-class="{ 'red-text': winLossAmount.lossPercent >= highestPercentageRange }">
+                                    {{winLossAmount.lossPercent | formatNumber}}%
+                                </span>
+                                <span> (<span data-ng-class="{ 'red-text': winLossAmount.lossPercent >= highestPercentageRange }">{{-winLossAmount.currentAmount | formatNumber}}</span>/{{winLossAmount.maxLossAmount | formatNumber}})</span>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal__footer">
+            <button class="btn btn--small" data-ng-click="cancel()">{{::('Close' | settingType22Label)}}</button>
+        </div>
+    </div>
+</div>

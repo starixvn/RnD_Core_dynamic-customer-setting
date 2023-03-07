@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.NumberGames2.DataAccesses
 {
     using Data;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using Models;
 
@@ -21,7 +22,8 @@
                 customerSyncStatus = objectDb.QueryEntity<CustomerSyncStatus>(new
                 {
                     CustId = customerId,
-                    ProductId = productId
+                    ProductId = productId,
+                    AppSettings.SettingStatus
                 });
             }
 
@@ -38,7 +40,8 @@
                     ProductID = productId,
                     UserID = userId,
                     SubAccID = subAccountId,
-                    IP = ip
+                    IP = ip,
+                    AppSettings.SettingStatus
                 });
             }
         }

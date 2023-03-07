@@ -12,11 +12,12 @@
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
+            byte settingStatus = 0,
             Level uplineLevel = null)
         {
             customerLevel = customerLevel ?? Level.Master;
             var setting = CreateCustomerSetting(customerId, customerLevel, productId);
-            return new UpdateCustomerSettingCommand(setting, uplineLevel);
+            return new UpdateCustomerSettingCommand(setting, settingStatus, uplineLevel);
         }
 
         public static Setting CreateCustomerSetting(

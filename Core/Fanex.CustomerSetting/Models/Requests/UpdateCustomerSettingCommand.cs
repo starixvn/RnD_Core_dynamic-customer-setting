@@ -7,13 +7,16 @@
     {
         private Level _uplineLevel;
         private ISetting _setting;
+        private byte _settingStatus;
 
         public UpdateCustomerSettingCommand(
             ISetting setting,
+            byte settingStatus = 0,
             Level uplineLevel = null)
         {
             Setting = setting;
             UplineLevel = uplineLevel;
+            SettingStatus = settingStatus;
         }
 
         public ISetting Setting
@@ -31,6 +34,24 @@
                 }
 
                 _setting = value;
+            }
+        }
+
+        public byte SettingStatus
+        {
+            get
+            {
+                return _settingStatus;
+            }
+
+            set
+            {
+                if (value < 0 || value > 3)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "Invalid Setting Status.");
+                }
+
+                _settingStatus = value;
             }
         }
 

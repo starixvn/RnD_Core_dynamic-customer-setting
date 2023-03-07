@@ -80,6 +80,8 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType20.Tests")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType21")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType21.Tests")]
+[assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType22")]
+[assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType22.Tests")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.NumberGames2")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.NumberGames2.Tests")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.Casino")]

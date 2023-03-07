@@ -68,7 +68,7 @@
         [Test]
         public void GetUpdateCustomerSettingCommand_CustomerIdExisted_ReturnExpectedResult()
         {
-            var expected = new UpdateCustomerSettingCommand(command.Setting, command.UplineLevel);
+            var expected = new UpdateCustomerSettingCommand(command.Setting, 0, command.UplineLevel);
             expected.Setting.CustomerId = 3;
             expected.Setting.CustomerInfo.UserName = "cust3";
 

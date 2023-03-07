@@ -249,4 +249,7 @@
   <data name="ExpandToolTip" xml:space="preserve">
     <value>คลิกเพื่อปิดส่วนขยาย</value>
   </data>
+  <data name="SettingType_22" xml:space="preserve">
+    <value>วงเงินแพ้ชนะ</value>
+  </data>
 </root>

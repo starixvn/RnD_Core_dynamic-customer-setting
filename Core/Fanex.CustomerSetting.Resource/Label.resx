@@ -249,4 +249,7 @@
   <data name="ExpandToolTip" xml:space="preserve">
     <value>Click to Collapse</value>
   </data>
+  <data name="SettingType_22" xml:space="preserve">
+    <value>Win Loss Limit</value>
+  </data>
 </root>

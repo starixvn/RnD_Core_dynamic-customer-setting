@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Models.Requests
 {
     using Enumerations;
+    using Fanex.CustomerSetting.Configurations;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,8 +15,9 @@
             ISetting setting,
             IEnumerable<int> customerIds,
             IEnumerable<string> customerNames,
-            Level uplineLevel)
-            : base(setting, uplineLevel)
+            Level uplineLevel,
+            byte settingStatus = 0)
+            : base(setting, settingStatus, uplineLevel)
         {
             CustomerIds = customerIds;
             CustomerNames = customerNames;
@@ -94,7 +96,7 @@
                 throw new ArgumentException($"{customerId} does not exist in selected ids for update action");
             }
 
-            var command = new UpdateCustomerSettingCommand(Setting, UplineLevel);
+            var command = new UpdateCustomerSettingCommand(Setting, AppSettings.SettingStatus, UplineLevel);
             command.Setting.CustomerId = customerId;
             command.Setting.CustomerInfo.UserName = CustomerNames.ElementAt(customerIdIndex);
 

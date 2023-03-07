@@ -1,9 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Models.Request
 {
-    using System;
-    using System.Linq;
     using Common;
     using CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Configurations;
+    using System;
+    using System.Linq;
 
     public class MultipleUpdateSettingRequest : UpdateSettingRequest
     {
@@ -29,6 +30,7 @@
                 setting: updateSingleCommand.Setting,
                 customerIds: CustomerIds.Split(',').Select(custId => Converter.ToInt(custId)),
                 customerNames: CustomerNames.Split(',').ToList(),
+                settingStatus: AppSettings.SettingStatus,
                 uplineLevel: updateSingleCommand.UplineLevel);
         }
     }

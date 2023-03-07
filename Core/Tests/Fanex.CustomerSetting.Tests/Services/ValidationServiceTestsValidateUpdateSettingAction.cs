@@ -85,7 +85,6 @@
             //// Assert
             _productService.Received().GetProductSettingTypes(
                 Arg.Is<byte>(productId => productId == updateParam.Setting.ProductId),
-                Arg.Any<byte>(), 
                 Arg.Any<byte>());
         }
 
@@ -101,7 +100,7 @@
             {
                 InstanceFactory.CreateCustomerSettingType(1)
             };
-            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, SystemType.Nap, 0)
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, SystemType.Nap)
                 .Returns(new List<SettingType>
                 {
                     InstanceFactory.CreateCustomerSettingType(2)
@@ -126,7 +125,7 @@
             {
                 InstanceFactory.CreateCustomerSettingType(1)
             };
-            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, SystemType.Nap, 0)
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, SystemType.Nap)
                 .Returns(new List<SettingType>
                 {
                     InstanceFactory.CreateCustomerSettingType(1)
