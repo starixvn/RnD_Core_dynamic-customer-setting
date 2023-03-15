@@ -1,0 +1,33 @@
+﻿<div data-ng-if="settingType | editableSettingType">
+    <settingtype23-input class="block__cell w25-percent setting-field-wrapper"
+                         data-setting-item="item"
+                         data-upline-level="uplineLevel"
+                         data-customer-level="customerLevel"
+                         data-field-name="minBet">
+    </settingtype23-input>
+    <settingtype23-input class="block__cell w25-percent setting-field-wrapper"
+                         data-setting-item="item"
+                         data-upline-level="uplineLevel"
+                         data-customer-level="customerLevel"
+                         data-field-name="maxBet">
+    </settingtype23-input>
+    <settingtype23-input class="block__cell w25-percent setting-field-wrapper"
+                         data-setting-item="item"
+                         data-upline-level="uplineLevel"
+                         data-customer-level="customerLevel"
+                         data-field-name="maxPerMatch">
+    </settingtype23-input>
+    <settingtype23-input class="block__cell block__cell--no-border w25-percent w25-percent--last setting-field-wrapper"
+                         data-setting-item="item"
+                         data-upline-level="uplineLevel"
+                         data-customer-level="customerLevel"
+                         data-field-name="maxPerBall">
+    </settingtype23-input>
+</div>
+<div class="align-center"
+     data-ng-if="!(settingType | editableSettingType)">
+    <div class="block__cell w25-percent">{{item.minBet | formatNumber}}</div>
+    <div class="block__cell w25-percent">{{item.maxBet | formatNumber}}</div>
+    <div class="block__cell w25-percent">{{item.maxPerMatch | formatNumber}}</div>
+    <div class="block__cell block__cell--no-border w25-percent w25-percent--last" data-ng-if="item.maxPerBall">{{item.maxPerBall | formatNumber}}</div>
+</div>
