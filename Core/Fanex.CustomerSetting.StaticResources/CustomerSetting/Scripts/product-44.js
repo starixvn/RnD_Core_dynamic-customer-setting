@@ -34454,194 +34454,6 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingTypeDirective = (function () {
-        function SettingTypeDirective(settingItemType) {
-            var _this = this;
-            this.replace = true;
-            this.controller = [
-                "$scope",
-                "settingTypesSharedValuesService",
-                function ($scope, settingTypesSharedValuesService) {
-                    $scope.customerId = settingTypesSharedValuesService.customerId;
-                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
-                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
-                    $scope.productId = settingTypesSharedValuesService.productId;
-                    $scope.productName = settingTypesSharedValuesService.productName;
-                    $scope.avaiCustomerLevels = CustomerSetting.Level;
-                    $scope.$watch("settingType", function (settingType) {
-                        $scope.normalMode = settingTypesSharedValuesService.normalMode;
-                        if (settingType && angular.isArray(settingType.settingItems)) {
-                            if (settingType.isError) {
-                                if (settingType.settingItems.length > 0) {
-                                    settingType.settingItems[0] = new CustomerSetting.ErrorSettingItem(settingType.settingItems[0]);
-                                }
-                            }
-                            else {
-                                settingType.settingItems.forEach(function (item, index) {
-                                    if (item) {
-                                        settingType.settingItems[index] = _this.settingItemType(item, true, $scope.customerLevel, $scope.uplineLevel, settingType.extraData, settingTypesSharedValuesService.multipleUpdates, settingTypesSharedValuesService.isSupportPT3DecimalSites);
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }];
-            this.settingItemType = settingItemType;
-        }
-        Object.defineProperty(SettingTypeDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    settingType: "=",
-                    update: "&",
-                    index: "@"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return SettingTypeDirective;
-    }());
-    CustomerSetting.SettingTypeDirective = SettingTypeDirective;
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var TogglableSettingBlockSharedStates = (function () {
-        function TogglableSettingBlockSharedStates(numberofBlocks, isCollapsed) {
-            if (isCollapsed === void 0) { isCollapsed = false; }
-            isCollapsed = isCollapsed || false;
-            if (numberofBlocks > 0) {
-                this.toggleStates = [];
-                this.numberofExpandedBlocks = isCollapsed ? 0 : numberofBlocks;
-                for (var index = 0; index < numberofBlocks; index++) {
-                    this.toggleStates[index] = !isCollapsed;
-                }
-            }
-        }
-        TogglableSettingBlockSharedStates.prototype.isExpanded = function (blockIndex) {
-            return this.toggleStates[blockIndex];
-        };
-        TogglableSettingBlockSharedStates.prototype.isExpandedAll = function () {
-            return this.numberofExpandedBlocks === this.toggleStates.length;
-        };
-        TogglableSettingBlockSharedStates.prototype.collapseBlock = function (blockIndex) {
-            if (this.toggleStates[blockIndex]) {
-                this.toggleStates[blockIndex] = false;
-                this.numberofExpandedBlocks--;
-            }
-        };
-        TogglableSettingBlockSharedStates.prototype.expandBlock = function (blockIndex) {
-            if (!this.toggleStates[blockIndex]) {
-                this.toggleStates[blockIndex] = true;
-                this.numberofExpandedBlocks++;
-            }
-        };
-        TogglableSettingBlockSharedStates.prototype.collapseAllBlocks = function () {
-            for (var index = 0; index < this.toggleStates.length; index++) {
-                this.toggleStates[index] = false;
-            }
-            this.numberofExpandedBlocks = 0;
-        };
-        TogglableSettingBlockSharedStates.prototype.expandAllBlocks = function () {
-            for (var index = 0; index < this.toggleStates.length; index++) {
-                this.toggleStates[index] = true;
-            }
-            this.numberofExpandedBlocks = this.toggleStates.length;
-        };
-        return TogglableSettingBlockSharedStates;
-    }());
-    CustomerSetting.TogglableSettingBlockSharedStates = TogglableSettingBlockSharedStates;
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DefaultSettingTypeGroupingDirective = (function () {
-        function DefaultSettingTypeGroupingDirective() {
-            var _this = this;
-            this.replace = true;
-            this.templateUrl = "DefaultSettingBlock/default-setting-block.htm";
-            this.controller = ["$scope", "$rootScope", function ($scope, $rootScope) {
-                    $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
-                    $scope.$watch("settingType", function (settingType) {
-                        $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
-                        if (settingType && angular.isArray(settingType.settingItems)) {
-                            if (settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
-                                $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
-                                if ($scope.togglableSettingBlocks) {
-                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
-                                }
-                            }
-                            else {
-                                $scope.sportGroups = [settingType.settingItems];
-                                if ($scope.togglableSettingBlocks) {
-                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
-                                }
-                            }
-                        }
-                    });
-                    $rootScope.$on("checkedChanged", function (event, args) {
-                        if ($scope.settingType && angular.isArray($scope.settingType.settingItems) && $scope.settingType.id === args.settingTypeId) {
-                            _this.disableChildByParentState($scope);
-                        }
-                    });
-                }];
-        }
-        DefaultSettingTypeGroupingDirective.prototype.disableChildByParentState = function ($scope) {
-            var parentGame = $scope.settingType.settingItems.filter(function (e) { return e["parentBetTypeId"] === 0 && e["parentSportTypeId"] === 0; })[0];
-            var childGames = $scope.settingType.settingItems.filter(function (e) { return e["parentBetTypeId"] === parentGame["betTypeId"] && e["parentSportTypeId"] === parentGame["sportTypeId"]; });
-            if (parentGame["isDisabled"]) {
-                childGames.forEach(function (e) {
-                    e["isDisabled"] = true;
-                    e["readonly"] = true;
-                });
-            }
-            else {
-                childGames.forEach(function (e) {
-                    e["readonly"] = false;
-                });
-            }
-        };
-        DefaultSettingTypeGroupingDirective.prototype.groupSettingItemsBySportType = function (settingItems) {
-            var currentSportTypeId = -1;
-            var result = new Array();
-            var group;
-            settingItems.forEach(function (item) {
-                var settingItem = item;
-                if (currentSportTypeId !== settingItem.sportTypeId) {
-                    if (group) {
-                        result.push(group);
-                    }
-                    currentSportTypeId = settingItem.sportTypeId;
-                    group = new Array();
-                }
-                group.push(settingItem);
-            });
-            if (group) {
-                result.push(group);
-            }
-            return result;
-        };
-        return DefaultSettingTypeGroupingDirective;
-    }());
-    CustomerSetting.DefaultSettingTypeGroupingDirective = DefaultSettingTypeGroupingDirective;
-    CustomerSetting.ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
-    function ShowingName() {
-        return function (settingItem, settingLevel, productName) {
-            return settingLevel === CustomerSetting.SettingLevel.product
-                ? productName
-                : (settingLevel === CustomerSetting.SettingLevel.sportType
-                    ? settingItem.sportTypeName
-                    : settingItem.betTypeName);
-        };
-    }
-    CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
-})(CustomerSetting || (CustomerSetting = {}));
-
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -34833,6 +34645,194 @@ var CustomerSetting;
         return NumericInputExtension;
     }());
     CustomerSetting.NumericInputExtension = NumericInputExtension;
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingTypeDirective = (function () {
+        function SettingTypeDirective(settingItemType) {
+            var _this = this;
+            this.replace = true;
+            this.controller = [
+                "$scope",
+                "settingTypesSharedValuesService",
+                function ($scope, settingTypesSharedValuesService) {
+                    $scope.customerId = settingTypesSharedValuesService.customerId;
+                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                    $scope.productId = settingTypesSharedValuesService.productId;
+                    $scope.productName = settingTypesSharedValuesService.productName;
+                    $scope.avaiCustomerLevels = CustomerSetting.Level;
+                    $scope.$watch("settingType", function (settingType) {
+                        $scope.normalMode = settingTypesSharedValuesService.normalMode;
+                        if (settingType && angular.isArray(settingType.settingItems)) {
+                            if (settingType.isError) {
+                                if (settingType.settingItems.length > 0) {
+                                    settingType.settingItems[0] = new CustomerSetting.ErrorSettingItem(settingType.settingItems[0]);
+                                }
+                            }
+                            else {
+                                settingType.settingItems.forEach(function (item, index) {
+                                    if (item) {
+                                        settingType.settingItems[index] = _this.settingItemType(item, true, $scope.customerLevel, $scope.uplineLevel, settingType.extraData, settingTypesSharedValuesService.multipleUpdates, settingTypesSharedValuesService.isSupportPT3DecimalSites);
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }];
+            this.settingItemType = settingItemType;
+        }
+        Object.defineProperty(SettingTypeDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    settingType: "=",
+                    update: "&",
+                    index: "@"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return SettingTypeDirective;
+    }());
+    CustomerSetting.SettingTypeDirective = SettingTypeDirective;
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var TogglableSettingBlockSharedStates = (function () {
+        function TogglableSettingBlockSharedStates(numberofBlocks, isCollapsed) {
+            if (isCollapsed === void 0) { isCollapsed = false; }
+            isCollapsed = isCollapsed || false;
+            if (numberofBlocks > 0) {
+                this.toggleStates = [];
+                this.numberofExpandedBlocks = isCollapsed ? 0 : numberofBlocks;
+                for (var index = 0; index < numberofBlocks; index++) {
+                    this.toggleStates[index] = !isCollapsed;
+                }
+            }
+        }
+        TogglableSettingBlockSharedStates.prototype.isExpanded = function (blockIndex) {
+            return this.toggleStates[blockIndex];
+        };
+        TogglableSettingBlockSharedStates.prototype.isExpandedAll = function () {
+            return this.numberofExpandedBlocks === this.toggleStates.length;
+        };
+        TogglableSettingBlockSharedStates.prototype.collapseBlock = function (blockIndex) {
+            if (this.toggleStates[blockIndex]) {
+                this.toggleStates[blockIndex] = false;
+                this.numberofExpandedBlocks--;
+            }
+        };
+        TogglableSettingBlockSharedStates.prototype.expandBlock = function (blockIndex) {
+            if (!this.toggleStates[blockIndex]) {
+                this.toggleStates[blockIndex] = true;
+                this.numberofExpandedBlocks++;
+            }
+        };
+        TogglableSettingBlockSharedStates.prototype.collapseAllBlocks = function () {
+            for (var index = 0; index < this.toggleStates.length; index++) {
+                this.toggleStates[index] = false;
+            }
+            this.numberofExpandedBlocks = 0;
+        };
+        TogglableSettingBlockSharedStates.prototype.expandAllBlocks = function () {
+            for (var index = 0; index < this.toggleStates.length; index++) {
+                this.toggleStates[index] = true;
+            }
+            this.numberofExpandedBlocks = this.toggleStates.length;
+        };
+        return TogglableSettingBlockSharedStates;
+    }());
+    CustomerSetting.TogglableSettingBlockSharedStates = TogglableSettingBlockSharedStates;
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DefaultSettingTypeGroupingDirective = (function () {
+        function DefaultSettingTypeGroupingDirective() {
+            var _this = this;
+            this.replace = true;
+            this.templateUrl = "DefaultSettingBlock/default-setting-block.htm";
+            this.controller = ["$scope", "$rootScope", function ($scope, $rootScope) {
+                    $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
+                    $scope.$watch("settingType", function (settingType) {
+                        $scope.togglableSettingBlocks = settingType.isEnableCollapseExpand;
+                        if (settingType && angular.isArray(settingType.settingItems)) {
+                            if (settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
+                                $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
+                                if ($scope.togglableSettingBlocks) {
+                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length, settingType.isCollapsed);
+                                }
+                            }
+                            else {
+                                $scope.sportGroups = [settingType.settingItems];
+                                if ($scope.togglableSettingBlocks) {
+                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates(1, settingType.isCollapsed);
+                                }
+                            }
+                        }
+                    });
+                    $rootScope.$on("checkedChanged", function (event, args) {
+                        if ($scope.settingType && angular.isArray($scope.settingType.settingItems) && $scope.settingType.id === args.settingTypeId) {
+                            _this.disableChildByParentState($scope);
+                        }
+                    });
+                }];
+        }
+        DefaultSettingTypeGroupingDirective.prototype.disableChildByParentState = function ($scope) {
+            var parentGame = $scope.settingType.settingItems.filter(function (e) { return e["parentBetTypeId"] === 0 && e["parentSportTypeId"] === 0; })[0];
+            var childGames = $scope.settingType.settingItems.filter(function (e) { return e["parentBetTypeId"] === parentGame["betTypeId"] && e["parentSportTypeId"] === parentGame["sportTypeId"]; });
+            if (parentGame["isDisabled"]) {
+                childGames.forEach(function (e) {
+                    e["isDisabled"] = true;
+                    e["readonly"] = true;
+                });
+            }
+            else {
+                childGames.forEach(function (e) {
+                    e["readonly"] = false;
+                });
+            }
+        };
+        DefaultSettingTypeGroupingDirective.prototype.groupSettingItemsBySportType = function (settingItems) {
+            var currentSportTypeId = -1;
+            var result = new Array();
+            var group;
+            settingItems.forEach(function (item) {
+                var settingItem = item;
+                if (currentSportTypeId !== settingItem.sportTypeId) {
+                    if (group) {
+                        result.push(group);
+                    }
+                    currentSportTypeId = settingItem.sportTypeId;
+                    group = new Array();
+                }
+                group.push(settingItem);
+            });
+            if (group) {
+                result.push(group);
+            }
+            return result;
+        };
+        return DefaultSettingTypeGroupingDirective;
+    }());
+    CustomerSetting.DefaultSettingTypeGroupingDirective = DefaultSettingTypeGroupingDirective;
+    CustomerSetting.ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
+    function ShowingName() {
+        return function (settingItem, settingLevel, productName) {
+            return settingLevel === CustomerSetting.SettingLevel.product
+                ? productName
+                : (settingLevel === CustomerSetting.SettingLevel.sportType
+                    ? settingItem.sportTypeName
+                    : settingItem.betTypeName);
+        };
+    }
+    CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -35222,6 +35222,120 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var DetectMaxHeightDirective = (function () {
+        function DetectMaxHeightDirective($window, $timeout) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var container = angular.element(element.parent());
+                var debounceResize = CustomerSetting.debounce(function () {
+                    if (!element.hasClass("ng-hide")) {
+                        _this.calculateHeight(element, container);
+                    }
+                }, 100);
+                _this.calculateHeight(element, container);
+                container.css({ "height": "auto" });
+                angular.element(_this.$window).on("resize", debounceResize);
+            };
+            this.$window = $window;
+            this.$timeout = $timeout;
+        }
+        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
+            var _this = this;
+            this.$timeout(function () {
+                var outerHeight = _this.$window.innerHeight;
+                var maxHeigth = outerHeight * 0.6;
+                var marginTop = outerHeight * 0.2 - 35;
+                element.css({
+                    "max-height": maxHeigth + "px"
+                });
+                container.css({ "margin-top": marginTop + "px" });
+            });
+        };
+        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
+        return DetectMaxHeightDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DraggableDirective = (function () {
+        function DraggableDirective($document) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
+                var container = angular.element(element.parent())[0];
+                var width;
+                var height;
+                var startX;
+                var startY;
+                var currentX;
+                var currentY;
+                draggableBanner.css({
+                    cursor: "move"
+                });
+                draggableBanner.on("mousedown", function (event) {
+                    startX = event.clientX - element[0].offsetLeft;
+                    startY = event.clientY - element[0].offsetTop;
+                    width = element[0].offsetWidth;
+                    height = element[0].offsetHeight;
+                    _this.$document.on("mousemove", mouseMove);
+                    _this.$document.on("mouseup", mouseUp);
+                });
+                var mouseMove = function (event) {
+                    currentX = event.clientX - startX;
+                    currentY = event.clientY - startY;
+                    updatePosition();
+                };
+                var mouseUp = function (event) {
+                    _this.$document.off("mousemove", mouseMove);
+                    _this.$document.off("mouseup", mouseUp);
+                };
+                function updatePosition() {
+                    if (container) {
+                        var containerClientRect = container.getBoundingClientRect();
+                        if (currentX < containerClientRect.left) {
+                            currentX = containerClientRect.left;
+                        }
+                        else if (currentX > containerClientRect.right - width) {
+                            currentX = containerClientRect.right - width;
+                        }
+                        if (currentY < containerClientRect.top) {
+                            currentY = containerClientRect.top;
+                        }
+                        else if (currentY > containerClientRect.bottom - height) {
+                            currentY = containerClientRect.bottom - height;
+                        }
+                    }
+                    element.css({
+                        "margin-top": currentY + "px",
+                        "margin-left": currentX + "px"
+                    });
+                }
+            };
+            this.$document = $document;
+        }
+        Object.defineProperty(DraggableDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    draggableBanner: "=draggable"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        DraggableDirective.$inject = ["$document"];
+        return DraggableDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var FieldHighlightingDirective = (function () {
         function FieldHighlightingDirective($window, $compile, $timeout, $templateCache, $rootScope) {
             var _this = this;
@@ -35386,120 +35500,6 @@ var CustomerSetting;
     }
     TooltipMessage.$inject = ["$injector", "$filter"];
     CustomerSetting.ModuleRegister.filter("tooltipMessage", TooltipMessage);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DetectMaxHeightDirective = (function () {
-        function DetectMaxHeightDirective($window, $timeout) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var container = angular.element(element.parent());
-                var debounceResize = CustomerSetting.debounce(function () {
-                    if (!element.hasClass("ng-hide")) {
-                        _this.calculateHeight(element, container);
-                    }
-                }, 100);
-                _this.calculateHeight(element, container);
-                container.css({ "height": "auto" });
-                angular.element(_this.$window).on("resize", debounceResize);
-            };
-            this.$window = $window;
-            this.$timeout = $timeout;
-        }
-        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
-            var _this = this;
-            this.$timeout(function () {
-                var outerHeight = _this.$window.innerHeight;
-                var maxHeigth = outerHeight * 0.6;
-                var marginTop = outerHeight * 0.2 - 35;
-                element.css({
-                    "max-height": maxHeigth + "px"
-                });
-                container.css({ "margin-top": marginTop + "px" });
-            });
-        };
-        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
-        return DetectMaxHeightDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DraggableDirective = (function () {
-        function DraggableDirective($document) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
-                var container = angular.element(element.parent())[0];
-                var width;
-                var height;
-                var startX;
-                var startY;
-                var currentX;
-                var currentY;
-                draggableBanner.css({
-                    cursor: "move"
-                });
-                draggableBanner.on("mousedown", function (event) {
-                    startX = event.clientX - element[0].offsetLeft;
-                    startY = event.clientY - element[0].offsetTop;
-                    width = element[0].offsetWidth;
-                    height = element[0].offsetHeight;
-                    _this.$document.on("mousemove", mouseMove);
-                    _this.$document.on("mouseup", mouseUp);
-                });
-                var mouseMove = function (event) {
-                    currentX = event.clientX - startX;
-                    currentY = event.clientY - startY;
-                    updatePosition();
-                };
-                var mouseUp = function (event) {
-                    _this.$document.off("mousemove", mouseMove);
-                    _this.$document.off("mouseup", mouseUp);
-                };
-                function updatePosition() {
-                    if (container) {
-                        var containerClientRect = container.getBoundingClientRect();
-                        if (currentX < containerClientRect.left) {
-                            currentX = containerClientRect.left;
-                        }
-                        else if (currentX > containerClientRect.right - width) {
-                            currentX = containerClientRect.right - width;
-                        }
-                        if (currentY < containerClientRect.top) {
-                            currentY = containerClientRect.top;
-                        }
-                        else if (currentY > containerClientRect.bottom - height) {
-                            currentY = containerClientRect.bottom - height;
-                        }
-                    }
-                    element.css({
-                        "margin-top": currentY + "px",
-                        "margin-left": currentX + "px"
-                    });
-                }
-            };
-            this.$document = $document;
-        }
-        Object.defineProperty(DraggableDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    draggableBanner: "=draggable"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        DraggableDirective.$inject = ["$document"];
-        return DraggableDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -35894,6 +35894,7 @@ var CustomerSetting;
                 this.minBet = settingItem.minBet;
                 this.maxBet = settingItem.maxBet;
                 this.maxPerBall = settingItem.maxPerBall;
+                this.hasMaxPerBall = settingItem.maxPerBall !== null;
                 this.maxPerMatch = settingItem.maxPerMatch;
                 if (settingItem.upline) {
                     this.upline = new SettingType23Item(settingItem.upline);
@@ -35963,7 +35964,7 @@ var CustomerSetting;
             if (!this.validateMaxPerMatch()) {
                 return false;
             }
-            if (this.maxPerBall && !this.validateMaxPerBall()) {
+            if (this.hasMaxPerBall && !this.validateMaxPerBall()) {
                 return false;
             }
             return true;
@@ -35983,7 +35984,7 @@ var CustomerSetting;
                 this.validationState = new CustomerSetting.ValidationResult("RequiredField", "maxPerMatch");
                 return false;
             }
-            if (oldSetting.maxPerBall !== null && this.maxPerBall === null) {
+            if (this.hasMaxPerBall && this.maxPerBall === null) {
                 this.validationState = new CustomerSetting.ValidationResult("RequiredField", "maxPerBall");
                 return false;
             }
@@ -38221,7 +38222,7 @@ $templateCache.put("settingtype13-value.htm","<div class=\"setting-field-wrapper
 $templateCache.put("settingtype13.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
 $templateCache.put("settingtype23-header-2.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w25-percent\">{{::(\'MinBet\' | settingType23Label)}}</div><div class=\"block__lbl w25-percent\">{{::(\'MaxBet\' | settingType23Label)}}</div><div class=\"block__lbl w25-percent\">{{::(\'MaxPerMatch\' | settingType23Label)}}</div><div class=\"block__lbl block__lbl--no-border w25-percent w25-percent--last\">{{::(\'MaxPerBall\' | settingType23Label)}}</div></div>");
 $templateCache.put("settingtype23-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'MinBet\' | settingType23Label)}}</div><div class=\"block__lbl w33-percent\">{{::(\'MaxBet\' | settingType23Label)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'MaxPerMatch\' | settingType23Label)}}</div></div>");
-$templateCache.put("settingtype23-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\" data-field-highlighting data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-ng-show=\"fieldName !== \'maxPerBall\' || settingItem.maxPerBall != null\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'settingType23ResourceService\':fieldName}}\"></div>");
+$templateCache.put("settingtype23-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\" data-field-highlighting data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-ng-show=\"fieldName !== \'maxPerBall\' || settingItem.hasMaxPerBall\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'settingType23ResourceService\':fieldName}}\"></div>");
 $templateCache.put("settingtype23-value-2.htm","<div data-ng-if=\"settingType | editableSettingType\"><settingtype23-input class=\"block__cell w25-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></settingtype23-input><settingtype23-input class=\"block__cell w25-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></settingtype23-input><settingtype23-input class=\"block__cell w25-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></settingtype23-input><settingtype23-input class=\"block__cell block__cell--no-border w25-percent w25-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerBall\"></settingtype23-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w25-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w25-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell w25-percent\">{{item.maxPerMatch | formatNumber}}</div><div class=\"block__cell block__cell--no-border w25-percent w25-percent--last\" data-ng-if=\"item.maxPerBall\">{{item.maxPerBall | formatNumber}}</div></div>");
 $templateCache.put("settingtype23-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><settingtype23-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></settingtype23-input><settingtype23-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></settingtype23-input><settingtype23-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></settingtype23-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerMatch | formatNumber}}</div></div>");
 $templateCache.put("settingtype23.htm","<div class=\"block full-width settingtype23\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\"><toggle-setting-block data-ng-if=\"togglableSharedStates\" data-shared-states=\"togglableSharedStates\" data-setting-data=\"settingType.settingItems\" data-setting-level=\"settingType.settingLevel\" data-setting-type-id=\"settingType.id\" data-setting-type-index=\"index\"></toggle-setting-block>{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'indent-30\': togglableSharedStates, \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[0] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<note-icon-tooltip data-ng-if=\"group[0].showIconTooltipMessage\" data-tooltip-message data-tooltip-message-backup=\"{{group[0].tooltipMessage}}\" data-tooltip-type></note-icon-tooltip><copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__lbl-group\" data-ng-if=\"group[0].subType === 1\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[0]\"></div><div class=\"block__lbl-group block__subType-header\" data-ng-if=\"group[0].subType === 2\" data-ng-include=\"headerTemplateUrlSubType2\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[0]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[0]\" data-ng-class=\"{ \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-if=\"group[0].subType === 1\" data-ng-include=\"valueTemplateUrl\"></div><div class=\"block__value\" data-ng-if=\"group[0].subType === 2\" data-ng-include=\"valueTemplateUrlSubType2\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[0]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");

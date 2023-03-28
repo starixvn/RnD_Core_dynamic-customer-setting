@@ -11,7 +11,7 @@ module CustomerSetting {
         public maxPerMatch: number;
         public subType: number;
         public upline: SettingType23Item;
-
+        public hasMaxPerBall: boolean;
         private $minConstraint: number;
         private $specialCasesAllowed: boolean;
 
@@ -26,6 +26,7 @@ module CustomerSetting {
                 this.minBet = settingItem.minBet;
                 this.maxBet = settingItem.maxBet;
                 this.maxPerBall = settingItem.maxPerBall;
+                this.hasMaxPerBall = settingItem.maxPerBall !== null;
                 this.maxPerMatch = settingItem.maxPerMatch;
 
                 if (settingItem.upline) {
@@ -111,7 +112,7 @@ module CustomerSetting {
                 return false;
             }
 
-            if (this.maxPerBall && !this.validateMaxPerBall()) {
+            if (this.hasMaxPerBall && !this.validateMaxPerBall()) {
                 return false;
             }
 
@@ -140,7 +141,7 @@ module CustomerSetting {
                 return false;
             }
 
-            if (oldSetting.maxPerBall !== null && this.maxPerBall === null) {
+            if (this.hasMaxPerBall && this.maxPerBall === null) {
                 this.validationState = new ValidationResult("RequiredField", "maxPerBall");
 
                 return false;
