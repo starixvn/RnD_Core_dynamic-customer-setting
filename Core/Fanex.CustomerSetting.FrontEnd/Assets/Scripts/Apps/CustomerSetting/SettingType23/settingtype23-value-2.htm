@@ -29,5 +29,5 @@
     <div class="block__cell w25-percent">{{item.minBet | formatNumber}}</div>
     <div class="block__cell w25-percent">{{item.maxBet | formatNumber}}</div>
     <div class="block__cell w25-percent">{{item.maxPerMatch | formatNumber}}</div>
-    <div class="block__cell block__cell--no-border w25-percent w25-percent--last" data-ng-if="item.maxPerBall">{{item.maxPerBall | formatNumber}}</div>
+    <div class="block__cell block__cell--no-border w25-percent w25-percent--last" data-ng-if="item.hasMaxPerBall">{{item.maxPerBall | formatNumber}}</div>
 </div>
