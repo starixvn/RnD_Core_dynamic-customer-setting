@@ -196,10 +196,10 @@
     <value>This field is required.</value>
   </data>
   <data name="MaxBetLessThanOrEqualMaxPerBall" xml:space="preserve">
-    <value>The Max Bet should be less than or equal to Max Per Ball</value>
+    <value>Max Bet must be less than or equal to Max Per Ball</value>
   </data>
   <data name="MaxPerBallLessThanOrEqualMaxPerMatch" xml:space="preserve">
-    <value>The Max Per Ball should be less than or equal to Max Per Match</value>
+    <value>Max Per Ball must be less than or equal to Max Per Match</value>
   </data>
   <data name="MaxPerMatchMoreThanOrEqualMaxPerBall" xml:space="preserve">
     <value>Max Per Match must be greater than or equal to Max Per Ball.</value>

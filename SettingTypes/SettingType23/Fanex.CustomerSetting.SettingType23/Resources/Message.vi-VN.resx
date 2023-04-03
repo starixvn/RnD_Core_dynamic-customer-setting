@@ -144,4 +144,25 @@
   <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
     <value>Cược Nhỏ Nhất phải lớn hơn hay bằng {0}.</value>
   </data>
+  <data name="MaxBetCannotBeGreaterThanMaxPerBall" xml:space="preserve">
+    <value>Tiền Cược Lớn Nhất không được lớn hơn Tiền Cược Tối Đa Cho 1 Lượt Banh.</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualMaxPerBall" xml:space="preserve">
+    <value>Tiền Cược Lớn Nhất phải nhỏ hơn hoặc bằng Tiền Cược Tối Đa Cho 1 Lượt Banh.</value>
+  </data>
+  <data name="MaxPerBallCannotBeGreaterThanMaxPerMatch" xml:space="preserve">
+    <value>Tiền Cược Tối Đa Cho 1 Lượt Banh không được lớn hơn Tiền Cược Tối Đa Cho 1 Trận.</value>
+  </data>
+  <data name="MaxPerBallCannotBeNegative" xml:space="preserve">
+    <value>Tiền Cược Tối Đa Cho 1 Lượt Banh không được là số âm.</value>
+  </data>
+  <data name="MaxPerBallLessThanOrEqualMaxPerMatch" xml:space="preserve">
+    <value>Tiền Cược Tối Đa Cho 1 Lượt Banh phải nhỏ hơn hoặc bằng Tiền Cược Tối Đa Cho 1 Trận.</value>
+  </data>
+  <data name="MaxPerBallMoreThanOrEqualMaxBet" xml:space="preserve">
+    <value>Tiền Cược Tối Đa Cho 1 Lượt Banh phải lớn hơn hoặc bằng Tiền Cược Lớn Nhất.</value>
+  </data>
+  <data name="MaxPerMatchMoreThanOrEqualMaxPerBall" xml:space="preserve">
+    <value>Tiền Cược Tối Đa Cho 1 Trận phải lớn hơn hoặc bằng Tiền Cược Tối Đa Cho 1 Lượt Banh.</value>
+  </data>
 </root>

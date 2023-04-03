@@ -18,6 +18,7 @@
     settingType23Resources["label"]["zh-cn"] = {
         "BetSetting": "投注设定",
         "MaxBet": "最高投注",
+        "MaxPerBall": "单粒球最高投注",
         "MaxPerMatch": "单场限额",
         "MinBet": "最低投注"
     };
@@ -26,6 +27,7 @@
     settingType23Resources["label"]["zh-tw"] = {
         "BetSetting": "投注設定",
         "MaxBet": "最高投注",
+        "MaxPerBall": "单粒球最高投注",
         "MaxPerMatch": "單場限額",
         "MinBet": "最低投注"
     };
@@ -34,6 +36,7 @@
     settingType23Resources["label"]["ko-kr"] = {
         "BetSetting": "배팅 설정",
         "MaxBet": "최대 배팅",
+        "MaxPerBall": "각 공의 최대",
         "MaxPerMatch": "경기당 최대 값",
         "MinBet": "최소 배팅"
     };
@@ -41,6 +44,7 @@
     settingType23Resources["label"] = settingType23Resources["label"] || {};
     settingType23Resources["label"]["ja-jp"] = {
         "MaxBet": "最大ベット",
+        "MaxPerBall": "Max Per Ball",
         "MaxPerMatch": "1 試合毎の最大"
     };
     
@@ -48,6 +52,7 @@
     settingType23Resources["label"]["th-th"] = {
         "BetSetting": "การกำหนดการวางเดิมพัน",
         "MaxBet": "ค่าเดิมพันสูงสุด",
+        "MaxPerBall": "เดิมพันสูงสุดต่อบอล",
         "MaxPerMatch": "ค่าเดิมพันสูงสุดต่อคู่การแข่งขัน",
         "MinBet": "ค่าเดิมพันต้ำสุด"
     };
@@ -56,6 +61,7 @@
     settingType23Resources["label"]["vi-vn"] = {
         "BetSetting": "Tiền Cược",
         "MaxBet": "Cược lớn nhất",
+        "MaxPerBall": "Cược tối đa cho 1 lượt banh",
         "MaxPerMatch": "Cược tối đa cho 1 trận",
         "MinBet": "Cược nhỏ nhất"
     };
@@ -66,13 +72,13 @@
         "MaxBetCannotBeGreaterThanMaxPerBall": "Max Bet cannot be greater than Max Per Ball.",
         "MaxBetCannotBeGreaterThanMaxPerMatch": "Max Bet cannot be greater than Max Per Match.",
         "MaxBetCannotBeNegative": "Max Bet cannot be negative.",
-        "MaxBetLessThanOrEqualMaxPerBall": "The Max Bet should be less than or equal to Max Per Ball",
+        "MaxBetLessThanOrEqualMaxPerBall": "Max Bet must be less than or equal to Max Per Ball",
         "MaxBetLessThanOrEqualMaxPerMatch": "The Max Bet should be less than or equal to Max Per Match",
         "MaxBetLessThanOrEqualTo": "Max Bet must be less than or equal to {0}.",
         "MaxBetMoreThanOrEqualMinBet": "Max Bet must be greater than or equal to Min Bet.",
         "MaxPerBallCannotBeGreaterThanMaxPerMatch": "Max Per Ball cannot be greater than Max Per Match.",
         "MaxPerBallCannotBeNegative": "Max Per Ball cannot be negative.",
-        "MaxPerBallLessThanOrEqualMaxPerMatch": "The Max Per Ball should be less than or equal to Max Per Match",
+        "MaxPerBallLessThanOrEqualMaxPerMatch": "Max Per Ball must be less than or equal to Max Per Match",
         "MaxPerBallLessThanOrEqualTo": "Max Per Ball must be less than or equal to {0}.",
         "MaxPerBallMoreThanOrEqualMaxBet": "Max Per Ball must be greater than or equal to Max Bet.",
         "MaxPerMatchCannotBeNegative": "Max Per Match cannot be negative.",
@@ -100,12 +106,19 @@
     
     settingType23Resources["message"] = settingType23Resources["message"] || {};
     settingType23Resources["message"]["zh-cn"] = {
+        "MaxBetCannotBeGreaterThanMaxPerBall": "最高投注不能大于单粒球最高投注。",
         "MaxBetCannotBeGreaterThanMaxPerMatch": "最高投注不可高于当场最高投注",
+        "MaxBetLessThanOrEqualMaxPerBall": "最高投注必须少于或等于单粒球最高投注",
         "MaxBetLessThanOrEqualMaxPerMatch": "最高投注必须少于或相等于单场限额",
         "MaxBetLessThanOrEqualTo": "最高投注不得多于或相等于 {0}",
         "MaxBetMoreThanOrEqualMinBet": "最高投注限额必须大于或相等于最低投注限额",
+        "MaxPerBallCannotBeGreaterThanMaxPerMatch": "单粒球最高投注不能大于单场限额。",
+        "MaxPerBallCannotBeNegative": "单粒球最高投注不能是负数。",
+        "MaxPerBallLessThanOrEqualMaxPerMatch": "單粒球最高投注必须少于或等于单场限额",
+        "MaxPerBallMoreThanOrEqualMaxBet": "单粒球最高投注必须大于或是等于最高投注。",
         "MaxPerMatchLessThanOrEqualTo": "单场最高投注需低于或相等于 {0}",
         "MaxPerMatchMoreThanOrEqualMaxBet": "单场投注限额必须大于或相等于最高投注限额",
+        "MaxPerMatchMoreThanOrEqualMaxPerBall": "单场限额必须大于或是等于单粒球最高投注。",
         "MinBetCannotBeGreaterThanMaxBet": "最低投注不可高于最低投注",
         "MinBetLessThanOrEqualMaxBet": "最低投注必须少于或相等于最高投注",
         "MinBetMoreThanOrEqualTo": "最大投注额必须大于或等于 {0}",
@@ -126,12 +139,19 @@
     
     settingType23Resources["message"] = settingType23Resources["message"] || {};
     settingType23Resources["message"]["zh-tw"] = {
+        "MaxBetCannotBeGreaterThanMaxPerBall": "最高投注不能大於單粒球最高投注。",
         "MaxBetCannotBeGreaterThanMaxPerMatch": "最高投注不可高於單場最高投注",
+        "MaxBetLessThanOrEqualMaxPerBall": "最高投注必須少於或等於單粒球最高投注",
         "MaxBetLessThanOrEqualMaxPerMatch": "最高投注必須少於或相等於單場限額",
         "MaxBetLessThanOrEqualTo": "最高投注不得多於或相等於 {0}",
         "MaxBetMoreThanOrEqualMinBet": "最高投註限額必須大於或相等於最低投註限額",
+        "MaxPerBallCannotBeGreaterThanMaxPerMatch": "單粒球最高投注不能大於單場限額。",
+        "MaxPerBallCannotBeNegative": "單粒球最高投注不能是負數。",
+        "MaxPerBallLessThanOrEqualMaxPerMatch": "單粒球最高投注必須少於或等於單場限額",
+        "MaxPerBallMoreThanOrEqualMaxBet": "單粒球最高投注必須大於或是等於最高投注。",
         "MaxPerMatchLessThanOrEqualTo": "單場最高投注需底於或等於 {0}",
         "MaxPerMatchMoreThanOrEqualMaxBet": "單場投註限額必須大於或相等於最高投註限額",
+        "MaxPerMatchMoreThanOrEqualMaxPerBall": "單場限額必須大於或是等於單粒球最高投注。",
         "MinBetCannotBeGreaterThanMaxBet": "最低投注不可高於最高投注",
         "MinBetLessThanOrEqualMaxBet": "最低投注必須少於或相等於最高投注",
         "MinBetMoreThanOrEqualTo": "最大投注額必須大於或等於 {0}",
@@ -174,12 +194,19 @@
     
     settingType23Resources["message"] = settingType23Resources["message"] || {};
     settingType23Resources["message"]["th-th"] = {
+        "MaxBetCannotBeGreaterThanMaxPerBall": "ค่าเดิมพันสูงสุดมากกว่าค่าเดิมพันสูงสุดต่อบอลไม่ได้",
         "MaxBetCannotBeGreaterThanMaxPerMatch": "จำนวนเงินสูงสุดที่สามารถเล่นได้ต้องไม่มากกว่าจำนวนเงินสูงสุดต่อรายการที่เล่น",
+        "MaxBetLessThanOrEqualMaxPerBall": "ค่าเดิมพันสูงสุดต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อบอล",
         "MaxBetLessThanOrEqualMaxPerMatch": "ค่าเดิมพันสูงสุดควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุดต่อการแข่งขัน",
         "MaxBetLessThanOrEqualTo": "จำนวนการเดิมพันสูงสุดต้องน้อยกว่า หรือเท่ากับ {0}.",
         "MaxBetMoreThanOrEqualMinBet": "ค่าการเดิมพันขั้นสูงสุดต้องมากกว่าหรือเท่ากับค่าการเดิมพันขั้นต่ำ",
+        "MaxPerBallCannotBeGreaterThanMaxPerMatch": "ค่าเดิมพันสูงสุดต่อบอลมากกว่าค่าเดิมพันสูงสุดต่อเกมไม่ได้",
+        "MaxPerBallCannotBeNegative": "ค่าเดิมพันสูงสุดต่อบอล เป็นเลขติดลบไม่ได้",
+        "MaxPerBallLessThanOrEqualMaxPerMatch": "ค่าเดิมพันสูงสุดต่อบอลต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อคู่การแข่งขัน",
+        "MaxPerBallMoreThanOrEqualMaxBet": "ค่าเดิมพันสูงสุดต่อบอลต้องมากกว่าหรือเท่ากับค่าเดิมพันสูงสุด",
         "MaxPerMatchLessThanOrEqualTo": "จำนวนการเดิมพันสูงสุงต่อรายการต้องน้อยกว่า หรือเท่ากับ {0}",
         "MaxPerMatchMoreThanOrEqualMaxBet": "ค่าการเดิมพันสูงสุดต่อแมทช์ต้องมากกว่าหรือเท่ากับค่าการเดิมพันขั้นสูงสุด",
+        "MaxPerMatchMoreThanOrEqualMaxPerBall": "ค่าเดิมพันสูงสุดต่อเกมต้องมากกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อบอล",
         "MinBetCannotBeGreaterThanMaxBet": "จำนวนเงินต่ำสุดที่สามารถเล่นได้ ต้องไม่มากกว่า จำนวนเงินสูงสุดที่สามารถเล่นได้",
         "MinBetLessThanOrEqualMaxBet": "ค่าเดิมพันขั้นต่ำควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุด.",
         "MinBetMoreThanOrEqualTo": "จำนวนการเดิมพันต่ำสุดต้องมากกว่า หรือเท่ากับ {0}.",
@@ -200,10 +227,17 @@
     
     settingType23Resources["message"] = settingType23Resources["message"] || {};
     settingType23Resources["message"]["vi-vn"] = {
+        "MaxBetCannotBeGreaterThanMaxPerBall": "Tiền Cược Lớn Nhất không được lớn hơn Tiền Cược Tối Đa Cho 1 Lượt Banh.",
         "MaxBetCannotBeGreaterThanMaxPerMatch": "Tiền cược lớn nhất không thể lớn hơn Tiền cược tối đa của mỗi trận đấu",
+        "MaxBetLessThanOrEqualMaxPerBall": "Tiền Cược Lớn Nhất phải nhỏ hơn hoặc bằng Tiền Cược Tối Đa Cho 1 Lượt Banh.",
         "MaxBetLessThanOrEqualMaxPerMatch": "Tiền cược lớn nhất phải nhỏ hơn hoặc bằng Tiền cược tối đa của mỗi trận đấu",
         "MaxBetLessThanOrEqualTo": "Tiền cược lớn nhất phải nhỏ hơn hoặc bằng {0}",
+        "MaxPerBallCannotBeGreaterThanMaxPerMatch": "Tiền Cược Tối Đa Cho 1 Lượt Banh không được lớn hơn Tiền Cược Tối Đa Cho 1 Trận.",
+        "MaxPerBallCannotBeNegative": "Tiền Cược Tối Đa Cho 1 Lượt Banh không được là số âm.",
+        "MaxPerBallLessThanOrEqualMaxPerMatch": "Tiền Cược Tối Đa Cho 1 Lượt Banh phải nhỏ hơn hoặc bằng Tiền Cược Tối Đa Cho 1 Trận.",
+        "MaxPerBallMoreThanOrEqualMaxBet": "Tiền Cược Tối Đa Cho 1 Lượt Banh phải lớn hơn hoặc bằng Tiền Cược Lớn Nhất.",
         "MaxPerMatchLessThanOrEqualTo": "Tiền cược tối đa cho mỗi trận phài ít hơn hoặc bằng {0}",
+        "MaxPerMatchMoreThanOrEqualMaxPerBall": "Tiền Cược Tối Đa Cho 1 Trận phải lớn hơn hoặc bằng Tiền Cược Tối Đa Cho 1 Lượt Banh.",
         "MinBetCannotBeGreaterThanMaxBet": "Tiền cược nhỏ nhất không thể lớn hơn Tiền cược lớn nhất",
         "MinBetLessThanOrEqualMaxBet": "Tiền cược nhỏ nhất phải nhỏ hơn hoặc bằng Tiền cược lớn nhất.",
         "MinBetMoreThanOrEqualTo": "Cược Nhỏ Nhất phải lớn hơn hay bằng {0}.",

@@ -183,4 +183,25 @@
   <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
     <value>จำนวนการเดิมพันต่ำสุดต้องมากกว่า หรือเท่ากับ {0}.</value>
   </data>
+  <data name="MaxBetCannotBeGreaterThanMaxPerBall" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดมากกว่าค่าเดิมพันสูงสุดต่อบอลไม่ได้</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualMaxPerBall" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อบอล</value>
+  </data>
+  <data name="MaxPerBallCannotBeGreaterThanMaxPerMatch" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อบอลมากกว่าค่าเดิมพันสูงสุดต่อเกมไม่ได้</value>
+  </data>
+  <data name="MaxPerBallCannotBeNegative" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อบอล เป็นเลขติดลบไม่ได้</value>
+  </data>
+  <data name="MaxPerBallLessThanOrEqualMaxPerMatch" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อบอลต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อคู่การแข่งขัน</value>
+  </data>
+  <data name="MaxPerBallMoreThanOrEqualMaxBet" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อบอลต้องมากกว่าหรือเท่ากับค่าเดิมพันสูงสุด</value>
+  </data>
+  <data name="MaxPerMatchMoreThanOrEqualMaxPerBall" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อเกมต้องมากกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อบอล</value>
+  </data>
 </root>

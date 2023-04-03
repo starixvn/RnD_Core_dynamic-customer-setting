@@ -97,7 +97,7 @@ namespace Fanex.CustomerSetting.SettingType23.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Max Bet should be less than or equal to Max Per Ball.
+        ///   Looks up a localized string similar to Max Bet must be less than or equal to Max Per Ball.
         /// </summary>
         internal static string MaxBetLessThanOrEqualMaxPerBall {
             get {
@@ -151,7 +151,7 @@ namespace Fanex.CustomerSetting.SettingType23.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Max Per Ball should be less than or equal to Max Per Match.
+        ///   Looks up a localized string similar to Max Per Ball must be less than or equal to Max Per Match.
         /// </summary>
         internal static string MaxPerBallLessThanOrEqualMaxPerMatch {
             get {

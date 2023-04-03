@@ -123,6 +123,9 @@
   <data name="MaxBet" xml:space="preserve">
     <value>最高投注</value>
   </data>
+  <data name="MaxPerBall" xml:space="preserve">
+    <value>单粒球最高投注</value>
+  </data>
   <data name="MaxPerMatch" xml:space="preserve">
     <value>單場限額</value>
   </data>

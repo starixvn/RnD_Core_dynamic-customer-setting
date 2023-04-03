@@ -183,4 +183,25 @@
   <data name="RequiredField" xml:space="preserve">
     <value>必填栏</value>
   </data>
+  <data name="MaxBetCannotBeGreaterThanMaxPerBall" xml:space="preserve">
+    <value>最高投注不能大于单粒球最高投注。</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualMaxPerBall" xml:space="preserve">
+    <value>最高投注必须少于或等于单粒球最高投注</value>
+  </data>
+  <data name="MaxPerBallCannotBeGreaterThanMaxPerMatch" xml:space="preserve">
+    <value>单粒球最高投注不能大于单场限额。</value>
+  </data>
+  <data name="MaxPerBallCannotBeNegative" xml:space="preserve">
+    <value>单粒球最高投注不能是负数。</value>
+  </data>
+  <data name="MaxPerBallLessThanOrEqualMaxPerMatch" xml:space="preserve">
+    <value>單粒球最高投注必须少于或等于单场限额</value>
+  </data>
+  <data name="MaxPerBallMoreThanOrEqualMaxBet" xml:space="preserve">
+    <value>单粒球最高投注必须大于或是等于最高投注。</value>
+  </data>
+  <data name="MaxPerMatchMoreThanOrEqualMaxPerBall" xml:space="preserve">
+    <value>单场限额必须大于或是等于单粒球最高投注。</value>
+  </data>
 </root>

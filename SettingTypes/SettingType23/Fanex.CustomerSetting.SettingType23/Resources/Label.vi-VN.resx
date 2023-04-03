@@ -123,6 +123,9 @@
   <data name="MaxBet" xml:space="preserve">
     <value>Cược lớn nhất</value>
   </data>
+  <data name="MaxPerBall" xml:space="preserve">
+    <value>Cược tối đa cho 1 lượt banh</value>
+  </data>
   <data name="MaxPerMatch" xml:space="preserve">
     <value>Cược tối đa cho 1 trận</value>
   </data>

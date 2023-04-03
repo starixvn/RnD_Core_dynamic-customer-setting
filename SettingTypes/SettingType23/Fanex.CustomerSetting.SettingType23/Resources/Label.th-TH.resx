@@ -123,6 +123,9 @@
   <data name="MaxBet" xml:space="preserve">
     <value>ค่าเดิมพันสูงสุด</value>
   </data>
+  <data name="MaxPerBall" xml:space="preserve">
+    <value>เดิมพันสูงสุดต่อบอล</value>
+  </data>
   <data name="MaxPerMatch" xml:space="preserve">
     <value>ค่าเดิมพันสูงสุดต่อคู่การแข่งขัน</value>
   </data>

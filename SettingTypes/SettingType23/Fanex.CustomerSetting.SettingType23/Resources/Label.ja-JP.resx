@@ -120,6 +120,9 @@
   <data name="MaxBet" xml:space="preserve">
     <value>最大ベット</value>
   </data>
+  <data name="MaxPerBall" xml:space="preserve">
+    <value>Max Per Ball</value>
+  </data>
   <data name="MaxPerMatch" xml:space="preserve">
     <value>1 試合毎の最大</value>
   </data>
