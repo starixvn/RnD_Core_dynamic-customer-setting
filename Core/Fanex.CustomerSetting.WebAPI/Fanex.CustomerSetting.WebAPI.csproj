@@ -284,6 +284,7 @@
     <Content Include="App_Data\PluggableTasks\settingtype-7.json" />
     <Content Include="App_Data\PluggableTasks\collapse-expand-toggle.json" />
     <Content Include="App_Data\ApiConfigurations\LogsConfiguration.config" />
+    <Content Include="App_Data\PluggableTasks\settingtype-22.json" />
     <None Include="packages.config" />
     <Content Include="Web.ConnectionStrings.backupMNL.config" />
     <Content Include="Web.ConnectionStrings.dev.config">
@@ -410,6 +411,10 @@
     <ProjectReference Include="..\..\Tasks\SettingType18\Fanex.CustomerSetting.Tasks.SettingType18\Fanex.CustomerSetting.Tasks.SettingType18.csproj">
       <Project>{fb04841c-96f5-41b9-ad70-473528912e77}</Project>
       <Name>Fanex.CustomerSetting.Tasks.SettingType18</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tasks\SettingType22\Fanex.CustomerSetting.Tasks.SettingType22\Fanex.CustomerSetting.Tasks.SettingType22.csproj">
+      <Project>{e2cbfdad-73ba-46a8-998b-c491ef502d28}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.SettingType22</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tasks\SettingType2\Fanex.CustomerSetting.Tasks.SettingType2\Fanex.CustomerSetting.Tasks.SettingType2.csproj">
       <Project>{ce688f6e-48c3-4036-a393-dc22109659ba}</Project>
