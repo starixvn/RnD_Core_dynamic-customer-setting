@@ -22,12 +22,14 @@ namespace Fanex.CustomerSetting.Models
         public byte Currency { get; set; }
 
         public string Site { get; set; }
+       
+        public string SiteLabel { get; set; }
 
         public bool IsSupportPT3DecimalSites 
-            => AppSettings.SupportPT3DecimalSites.Any(site => site.Equals(this.Site, System.StringComparison.CurrentCultureIgnoreCase));
+            => AppSettings.SupportPT3DecimalSites.Any(site => site.Equals(this.SiteLabel, System.StringComparison.CurrentCultureIgnoreCase));
 
         public bool IsY7Sites
-            => AppSettings.Y7Sites.Any(site => site.Equals(this.Site, System.StringComparison.CurrentCultureIgnoreCase));
+            => AppSettings.Y7Sites.Any(site => site.Equals(this.SiteLabel, System.StringComparison.CurrentCultureIgnoreCase));
 
         public bool IsEnableCollapseExpand { get; set; }
 
