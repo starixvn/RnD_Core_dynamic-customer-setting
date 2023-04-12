@@ -153,7 +153,7 @@ module CustomerSetting {
         public validateSpecialCase(): boolean {
             if (this.$specialCasesAllowed
                 && this.minBet === 0
-                && this.maxBet >= 0 && this.maxBet <= this.maxPerMatch
+                && this.maxBet >= 0 && this.maxBet <= this.maxPerMatch && this.maxPerBall <= this.maxPerMatch
                 && this.maxPerMatch < 1) {
                 return true;
             }
