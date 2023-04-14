@@ -62,6 +62,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources.th-TH.resx" />
+    <EmbeddedResource Include="Resources.vi-VN.resx" />
+    <EmbeddedResource Include="Resources.zh-CN.resx" />
+    <EmbeddedResource Include="Resources.zh-TW.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

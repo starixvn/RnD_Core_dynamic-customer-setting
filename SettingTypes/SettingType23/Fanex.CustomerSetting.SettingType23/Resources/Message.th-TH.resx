@@ -204,4 +204,7 @@
   <data name="MaxPerMatchMoreThanOrEqualMaxPerBall" xml:space="preserve">
     <value>ค่าเดิมพันสูงสุดต่อเกมต้องมากกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อบอล</value>
   </data>
+  <data name="MaxPerBallLessThanOrEqualTo" xml:space="preserve">
+    <value>สูงสุดต่อบอล ต้อง น้อยกว่า หรือ เท่ากับ {0}.</value>
+  </data>
 </root>

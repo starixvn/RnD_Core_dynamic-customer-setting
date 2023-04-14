@@ -165,4 +165,7 @@
   <data name="MaxPerMatchMoreThanOrEqualMaxPerBall" xml:space="preserve">
     <value>Tiền Cược Tối Đa Cho 1 Trận phải lớn hơn hoặc bằng Tiền Cược Tối Đa Cho 1 Lượt Banh.</value>
   </data>
+  <data name="MaxPerBallLessThanOrEqualTo" xml:space="preserve">
+    <value>Tiền cược tối đa cho mỗi lượt banh phải ít hơn hoặc bằng {0}</value>
+  </data>
 </root>

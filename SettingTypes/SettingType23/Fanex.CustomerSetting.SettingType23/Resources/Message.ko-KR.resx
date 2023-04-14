@@ -138,4 +138,7 @@
   <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
     <value>베팅 설정이 성공적으로 업데이트되었습니다.</value>
   </data>
+  <data name="MaxPerBallLessThanOrEqualTo" xml:space="preserve">
+    <value>각 최대공은 {0}보다 작거나 같아야만 합니다.</value>
+  </data>
 </root>

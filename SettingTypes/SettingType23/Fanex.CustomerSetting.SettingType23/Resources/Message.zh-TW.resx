@@ -204,4 +204,7 @@
   <data name="MaxPerMatchMoreThanOrEqualMaxPerBall" xml:space="preserve">
     <value>單場限額必須大於或是等於單粒球最高投注。</value>
   </data>
+  <data name="MaxPerBallLessThanOrEqualTo" xml:space="preserve">
+    <value>單粒球最高投注必須少於或相等於 {0}.</value>
+  </data>
 </root>
