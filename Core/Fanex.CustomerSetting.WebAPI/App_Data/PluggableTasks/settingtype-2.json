@@ -15,6 +15,18 @@
         ]
       },
       {
+        "settingTypeId": 23,
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.SettingType2.BetSettingNotesTask, Fanex.CustomerSetting.Tasks.SettingType2"
+        ]
+      },
+      {
+        "settingTypeId": 23,
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.SettingType2.BetSettingItemNoteTask, Fanex.CustomerSetting.Tasks.SettingType2"
+        ]
+      },
+      {
         "settingTypeId": 16,
         "taskNames": [
           "Fanex.CustomerSetting.Tasks.SettingType2.BetSettingNotesTask, Fanex.CustomerSetting.Tasks.SettingType2"

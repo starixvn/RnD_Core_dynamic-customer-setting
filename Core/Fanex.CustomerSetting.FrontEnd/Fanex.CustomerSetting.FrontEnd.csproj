@@ -168,6 +168,7 @@
     <None Include="Assets\Styles\flexbox-patch.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype1.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype12.scss" />
+    <None Include="Assets\Styles\SettingTypes\_settingtype23.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype22.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype6.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype10.scss" />
@@ -386,6 +387,21 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType22\settingtype22-win-limit-select.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType22\settingtype22.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType22\settingtype22-memberwinlossamount-modal.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23-header-2.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23-input.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23-resources.js">
+      <DependentUpon>settingtype23-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype23-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23-value-2.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-input.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -648,6 +664,10 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType22\settingtype22-win-limit-select.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType22\settingtype22.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType22\settingtype22-memberwinlossamount-modal.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\models.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23-input.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23-resources.ts" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType23\settingtype23.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Typings\angularjs\angular-mocks.d.ts" />

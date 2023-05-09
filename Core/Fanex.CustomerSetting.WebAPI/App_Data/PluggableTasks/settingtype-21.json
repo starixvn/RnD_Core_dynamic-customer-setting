@@ -3,9 +3,9 @@
     "order": 1,
     "tasks": [
       {
-        "settingTypeId": 21,
+        "settingTypeId": 22,
         "taskNames": [
-          "Fanex.CustomerSetting.Tasks.SettingType21.AddSettingType21QueryWarningTask, Fanex.CustomerSetting.Tasks.SettingType21"
+          "Fanex.CustomerSetting.Tasks.SettingType22.SettingType22NoteTask, Fanex.CustomerSetting.Tasks.SettingType22"
         ]
       }
     ]

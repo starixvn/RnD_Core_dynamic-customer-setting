@@ -1094,3 +1094,6 @@ select.setting-field {
       text-align: left; }
     .settingtype22 table .cell-number {
       text-align: center; }
+
+.settingtype23 .block__subType-header {
+  border-top: 1px solid #7c98a4; }
