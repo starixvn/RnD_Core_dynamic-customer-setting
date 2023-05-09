@@ -7,7 +7,7 @@
       <Mapping DataField="MaxWinLimit" ObjectProperty="WinLimit" />
       <Mapping DataField="MaxLossLimit" ObjectProperty="LossLimit" />
     </Setting>
-    <Setting Key="CustSetting_WinLossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd_UAT4" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_WinLossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_WinLossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>

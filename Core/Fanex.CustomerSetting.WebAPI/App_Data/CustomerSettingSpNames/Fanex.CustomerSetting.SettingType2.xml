@@ -17,6 +17,6 @@
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
-    <Setting Key="CustSetting_BetLimitUpd" SpName="Acc_CustSetting_BetLimitUpd_UAT4" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_BetLimitUpd" SpName="Acc_CustSetting_BetLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>

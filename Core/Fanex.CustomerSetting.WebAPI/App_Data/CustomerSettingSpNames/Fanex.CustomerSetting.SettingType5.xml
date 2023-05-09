@@ -30,6 +30,6 @@
       <Mapping DataField="MasterDiscount" ObjectProperty="UplineOfUplineChargeCommission" />
       <Mapping DataField="IntervalComm" ObjectProperty="IntervalStep" />
     </Setting>
-    <Setting Key="CustSetting_ChargeCommissionUpd" SpName="Acc_CustSetting_DiscountUpd_UAT4" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_ChargeCommissionUpd" SpName="Acc_CustSetting_DiscountUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>

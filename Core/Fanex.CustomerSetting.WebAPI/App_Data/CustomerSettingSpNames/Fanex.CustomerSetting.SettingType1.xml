@@ -28,6 +28,6 @@
     <Setting Key="CustSetting_AgentPTUpd" SpName="Acc_CustSetting_AgentPTUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_SuperPTOnMemberUpd" SpName="Acc_CustSetting_SuperPTOnMemberUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_MasterPTOnMemberUpd" SpName="Acc_CustSetting_MasterPTOnMemberUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
-    <Setting Key="CustSetting_AgentPTOnMemberUpd" SpName="Acc_CustSetting_AgentPTOnMemberUpd_UAT4" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_AgentPTOnMemberUpd" SpName="Acc_CustSetting_AgentPTOnMemberUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>

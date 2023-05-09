@@ -7,6 +7,6 @@
       <Mapping DataField="StakeLevelName" ObjectProperty="StakeLevelRange" />
       <Mapping DataField="IsChecked" ObjectProperty="Selected" />
     </Setting>
-    <Setting Key="CustSetting_StakeLevelUpd" SpName="Acc_CustSetting_StakeLevelUpd_UAT4" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_StakeLevelUpd" SpName="Acc_CustSetting_StakeLevelUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>

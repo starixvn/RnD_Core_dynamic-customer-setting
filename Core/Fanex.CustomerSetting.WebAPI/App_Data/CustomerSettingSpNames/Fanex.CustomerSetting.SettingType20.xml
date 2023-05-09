@@ -5,6 +5,6 @@
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
-    <Setting Key="Acc_CustSetting_GameBetSettingUpd" SpName="Acc_CustSetting_GameBetSettingUpd_UAT4" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_GameBetSettingUpd" SpName="Acc_CustSetting_GameBetSettingUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>

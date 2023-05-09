@@ -6,7 +6,7 @@
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="MaxLossLimit" ObjectProperty="LossLimit" />
     </Setting>
-    <Setting Key="CustSetting_LossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd_UAT4" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_LossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>
