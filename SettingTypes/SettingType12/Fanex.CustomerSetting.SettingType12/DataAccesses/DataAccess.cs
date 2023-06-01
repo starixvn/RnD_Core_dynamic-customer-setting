@@ -12,6 +12,7 @@
     using Models.Requests;
     using System.Collections;
     using System.Collections.Generic;
+    using Fanex.CustomerSetting.Extensions;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
@@ -56,7 +57,8 @@
 
         public CurrentLossAmountItem GetCustomerCurrentLossAmount(CurrentLossAmountQuery query)
         {
-            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_LossPercentSelect"))
+            var siteDB = ObjectDbExtensions.GetSiteDBConfig(query.CustomerId);            
+            using (var objectDb = new ObjectDb($"{siteDB.PrefixSPName}CustSetting_LossPercentSelect"))
             {
                 var parameterValues = new Hashtable
                 {
@@ -65,7 +67,7 @@
                     { "bettype", query.BetTypeId }
                 };
 
-                return objectDb.QueryEntity<CurrentLossAmountItem>(parameterValues);
+                return objectDb.QueryEntityOnSiteDB<CurrentLossAmountItem>(parameterValues, siteDB.AGIP);
             }
         }
     }

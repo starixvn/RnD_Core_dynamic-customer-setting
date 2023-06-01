@@ -7,6 +7,8 @@
     using CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
+    using Fanex.CustomerSetting.Extensions;
+    using Fanex.Data;
     using Models;
     using Models.Requests;
     using System.Collections;
@@ -54,7 +56,8 @@
 
         public CurrentWinLossAmountItem GetCustomerCurrentWinLossAmount(CurrentWinLossAmountQuery query)
         {
-            using (var objectDb = ObjectDbFactory.ObjectDb("CustSetting_WinLossPercentSelect"))
+            var siteDB = ObjectDbExtensions.GetSiteDBConfig(query.CustomerId);
+            using (var objectDb = new ObjectDb($"{siteDB.PrefixSPName}CustSetting_WinLossPercentSelect"))
             {
                 var parameterValues = new Hashtable
                 {
@@ -63,7 +66,7 @@
                     { "bettype", query.BetTypeId }
                 };
 
-                return objectDb.QueryEntity<CurrentWinLossAmountItem>(parameterValues);
+                return objectDb.QueryEntityOnSiteDB<CurrentWinLossAmountItem>(parameterValues, siteDB.AGIP);
             }
         }
     }
