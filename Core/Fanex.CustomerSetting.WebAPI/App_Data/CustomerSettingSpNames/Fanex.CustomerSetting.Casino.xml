@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions SiteId="68" SiteName="DCS">
-  <Function Name="Customer_Setting_Casino" ProductName="AllBet,Macau Games">
+  <Function Name="Customer_Setting_Casino" ProductName="RNG Slot">
     <Setting Key="Acc_CustSetting_DisableNewProductSyncStatusSelect " SpName="Acc_CustSetting_DisableNewProductSyncStatusSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="Acc_CustSetting_DisableNewProductSyncStatusUpd" SpName="Acc_CustSetting_DisableNewProductSyncStatusUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
