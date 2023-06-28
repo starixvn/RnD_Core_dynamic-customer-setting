@@ -46,7 +46,7 @@
 
             if (string.IsNullOrEmpty(template))
             {
-                template = BuildTemplate();
+                template = BuildTemplate(query.IsDarkMode);
                 cache.Set(SettingTemplateCachingKey, template, DateTime.Now.AddHours(CachingHours));
             }
 
@@ -58,6 +58,7 @@
                 query.Language = settingContext.Language;
                 template = AddFlexboxPatchToTemplate(template);
                 template = ReplaceParameters(template, query);
+                template = ReplaceCustomCss(template, query.IsDarkMode);
             }
 
             return Content(template, "text/HTML");
@@ -91,7 +92,7 @@
             return Content(customerSettingResponse.Content);
         }
 
-        private string BuildTemplate()
+        private string BuildTemplate(bool isDarkMode)
         {
             IRestResponse response = _customerSettingService.QueryCustomerSettingTemplate();
             bool isDebug = HttpContext.IsDebuggingEnabled;
@@ -102,9 +103,6 @@
                 cdn = Url.Content(cdn);
             }
 
-            string customCss = CustomerSettingConfiguration.Settings.CustomCssUrl != null
-                ? Url.Content(CustomerSettingConfiguration.Settings.CustomCssUrl.ToString())
-                : string.Empty;
             string template = string.Empty;
 
             if (response.StatusCode != HttpStatusCode.OK)
@@ -116,7 +114,6 @@
 
             template = SimpleJson.DeserializeObject<string>(response.Content);
             template = template.Replace("{{cdnUri}}", cdn);
-            template = template.Replace("{{customCss}}", customCss);
             template = template.Replace("{{version}}", isDebug ? "0.0.1" : Guid.NewGuid().ToString("N"));
             template = template.Replace("{{min}}", isDebug ? string.Empty : ".min");
 
@@ -162,6 +159,22 @@
                 finalTemplate = finalTemplate.Replace("{{productId}}", query.ProductId.ToString());
             }
 
+            return finalTemplate;
+        }
+
+        private string ReplaceCustomCss(string template, bool isDarkMode)
+        {
+            string finalTemplate = template;
+
+            string customCss = CustomerSettingConfiguration.Settings.CustomCssUrl != null
+                ? Url.Content(CustomerSettingConfiguration.Settings.CustomCssUrl.ToString())
+                : string.Empty;
+
+            string darkModeCustomCss = CustomerSettingConfiguration.Settings.DarkModeCustomCssUrl != null
+               ? Url.Content(CustomerSettingConfiguration.Settings.DarkModeCustomCssUrl.ToString())
+               : string.Empty;
+
+            finalTemplate = finalTemplate.Replace("{{customCss}}", isDarkMode ? darkModeCustomCss : customCss);
             return finalTemplate;
         }
     }
