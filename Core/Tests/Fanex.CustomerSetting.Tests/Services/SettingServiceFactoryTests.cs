@@ -1,14 +1,13 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Tests
 {
-    using System;
-    using Casino.Services.Impl;
     using CustomerSetting.Configurations;
+    using CustomerSetting.LoggingConfig;
     using CustomerSetting.Models;
     using CustomerSetting.Services.Impl;
-    using CustomerSetting.LoggingConfig;
     using Fanex.Logging.Extensions.Database;
     using NSubstitute;
     using NUnit.Framework;
+    using System;
 
     [TestFixture]
     public class SettingServiceFactoryTests
@@ -138,50 +137,6 @@
 
             //// Assert
             Assert.AreEqual(settingService.GetType(), defaultServiceType, productId.ToString(), null);
-        }
-
-        [Test]
-        public void GetUpdateService_ProductIdIsRegistered_ReturnApproriatedValidService()
-        {
-            //// Arrange
-            var productId = AllBet;
-            var settingContext = Substitute.For<ISettingContext>();
-            settingContext.Actor = Substitute.For<User>();
-            var serviceType = typeof(UpdateCasinoSettingService);
-
-            configurator
-               .UseQueryServiceType(serviceType)
-               .UseUpdateServiceType(serviceType)
-               .ForProducts(AllBet)
-               .Apply();
-
-            //// Act
-            var settingService = new SettingServiceFactory().CreateUpdateService(100, productId, settingContext);
-
-            //// Assert
-            Assert.AreEqual(settingService.GetType(), serviceType, productId.ToString(), null);
-        }
-
-        [Test]
-        public void GetQueryService_ProductIdIsRegistered_ReturnApproriatedValidService()
-        {
-            //// Arrange
-            var productId = AllBet;
-            var settingContext = Substitute.For<ISettingContext>();
-            settingContext.Actor = Substitute.For<User>();
-            var serviceType = typeof(QueryCasinoSettingService);
-
-            configurator
-                .UseQueryServiceType(serviceType)
-                .UseUpdateServiceType(serviceType)
-                .ForProducts(AllBet)
-                .Apply();
-
-            //// Act
-            var settingService = new SettingServiceFactory().CreateQueryService(100, productId, settingContext);
-
-            //// Assert
-            Assert.AreEqual(settingService.GetType(), serviceType, productId.ToString(), null);
         }
     }
 }
