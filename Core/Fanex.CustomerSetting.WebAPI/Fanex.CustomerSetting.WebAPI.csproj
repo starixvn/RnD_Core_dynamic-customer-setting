@@ -194,7 +194,6 @@
       <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\APILoggerSpNames.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Casino.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.NumberGames2.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType11.xml" />
