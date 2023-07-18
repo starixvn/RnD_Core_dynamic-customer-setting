@@ -99,9 +99,6 @@
     <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="ONEbook.NG2.API, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ONEbook.NG2.API.DCS.1.0.0.3\lib\net40\ONEbook.NG2.API.dll</HintPath>
-    </Reference>
     <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ONEbook.UM.ThirdParty.1.0.0.0\lib\net40\ONEbook.UM.ThirdParty.dll</HintPath>
     </Reference>
@@ -133,10 +130,6 @@
     <Compile Include="StubHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Fanex.CustomerSetting.NumberGames2\Fanex.CustomerSetting.NumberGames2.csproj">
-      <Project>{f2a5014c-9daf-4b5e-8471-7d68742a7dde}</Project>
-      <Name>Fanex.CustomerSetting.NumberGames2</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>

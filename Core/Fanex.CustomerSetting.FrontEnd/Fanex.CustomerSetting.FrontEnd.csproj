@@ -244,17 +244,6 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\settingtype18-header.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\settingtype18-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType18\settingtype18.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11-resources.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>settingtype11-resources.tt</DependentUpon>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype11-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\settingtype12-resources.js">
       <DependentUpon>settingtype12-resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -491,19 +480,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>settingtype8-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-input.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-resources.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>settingtype9-resources.tt</DependentUpon>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-resources.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype9-resources.js</LastGenOutput>
-    </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9.htm" />
     <Content Include="Assets\Scripts\NodeModules\embeded-template.js" />
     <Content Include="Assets\Styles\customer-setting-matrix.css">
       <DependentUpon>customer-setting-matrix.scss</DependentUpon>
@@ -569,9 +545,6 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingType\setting-type-base-directive.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingType\setting-type-directive-loader.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Resource\resource-translation.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\models.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\settingtype12-input.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\settingtype12-resource.ts" />
@@ -622,10 +595,6 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8-groupdetails-modal.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8.ts" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8-resource.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-input.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-resources.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\models.ts" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9.ts" />
     <Content Include="Assets\Scripts\NodeModules\embeded-template.ts" />
     <Content Include="Assets\Scripts\NodeModules\js-string-escape.d.ts" />
     <Content Include="Assets\Scripts\NodeModules\minimize.d.ts" />

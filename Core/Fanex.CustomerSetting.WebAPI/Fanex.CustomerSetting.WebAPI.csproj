@@ -172,31 +172,7 @@
     <AdditionalFiles Include="..\..\.sonarlint\rome.dcs\CSharp\SonarLint.xml">
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
-    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.backupMNL.config">
-      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
-    </Content>
-    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.local.config">
-      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
-    </Content>
-    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.masterLocal.config">
-      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
-    </Content>
-    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.masterSIT.config">
-      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
-    </Content>
-    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.pro.config">
-      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
-    </Content>
-    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.sit.config">
-      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
-    </Content>
-    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.uat.config">
-      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
-    </Content>
-    <Content Include="App_Data\CustomerSettingSpNames\APILoggerSpNames.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.NumberGames2.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType11.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType12.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType13.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType14.xml" />
@@ -219,7 +195,6 @@
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType7.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType8.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType9.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Task.Product18.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml" />
     <Content Include="App_Data\PluggableTasks\product-18.json" />
@@ -263,7 +238,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.backupMNL.config" />
-    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.config" />
     <Content Include="App_Data\PluggableTasks\settingtype-13.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-9.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-2.json" />
@@ -282,7 +256,6 @@
     <Content Include="App_Data\PluggableTasks\settingtype-8.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-7.json" />
     <Content Include="App_Data\PluggableTasks\collapse-expand-toggle.json" />
-    <Content Include="App_Data\ApiConfigurations\LogsConfiguration.config" />
     <Content Include="App_Data\PluggableTasks\settingtype-22.json" />
     <None Include="packages.config" />
     <Content Include="Web.ConnectionStrings.backupMNL.config" />
@@ -315,10 +288,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\SettingTypes\SettingType11\Fanex.CustomerSetting.SettingType11\Fanex.CustomerSetting.SettingType11.csproj">
-      <Project>{24fd214c-e151-4f97-95c7-924680d84c74}</Project>
-      <Name>Fanex.CustomerSetting.SettingType11</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SettingTypes\SettingType12\Fanex.CustomerSetting.SettingType12\Fanex.CustomerSetting.SettingType12.csproj">
       <Project>{012f250b-a33d-4016-a5de-407e9aa5d5b1}</Project>
       <Name>Fanex.CustomerSetting.SettingType12</Name>
@@ -383,10 +352,6 @@
       <Project>{0b879d62-31d1-4640-ac8c-f618aaaec6d8}</Project>
       <Name>Fanex.CustomerSetting.SettingType8</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SettingTypes\SettingType9\Fanex.CustomerSetting.SettingType9\Fanex.CustomerSetting.SettingType9.csproj">
-      <Project>{3fcf65fb-a2e7-4b82-b0d1-665d73468c3a}</Project>
-      <Name>Fanex.CustomerSetting.SettingType9</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Tasks\CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle\Fanex.CustomerSetting.Tasks.CollapseExpandToggle.csproj">
       <Project>{0128e0b4-3f44-4d5d-9f70-d3bc0a0a0f25}</Project>
       <Name>Fanex.CustomerSetting.Tasks.CollapseExpandToggle</Name>
@@ -427,17 +392,9 @@
       <Project>{b2071ef6-7006-4c20-b0f1-3ab246d751a5}</Project>
       <Name>Fanex.CustomerSetting.Tasks.SettingType8</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Tasks\SettingType9\Fanex.CustomerSetting.Tasks.SettingType9\Fanex.CustomerSetting.Tasks.SettingType9.csproj">
-      <Project>{c7ed70ad-54e8-48dd-b6f7-f42fe3b8788f}</Project>
-      <Name>Fanex.CustomerSetting.Tasks.SettingType9</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Casino\Fanex.CustomerSetting.Casino.csproj">
       <Project>{6fe2478f-9e93-48d1-95b9-cad78704b67e}</Project>
       <Name>Fanex.CustomerSetting.Casino</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.NumberGames2\Fanex.CustomerSetting.NumberGames2.csproj">
-      <Project>{f2a5014c-9daf-4b5e-8471-7d68742a7dde}</Project>
-      <Name>Fanex.CustomerSetting.NumberGames2</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
       <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
