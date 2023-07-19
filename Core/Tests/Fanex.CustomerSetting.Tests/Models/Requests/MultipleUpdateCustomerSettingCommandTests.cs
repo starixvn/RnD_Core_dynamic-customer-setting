@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models.Requests
 {
-    using Fanex.CustomerSetting.Casino.Tests;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;

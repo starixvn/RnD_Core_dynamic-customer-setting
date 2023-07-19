@@ -172,7 +172,6 @@
     <AdditionalFiles Include="..\..\.sonarlint\rome.dcs\CSharp\SonarLint.xml">
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Casino.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType12.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType13.xml" />
@@ -392,10 +391,6 @@
     <ProjectReference Include="..\..\Tasks\SettingType8\Fanex.CustomerSetting.Tasks.SettingType8\Fanex.CustomerSetting.Tasks.SettingType8.csproj">
       <Project>{b2071ef6-7006-4c20-b0f1-3ab246d751a5}</Project>
       <Name>Fanex.CustomerSetting.Tasks.SettingType8</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Casino\Fanex.CustomerSetting.Casino.csproj">
-      <Project>{6fe2478f-9e93-48d1-95b9-cad78704b67e}</Project>
-      <Name>Fanex.CustomerSetting.Casino</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
       <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>

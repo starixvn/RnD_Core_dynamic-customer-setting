@@ -181,10 +181,6 @@
       <Project>{1f9436d3-f8aa-48c9-b1a7-7659eaa7bdcc}</Project>
       <Name>Fanex.CustomerSetting.SettingType1</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Fanex.CustomerSetting.Casino\Fanex.CustomerSetting.Casino.csproj">
-      <Project>{6fe2478f-9e93-48d1-95b9-cad78704b67e}</Project>
-      <Name>Fanex.CustomerSetting.Casino</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
       <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
       <Name>Fanex.CustomerSetting.Resource</Name>
@@ -192,10 +188,6 @@
     <ProjectReference Include="..\..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Casino.Tests\Fanex.CustomerSetting.Casino.Tests.csproj">
-      <Project>{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}</Project>
-      <Name>Fanex.CustomerSetting.Casino.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
