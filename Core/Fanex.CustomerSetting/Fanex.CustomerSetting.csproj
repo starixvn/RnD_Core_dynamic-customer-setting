@@ -135,12 +135,14 @@
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
     <Compile Include="Criteria\UnderMaintainanceQueryCriteria.cs" />
     <Compile Include="DataAccesses\ObjectDbFactory.cs" />
+    <Compile Include="Extensions\ObjectDbExtensions.cs" />
     <Compile Include="LoggingConfig\ExceptionHandlerAdapter.cs" />
     <Compile Include="LoggingConfig\LogEngines\LogEngineFactory.cs" />
     <Compile Include="LoggingConfig\LogEngines\RabbitLogEngine.cs" />
     <Compile Include="LoggingConfig\LogEngines\SentryLogEngine.cs" />
     <Compile Include="LoggingConfig\LoggingConfig.cs" />
     <Compile Include="LoggingConfig\LogManagerAdapter.cs" />
+    <Compile Include="Models\SiteDB.cs" />
     <Compile Include="Models\UnderMaintainanceInfo.cs" />
     <Compile Include="Services\Impl\SettingServiceFactory.cs" />
     <Compile Include="Services\Impl\UMService.cs" />

@@ -8,5 +8,18 @@
     </Setting>
     <Setting Key="CustSetting_LossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
+    <Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+  </Function>
+
+  <Function Name="SiteDB 1 - WinLossLimit">
+    <Setting Key="SiteDB1_CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
+  </Function>
+  
+  <Function Name="SiteDB 2 - WinLossLimit">
+    <Setting Key="SiteDB2_CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
+  </Function>
+  
+  <Function Name="SiteDB 3 - WinLossLimit">
+    <Setting Key="SiteDB3_CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>
