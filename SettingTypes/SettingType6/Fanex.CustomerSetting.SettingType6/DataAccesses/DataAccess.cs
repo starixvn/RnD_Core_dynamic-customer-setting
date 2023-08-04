@@ -63,7 +63,8 @@
                 {
                     { "custid", query.CustomerId },
                     { "sporttype", query.SportTypeId },
-                    { "bettype", query.BetTypeId }
+                    { "bettype", query.BetTypeId },
+                    { "settingstatus", query.SettingStatus }
                 };
 
                 return objectDb.QueryEntityOnSiteDB<CurrentWinLossAmountItem>(parameterValues, siteDB.AGIP);

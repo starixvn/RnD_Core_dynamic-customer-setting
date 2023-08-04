@@ -86,7 +86,7 @@
             CurrentLossAmountQuery query = JsonConvert.DeserializeObject<CurrentLossAmountQuery>(command.JsonParameters);
 
             query.CustomerId = command.CustomerId;
-
+            query.SettingStatus = command.SettingStatus;
             return _lossLimitDataAccess.GetCustomerCurrentLossAmount(query);
         }
     }
