@@ -12,13 +12,15 @@
 
         private readonly int SettingType17 = 17;
 
+        private readonly int SettingType7 = 7;
+
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, ISetting setting)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
             Check.Argument.IsNotNull(query, nameof(query));
             Check.Argument.IsNotNull(setting, nameof(setting));
             List<string> messages = new List<string>();
-            if (setting.SettingTypes.FirstOrDefault().SettingItems.Any(item => (item as SettingItemDefault)?.SportTypeId == BBinProductId))
+            if (setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == SettingType7).SettingItems.Any(item => (item as SettingItemDefault)?.SportTypeId == BBinProductId))
             {
                 messages.Add(Resource.BBinSettingNote);
             }
