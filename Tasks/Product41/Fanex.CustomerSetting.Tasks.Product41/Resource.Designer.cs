@@ -77,5 +77,14 @@ namespace Fanex.CustomerSetting.Tasks.Product41 {
                 return ResourceManager.GetString("BBinSettingNote", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission is not applied to the Blackjack games..
+        /// </summary>
+        internal static string BlackjackSettingNote {
+            get {
+                return ResourceManager.GetString("BlackjackSettingNote", resourceCulture);
+            }
+        }
     }
 }

@@ -123,4 +123,7 @@
   <data name="BBinSettingNote" xml:space="preserve">
     <value>Lưu ý, đối với BBIN, khi bạn chỉnh sửa các thiết lập của Member, các thiết lập mới này sẽ được áp dụng từ lần chuyển tiền tiếp theo của Member.</value>
   </data>
+  <data name="BlackjackSettingNote" xml:space="preserve">
+    <value>Hoa hồng không được áp dụng cho các trò chơi Blackjack.</value>
+  </data>
 </root>

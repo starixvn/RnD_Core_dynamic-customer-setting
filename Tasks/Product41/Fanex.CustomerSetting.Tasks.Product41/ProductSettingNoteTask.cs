@@ -8,8 +8,6 @@
 
     public class ProductSettingNoteTask : IPostQueryCustomerSettingTask
     {
-        private readonly int BBinProductId = 241;
-
         private readonly int SettingType17 = 17;
 
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, ISetting setting)
@@ -19,7 +17,7 @@
             Check.Argument.IsNotNull(setting, nameof(setting));
             List<string> messages = new List<string>();
             messages.Add(Resource.BBinSettingNote);
-
+            messages.Add(Resource.BlackjackSettingNote);
             if (setting.CustomerLevel.IsAgentLevel() && setting.SettingTypes.Any(item => item.Id == SettingType17))
             {
                 messages.Add(Resource.AgentStakeLevelWarning);

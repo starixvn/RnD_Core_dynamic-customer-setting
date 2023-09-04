@@ -123,4 +123,7 @@
   <data name="BBinSettingNote" xml:space="preserve">
     <value>请知悉: [BBIN 产品] 当您更改会员的设置时，此新更改只会在会员转额进游戏后才会生效。</value>
   </data>
+  <data name="BlackjackSettingNote" xml:space="preserve">
+    <value>二十一点游戏沒有提供佣金。</value>
+  </data>
 </root>

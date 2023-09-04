@@ -123,4 +123,7 @@
   <data name="BBinSettingNote" xml:space="preserve">
     <value>โปรดทราบ: [BBIN] เมื่อคุณแก้ไขการตั้งค่าของสมาชิก การตั้งค่าใหม่เหล่านี้จะมีผลหลังจากการโอนเงินเข้าสู่เกมครั้งต่อไปของสมาชิก</value>
   </data>
+  <data name="BlackjackSettingNote" xml:space="preserve">
+    <value>เกมแบล็คแจ็ค จะไม่มีค่าคอมมิชชัน</value>
+  </data>
 </root>

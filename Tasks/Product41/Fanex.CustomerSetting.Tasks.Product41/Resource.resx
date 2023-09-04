@@ -123,4 +123,7 @@
   <data name="BBinSettingNote" xml:space="preserve">
     <value>Note that: [BBIN] when you edit member's settings, these new settings will take effect on member's next transfer.</value>
   </data>
+  <data name="BlackjackSettingNote" xml:space="preserve">
+    <value>Commission is not applied to the Blackjack games.</value>
+  </data>
 </root>
