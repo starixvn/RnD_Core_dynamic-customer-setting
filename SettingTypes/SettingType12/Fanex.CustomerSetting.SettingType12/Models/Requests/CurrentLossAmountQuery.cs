@@ -8,6 +8,8 @@
 
         public short BetTypeId { get; set; }
 
+        public byte SettingStatus { get; set; }
+
         public override bool Equals(object obj)
         {
             var otherObj = obj as CurrentLossAmountQuery;

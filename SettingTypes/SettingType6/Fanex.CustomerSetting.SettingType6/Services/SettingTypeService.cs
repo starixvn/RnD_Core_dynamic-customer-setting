@@ -86,7 +86,7 @@
             CurrentWinLossAmountQuery query = JsonConvert.DeserializeObject<CurrentWinLossAmountQuery>(command.JsonParameters);
 
             query.CustomerId = command.CustomerId;
-
+            query.SettingStatus = command.SettingStatus;
             return _winLossLimitDataAccess.GetCustomerCurrentWinLossAmount(query);
         }
     }

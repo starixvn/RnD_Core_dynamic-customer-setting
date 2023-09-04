@@ -18,10 +18,7 @@
             Check.Argument.IsNotNull(query, nameof(query));
             Check.Argument.IsNotNull(setting, nameof(setting));
             List<string> messages = new List<string>();
-            if (setting.SettingTypes.FirstOrDefault().SettingItems.Any(item => (item as SettingItemDefault)?.SportTypeId == BBinProductId))
-            {
-                messages.Add(Resource.BBinSettingNote);
-            }
+            messages.Add(Resource.BBinSettingNote);
 
             if (setting.CustomerLevel.IsAgentLevel() && setting.SettingTypes.Any(item => item.Id == SettingType17))
             {

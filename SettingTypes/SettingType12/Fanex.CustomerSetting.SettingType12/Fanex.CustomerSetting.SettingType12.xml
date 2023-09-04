@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
-    <Function Name="WinLossLimit">
-        <Setting Key="CustSetting_LossLimitSelect" SpName="Acc_CustSetting_WinLossLimitSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
-            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
-            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
-            <Mapping DataField="MaxLossLimit" ObjectProperty="LossLimit" />
-        </Setting>
+  <Function Name="WinLossLimit">
+    <Setting Key="CustSetting_LossLimitSelect" SpName="Acc_CustSetting_WinLossLimitSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="MaxLossLimit" ObjectProperty="LossLimit" />
+    </Setting>
 
-        <Setting Key="CustSetting_LossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_LossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
 
-        <Setting Key="CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
-        <Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
-    </Function>
+    <Setting Key="CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+  </Function>
 
-  <Function Name="SiteDB 1 - WinLossLimit">    
-    <Setting Key="SiteDB1_CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
+  <Function Name="SiteDB 1 - WinLossLimit">
+    <Setting Key="SiteDB1_CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
   <Function Name="SiteDB 2 - WinLossLimit">
-    <Setting Key="SiteDB2_CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
+    <Setting Key="SiteDB2_CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
   <Function Name="SiteDB 3 - WinLossLimit">
-    <Setting Key="SiteDB3_CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" TimeOut="600" />
+    <Setting Key="SiteDB3_CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>
