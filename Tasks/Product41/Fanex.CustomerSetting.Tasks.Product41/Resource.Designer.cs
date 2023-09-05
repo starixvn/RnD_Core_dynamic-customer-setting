@@ -70,7 +70,7 @@ namespace Fanex.CustomerSetting.Tasks.Product41 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Note that: [BBIN] when you edit member&apos;s settings, these new settings will take effect on member&apos;s next transfer..
+        ///   Looks up a localized string similar to [BBIN]: Commission is not applied to the BBIN product, with effective from 11/9/2023  (dd/mm/yyyy). Furthermore, when you edit member&apos;s settings, these new settings will take effect on member&apos;s next transfer..
         /// </summary>
         internal static string BBinSettingNote {
             get {

@@ -121,6 +121,6 @@
     <value>Lưu ý rằng Agent có thể gán cho Member tất cả giới hạn cược nào mà họ được phép.</value>
   </data>
   <data name="BBinSettingNote" xml:space="preserve">
-    <value>Lưu ý, đối với BBIN, khi bạn chỉnh sửa các thiết lập của Member, các thiết lập mới này sẽ được áp dụng từ lần chuyển tiền tiếp theo của Member.</value>
+    <value>[BBIN]: Hoa hồng không được áp dụng cho sản phẩm BBIN, kể từ ngày 11/9/2023 (dd/mm/yyyy). Ngoài ra, khi bạn chỉnh sửa cài đặt của Member, những cài đặt mới này sẽ bắt đầu có hiệu lực kể từ lần chuyển khoản tiếp theo của họ.</value>
   </data>
 </root>
