@@ -120,6 +120,9 @@
   <data name="AutoResetIsViolatedWithUpline" xml:space="preserve">
     <value>關閉上線的每日限額自動重設.</value>
   </data>
+  <data name="BBinPopupNoteMessage" xml:space="preserve">
+    <value>注意：BBIN"贏數額巴仙"的欄位顯示"N/A" 的意思是最高的贏數額不適用於BBIN的產品。</value>
+  </data>
   <data name="MaximumLossValueIsRequired" xml:space="preserve">
     <value>需求最高輸額.</value>
   </data>
