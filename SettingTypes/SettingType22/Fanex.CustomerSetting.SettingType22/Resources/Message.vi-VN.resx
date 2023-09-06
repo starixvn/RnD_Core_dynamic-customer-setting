@@ -120,6 +120,9 @@
   <data name="AutoResetIsViolatedWithUpline" xml:space="preserve">
     <value>Chức năng tự động reset giới hạn chuyển khoản mỗi ngày đã được tắt cho cấp trên.</value>
   </data>
+  <data name="BBinPopupNoteMessage" xml:space="preserve">
+    <value>Lưu ý: Phần trăm Thắng (%) của BBIN hiển thị là "N/A" nghĩa là không áp dụng Giới Hạn Thắng Tối Đa cho sản phẩm này.</value>
+  </data>
   <data name="MaximumLossValueIsRequired" xml:space="preserve">
     <value>Tiền thua cược lớn nhất không thể trống.</value>
   </data>

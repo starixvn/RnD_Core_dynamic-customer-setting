@@ -1094,6 +1094,12 @@ select.setting-field {
       text-align: left; }
     .settingtype22 table .cell-number {
       text-align: center; }
+  .settingtype22 table .not-available {
+    background-color: lightgrey; }
+
+.settingtype22 .note-message {
+  margin: 20px;
+  display: block; }
 
 .settingtype23 .block__subType-header {
   border-top: 1px solid #7c98a4; }

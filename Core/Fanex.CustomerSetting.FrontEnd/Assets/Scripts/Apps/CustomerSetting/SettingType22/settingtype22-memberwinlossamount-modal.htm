@@ -17,7 +17,10 @@
                         <td class="cell-text">
                             {{winLossAmount.sportTypeName}}
                         </td>
-                        <td class="cell-number">
+                        <td class="cell-number" data-ng-class="{ 'not-available': winLossAmount.winPercent === -3 }">
+                            <span data-ng-if="winLossAmount.winPercent === -3">
+                                <strong>{{'NotAvailable' | settingType22Label}}</strong>
+                            </span>
                             <span data-ng-if="winLossAmount.winPercent === -2">
                                 <span class="red-text">{{'NotAvailable' | settingType22Label}}</span>
                                 <span> ({{winLossAmount.currentAmount | formatNumber}}/<span class="red-text">{{winLossAmount.maxWinAmount}}</span>)</span>
@@ -44,6 +47,7 @@
                     </tr>
                 </tbody>
             </table>
+            <span class="note-message" data-ng-bind-html="'BBinPopupNoteMessage' | settingType22Message | unsafe"></span>
         </div>
         <div class="modal__footer">
             <button class="btn btn--small" data-ng-click="cancel()">{{::('Close' | settingType22Label)}}</button>

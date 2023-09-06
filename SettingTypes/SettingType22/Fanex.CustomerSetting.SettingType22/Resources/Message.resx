@@ -120,6 +120,9 @@
   <data name="AutoResetIsViolatedWithUpline" xml:space="preserve">
     <value>Daily Auto Reset is turned off for the Upline.</value>
   </data>
+  <data name="BBinPopupNoteMessage" xml:space="preserve">
+    <value>Note: BBIN's Winning% shown as "N/A" because Maximum Win Limit control is not applied to the BBIN product.</value>
+  </data>
   <data name="MaximumLossValueIsRequired" xml:space="preserve">
     <value>Maximum Loss value is required.</value>
   </data>

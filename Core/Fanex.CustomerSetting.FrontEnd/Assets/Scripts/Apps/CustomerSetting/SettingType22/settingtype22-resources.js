@@ -8,6 +8,7 @@
     settingType22Resource["label"] = settingType22Resource["label"] || {};
     settingType22Resource["label"]["en-us"] = {
         "ClickToViewCurrentWinLossLimit": "Click to view Current Win/Loss Amount",
+        "Close": "Close",
         "CurrentWinLossAmount": "Current Win/Loss Amount",
         "DailyAutoResetLimit": "Daily auto reset limit (at 12 noon GMT +8)",
         "Losing": "Losing",
@@ -79,6 +80,7 @@
     settingType22Resource["message"] = settingType22Resource["message"] || {};
     settingType22Resource["message"]["en-us"] = {
         "AutoResetIsViolatedWithUpline": "Daily Auto Reset is turned off for the Upline.",
+        "BBinPopupNoteMessage": "Note: BBIN&apos;s Winning% shown as &quot;N/A&quot; because Maximum Win Limit control is not applied to the BBIN product.",
         "MaximumLossValueIsRequired": "Maximum Loss value is required.",
         "MaximumLossValueShouldBeInRange": "Maximum Loss value should be in the range of ({0} - {1}).",
         "MaximumWinShouldBotExceedThanUplineMaximumWin": "Maximum Win should be less than or equal to Maximum Win of the direct upline.",
@@ -92,6 +94,7 @@
     settingType22Resource["message"] = settingType22Resource["message"] || {};
     settingType22Resource["message"]["zh-cn"] = {
         "AutoResetIsViolatedWithUpline": "关闭上线的每日限额自动重设.",
+        "BBinPopupNoteMessage": "注意：BBIN&quot;赢数额巴仙&quot;的栏位显示&quot;N/A&quot; 的意思是最高的赢数额不适用于BBIN的产品。",
         "MaximumLossValueIsRequired": "需求最高输额.",
         "MaximumLossValueShouldBeInRange": "最高输额需介于 ({0} - {1}) 的范围.",
         "MaximumWinShouldBotExceedThanUplineMaximumWin": "最高赢额应低于或相等于直系上线的最高赢额.",
@@ -105,6 +108,7 @@
     settingType22Resource["message"] = settingType22Resource["message"] || {};
     settingType22Resource["message"]["zh-tw"] = {
         "AutoResetIsViolatedWithUpline": "關閉上線的每日限額自動重設.",
+        "BBinPopupNoteMessage": "注意：BBIN&quot;贏數額巴仙&quot;的欄位顯示&quot;N/A&quot; 的意思是最高的贏數額不適用於BBIN的產品。",
         "MaximumLossValueIsRequired": "需求最高輸額.",
         "MaximumLossValueShouldBeInRange": "最高輸額需介於 ({0} - {1}) 的範圍.",
         "MaximumWinShouldBotExceedThanUplineMaximumWin": "最高贏額應低於或相等於直系上線的最高贏額.",
@@ -118,6 +122,7 @@
     settingType22Resource["message"] = settingType22Resource["message"] || {};
     settingType22Resource["message"]["th-th"] = {
         "AutoResetIsViolatedWithUpline": "มีการปิดการตั้งค่าใหม่อัตโนมัติรายวันสำหรับอัปไลน์",
+        "BBinPopupNoteMessage": "หมายเหตุ: ค่า % การชนะของ BBIN แสดงผลเป็น &quot;N/A&quot; เนื่องจากผลิตภัณฑ์ BBIN ไม่มีการควบคุมขีดจำกัดการชนะสูงสุด",
         "MaximumLossValueIsRequired": "ต้องใช้ค่าแพ้สูงสุด",
         "MaximumLossValueShouldBeInRange": "ค่าแพ้สูงสุดควรอยู่ในช่วง ({0} - {1})",
         "MaximumWinShouldBotExceedThanUplineMaximumWin": "ชนะสูงสุดควรน้อยกว่าหรือเท่ากับชนะสูงสุดของอัปไลน์โดยตรง",
@@ -131,6 +136,7 @@
     settingType22Resource["message"] = settingType22Resource["message"] || {};
     settingType22Resource["message"]["vi-vn"] = {
         "AutoResetIsViolatedWithUpline": "Chức năng tự động reset giới hạn chuyển khoản mỗi ngày đã được tắt cho cấp trên.",
+        "BBinPopupNoteMessage": "Lưu ý: Phần trăm Thắng (%) của BBIN hiển thị là &quot;N/A&quot; nghĩa là không áp dụng Giới Hạn Thắng Tối Đa cho sản phẩm này.",
         "MaximumLossValueIsRequired": "Tiền thua cược lớn nhất không thể trống.",
         "MaximumLossValueShouldBeInRange": "Tiền thua cược lớn nhất phải nằm trong khoảng ({0} - {1}).",
         "MaximumWinShouldBotExceedThanUplineMaximumWin": "Tiền thắng cược lớn nhất phải ít hơn hoặc bằng Tiền thắng cược lớn nhất của cấp trên trực tiếp.",

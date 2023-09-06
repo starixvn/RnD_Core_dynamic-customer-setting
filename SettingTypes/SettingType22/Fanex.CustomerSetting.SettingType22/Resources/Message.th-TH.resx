@@ -120,6 +120,9 @@
   <data name="AutoResetIsViolatedWithUpline" xml:space="preserve">
     <value>มีการปิดการตั้งค่าใหม่อัตโนมัติรายวันสำหรับอัปไลน์</value>
   </data>
+  <data name="BBinPopupNoteMessage" xml:space="preserve">
+    <value>หมายเหตุ: ค่า % การชนะของ BBIN แสดงผลเป็น "N/A" เนื่องจากผลิตภัณฑ์ BBIN ไม่มีการควบคุมขีดจำกัดการชนะสูงสุด</value>
+  </data>
   <data name="MaximumLossValueIsRequired" xml:space="preserve">
     <value>ต้องใช้ค่าแพ้สูงสุด</value>
   </data>

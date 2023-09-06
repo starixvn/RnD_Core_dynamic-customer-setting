@@ -70,6 +70,15 @@ namespace Fanex.CustomerSetting.SettingType22.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Note: BBIN&apos;s Winning% shown as &quot;N/A&quot; because Maximum Win Limit control is not applied to the BBIN product..
+        /// </summary>
+        internal static string BBinPopupNoteMessage {
+            get {
+                return ResourceManager.GetString("BBinPopupNoteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maximum Loss value is required..
         /// </summary>
         internal static string MaximumLossValueIsRequired {
