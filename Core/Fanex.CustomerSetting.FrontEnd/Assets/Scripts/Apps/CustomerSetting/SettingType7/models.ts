@@ -4,7 +4,7 @@
 module CustomerSetting {
     "use strict";
 
-    const numberOfCellsOnEachRow: number = 5;
+    const numberOfCellsOnEachRow: number = 6;
 
     export class SettingType7Item extends DefaultSettingItem {
         public stakeRanges: Array<SettingType7StakeRange>;
@@ -75,7 +75,7 @@ module CustomerSetting {
                 isViolated = this.stakeRanges.filter((stakeRange: SettingType7StakeRange) => stakeRange.selected).length !== 1;
 
                 if (isViolated) {
-                    this.validationState = new ValidationResult("MemberStakeLevelMustBeSelectedForBetType");
+                    this.validationState = new ValidationResult("MemberStakeLevelMustBeSelectedForBetType", this.sportTypeId + "_" + this.betTypeId + "_" + this.stakeRanges[0].stakeLevelId);
 
                     return false;
                 }

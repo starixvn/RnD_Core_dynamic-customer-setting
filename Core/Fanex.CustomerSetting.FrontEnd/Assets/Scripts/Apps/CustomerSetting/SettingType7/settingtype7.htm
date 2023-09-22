@@ -92,21 +92,25 @@
                          data-ng-repeat="stakeRange in stakeRangeGroup">
                         <div class="setting-field--checkfield" data-ng-if="stakeRange.stakeLevelId">
                             <div class="setting-field--checkfield__check-ctrl-wrapper">
-                                <input id="{{stakeRange.stakeLevelId}}"
+                                <input id="{{item.sportTypeId}}_{{item.betTypeId}}_{{stakeRange.stakeLevelId}}"
                                        type="checkbox"
                                        class="setting-field--checkfield__check-ctrl"
                                        data-ng-model="stakeRange.selected"
                                        data-ng-disabled="!(settingType | editableSettingType)"
-                                       data-ng-if="customerLevel !== avaiCustomerLevels.member" />
-                                <input id="{{stakeRange.stakeLevelId}}"
+                                       data-ng-if="customerLevel !== avaiCustomerLevels.member" 
+                                       data-field-name="{{item.sportTypeId}}_{{item.betTypeId}}_{{stakeRange.stakeLevelId}}" />
+                                <input id="{{item.sportTypeId}}_{{item.betTypeId}}_{{stakeRange.stakeLevelId}}"
                                        type="radio"
                                        class="setting-field--checkfield__check-ctrl"
                                        data-ng-model="item.selectStakeLevelId"
                                        data-ng-value="stakeRange.stakeLevelId"
                                        data-ng-disabled="!(settingType | editableSettingType)"
-                                       data-ng-if="customerLevel === avaiCustomerLevels.member" />
+                                       data-ng-if="customerLevel === avaiCustomerLevels.member"
+                                       data-field-highlighting
+                                       data-highlight-state="highlightState"
+                                       data-field-name="{{item.sportTypeId}}_{{item.betTypeId}}_{{stakeRange.stakeLevelId}}" />
                             </div>
-                            <label class="setting-field--checkfield__check-ctrl-lbl" for="{{stakeRange.stakeLevelId}}">{{stakeRange.stakeLevelRange}}</label>
+                            <label class="setting-field--checkfield__check-ctrl-lbl" for="{{item.sportTypeId}}_{{item.betTypeId}}_{{stakeRange.stakeLevelId}}">{{stakeRange.stakeLevelRange}}</label>
                         </div>
                     </div>
                 </div>

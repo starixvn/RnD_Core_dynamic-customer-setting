@@ -11,6 +11,7 @@ module CustomerSetting {
         public stakeRangeGroups: Array<Array<SettingType17StakeRange>>;
         public selectStakeLevelId: number;
         public maxChoice: number;
+        public isAllowUncheckStakeLevelOnMember: boolean;
 
         private systemId: number;
         private customerLevel: Level;
@@ -18,9 +19,9 @@ module CustomerSetting {
         constructor();
         constructor(settingItem: any);
         constructor(settingItem: any, backup: boolean, customerLevel: Level, systemId: number);
-        constructor(settingItem?: any, backup: boolean = false, customerLevel: Level = null, systemId: number = 0) {
+        constructor(settingItem: any, backup: boolean, customerLevel: Level, systemId: number, isAllowUncheckStakeLevelOnMember: boolean);
+        constructor(settingItem?: any, backup: boolean = false, customerLevel: Level = null, systemId: number = 0, isAllowUncheckStakeLevelOnMember: boolean = false) {
             super(settingItem);
-
             if (settingItem) {
                 this.stakeRanges = new Array<SettingType17StakeRange>();
 
@@ -36,6 +37,7 @@ module CustomerSetting {
                 this.tooltipMessage = settingItem.tooltipMessage;
                 this.showIconTooltipMessage = settingItem.showIconTooltipMessage;
                 this.maxChoice = settingItem.maxChoice;
+                this.isAllowUncheckStakeLevelOnMember = isAllowUncheckStakeLevelOnMember;
             }
 
             if (backup) {
@@ -57,7 +59,7 @@ module CustomerSetting {
 
         public validate(): boolean {
             var isViolated: boolean = false;
-            if (this.customerLevel === Level.member || System.isY7(this.systemId)) {
+            if ((this.customerLevel === Level.member && !this.isAllowUncheckStakeLevelOnMember) || System.isY7(this.systemId)) {
                 isViolated = this.stakeRanges.filter((stakeRange: SettingType17StakeRange) => stakeRange.selected).length === 0;
 
                 if (isViolated) {

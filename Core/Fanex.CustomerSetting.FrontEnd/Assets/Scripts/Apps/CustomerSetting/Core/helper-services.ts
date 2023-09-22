@@ -262,6 +262,7 @@ module CustomerSetting {
         public normalMode: boolean;
         public multipleUpdates: boolean;
         public isSupportPT3DecimalSites: boolean;
+        public isAllowUncheckStakeLevelOnMember: boolean;
         public isY7Sites: boolean;
 
         private parametersService: ParametersService;
@@ -281,6 +282,7 @@ module CustomerSetting {
                 this.productId = setting.productId;
                 this.productName = setting.productName;
                 this.normalMode = setting.isNormalMode;
+                this.isAllowUncheckStakeLevelOnMember = this.customerLevel == Level.member && setting.customerInfo.isAllowUncheckStakeLevelOnMember;
                 this.isSupportPT3DecimalSites = this.systemId == System.nap || setting.customerInfo.isSupportPT3DecimalSites;
                 this.isY7Sites = setting.customerInfo.isY7Sites;
 

@@ -77,5 +77,14 @@ namespace Fanex.CustomerSetting.Tasks.Product41 {
                 return ResourceManager.GetString("BBinSettingNote", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string NoneOption {
+            get {
+                return ResourceManager.GetString("NoneOption", resourceCulture);
+            }
+        }
     }
 }

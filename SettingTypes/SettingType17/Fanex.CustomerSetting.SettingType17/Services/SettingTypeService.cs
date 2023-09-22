@@ -64,7 +64,7 @@
         {
             Check.Argument.IsNotNull(settingType, nameof(settingType));
 
-            if (customerLevel.IsMemberLevel() || SystemType.IsY7(settingContext.System))
+            if (SystemType.IsY7(settingContext.System))
             {
                 IResult validationResult = ValidateY7SelectedStakeValue(settingType);
 
@@ -72,16 +72,6 @@
                 {
                     throw new CustomerSettingException(validationResult.Message);
                 }
-            }
-            if (customerLevel.IsMemberLevel())
-            {
-                IResult validationResult = ValidateMemberSelectedStakeValue(settingType);
-
-                if (validationResult.IsFailed)
-                {
-                    throw new CustomerSettingException(validationResult.Message);
-                }
-
             }
 
             IResult result = _stakeLevelDataAccess.UpdateCustomerStakeLevel(
@@ -133,24 +123,6 @@
                 return new Result(
                     ErrorCodes.MemberStakeLevelMustBeSelectedForSportBetType,
                     Message.MemberStakeLevelMustBeSelectedForBetType);
-            }
-
-            return Result.Success;
-        }
-
-        private IResult ValidateMemberSelectedStakeValue(SettingType settingType)
-        {
-            var hasViolatedItem = settingType.SettingItems.Cast<StakeLevelItem>().FirstOrDefault(stakeLevelItem =>
-            {
-                return stakeLevelItem?.MaxChoice > 0
-                    && stakeLevelItem?.StakeRanges?.Count(stakeLevelValue => stakeLevelValue.Selected) > stakeLevelItem?.MaxChoice;
-            });
-
-            if (hasViolatedItem != null)
-            {
-                return new Result(
-                    ErrorCodes.MemberStakeLevelMustBeSelectedForSportBetType,
-                    string.Format(Message.Msg_10036, hasViolatedItem.MaxChoice, hasViolatedItem.SportTypeName));
             }
 
             return Result.Success;
