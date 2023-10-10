@@ -54,7 +54,9 @@ module CustomerSetting {
                                         item,
                                         true,
                                         $scope.customerLevel,
-                                        parametersService.systemId);
+                                        parametersService.systemId,
+                                        settingTypesSharedValuesService.isAllowUncheckStakeLevelOnMember
+                                    );
                                 }
                             });
 

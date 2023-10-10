@@ -28,6 +28,7 @@ module CustomerSetting {
         public fax: string;
         public email: string;
         public currency: number;
+        public isAllowUncheckStakeLevelOnMember: boolean;
         public isSupportPT3DecimalSites: boolean;
         public isY7Sites: boolean;
         public isEnableCollapseExpand: boolean;
@@ -43,6 +44,7 @@ module CustomerSetting {
                 this.fax = info.fax;
                 this.email = info.email;
                 this.currency = info.currency;
+                this.isAllowUncheckStakeLevelOnMember = info.isAllowUncheckStakeLevelOnMember;
                 this.isSupportPT3DecimalSites = info.isSupportPT3DecimalSites;
                 this.isY7Sites = info.isY7Sites;
                 this.isEnableCollapseExpand = info.isEnableCollapseExpand;

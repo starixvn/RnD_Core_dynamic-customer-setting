@@ -123,4 +123,7 @@
   <data name="BBinSettingNote" xml:space="preserve">
     <value>[BBIN]: ผลิตภัณฑ์ BBIN จะไม่มีการคิดค่าคอมมิชชัน โปรดทราบว่าการปรับเปลี่ยนการตั้งค่าของสมาชิกจะเริ่มมีผลตั้งแต่เวลาที่สมาชิกทำการโอนครั้งถัดไป</value>
   </data>
+  <data name="NoneOption" xml:space="preserve">
+    <value>ไม่ใช่</value>
+  </data>
 </root>

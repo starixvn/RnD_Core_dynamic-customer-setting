@@ -18,7 +18,7 @@
         public override string ToXml()
         {
             var checkedStakeLevelIds = StakeRanges
-                .Where(stakeRange => stakeRange.Selected)
+                .Where(stakeRange => stakeRange.Selected && stakeRange.StakeLevelId > 0)
                 .Select(stakeRange => stakeRange.StakeLevelId);
 
             return string.Format(StakeLevelXmlFormat, base.ToXml(), string.Join(",", checkedStakeLevelIds));

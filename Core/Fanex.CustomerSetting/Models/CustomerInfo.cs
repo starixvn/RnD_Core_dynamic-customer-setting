@@ -25,6 +25,9 @@ namespace Fanex.CustomerSetting.Models
        
         public string SiteLabel { get; set; }
 
+        public bool IsAllowUncheckStakeLevelOnMember
+            => AppSettings.SitesAllowUncheckStakeLevelOnMember.Any(site => site.Equals(this.Site, System.StringComparison.CurrentCultureIgnoreCase));
+
         public bool IsSupportPT3DecimalSites 
             => AppSettings.SupportPT3DecimalSites.Any(site => site.Equals(this.SiteLabel, System.StringComparison.CurrentCultureIgnoreCase));
 

@@ -123,4 +123,7 @@
   <data name="BBinSettingNote" xml:space="preserve">
     <value>[BBIN]：不再提供佣金于BBIN产品从11/09/2023 始生效。此外，当您更改会员的设置时，此新更改只会在会员转额进游戏后才会生效。</value>
   </data>
+  <data name="NoneOption" xml:space="preserve">
+    <value>没有</value>
+  </data>
 </root>
