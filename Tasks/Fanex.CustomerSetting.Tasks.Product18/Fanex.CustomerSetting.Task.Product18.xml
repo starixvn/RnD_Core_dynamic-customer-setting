@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions SiteId="68" SiteName="DCS">
     <Function>
-        <Setting Key="Acc_CustSetting_CheckMacauEnable" SpName="Acc_CustSetting_CheckMacauEnable" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="600" />
+        <Setting Key="Acc_CustSetting_CheckMacauEnable" SpName="Acc_CustSetting_CheckMacauEnable" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600" />
     </Function>
 </Functions>
