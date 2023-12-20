@@ -175,28 +175,27 @@
     <Content Include="AppSettings.sit.config" />
     <Content Include="AppSettings.uat.config" />
     <Content Include="AppSettings.aws.config" />
+    <Content Include="AppSettings.DR.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <Content Include="Web.ConnectionStrings.config" />
     <None Include="Properties\PublishProfiles\MatrixPublish.pubxml" />
-    <Content Include="Web.backupMNL.config" />
-    <Content Include="Web.ConnectionStrings.backupMNL.config" />
     <Content Include="Web.ConnectionStrings.local.config" />
     <Content Include="Web.ConnectionStrings.masterLocal.config" />
     <Content Include="Web.ConnectionStrings.masterSIT.config" />
     <Content Include="Web.ConnectionStrings.pro.config" />
     <Content Include="Web.ConnectionStrings.sit.config" />
-    <Content Include="Web.ConnectionStrings.spu2.config" />
     <Content Include="Web.ConnectionStrings.uat.config" />
     <Content Include="Web.ConnectionStrings.aws.config" />
+    <None Include="Web.ConnectionStrings.DR.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Web.local.config" />
     <Content Include="Web.pro.config" />
-    <Content Include="Web.spu2.config" />
     <Content Include="Web.masterLocal.config" />
     <Content Include="Web.aws.config" />
+    <None Include="Web.DR.config" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

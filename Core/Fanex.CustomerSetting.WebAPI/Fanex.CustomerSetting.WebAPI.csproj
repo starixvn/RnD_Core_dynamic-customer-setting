@@ -237,7 +237,6 @@
     <Content Include="Web.ConnectionStrings.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.backupMNL.config" />
     <Content Include="App_Data\PluggableTasks\settingtype-13.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-9.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-2.json" />
@@ -257,8 +256,8 @@
     <Content Include="App_Data\PluggableTasks\settingtype-7.json" />
     <Content Include="App_Data\PluggableTasks\collapse-expand-toggle.json" />
     <Content Include="App_Data\PluggableTasks\settingtype-22.json" />
+    <Content Include="AppSettings.DR.config" />
     <None Include="packages.config" />
-    <Content Include="Web.ConnectionStrings.backupMNL.config" />
     <Content Include="Web.ConnectionStrings.dev.config">
       <SubType>Designer</SubType>
     </Content>
@@ -267,18 +266,18 @@
     <Content Include="Web.ConnectionStrings.masterSIT.config" />
     <Content Include="Web.ConnectionStrings.pro.config" />
     <Content Include="Web.ConnectionStrings.sit.config" />
-    <Content Include="Web.ConnectionStrings.spu2.config" />
     <Content Include="Web.ConnectionStrings.uat.config" />
     <Content Include="Web.ConnectionStrings.aws.config" />
     <Content Include="App_Data\PluggableTasks\settingtype-18.json" />
+    <None Include="Web.ConnectionStrings.DR.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Web.local.config" />
     <Content Include="Web.pro.config" />
-    <Content Include="Web.spu2.config" />
     <Content Include="Web.masterLocal.config" />
     <Content Include="Web.aws.config" />
+    <None Include="Web.DR.config" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
