@@ -69,6 +69,7 @@
     <None Include="..\..\..\.sonarlint\rome.dcscsharp.ruleset">
       <Link>rome.dcscsharp.ruleset</Link>
     </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
