@@ -16,6 +16,7 @@
         private const string DefaultLanguage = "en-US";
         private readonly IDynamicRepository _dynamicRepository;
         private readonly IResourceService _resourceService;
+        private const int SportsBookProductId = 1;
 
         public CommissionMatrixService(
             IResourceService resourceService = null,
@@ -28,7 +29,7 @@
         public CommissionMatrix GetCommissionMatrix(byte productId, string customerName, byte settingStatus)
         {
             var commissionItemMaxtrixDtos = GetCommissionItemMaxtrixDtos(productId, customerName, settingStatus);
-            var commissionItemMatrices = GetCommissionItemMatricesFromDto(commissionItemMaxtrixDtos);
+            var commissionItemMatrices = GetCommissionItemMatricesFromDto(productId, commissionItemMaxtrixDtos);
 
             return new CommissionMatrix
             {
@@ -36,8 +37,7 @@
             };
         }
 
-        private IEnumerable<CommissionItemMatrix> GetCommissionItemMatricesFromDto(
-            IEnumerable<CommissionItemMatrixDto> commissionItemMaxtrixDtos)
+        private IEnumerable<CommissionItemMatrix> GetCommissionItemMatricesFromDto(int productId, IEnumerable<CommissionItemMatrixDto> commissionItemMaxtrixDtos)
         {
             var commissionItemMatrices = commissionItemMaxtrixDtos.GroupBy(dto => new
             {
@@ -48,7 +48,9 @@
                 BetTypeId = groupedDto.Key.BetType,
                 BetTypeName = _resourceService.GetBetTypeName(groupedDto.Key.BetType, DefaultLanguage),
                 SportTypeId = groupedDto.Key.SportType,
-                SportTypeName = _resourceService.GetSportTypeName(groupedDto.Key.SportType, DefaultLanguage),
+                SportTypeName = productId == SportsBookProductId
+                    ? _resourceService.GetSportsbookCommName(groupedDto.Key.SportType, groupedDto.Key.BetType)
+                    : _resourceService.GetSportTypeName(groupedDto.Key.SportType, DefaultLanguage),
                 CommissionItemMatrixRows = groupedDto.Select(commissionItemMatrixDto => new CommissionItemMatrixRow(commissionItemMatrixDto))
             });
 

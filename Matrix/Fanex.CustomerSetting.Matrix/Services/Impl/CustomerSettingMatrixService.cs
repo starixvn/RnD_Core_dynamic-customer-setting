@@ -21,6 +21,8 @@
     {
         private const string SettingTypeLevelCacheKey = "Fanex.CustomerSetting.Matrix.SettingTypeLevelCacheKey.{0}.{1}.{2}";
         private const int CacheDuration = 1; //// 1 hour
+        private const int SportsBookProductId = 1;
+        private const int SportTypeSettingLevel = 2;
 
         private readonly ICustomerService _customerService;
         private readonly IPTMatrixService _pTMatrixService;
@@ -76,8 +78,10 @@
             {
                 case ViewMode.PositionTaking:
                     return _pTMatrixService.GetPTMatrix(settingMatrixQuery, GetMasterName(customerLine));
+
                 case ViewMode.Commission:
                     return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName, SettingStatus);
+
                 default:
                     throw new InvalidOperationException(Message.InvalidSettingTypeId);
             }
@@ -98,6 +102,11 @@
 
         private byte GetSettingTypeLevel(SettingMatrixQuery settingMatrixQuery, short settingTypeId)
         {
+            if (settingMatrixQuery.ProductId == SportsBookProductId)
+            {
+                return SportTypeSettingLevel;
+            }
+
             var settingTypeLevel = _cachingService.GetOrAdd(
                    string.Format(SettingTypeLevelCacheKey, settingMatrixQuery.ProductId, settingMatrixQuery.SportTypeId, settingTypeId),
                    () =>
