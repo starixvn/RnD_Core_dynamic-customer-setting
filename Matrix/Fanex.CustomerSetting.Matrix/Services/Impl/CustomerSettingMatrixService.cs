@@ -78,10 +78,8 @@
             {
                 case ViewMode.PositionTaking:
                     return _pTMatrixService.GetPTMatrix(settingMatrixQuery, GetMasterName(customerLine));
-
                 case ViewMode.Commission:
                     return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName, SettingStatus);
-
                 default:
                     throw new InvalidOperationException(Message.InvalidSettingTypeId);
             }
@@ -102,7 +100,7 @@
 
         private byte GetSettingTypeLevel(SettingMatrixQuery settingMatrixQuery, short settingTypeId)
         {
-            if (settingMatrixQuery.ProductId == SportsBookProductId)
+            if (IsSportsbookComm(settingMatrixQuery))
             {
                 return SportTypeSettingLevel;
             }
@@ -124,6 +122,12 @@
             return settingTypeLevel;
         }
 
+        private static bool IsSportsbookComm(SettingMatrixQuery settingMatrixQuery)
+        {
+            return settingMatrixQuery.ProductId == SportsBookProductId
+                            && (ViewMode)settingMatrixQuery.ViewMode == ViewMode.Commission;
+        }
+
         private short GetSettingTypeId(SettingMatrixQuery settingMatrixQuery)
         {
             var criteria = new GetSettingTypeIdCriteria
@@ -139,5 +143,7 @@
                 return (short)output["settingtype"];
             }
         }
+
+
     }
 }

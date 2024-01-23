@@ -46,7 +46,9 @@
             }).Select(groupedDto => new CommissionItemMatrix
             {
                 BetTypeId = groupedDto.Key.BetType,
-                BetTypeName = _resourceService.GetBetTypeName(groupedDto.Key.BetType, DefaultLanguage),
+                BetTypeName = productId == SportsBookProductId
+                    ? _resourceService.GetSportsbookCommName(groupedDto.Key.SportType, groupedDto.Key.BetType)
+                    : _resourceService.GetBetTypeName(groupedDto.Key.BetType, DefaultLanguage),
                 SportTypeId = groupedDto.Key.SportType,
                 SportTypeName = productId == SportsBookProductId
                     ? _resourceService.GetSportsbookCommName(groupedDto.Key.SportType, groupedDto.Key.BetType)
