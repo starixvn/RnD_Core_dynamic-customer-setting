@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
     <Function Name="GameDisableStatus">
-        <Setting Key="Acc_CustSetting_TicketCommissionSelect" SpName="Acc_CustSetting_TicketCommissionSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+        <Setting Key="Acc_CustSetting_TicketCommissionSelect" SpName="Acc_CustSetting_TicketCommissionSelect" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
             <Mapping DataField="GivenCommission" ObjectProperty="Commission" />
         </Setting>
-        <Setting Key="Acc_CustSetting_TicketCommissionUpd" SpName="Acc_CustSetting_TicketCommissionUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+        <Setting Key="Acc_CustSetting_TicketCommissionUpd" SpName="Acc_CustSetting_TicketCommissionUpd" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600" />
     </Function>
 </Functions>

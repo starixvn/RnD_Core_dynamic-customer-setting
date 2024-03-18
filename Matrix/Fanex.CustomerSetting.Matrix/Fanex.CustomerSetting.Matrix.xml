@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Customer_Setting_Maxtrix">
-    <Setting Key="CustSetting_CommMatrix" SpName="Acc_CustSetting_CommMatrix" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_CommMatrix" SpName="Acc_CustSetting_CommMatrix" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600">
       <Mapping DataField="RoleID" ObjectProperty="LevelValue" />
       <Mapping DataField="Discount" ObjectProperty="CommRate" />
     </Setting>
-    <Setting Key="CustSetting_PTMatrix" SpName="Acc_CustSetting_PTMatrix" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_PTMatrix" SpName="Acc_CustSetting_PTMatrix" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600">
       <Mapping DataField="RoleID" ObjectProperty="LevelValue" />
     </Setting>
-    <Setting Key="CustSetting_CustomerLineInfoSelect" SpName="Acc_CustSetting_CustomerLineInfoSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_CustomerLineInfoSelect" SpName="Acc_CustSetting_CustomerLineInfoSelect" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600">
       <Mapping DataField="RoleID" ObjectProperty="LevelValue" />
     </Setting>
-    <Setting Key="CustSetting_AllowMasterPTSelect" SpName="Acc_CustSetting_AllowMasterPTSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
-    <Setting Key="CustSetting_SettingLevel" SpName="Acc_CustSetting_SettingLevel" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
-    <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_AllowMasterPTSelect" SpName="Acc_CustSetting_AllowMasterPTSelect" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600" />
+    <Setting Key="CustSetting_SettingLevel" SpName="Acc_CustSetting_SettingLevel" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600" />
+    <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.wsv_nap" TimeOut="600" />
   </Function>
 </Functions>

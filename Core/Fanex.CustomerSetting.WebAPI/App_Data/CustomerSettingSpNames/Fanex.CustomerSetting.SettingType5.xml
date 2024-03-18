@@ -1,28 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="68" SiteName="DCS">
   <Function Name="ChargeCommission" ProductName="Sportsbook 2">
-    <Setting Key="CustSetting_SuperChargeCommissionSelect" SpName="Acc_CustSetting_DiscountSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_SuperChargeCommissionSelect" SpName="Acc_CustSetting_DiscountSelect" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="SuperDiscount" ObjectProperty="ChargeCommission" />
       <Mapping DataField="DefaultMaxDiscount" ObjectProperty="UplineChargeCommission" />
       <Mapping DataField="IntervalComm" ObjectProperty="IntervalStep" />
     </Setting>
-    <Setting Key="CustSetting_MasterChargeCommissionSelect" SpName="Acc_CustSetting_DiscountSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_MasterChargeCommissionSelect" SpName="Acc_CustSetting_DiscountSelect" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="MasterDiscount" ObjectProperty="ChargeCommission" />
       <Mapping DataField="SuperDiscount" ObjectProperty="UplineChargeCommission" />
       <Mapping DataField="IntervalComm" ObjectProperty="IntervalStep" />
     </Setting>
-    <Setting Key="CustSetting_AgentChargeCommissionSelect" SpName="Acc_CustSetting_DiscountSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_AgentChargeCommissionSelect" SpName="Acc_CustSetting_DiscountSelect" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="AgentDiscount" ObjectProperty="ChargeCommission" />
       <Mapping DataField="MasterDiscount" ObjectProperty="UplineChargeCommission" />
       <Mapping DataField="IntervalComm" ObjectProperty="IntervalStep" />
     </Setting>
-    <Setting Key="CustSetting_MemberChargeCommissionSelect" SpName="Acc_CustSetting_DiscountSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_MemberChargeCommissionSelect" SpName="Acc_CustSetting_DiscountSelect" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="PlayerDiscount" ObjectProperty="ChargeCommission" />
@@ -30,6 +30,6 @@
       <Mapping DataField="MasterDiscount" ObjectProperty="UplineOfUplineChargeCommission" />
       <Mapping DataField="IntervalComm" ObjectProperty="IntervalStep" />
     </Setting>
-    <Setting Key="CustSetting_ChargeCommissionUpd" SpName="Acc_CustSetting_DiscountUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_ChargeCommissionUpd" SpName="Acc_CustSetting_DiscountUpd" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600" />
   </Function>
 </Functions>

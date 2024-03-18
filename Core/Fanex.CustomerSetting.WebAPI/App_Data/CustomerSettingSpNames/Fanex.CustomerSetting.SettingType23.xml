@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Bet_Limit">
-    <Setting Key="Acc_CustSetting_BetSetting23Select" SpName="Acc_CustSetting_BetSetting23Select" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
+    <Setting Key="Acc_CustSetting_BetSetting23Select" SpName="Acc_CustSetting_BetSetting23Select" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="MaxPerNumber" ObjectProperty="MaxPerBall" />
       <Mapping DataField="MaxPerNumberMax" ObjectProperty="MaxPerBallMax" />
     </Setting>
 
-    <Setting Key="Acc_CustSetting_BetSetting23Upd" SpName="Acc_CustSetting_BetSetting23Upd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_BetSetting23Upd" SpName="Acc_CustSetting_BetSetting23Upd" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600" />
   </Function>
 </Functions>
