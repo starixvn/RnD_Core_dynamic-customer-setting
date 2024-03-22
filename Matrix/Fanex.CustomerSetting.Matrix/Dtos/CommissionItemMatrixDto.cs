@@ -8,6 +8,6 @@
 
         public short BetType { get; set; }
 
-        public decimal CommRate { get; set; }
+        public decimal? CommRate { get; set; }
     }
 }

@@ -94,5 +94,10 @@
                 ? string.Format(RefResourceDefaultFormat, refId, resourceId)
                 : resourceData;
         }
+
+        public string GetSportsbookCommName(int sporttypeId, int bettypeId, string language = "en-US")
+        {
+            return _remotingRef.GetResourceDataByRefIdAndResourceId("SB_Comm_SMA", $"1_150_{sporttypeId}_{bettypeId}", language, string.Empty);
+        }
     }
 }

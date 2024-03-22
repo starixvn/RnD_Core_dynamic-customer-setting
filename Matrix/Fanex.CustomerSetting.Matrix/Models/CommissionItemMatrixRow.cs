@@ -23,6 +23,6 @@
 
         public Level CustomerLevel { get; set; }
 
-        public decimal CommRate { get; set; }
+        public decimal? CommRate { get; set; }
     }
 }
