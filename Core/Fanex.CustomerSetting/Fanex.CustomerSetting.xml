@@ -11,6 +11,6 @@
         </Setting>
         <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.wsv_nap" TimeOut="600" />
         <Setting Key="CustSetting_CustomerInfoSelect" SpName="Acc_CustSetting_CustomerInfoSelect" DbName="DBCUST.CUSTDB.wsv_nap" TimeOut="600" />
-        <Setting Key="EAS_CustSetting_CustomerInfoSelect" SpName="EAS_CustSetting_CustomerInfoSelect" DbName="DBCUST.CUSTDB.bodbExtAccNet" TimeOut="600" />
+        <Setting Key="EAS_CustSetting_CustomerInfoSelect" SpName="EAS_CustSetting_CustomerInfoSelect" DbName="DBCUST.CUSTDB.wsv_xnap" TimeOut="600" />
     </Function>
 </Functions>
