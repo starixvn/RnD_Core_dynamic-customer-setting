@@ -7,6 +7,7 @@
     using Criteria;
     using Data.Repository;
     using Exceptions;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Logging;
     using Models;
     using Models.Constants;
@@ -183,6 +184,11 @@
                 customerSettingType.Id = productSettingType.Id;
                 customerSettingType.SettingLevel = productSettingType.SettingLevel;
                 customerSettingType.DisplayOrder = productSettingType.DisplayOrder;
+
+                if (query.CustomerLevel.IsSuperLevel() && SystemType.IsExternalNap(SettingContext.System) && SystemType.IsNotExternalNapBetSetting(SettingContext.System))
+                {
+                    customerSettingType.DisplayMode = DisplayModes.ReadOnly;
+                }
 
                 if (customerSettingType.DisplayMode != DisplayModes.ReadOnly)
                 {
