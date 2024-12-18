@@ -14,12 +14,14 @@
         {
         }
 
-        internal PTItemMatrixRow(PTItemMatrixDto pTMatrixDto)
+        internal PTItemMatrixRow(PTItemMatrixDto pTMatrixDto, DirectMember directMemberEnum)
         {
             if (pTMatrixDto == null)
             {
                 throw new ArgumentNullException(nameof(pTMatrixDto), "PT Item Matrix Dto cannot be null");
             }
+
+            DirectMember = directMemberEnum;
 
             CustomerLevel = Enumeration.FromValue<Level>(pTMatrixDto.LevelValue);
 
@@ -27,12 +29,14 @@
 
             SetMasterPT(pTMatrixDto);
 
-            AgentPT = CustomerLevel.IsMasterLevel() ? null : pTMatrixDto.AgentPT;
+            AgentPT = CustomerLevel.IsMasterLevel() || (DirectMember != DirectMember.None && CustomerLevel.IsNotSuperLevel()) ? null : pTMatrixDto.AgentPT;
 
-            MinPT = pTMatrixDto.MinPT;
+            MinPT = DirectMember == DirectMember.SuperDirectMember && CustomerLevel.IsMemberLevel() ? null : pTMatrixDto.MinPT;
         }
 
         public Level CustomerLevel { get; set; }
+
+        public DirectMember DirectMember { get; set; }
 
         public decimal? SuperPT { get; set; }
 
@@ -52,9 +56,12 @@
 
         private void SetMasterPT(PTItemMatrixDto pTMatrixDto)
         {
-            MasterPT = pTMatrixDto.MasterPT;
+            if (DirectMember != DirectMember.SuperDirectMember || CustomerLevel.IsSuperLevel())
+            {
+                MasterPT = pTMatrixDto.MasterPT;
+            }
 
-            if (CustomerLevel.IsAgentLevel() || CustomerLevel.IsMemberLevel())
+            if (DirectMember == DirectMember.None && (CustomerLevel.IsAgentLevel() || CustomerLevel.IsMemberLevel()))
             {
                 IsAutoMasterPT = pTMatrixDto.IsAutoMasterPT;
                 AutoMasterPT = IsAutoMasterPT.Value ? pTMatrixDto.AutoMasterPT : 0;
@@ -68,7 +75,11 @@
 
         private void SetSuperPT(PTItemMatrixDto pTMatrixDto)
         {
-            if (CustomerLevel.IsMasterLevel() || CustomerLevel.IsMemberLevel())
+            if (DirectMember == DirectMember.SuperDirectMember && CustomerLevel.IsMemberLevel())
+            {
+                SuperPT = pTMatrixDto.SuperPT;
+            }
+            else if (CustomerLevel.IsMasterLevel() || CustomerLevel.IsMemberLevel())
             {
                 IsAutoSuperPT = pTMatrixDto.IsAutoSuperPT;
                 AutoSuperPT = IsAutoSuperPT.Value ? pTMatrixDto.AutoSuperPT : 0;

@@ -73,7 +73,7 @@
                         <input data-ng-show="ptItemMatrixRow.isAutoSuperPT != null" type="checkbox" data-ng-model="ptItemMatrixRow.isAutoSuperPT" disabled="disabled" />
                     </td>
                     <td data-ng-switch="ptItemMatrixRow.isMasterLevel"
-                        data-ng-class="{'pt-icon': ptItemMatrixRow.isMasterLevel && ptMatrix.isAllowMasterAutoPT, 'pt-icon not-allow': ptItemMatrixRow.isMasterLevel && !ptMatrix.isAllowMasterAutoPT,'not-auto-pt': !ptMatrix.isAllowMasterAutoPT && ptItemMatrixRow.isAgentOrMemberLevel}">
+                        data-ng-class="{'pt-icon': ptItemMatrixRow.directMember >= 0 && ptItemMatrixRow.isMasterLevel && ptMatrix.isAllowMasterAutoPT, 'pt-icon not-allow': ptItemMatrixRow.directMember >= 0 && ptItemMatrixRow.isMasterLevel && !ptMatrix.isAllowMasterAutoPT,'not-auto-pt': ptItemMatrixRow.directMember >= 0 && !ptMatrix.isAllowMasterAutoPT && ptItemMatrixRow.isAgentOrMemberLevel}">
                         <div data-ng-switch-when="true">
                             <div data-ng-class="{'icon-auto-pt': ptMatrix.isAllowMasterAutoPT, 'icon-not-auto-pt': !ptMatrix.isAllowMasterAutoPT}">
                             </div>
@@ -83,7 +83,7 @@
                         </div>
                     </td>
                     <td data-ng-switch="ptItemMatrixRow.isMasterLevel"
-                        data-ng-class="{'pt-icon': ptItemMatrixRow.isMasterLevel && ptMatrix.isAllowMasterAutoPT, 'pt-icon not-allow': ptItemMatrixRow.isMasterLevel && !ptMatrix.isAllowMasterAutoPT,'not-auto-pt': !ptMatrix.isAllowMasterAutoPT && ptItemMatrixRow.isAgentOrMemberLevel}">
+                        data-ng-class="{'pt-icon': ptItemMatrixRow.directMember >= 0 && ptItemMatrixRow.isMasterLevel && ptMatrix.isAllowMasterAutoPT, 'pt-icon not-allow': ptItemMatrixRow.directMember >= 0 && ptItemMatrixRow.isMasterLevel && !ptMatrix.isAllowMasterAutoPT,'not-auto-pt': ptItemMatrixRow.directMember >= 0 && !ptMatrix.isAllowMasterAutoPT && ptItemMatrixRow.isAgentOrMemberLevel}">
                         <div data-ng-switch-when="true">
                             <div data-ng-class="{'icon-auto-pt': ptMatrix.isAllowMasterAutoPT, 'icon-not-auto-pt': !ptMatrix.isAllowMasterAutoPT}">
                             </div>

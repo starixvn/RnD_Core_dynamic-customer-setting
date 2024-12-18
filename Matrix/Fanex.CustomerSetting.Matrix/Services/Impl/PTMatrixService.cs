@@ -9,6 +9,7 @@
     using CustomerSetting.Services.Impl;
     using Data.Repository;
     using Dtos;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Models;
     using Resources;
 
@@ -29,11 +30,11 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public PTMatrix GetPTMatrix(SettingMatrixQuery settingMatrixQuery, string masterName = null)
+        public PTMatrix GetPTMatrix(SettingMatrixQuery settingMatrixQuery, string masterName = null, DirectMember directMemberEnum = DirectMember.None)
         {
             var isAllowAutoMasterPT = GetIsAllowMasterAutoPT(masterName);
             var pTItemMatrixDtos = GetPTItemMatrixDtos(settingMatrixQuery);
-            var pTItemMatrices = GetPTItemMatricesFromDto(pTItemMatrixDtos);
+            var pTItemMatrices = GetPTItemMatricesFromDto(pTItemMatrixDtos, directMemberEnum);
 
             return new PTMatrix
             {
@@ -55,7 +56,7 @@
             });
         }
 
-        private IEnumerable<PTItemMatrix> GetPTItemMatricesFromDto(IEnumerable<PTItemMatrixDto> pTItemMatrixDtos)
+        private IEnumerable<PTItemMatrix> GetPTItemMatricesFromDto(IEnumerable<PTItemMatrixDto> pTItemMatrixDtos, DirectMember directMemberEnum)
         {
             var pTItemMatrices = pTItemMatrixDtos.GroupBy(dtoRow => new
             {
@@ -69,7 +70,7 @@
                 SportTypeId = group.Key.SportType,
                 SportTypeName = _resourceService.GetSportTypeName(group.Key.SportType, DefaultLanguage),
                 IsLive = group.Key.IsLive,
-                PTItemMatrixRows = group.Select(ptItemMatrixRowDto => new PTItemMatrixRow(ptItemMatrixRowDto))
+                PTItemMatrixRows = group.Select(ptItemMatrixRowDto => new PTItemMatrixRow(ptItemMatrixRowDto, directMemberEnum))
             });
 
             return pTItemMatrices;

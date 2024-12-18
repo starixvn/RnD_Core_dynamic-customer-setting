@@ -22,7 +22,7 @@
         [Test]
         public void PTItemMatrixRow_NullInput_ThrowArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new PTItemMatrixRow(null));
+            Assert.Throws<ArgumentNullException>(() => new PTItemMatrixRow(null, DirectMember.None));
         }
 
         [Test]
@@ -40,7 +40,7 @@
                 MasterPT = 1
             };
 
-            var actual = new PTItemMatrixRow(fakeData);
+            var actual = new PTItemMatrixRow(fakeData, DirectMember.None);
 
             Assert.AreEqual(serializer.Serialize(expected), serializer.Serialize(actual));
         }
@@ -65,7 +65,7 @@
                 AutoSuperPT = 0
             };
 
-            var actual = new PTItemMatrixRow(fakeData);
+            var actual = new PTItemMatrixRow(fakeData, DirectMember.None);
 
             Assert.AreEqual(serializer.Serialize(expected), serializer.Serialize(actual));
         }
@@ -89,7 +89,7 @@
                 IsAutoSuperPT = true
             };
 
-            var actual = new PTItemMatrixRow(fakeData);
+            var actual = new PTItemMatrixRow(fakeData, DirectMember.None);
 
             Assert.AreEqual(serializer.Serialize(expected), serializer.Serialize(actual));
         }
@@ -111,7 +111,7 @@
                 IsAutoMasterPT = true
             };
 
-            var actual = new PTItemMatrixRow(fakeData);
+            var actual = new PTItemMatrixRow(fakeData, DirectMember.None);
 
             Assert.AreEqual(serializer.Serialize(expected), serializer.Serialize(actual));
         }
@@ -134,7 +134,7 @@
                 AutoMasterPT = 0
             };
 
-            var actual = new PTItemMatrixRow(fakeData);
+            var actual = new PTItemMatrixRow(fakeData, DirectMember.None);
 
             Assert.AreEqual(serializer.Serialize(expected), serializer.Serialize(actual));
         }
@@ -166,7 +166,7 @@
                 AutoMasterPT = 20
             };
 
-            var actual = new PTItemMatrixRow(fakeData);
+            var actual = new PTItemMatrixRow(fakeData, DirectMember.None);
 
             Assert.AreEqual(serializer.Serialize(expected), serializer.Serialize(actual));
         }
