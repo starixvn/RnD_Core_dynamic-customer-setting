@@ -7,7 +7,7 @@
     {
         public string Name { get; set; }
 
-        public byte Currency { get; set; }
+        public int Currency { get; set; }
 
         public Level Level { get; set; }
     }
