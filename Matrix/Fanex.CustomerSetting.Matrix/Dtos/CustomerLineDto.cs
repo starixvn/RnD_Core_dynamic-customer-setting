@@ -8,7 +8,7 @@
 
         public byte LevelValue { get; set; }
 
-        public byte? Currency { get; set; }
+        public int? Currency { get; set; }
 
         public int? SuperId { get; set; }
 
