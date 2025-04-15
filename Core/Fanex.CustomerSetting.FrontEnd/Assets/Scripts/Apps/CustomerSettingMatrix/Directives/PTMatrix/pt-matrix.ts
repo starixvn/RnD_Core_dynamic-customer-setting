@@ -105,6 +105,7 @@ module CustomerSettingMatrix {
 
     export class PTItemMaxtrixRow {
         public customerLevel: Level;
+        public directMember: number;
 
         public superPT: number;
         public autoSuperPT: number;
@@ -122,7 +123,7 @@ module CustomerSettingMatrix {
 
         constructor(ptItemMaxtrixRow: any) {
             this.customerLevel = new Level(ptItemMaxtrixRow.customerLevel);
-
+            this.directMember = ptItemMaxtrixRow.directMember;
             this.superPT = ptItemMaxtrixRow.superPT;
             this.autoSuperPT = ptItemMaxtrixRow.autoSuperPT;
             this.isAutoSuperPT = ptItemMaxtrixRow.isAutoSuperPT;

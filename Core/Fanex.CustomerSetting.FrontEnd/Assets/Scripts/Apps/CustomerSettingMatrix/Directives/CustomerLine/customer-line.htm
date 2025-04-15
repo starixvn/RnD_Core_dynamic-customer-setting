@@ -1,7 +1,7 @@
 ﻿<div class="customer-line">
     <table>
         <tbody>
-            <tr data-ng-repeat="customer in customerLine" data-ng-switch="$first">
+            <tr data-ng-repeat="customer in customerLine" data-ng-switch="$first" data-ng-if="customer.id >= 0">
                 <td class="level-name" data-ng-switch-when="false">{{customer.levelName}}</td>
                 <td class="level-name" data-ng-switch-when="true">Customer</td>
                 <td class="customer-name" data-ng-class="{'active': $index==0}">{{customer.name}} ({{customer.id}})</td>

@@ -167,6 +167,7 @@
     <Compile Include="LoggingConfig\LogEngines\SentryLogEngine.cs" />
     <Compile Include="LoggingConfig\LoggingConfig.cs" />
     <Compile Include="LoggingConfig\LogManagerAdapter.cs" />
+    <Compile Include="Models\Enumerations\DirectMember.cs" />
     <Compile Include="Models\SiteDB.cs" />
     <Compile Include="Models\UnderMaintainanceInfo.cs" />
     <Compile Include="Services\Impl\SettingServiceFactory.cs" />
