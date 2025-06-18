@@ -9,6 +9,7 @@
     using System.Web.Http;
     using CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Configurations;
+    using Fanex.Logging.Extensions.Web;
     using Models;
     using Services;
     using Services.Impl;
@@ -56,7 +57,7 @@
         {
             ObjectCache cache = MemoryCache.Default;
             var template = cache.Get(CustomerSettingMatrixTemplateCacheKey) as string;
-
+            ExceptionHandler.Handle(new Exception("testing."));
             if (string.IsNullOrEmpty(template))
             {
                 template = File.ReadAllText(HostingEnvironment.MapPath(CustomerSettingMatrixTemplateFilePath));

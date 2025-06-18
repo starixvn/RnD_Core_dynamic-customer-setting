@@ -39,7 +39,8 @@
 
             _positionTakingMatrixService = new PTMatrixService(
                 _resourceService,
-                _dynamicRepository);
+                _dynamicRepository,
+                null);
         }
 
         [Test]

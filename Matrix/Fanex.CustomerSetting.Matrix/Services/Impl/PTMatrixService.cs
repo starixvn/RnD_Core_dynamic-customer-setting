@@ -9,29 +9,37 @@
     using CustomerSetting.Services.Impl;
     using Data.Repository;
     using Dtos;
+    using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.Logging;
     using Models;
     using Resources;
 
+
     [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules",
-        "SA1305:FieldNamesMustNotUseHungarianNotation",
-        Justification = "PT is abbriviation for Position Taking.")]
+                 "SA1305:FieldNamesMustNotUseHungarianNotation",
+                 Justification = "PT is abbreviation for Position Taking.")]
     internal class PTMatrixService : IPTMatrixService
     {
         private const string DefaultLanguage = "en-US";
         private readonly IResourceService _resourceService;
         private readonly IDynamicRepository _dynamicRepository;
+        private readonly ILogger _logger; // Added logger field  
 
         public PTMatrixService(
             IResourceService resourceService = null,
-            IDynamicRepository dynamicRepository = null)
+            IDynamicRepository dynamicRepository = null,
+            ILogger logger = null) // Added ILogger parameter  
         {
             _resourceService = resourceService ?? new ResourceService();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
+            _logger = logger ?? new Logger(); // Initialize logger  
         }
 
         public PTMatrix GetPTMatrix(SettingMatrixQuery settingMatrixQuery, string masterName = null, DirectMember directMemberEnum = DirectMember.None)
         {
+            _logger.Error("Error in GetPTMatrix");
+
             var isAllowAutoMasterPT = GetIsAllowMasterAutoPT(masterName);
             var pTItemMatrixDtos = GetPTItemMatrixDtos(settingMatrixQuery);
             var pTItemMatrices = GetPTItemMatricesFromDto(pTItemMatrixDtos, directMemberEnum);
@@ -41,6 +49,7 @@
                 IsAllowMasterAutoPT = isAllowAutoMasterPT,
                 PTItemMatrices = pTItemMatrices
             };
+           
         }
 
         private bool GetIsAllowMasterAutoPT(string masterName)
