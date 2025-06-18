@@ -201,6 +201,7 @@
     <Content Include="AppSettings.uat.config" />
     <Content Include="AppSettings.aws.config" />
     <Content Include="AppSettings.DR.config" />
+    <Content Include="AppSettings.KLPROD.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <Content Include="Web.ConnectionStrings.config" />
@@ -213,6 +214,7 @@
     <Content Include="Web.ConnectionStrings.uat.config" />
     <Content Include="Web.ConnectionStrings.aws.config" />
     <Content Include="Web.ConnectionStrings.DR.config" />
+    <Content Include="Web.ConnectionStrings.KLPROD.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -221,6 +223,7 @@
     <Content Include="Web.masterLocal.config" />
     <Content Include="Web.aws.config" />
     <Content Include="Web.DR.config" />
+    <Content Include="Web.KLPROD.config" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
