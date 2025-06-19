@@ -33,7 +33,7 @@
             var jsonFormater = formaters.JsonFormatter;
             jsonFormater.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            config.Filters.Add(new HmacAuthorizationFilterAttribute());
+            //config.Filters.Add(new HmacAuthorizationFilterAttribute());
             config.Filters.Add(new GlobalExceptionFilterAttribute());
         }
     }
